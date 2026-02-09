@@ -1,0 +1,264 @@
+{
+  "lastUpdated": "2026-02-01",
+  "publications": [
+    {
+      "year": "2025",
+      "title": "Assessment of Frailty in Community-Dwelling Older Adults Using Smartphone-Based Digital Lifelogging: A Multi-Center, Prospective Observational Study",
+      "authors": "Janghyeon Kim, Namki Hong, Hee-Won Jung, Seungjin Baek, Sang Wouk Cho, Jungheui Kim, Changseok Lee, Subeom Lee, Bo-Young Youn",
+      "journal": "Sensors",
+      "volume": "26(1)",
+      "pages": "215",
+      "doi": "https://doi.org/10.3390/s26010215"
+    },
+    {
+      "year": "2025",
+      "title": "Unsupervised Frailty Intervention by Digitalized Exercise Coaching: A Feasibility Study",
+      "authors": "Changseok Lee, Jehun Lee, Heeyoung Jeong, Haeram Lee, Eunah Wang, Gyungyoon Baek, Hyeri Shin, Seongjun Yoon",
+      "journal": "Sensors",
+      "volume": "25(12)",
+      "pages": "3674",
+      "doi": "https://doi.org/10.3390/s25123674"
+    },
+    {
+      "year": "2024",
+      "title": "Comparative analysis of gait speed measurement protocols: Static start versus dynamic start in a cross-sectional study using light detection and ranging",
+      "authors": "Sunghwn Ji, Hee-Won Jung, Seongjun Yoon, Hyunchul Roh, Miji Kim, Heeeun Jung, Ryoungwoo Jang, Hyeonkyu Ha, Ji Yeon Baek, Il-Young Jang, Eunju Lee",
+      "journal": "The Journal of Frailty & Aging",
+      "volume": "13",
+      "pages": "1-6",
+      "doi": "http://doi.org/10.14283/jfa.2024.48"
+    },
+    {
+      "year": "2023",
+      "title": "Validation of the Effectiveness and Usability of Mobile Application for Personalized Multi-component Exercise Intervention to Improve Frailty Status in Community-dwelling Older People",
+      "authors": "Changseok Lee, Jehun Lee, Gyungyoon Baek, Heui Jeong Moon, Hun Ju Seong, Seongjun Yoon",
+      "journal": "HCI Korea 2023",
+      "pages": "788-793",
+      "doi": null
+    },
+    {
+      "year": "2022",
+      "title": "Validation of a Multi-Sensor-Based Kiosk in the Use of the Short Physical Performance Battery in Older Adults Attending a Fall and Balance Clinic",
+      "authors": "Herb Howard C. Hernandez, Eng Hui Ong, Louise Heyzer, Cai Ning Tan, Faezah Ghazali, Daphne Zihui Yang, Hee-Won Jung, Noor Hafizah Ismail, Wee Shiong Lim",
+      "journal": "Annals of Geriatric Medicine and Research",
+      "volume": "26(2)",
+      "pages": "125-133",
+      "doi": "https://doi.org/10.4235/agmr.22.0022"
+    },
+    {
+      "year": "2022",
+      "title": "Optimistic orientation and frailty in community-dwelling older adults: Results from KFACS study",
+      "authors": "Sunyoung Kim, Chang Won Won",
+      "journal": "Experimental Gerontology",
+      "volume": "170",
+      "pages": "111963",
+      "doi": "https://doi.org/10.1016/j.exger.2022.111963"
+    },
+    {
+      "year": "2022",
+      "title": "Serum irisin level is independent of sarcopenia and related muscle parameters in older adults",
+      "authors": "Ji Yeon Baek, Il-Young Jang, Hee-Won Jung, So Jeong Park, Jin Young Lee, Eunah Choi, Yun Sun Lee, Eunju Lee, Beom-Jun Kim",
+      "journal": "Experimental Gerontology",
+      "volume": "162",
+      "pages": "111744",
+      "doi": "https://doi.org/10.1016/j.exger.2022.111744"
+    },
+    {
+      "year": "2022",
+      "title": "Decreased Serum Level of Sclerostin in Older Adults with Sarcopenia",
+      "authors": "Seong Hee Ahn, Hee-Won Jung, Eunju Lee, Ji Yeon Baek, Il-Young Jang, So Jeong Park, Jin Young Lee, Eunah Choi, Yun Sun Lee, Seongbin Hong, Beom-Jun Kim",
+      "journal": "Calcium & Bone Metabolism",
+      "volume": "37(3)",
+      "pages": "487-496",
+      "doi": "https://doi.org/10.3803/EnM.2022.1428"
+    },
+    {
+      "year": "2021",
+      "title": "Comparison of Two Electronic Physical Performance Batteries by Measurement Time and Sarcopenia Classification",
+      "authors": "Chan Mi Park, Hee-Won Jung, Il-Young Jang, Ji Yeon Baek, Seongjun Yoon, Hyunchul Roh, Eunju Lee",
+      "journal": "Sensors",
+      "volume": "21(15)",
+      "pages": "5147",
+      "doi": "https://doi.org/10.3390/s21155147"
+    },
+    {
+      "year": "2021",
+      "title": "Comparison of Human Interpretation and a Rule-Based Algorithm for Instrumented Sit-to-Stand Test",
+      "authors": "Hee-Won Jung, Seongjun Yoon, Ji Yeon Baek, Eunju Lee, Il-Young Jang, Hyunchul Roh",
+      "journal": "Annals of Geriatric Medicine and Research",
+      "volume": "25(2)",
+      "pages": "86-92",
+      "doi": "https://doi.org/10.4235/agmr.21.0034"
+    },
+    {
+      "year": "2021",
+      "title": "Development and Validation of 2D-LiDAR-Based Gait Analysis Instrument and Algorithm",
+      "authors": "Seongjun Yoon, Hee-Won Jung, Heeyoune Jung, Keewon Kim, Suk-Koo Hong, Hyunchul Roh, Byung-Mo Oh",
+      "journal": "Sensors",
+      "volume": "21(2)",
+      "pages": "414",
+      "doi": "https://doi.org/10.3390/s21020414"
+    },
+    {
+      "year": "2021",
+      "title": "Association between serum FGF21 level and sarcopenia in older adults",
+      "authors": "Hee-Won Jung, Jin Hoon Park, Da Ae Kim, Il-Young Jang, So Jeong Park, Jin Young Lee, Seungjoo Lee, Jeoung Hee Kim, Hyon-Seung Yi, Eunju Lee, Beom-Jun Kim",
+      "journal": "Bone",
+      "volume": "145",
+      "pages": "115877",
+      "doi": "https://doi.org/10.1016/j.bone.2021.115877"
+    },
+    {
+      "year": "2020",
+      "title": "Functional Age Predicted by Electronic Short Physical Performance Battery Can Detect Frailty Status in Older Adults",
+      "authors": "Hee-Won Jung, Taeyang Jin, Ji Yeon Baek, Seongjun Yoon, Eunju Lee, Jack M. Guralnik, Il-Young Jang",
+      "journal": "Clinical Interventions in Aging",
+      "volume": "15",
+      "pages": "2175-2182",
+      "doi": "https://doi.org/10.2147/CIA.S280542"
+    },
+    {
+      "year": "2020",
+      "title": "Validity of the Clinical Frailty Scale in Korean older patients at a geriatric clinic",
+      "authors": "Hee-Won Jung, Il-Young Jang, Ji Yeon Baek, Seunghyun Park, Chan Mi Park, Seung Jun Han, Eunju Lee",
+      "journal": "Korean Journal of Internal Medicine",
+      "volume": "36(5)",
+      "pages": "1242-1250",
+      "doi": "https://doi.org/10.3904/kjim.2020.652"
+    },
+    {
+      "year": "2020",
+      "title": "Lower Serum n-3 Fatty Acid Level in Older Adults with Sarcopenia",
+      "authors": "Il-Young Jang, Hee-Won Jung, Jin Hoon Park, Jeoung Hee Kim, Seungjoo Lee, Eunju Lee, Jin Young Lee, So Jeong Park, Da Ae Kim, Su Jung Kim, Hyun Ju Yoo, Beom-Jun Kim",
+      "journal": "Nutrients",
+      "volume": "12(10)",
+      "pages": "2959",
+      "doi": "https://doi.org/10.3390/nu12102959"
+    },
+    {
+      "year": "2020",
+      "title": "Older Men Living with Spouse and Older Women Living with Spouse and Children Have Lower Frailty Prevalence: The Korean Frailty and Aging Cohort Study (KFACS)",
+      "authors": "Hyeongjin Shim, Sunyoung Kim, Miji Kim, Byung Sung Kim, Eunjin Jeong, Young Ju Lee, Chang Won Won",
+      "journal": "Annals of Geriatric Medicine and Research",
+      "volume": "24(3)",
+      "pages": "204-210",
+      "doi": "https://doi.org/10.4235/agmr.20.0058"
+    },
+    {
+      "year": "2020",
+      "title": "Relationships between cognitive function and frailty in older Korean adults: The moderating effect of the number of teeth",
+      "authors": "Ji-hye Yun, Seung-kook Ki, Jinhee Kim, Doukyoung Chon, Seung-yun Shin, Yunhwan Lee",
+      "journal": "Archives of Gerontology and Geriatrics",
+      "volume": "91",
+      "pages": "104213",
+      "doi": "https://doi.org/10.1016/j.archger.2020.104213"
+    },
+    {
+      "year": "2020",
+      "title": "Exploring health-related quality of life and frailty in older adults based on the Korean Frailty and Aging Cohort Study",
+      "authors": "Moon Jung Kim, Saengryeol Park, Young-il Jung, Seon-Ha Kim, In-Hwan Oh",
+      "journal": "Quality of Life Research",
+      "pages": "1-9",
+      "doi": "https://doi.org/10.1007/s11136-020-02568-5"
+    },
+    {
+      "year": "2020",
+      "title": "Motoric Cognitive Risk Syndrome Using Three-Item Recall Test and Its Associations with Fall-Related Outcomes: The Korean Frailty and Aging Cohort Study",
+      "authors": "Hayoung Shim, Miji Kim, Chang Won Won",
+      "journal": "International Journal of Environmental Research and Public Health",
+      "volume": "17(10)",
+      "pages": "3364",
+      "doi": "https://doi.org/10.3390/ijerph17103364"
+    },
+    {
+      "year": "2020",
+      "title": "Sarcopenia in Korean Community-Dwelling Adults Aged 70 Years and Older: Application of Screening and Diagnostic Tools From the Asian Working Group for Sarcopenia 2019 Update",
+      "authors": "Miji Kim, Chang Won Won",
+      "journal": "Journal of the American Medical Directors Association",
+      "volume": "21(6)",
+      "pages": "752-758",
+      "doi": "https://doi.org/10.1016/j.jamda.2020.03.018"
+    },
+    {
+      "year": "2019",
+      "title": "Validation of a Multi-Sensor-Based Kiosk for Short Physical Performance Battery",
+      "authors": "Hee-Won Jung, Hyunchul Roh, Younggun Cho, Jinyong Jeong, Young-Sik Shin, Jae-Young Lim, Jack M. Guralnik, Jihong Park",
+      "journal": "Journal of the American Geriatrics Society",
+      "volume": "67(12)",
+      "pages": "2605-2609",
+      "doi": "https://doi.org/10.1111/jgs.16135"
+    },
+    {
+      "year": "2019",
+      "title": "Comparison of the use of a manual stopwatch and an automatic instrument for measuring 4-m gait speed at the usual walking pace with different starting protocols in older adults",
+      "authors": "Seung-Lyul Oh, Dae Young Kim, Jun Hyun Bae, Heewon Jung, Jae-Young Lim",
+      "journal": "European Geriatric Medicine",
+      "volume": "10",
+      "pages": "747-752",
+      "doi": "https://doi.org/10.1007/s41999-019-00210-3"
+    },
+    {
+      "year": "2019",
+      "title": "Development of a Frailty Phenotype Questionnaire for Use in Screening Community-Dwelling Older Adults",
+      "authors": "Sunyoung Kim, Miji Kim, Hee-Won Jung, Chang Won Won",
+      "journal": "Journal of the American Medical Directors Association",
+      "volume": "21(5)",
+      "pages": "660-664",
+      "doi": "https://doi.org/10.1016/j.jamda.2019.08.028"
+    },
+    {
+      "year": "2019",
+      "title": "An Optimal Questionnaire Representing Slow Gait Speed (<1m/s) in Community-dwelling Older Adults: The Korean Frailty and Aging Cohort Study (KFACS)",
+      "authors": "S. Lee, S. Kim, M. Kim, J. Yoo, B. Kim, M. Yoo, Chang Won Won",
+      "journal": "The Journal of Nutrition, Health & Aging",
+      "volume": "23",
+      "pages": "648-653",
+      "doi": "https://doi.org/10.1007/s12603-019-1213-y"
+    },
+    {
+      "year": "2019",
+      "title": "Sarcopenia Is Associated with Cognitive Impairment Mainly Due to Slow Gait Speed: Results from the Korean Frailty and Aging Cohort Study (KFACS)",
+      "authors": "Miji Kim, Chang Won Won",
+      "journal": "International Journal of Environmental Research and Public Health",
+      "volume": "16(9)",
+      "pages": "1491",
+      "doi": "https://doi.org/10.3390/ijerph16091491"
+    },
+    {
+      "year": "2019",
+      "title": "Cross-Comparisons of Gait Speeds by Automatic Sensors and a Stopwatch to Provide Converting Formula Between Measuring Modalities",
+      "authors": "Hee-Won Jung, Hyun-Chul Roh, Sun-wook Kim, Sunyoung Kim, Miji Kim, Chang Won Won",
+      "journal": "Annals of Geriatric Medicine and Research",
+      "volume": "23(2)",
+      "pages": "71-76",
+      "doi": "https://doi.org/10.4235/agmr.19.0016"
+    },
+    {
+      "year": "2018",
+      "title": "Combinations of gait speed testing protocols (automatic vs manual timer, dynamic vs static start) can significantly influence the prevalence of slowness: Results from the Korean Frailty and Aging Cohort Study",
+      "authors": "Miji Kim, Chang Won Won",
+      "journal": "Archives of Gerontology and Geriatrics",
+      "volume": "81",
+      "pages": "215-221",
+      "doi": "https://doi.org/10.1016/j.archger.2018.12.009"
+    },
+    {
+      "year": "2018",
+      "title": "Calf Circumference as a Screening Tool for Cognitive Frailty in Community-Dwelling Older Adults: The Korean Frailty and Aging Cohort Study (KFACS)",
+      "authors": "Miji Kim, Min Jeong Jeong, Jinho Yoo, Da Young Song, Chang Won Won",
+      "journal": "Journal of Clinical Medicine",
+      "volume": "7(10)",
+      "pages": "332",
+      "doi": "https://doi.org/10.3390/jcm7100332"
+    },
+    {
+      "year": "2018",
+      "title": "Simple Method of Screening for Frailty in Older Adults Using a Chronometer and Tape Measure in Clinic",
+      "authors": "Hee-Won Jung, Min-Gu Kang, Jung-Yeon Choi, Sol-Ji Yoon, Sun-wook Kim, Kwang-il Kim, Cheol-Ho Kim",
+      "journal": "Journal of the American Geriatrics Society",
+      "volume": "66(1)",
+      "pages": "157-160",
+      "doi": "https://doi.org/10.1111/jgs.15204"
+    }
+  ]
+}

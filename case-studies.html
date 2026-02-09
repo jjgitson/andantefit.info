@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AndanteFit case studies and research reports">
+  <title>Case Studies - AndanteFit</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span>AndanteFit</span>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="product.html" class="nav-link">Product</a></li>
+        <li><a href="validation.html" class="nav-link">Validation</a></li>
+        <li><a href="case-studies.html" class="nav-link active">Case Studies</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Research Reports</span>
+      <h1 class="hero-headline">Case Studies & Applications</h1>
+      <p class="hero-subtitle">
+        Real-world implementations of AndanteFit across clinical and research settings, 
+        demonstrating practical applications and outcomes.
+      </p>
+    </div>
+  </section>
+
+  <!-- Case Studies Grid -->
+  <section class="section">
+    <div class="container">
+      <div id="caseStudiesContainer">
+        <p style="text-align: center; color: var(--color-text-muted);">
+          Loading case studies...
+        </p>
+      </div>
+
+      <div id="emptyState" class="hidden" style="text-align: center; padding: 60px 20px;">
+        <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.3;">📄</div>
+        <h3 style="color: var(--color-text-secondary); margin-bottom: 12px;">No Case Studies Yet</h3>
+        <p style="color: var(--color-text-muted); max-width: 480px; margin: 0 auto;">
+          Case studies will appear here automatically when HTML files are added to the 
+          <code style="background-color: var(--color-soft-gray); padding: 2px 6px; border-radius: 4px;">case-studies/</code> 
+          folder in the repository.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>AndanteFit</h4>
+          <p>
+            Developed and provided by DYPHI Inc.<br>
+            Automated physical performance assessment for frailty and sarcopenia research.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <p>
+            <a href="product.html">Product</a><br>
+            <a href="validation.html">Validation</a><br>
+            <a href="case-studies.html">Case Studies</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>
+            Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br>
+            Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br>
+            Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 DYPHI Inc. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // GitHub repository configuration
+    // IMPORTANT: Update these values with your actual repository details
+    const GITHUB_CONFIG = {
+      owner: 'YOUR_GITHUB_USERNAME',  // Replace with your GitHub username
+      repo: 'andantefit-website',     // Replace with your repository name
+      folder: 'case-studies',         // Folder containing case study HTML files
+      branch: 'main'                  // Branch name (usually 'main' or 'master')
+    };
+
+    // Function to parse filename for date and title
+    function parseFilename(filename) {
+      // Expected format: YYYY-MM-DD-Title-Words.html
+      // Example: 2026-02-10-Pilot-Study-Seoul.html
+      const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
+      
+      if (match) {
+        const [, year, month, day, titlePart] = match;
+        const title = titlePart.replace(/-/g, ' ');
+        const date = new Date(year, month - 1, day);
+        
+        return {
+          date,
+          dateStr: date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          }),
+          title,
+          filename
+        };
+      }
+      
+      // Fallback for non-standard filenames
+      return {
+        date: new Date(),
+        dateStr: 'Date unknown',
+        title: filename.replace('.html', '').replace(/-/g, ' '),
+        filename
+      };
+    }
+
+    // Load case studies from GitHub
+    async function loadCaseStudies() {
+      const container = document.getElementById('caseStudiesContainer');
+      const emptyState = document.getElementById('emptyState');
+      
+      try {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${GITHUB_CONFIG.branch}`;
+        const response = await fetch(apiUrl);
+        
+        if (!response.ok) {
+          throw new Error(`GitHub API error: ${response.status}`);
+        }
+        
+        const files = await response.json();
+        const htmlFiles = files.filter(file => 
+          file.type === 'file' && file.name.endsWith('.html')
+        );
+        
+        if (htmlFiles.length === 0) {
+          container.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+        
+        // Parse and sort files by date (newest first)
+        const caseStudies = htmlFiles
+          .map(file => ({
+            ...parseFilename(file.name),
+            path: file.path,
+            url: `${GITHUB_CONFIG.folder}/${file.name}`
+          }))
+          .sort((a, b) => b.date - a.date);
+        
+        // Generate HTML
+        container.innerHTML = `
+          <div class="grid grid-3">
+            ${caseStudies.map(study => `
+              <div class="case-study-card">
+                <div class="case-study-date">${study.dateStr}</div>
+                <div class="case-study-content">
+                  <h3 class="case-study-title">${study.title}</h3>
+                  <a href="${study.url}" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    View Report →
+                  </a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        
+      } catch (error) {
+        console.error('Error loading case studies:', error);
+        
+        // Show helpful error message
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; background-color: rgba(239, 68, 68, 0.1); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);">
+            <h3 style="color: #DC2626; margin-bottom: 12px;">Unable to Load Case Studies</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 20px; max-width: 560px; margin-left: auto; margin-right: auto;">
+              ${error.message.includes('GitHub API') 
+                ? 'Please configure your GitHub repository details in the GITHUB_CONFIG object at the top of case-studies.html.'
+                : 'There was an error connecting to GitHub. Please check your internet connection and repository configuration.'}
+            </p>
+            <details style="text-align: left; max-width: 600px; margin: 0 auto; padding: 20px; background-color: var(--color-soft-gray); border-radius: 8px;">
+              <summary style="cursor: pointer; font-weight: 600; margin-bottom: 12px;">Configuration Instructions</summary>
+              <ol style="line-height: 1.9; color: var(--color-text-secondary); padding-left: 20px;">
+                <li>Open <code>case-studies.html</code> in a text editor</li>
+                <li>Find the <code>GITHUB_CONFIG</code> object near the top of the script</li>
+                <li>Replace <code>YOUR_GITHUB_USERNAME</code> with your actual GitHub username</li>
+                <li>Replace <code>andantefit-website</code> with your repository name (if different)</li>
+                <li>Save the file and refresh this page</li>
+              </ol>
+            </details>
+          </div>
+        `;
+      }
+    }
+
+    // Load on page load
+    loadCaseStudies();
+  </script>
+</body>
+</html>

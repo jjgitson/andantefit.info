@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AndanteFit product details: SPPB automation, standardization, and technical specifications">
+  <title>Product - AndanteFit</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span>AndanteFit</span>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="product.html" class="nav-link active">Product</a></li>
+        <li><a href="validation.html" class="nav-link">Validation</a></li>
+        <li><a href="case-studies.html" class="nav-link">Case Studies</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Product Overview</span>
+      <h1 class="hero-headline">Automated SPPB Administration</h1>
+      <p class="hero-subtitle">
+        High-precision, continuous measurement enabled by LiDAR technology through a fully automated process. 
+        No wearable devices or disposable components required.
+      </p>
+    </div>
+  </section>
+
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">The Challenge</span>
+        <h2>Manual SPPB Assessment Limitations</h2>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 class="card-title">Human-Related Errors</h3>
+          <ul style="line-height: 1.9; color: var(--color-text-secondary); list-style: none; padding-left: 0;">
+            <li>✗ <strong>Reaction time variability:</strong> Manual stopwatch timing introduces 100-300ms error per measurement</li>
+            <li>✗ <strong>Observer bias:</strong> Different testers may interpret protocol steps inconsistently</li>
+            <li>✗ <strong>Recording mistakes:</strong> Transcription errors when logging results</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Protocol Compliance Issues</h3>
+          <ul style="line-height: 1.9; color: var(--color-text-secondary); list-style: none; padding-left: 0;">
+            <li>✗ <strong>Starting conditions:</strong> Inconsistent application of static vs dynamic start protocols</li>
+            <li>✗ <strong>Position verification:</strong> Subjective assessment of balance positions</li>
+            <li>✗ <strong>Multi-site studies:</strong> Inter-rater reliability challenges across institutions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">AndanteFit Solution</span>
+        <h2>Standardization Through Automation</h2>
+        <p>
+          AndanteFit eliminates examiner-related variability and ensures protocol compliance 
+          through sensor-based objective measurement.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-icon">📏</div>
+          <h3 class="card-title">Precise Measurement</h3>
+          <p class="card-description">
+            <strong>LiDAR technology:</strong> Continuous 2D spatial tracking at 10Hz sampling rate. 
+            Distance accuracy: ±5mm. Velocity accuracy: ±0.02 m/s.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <h3 class="card-title">Automated Detection</h3>
+          <p class="card-description">
+            <strong>Rule-based algorithms:</strong> Automatic start/stop detection, position verification, 
+            and repetition counting. No manual intervention required.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3 class="card-title">Instant Scoring</h3>
+          <p class="card-description">
+            <strong>Real-time calculation:</strong> SPPB scores computed immediately after test completion. 
+            AWGS 2019 and international guideline compliance built-in.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System Components -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Hardware</span>
+        <h2>Three-Module System</h2>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3 class="card-title">Gait Speed Module</h3>
+          <p class="card-description">
+            <strong>Sensor:</strong> 2D LiDAR (10Hz)<br>
+            <strong>Range:</strong> Up to 10m customizable walking distance<br>
+            <strong>Protocols:</strong> Static and dynamic start conditions<br>
+            <strong>Output:</strong> Velocity profile, acceleration, gait metrics
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Sit-to-Stand Module</h3>
+          <p class="card-description">
+            <strong>Detection:</strong> Multi-modal sensor array<br>
+            <strong>Protocols:</strong> 5-repetition or 30-second tests<br>
+            <strong>Tracking:</strong> Seat height, standing time per cycle<br>
+            <strong>Output:</strong> Total time, rhythm analysis
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Balance Module</h3>
+          <p class="card-description">
+            <strong>Platform:</strong> Pressure-sensitive footplate<br>
+            <strong>Positions:</strong> Side-by-side, semi-tandem, tandem<br>
+            <strong>Tracking:</strong> Center of pressure, sway metrics<br>
+            <strong>Output:</strong> Hold time, stability score
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Software -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Software</span>
+        <h2>Integrated Workflow</h2>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 class="card-title">Mobile Application</h3>
+          <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+            <li><strong>Test Administration:</strong> Step-by-step protocol guidance with visual cues</li>
+            <li><strong>Participant Management:</strong> ID assignment, demographic data collection</li>
+            <li><strong>Real-Time Feedback:</strong> Instant test results and quality indicators</li>
+            <li><strong>Offline Capability:</strong> Data stored locally, synced when connected</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Web Dashboard</h3>
+          <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+            <li><strong>Data Repository:</strong> Secure cloud storage with longitudinal tracking</li>
+            <li><strong>Reporting Tools:</strong> PDF export, batch data download (CSV/Excel)</li>
+            <li><strong>Analytics:</strong> Cohort comparison, change score visualization</li>
+            <li><strong>Access Control:</strong> Role-based permissions for research teams</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Performance Metrics</span>
+        <h2>Evidence of Efficiency</h2>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">&lt;3 min</h3>
+          <p class="card-description">
+            <strong>Average test time per participant.</strong> Compared to 5-8 minutes with conventional 
+            manual administration (Jung et al., 2019).
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">r = 0.92</h3>
+          <p class="card-description">
+            <strong>Correlation with manual SPPB.</strong> High agreement demonstrated across all 
+            components (Park et al., 2021).
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">ICC &gt; 0.90</h3>
+          <p class="card-description">
+            <strong>Inter-rater reliability.</strong> Consistent results across different testers and 
+            institutions (Hernandez et al., 2022).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specifications -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Technical Specifications</span>
+        <h2>System Requirements</h2>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Physical Dimensions & Setup</h3>
+        <div class="grid grid-2">
+          <div>
+            <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+              <li><strong>Gait module:</strong> LiDAR on tripod (adjustable height 100-170cm)</li>
+              <li><strong>Sit-to-stand module:</strong> Standard chair with sensor platform (43cm seat height)</li>
+              <li><strong>Balance module:</strong> Footplate 60cm × 40cm × 5cm</li>
+              <li><strong>Space requirement:</strong> Minimum 4m × 2m clear area</li>
+            </ul>
+          </div>
+          <div>
+            <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+              <li><strong>Power:</strong> 100-240V AC, 50/60Hz, &lt;150W total</li>
+              <li><strong>Connectivity:</strong> Wi-Fi 802.11ac or Bluetooth 5.0</li>
+              <li><strong>Mobile device:</strong> iOS 13+ or Android 9+, tablet recommended</li>
+              <li><strong>Installation:</strong> &lt;30 minutes, no tools required</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container text-center">
+      <h2>Interested in AndanteFit for Your Research?</h2>
+      <p style="max-width: 640px; margin: 0 auto 2rem;">
+        Contact us to discuss system specifications, validation protocols, and institutional implementation.
+      </p>
+      <a href="mailto:snm@dyphi.com" class="btn btn-primary">Contact Research Team</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>AndanteFit</h4>
+          <p>
+            Developed and provided by DYPHI Inc.<br>
+            Automated physical performance assessment for frailty and sarcopenia research.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <p>
+            <a href="product.html">Product</a><br>
+            <a href="validation.html">Validation</a><br>
+            <a href="case-studies.html">Case Studies</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>
+            Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br>
+            Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br>
+            Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 DYPHI Inc. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,31 +1,45 @@
-(function(){
-  const btn = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.main-nav');
-  if(!btn || !nav) return;
+(function () {
+  const btn = document.querySelector(".nav-toggle");
+  const nav = document.querySelector(".main-nav");
+  if (!btn || !nav) return;
 
-  const close = () => {
-    nav.classList.remove('is-open');
-    btn.setAttribute('aria-expanded','false');
+  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
+  const setOpen = (open) => {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    nav.classList.toggle("is-open", open);
   };
 
-  btn.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', String(isOpen));
+  // 초기 상태
+  setOpen(false);
+
+  btn.addEventListener("click", () => {
+    const open = btn.getAttribute("aria-expanded") !== "true";
+    setOpen(open);
   });
 
-  document.addEventListener('click', (e) => {
-    if(!nav.classList.contains('is-open')) return;
-    if(nav.contains(e.target) || btn.contains(e.target)) return;
-    close();
+  // 바깥 클릭 닫기
+  document.addEventListener("click", (e) => {
+    if (!isMobile()) return;
+    if (btn.getAttribute("aria-expanded") !== "true") return;
+    if (nav.contains(e.target) || btn.contains(e.target)) return;
+    setOpen(false);
   });
 
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape') close();
+  // ESC 닫기
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
   });
 
-  nav.addEventListener('click', (e) => {
-    const a = e.target.closest('a');
-    if(!a) return;
-    if(window.matchMedia('(max-width: 900px)').matches) close();
+  // 링크 클릭 시 닫기 (모바일만)
+  nav.addEventListener("click", (e) => {
+    const a = e.target.closest("a");
+    if (!a) return;
+    if (isMobile()) setOpen(false);
+  });
+
+  // 데스크톱으로 돌아오면 강제로 닫기
+  window.addEventListener("resize", () => {
+    if (!isMobile()) setOpen(false);
   });
 })();

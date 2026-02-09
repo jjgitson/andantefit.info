@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AndanteFit global customers, partners, and demo sites">
+  <meta name="description" content="AndanteFit global customers, partners, and domestic implementation sites">
   <title>References - AndanteFit</title>
   <link rel="stylesheet" href="css/style.css">
   
-  <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -15,14 +14,32 @@
     gtag('js', new Date());
     gtag('config', 'G-0L4ENVHFYP');
   </script>
+
+  <style>
+    /* Region 구분을 위한 추가 스타일 - 기존 UI 일관성 유지 */
+    .region-header { border-bottom: 2px solid var(--color-deep-blue); padding-bottom: 12px; margin-bottom: 32px; margin-top: 60px; }
+    .region-header h3 { margin-bottom: 0; color: var(--color-deep-blue); font-size: 1.5rem; }
+    
+    /* 한국 지도 섹션 레이아웃 */
+    .korea-map-section { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: start; background: white; padding: 40px; border-radius: 20px; box-shadow: var(--shadow-md); margin-top: 20px; }
+    .map-container { position: relative; width: 100%; height: 550px; background: #f8fafc; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .hospital-list-container { height: 550px; overflow-y: auto; padding-right: 20px; }
+    .hospital-item { padding: 12px 0; border-bottom: 1px solid var(--color-border); font-weight: 500; color: var(--color-text-primary); font-size: 0.9375rem; }
+    .hospital-item:last-child { border-bottom: none; }
+    
+    /* Simplified Map Marker Styles */
+    .map-marker { fill: var(--color-deep-blue); opacity: 0.6; transition: opacity 0.3s; cursor: pointer; }
+    .map-marker:hover { opacity: 1; }
+    
+    @media (max-width: 992px) { .korea-map-section { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-container">
-  <a href="index.html" class="nav-logo">
-  <img src="assets/andantefit-logo.png" alt="AndanteFit">
-</a>
+      <a href="index.html" class="nav-logo">
+        <img src="assets/andantefit-logo.png" alt="AndanteFit">
+      </a>
       <ul class="nav-menu" id="navMenu">
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="product.html" class="nav-link">Product</a></li>
@@ -36,208 +53,112 @@
     </div>
   </nav>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container hero-content">
       <span class="section-label">Global Network</span>
       <h1 class="hero-headline">Trusted by Leading Institutions Worldwide</h1>
       <p class="hero-subtitle">
-        AndanteFit is utilized by research institutions, healthcare organizations, and community centers 
-        across Asia, Europe, and North America for sarcopenia and frailty assessment.
+        AndanteFit is standardized in leading medical and research centers across Asia, Europe, and North America.
       </p>
     </div>
   </section>
 
-  <!-- Customer Logos -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Research Partners</span>
-        <h2>Academic & Medical Institutions</h2>
-        <p>
-          Universities and medical centers conducting peer-reviewed research with AndanteFit
-        </p>
-      </div>
-
-      <!-- Logo Grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin-bottom: 60px;">
-        <!-- Placeholder for logos - will be loaded from JSON -->
-        <div class="card" style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; text-align: center; transition: all 0.3s ease;">
-          <div style="width: 100%; height: 80px; background-color: var(--color-soft-gray); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 2.5rem;">
-            🏥
-          </div>
-          <h4 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">Seoul National University Hospital</h4>
-          <p style="font-size: 0.8125rem; color: var(--color-text-muted); margin: 0;">Seoul, South Korea</p>
-        </div>
-
-        <div class="card" style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; text-align: center; transition: all 0.3s ease;">
-          <div style="width: 100%; height: 80px; background-color: var(--color-soft-gray); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 2.5rem;">
-            🏥
-          </div>
-          <h4 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">National University Hospital Singapore</h4>
-          <p style="font-size: 0.8125rem; color: var(--color-text-muted); margin: 0;">Singapore</p>
-        </div>
-
-        <div class="card" style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; text-align: center; transition: all 0.3s ease;">
-          <div style="width: 100%; height: 80px; background-color: var(--color-soft-gray); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 2.5rem;">
-            🏥
-          </div>
-          <h4 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">Charité – Universitätsmedizin Berlin</h4>
-          <p style="font-size: 0.8125rem; color: var(--color-text-muted); margin: 0;">Berlin, Germany</p>
-        </div>
-
-        <div class="card" style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; text-align: center; transition: all 0.3s ease;">
-          <div style="width: 100%; height: 80px; background-color: var(--color-soft-gray); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 2.5rem;">
-            🏥
-          </div>
-          <h4 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">Asan Medical Center</h4>
-          <p style="font-size: 0.8125rem; color: var(--color-text-muted); margin: 0;">Seoul, South Korea</p>
-        </div>
-
-        <div class="card" style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; text-align: center; transition: all 0.3s ease;">
-          <div style="width: 100%; height: 80px; background-color: var(--color-soft-gray); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 2.5rem;">
-            🏥
-          </div>
-          <h4 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">Kyung Hee University Hospital</h4>
-          <p style="font-size: 0.8125rem; color: var(--color-text-muted); margin: 0;">Seoul, South Korea</p>
-        </div>
-
-        <div class="card" style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; text-align: center; transition: all 0.3s ease;">
-          <div style="width: 100%; height: 80px; background-color: var(--color-soft-gray); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 2.5rem;">
-            🏥
-          </div>
-          <h4 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">University of Maryland</h4>
-          <p style="font-size: 0.8125rem; color: var(--color-text-muted); margin: 0;">Baltimore, USA</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Demo Sites -->
-  <section class="section" style="background-color: var(--color-white);">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Implementation Sites</span>
-        <h2>Community & Clinical Demo Sites</h2>
-        <p>
-          Healthcare centers and community organizations implementing AndanteFit for frailty screening
-        </p>
-      </div>
-
+  <div class="container section">
+    
+    <div class="region-section">
+      <div class="region-header"><h3>Europe & North America</h3></div>
       <div class="grid grid-3">
-        <div class="card">
-          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(15, 76, 129, 0.1) 0%, rgba(15, 76, 129, 0.05) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 3rem;">
-            🏢
-          </div>
-          <h3 class="card-title">Songpa Senior Welfare Center</h3>
-          <p class="card-description">
-            Seoul, South Korea<br>
-            <small style="color: var(--color-text-muted);">Community-based frailty screening program</small>
-          </p>
-        </div>
-
-        <div class="card">
-          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(15, 76, 129, 0.1) 0%, rgba(15, 76, 129, 0.05) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 3rem;">
-            🏥
-          </div>
-          <h3 class="card-title">Tan Tock Seng Hospital</h3>
-          <p class="card-description">
-            Singapore<br>
-            <small style="color: var(--color-text-muted);">Falls and balance prevention program</small>
-          </p>
-        </div>
-
-        <div class="card">
-          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(15, 76, 129, 0.1) 0%, rgba(15, 76, 129, 0.05) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 3rem;">
-            🏥
-          </div>
-          <h3 class="card-title">Singapore General Hospital</h3>
-          <p class="card-description">
-            Singapore<br>
-            <small style="color: var(--color-text-muted);">Geriatric outpatient assessment clinic</small>
-          </p>
-        </div>
-
-        <div class="card">
-          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(15, 76, 129, 0.1) 0%, rgba(15, 76, 129, 0.05) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 3rem;">
-            🏛️
-          </div>
-          <h3 class="card-title">Seoul Metropolitan Government</h3>
-          <p class="card-description">
-            Seoul, South Korea<br>
-            <small style="color: var(--color-text-muted);">Senior health promotion initiative</small>
-          </p>
-        </div>
-
-        <div class="card">
-          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(15, 76, 129, 0.1) 0%, rgba(15, 76, 129, 0.05) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 3rem;">
-            🏥
-          </div>
-          <h3 class="card-title">Bundang Seoul National University Hospital</h3>
-          <p class="card-description">
-            Seongnam, South Korea<br>
-            <small style="color: var(--color-text-muted);">Geriatric rehabilitation center</small>
-          </p>
-        </div>
-
-        <div class="card">
-          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(15, 76, 129, 0.1) 0%, rgba(15, 76, 129, 0.05) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 3rem;">
-            🏥
-          </div>
-          <h3 class="card-title">Samsung Medical Center</h3>
-          <p class="card-description">
-            Seoul, South Korea<br>
-            <small style="color: var(--color-text-muted);">Cancer rehabilitation program</small>
-          </p>
-        </div>
+        <div class="card"><strong>Charité – Universitätsmedizin Berlin</strong><p class="card-description">Germany</p></div>
+        <div class="card"><strong>University of Maryland</strong><p class="card-description">USA</p></div>
+        <div class="card"><strong>Montreal General Hospital</strong><p class="card-description">Canada</p></div>
+        <div class="card"><strong>Hospital Clínico San Carlos</strong><p class="card-description">Spain</p></div>
+        <div class="card"><strong>Clinic Barcelona</strong><p class="card-description">Spain</p></div>
+        <div class="card"><strong>Hospital Universitario Ramón y Cajal</strong><p class="card-description">Spain</p></div>
       </div>
     </div>
-  </section>
 
-  <!-- Geographic Distribution -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Global Presence</span>
-        <h2>Countries & Regions</h2>
-      </div>
-
+    <div class="region-section">
+      <div class="region-header"><h3>Asia Pacific</h3></div>
       <div class="grid grid-3">
-        <div class="card" style="text-align: center;">
-          <h3 style="font-size: 3rem; font-weight: 800; color: var(--color-deep-blue); margin-bottom: 8px;">🇰🇷</h3>
-          <h4 class="card-title">South Korea</h4>
-          <p class="card-description">Seoul, Daejeon, Seongnam, Gyeonggi Province</p>
+        <div class="card"><strong>Juntendo University</strong><p class="card-description">Japan</p></div>
+        <div class="card"><strong>Nagoya University</strong><p class="card-description">Japan</p></div>
+        <div class="card"><strong>St. Luke's International University</strong><p class="card-description">Japan</p></div>
+        <div class="card"><strong>Kobe City Medical Center</strong><p class="card-description">Japan</p></div>
+        <div class="card"><strong>Hanyang Pacific University</strong><p class="card-description">Japan</p></div>
+        <div class="card"><strong>National University Health System (NUHS)</strong><p class="card-description">Singapore</p></div>
+        <div class="card"><strong>Tan Tock Seng Hospital</strong><p class="card-description">Singapore</p></div>
+        <div class="card"><strong>Singapore General Hospital</strong><p class="card-description">Singapore</p></div>
+        <div class="card"><strong>National Cancer Institute (NCI)</strong><p class="card-description">Malaysia</p></div>
+        <div class="card"><strong>Universiti Putra Malaysia (UPM)</strong><p class="card-description">Malaysia</p></div>
+        <div class="card"><strong>Chulalongkorn University</strong><p class="card-description">Thailand</p></div>
+        <div class="card"><strong>Chiang Mai University Hospital</strong><p class="card-description">Thailand</p></div>
+      </div>
+    </div>
+
+    <div class="region-section">
+      <div class="region-header"><h3>South Korea</h3></div>
+      <p class="mb-4" style="color: var(--color-text-secondary);">
+        AndanteFit is implemented in 80+ major university hospitals and community health centers in Korea.
+      </p>
+      
+      <div class="korea-map-section">
+        <div class="map-container">
+          <svg viewBox="0 0 300 450" width="100%" height="100%">
+            <path d="M120,40 L160,50 L180,100 L200,150 L190,250 L150,350 L100,380 L60,320 L50,200 L70,80 Z" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/>
+            <circle cx="110" cy="110" r="8" class="map-marker" title="Seoul/Gyeonggi"/>
+            <circle cx="150" cy="180" r="6" class="map-marker" title="Chungcheong"/>
+            <circle cx="180" cy="280" r="7" class="map-marker" title="Gyeongsang"/>
+            <circle cx="90" cy="300" r="6" class="map-marker" title="Jeolla"/>
+            <circle cx="170" cy="80" r="5" class="map-marker" title="Gangwon"/>
+          </svg>
         </div>
 
-        <div class="card" style="text-align: center;">
-          <h3 style="font-size: 3rem; font-weight: 800; color: var(--color-deep-blue); margin-bottom: 8px;">🇸🇬</h3>
-          <h4 class="card-title">Singapore</h4>
-          <p class="card-description">National healthcare network implementations</p>
-        </div>
-
-        <div class="card" style="text-align: center;">
-          <h3 style="font-size: 3rem; font-weight: 800; color: var(--color-deep-blue); margin-bottom: 8px;">🇩🇪</h3>
-          <h4 class="card-title">Germany</h4>
-          <p class="card-description">Berlin university medical research</p>
+        <div class="hospital-list-container">
+          <div class="hospital-item">서울아산병원</div>
+          <div class="hospital-item">삼성서울병원</div>
+          <div class="hospital-item">서울대학교병원</div>
+          <div class="hospital-item">세브란스병원</div>
+          <div class="hospital-item">분당서울대학교병원</div>
+          <div class="hospital-item">서울성모병원</div>
+          <div class="hospital-item">고려대학교의료원 (안암/구로/안산)</div>
+          <div class="hospital-item">가톨릭대학교병원 (의정부/부천/성빈센트/은평)</div>
+          <div class="hospital-item">경북대학교병원 (칠곡경북대학교병원 포함)</div>
+          <div class="hospital-item">부산대학교병원 (양산부산대학교병원 포함)</div>
+          <div class="hospital-item">전남대학교병원 (화순전남대학교병원 포함)</div>
+          <div class="hospital-item">원주세브란스기독병원</div>
+          <div class="hospital-item">한양대학교병원</div>
+          <div class="hospital-item">중앙대학교광명병원</div>
+          <div class="hospital-item">영남대학교병원</div>
+          <div class="hospital-item">인제대학교병원 (일산/해운대)</div>
+          <div class="hospital-item">한림대학교병원 (성심/동탄성심)</div>
+          <div class="hospital-item">국립암센터</div>
+          <div class="hospital-item">중앙보훈병원</div>
+          <div class="hospital-item">이화여자대학교목동병원</div>
+          <div class="hospital-item">순천향대학교부속부천병원</div>
+          <div class="hospital-item">강원대학교병원</div>
+          <div class="hospital-item">경상대학교병원</div>
+          <div class="hospital-item">용인세브란스병원</div>
+          <div class="hospital-item">희연재활병원</div>
+          <div class="hospital-item">파크사이드재활병원</div>
+          <div class="hospital-item">해븐리병원</div>
+          <div class="hospital-item">Public Health Centers (Seoul, Gyeonggi, Gangwon, etc.)</div>
+          <div class="hospital-item">Senior Welfare Centers & Community Sites</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Note Section -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">
       <div class="card" style="max-width: 800px; margin: 0 auto; text-align: center; padding: 40px;">
         <p style="font-size: 1.125rem; line-height: 1.8; color: var(--color-text-secondary); margin: 0;">
           <strong>Note:</strong> This list represents a selection of AndanteFit implementation sites. 
-          For partnership inquiries or institutional demonstrations, please refer to the Materials Download 
-          request form on our <a href="product.html" style="color: var(--color-deep-blue); font-weight: 600;">Product page</a>.
+          For partnership inquiries, please refer to the <a href="product.html" style="color: var(--color-deep-blue); font-weight: 600;">Product page</a>.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -248,7 +169,6 @@
             Automated physical performance assessment for frailty and sarcopenia research.
           </p>
         </div>
-
         <div class="footer-section">
           <h4>Quick Links</h4>
           <p>
@@ -258,7 +178,6 @@
             <a href="references.html">References</a>
           </p>
         </div>
-
         <div class="footer-section">
           <h4>Contact</h4>
           <p>
@@ -268,7 +187,6 @@
           </p>
         </div>
       </div>
-
       <div class="footer-bottom">
         © 2026 DYPHI Inc. All Rights Reserved.
       </div>

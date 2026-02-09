@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AndanteFit - Precision Physical Performance Assessment</title>
     <link rel="icon" href="favicon_1024px.png">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MH5P9YQQN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date()); gtag('config', 'G-3MH5P9YQQN');
     </script>
+
     <style>
-        /* 화면 꽉 차는 Healthy Aging Hero 스타일 */
+        /* 1. 화면을 꽉 채우는 Healthy Aging Hero 섹션 */
         .hero-full {
             position: relative;
             width: 100%;
-            height: 80vh;
-            min-height: 500px;
+            height: 100vh; /* 브라우저 높이 100% */
             background: url('healthy_aging.png') no-repeat center center;
             background-size: cover;
             display: flex;
@@ -31,83 +32,114 @@
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.2); /* 이미지 가독성을 위한 오버레이 */
+            background: rgba(0, 0, 0, 0.25); /* 가독성을 위한 레이어 */
         }
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 900px;
-            padding: 0 20px;
+            max-width: 1000px;
+            padding: 0 2rem;
         }
         .hero-content h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-family: 'Cardo', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
-        
-        /* 기기 및 모바일 앱 통합 섹션 */
-        .system-display {
-            padding: 4rem 0;
+        .hero-content p {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* 2. 하드웨어 및 모바일 통합 전시 섹션 */
+        .system-showcase {
+            padding: 6rem 0;
             background: #fff;
-            text-align: center;
         }
-        .system-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 2rem;
+        .system-container {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-top: 3rem;
+            gap: 4rem;
         }
-        .system-grid img {
+        .system-main-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: end;
+        }
+        .system-main-visual img {
             width: 100%;
             height: auto;
             border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .label-text {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            color: #111;
+            font-size: 1.1rem;
+            text-align: center;
         }
 
-        /* YouTube 섹션 */
-        .video-highlight {
+        /* 3. YouTube 섹션 */
+        .video-section {
             background: #f8fafc;
-            padding: 5rem 0;
+            padding: 6rem 0;
+            text-align: center;
         }
-        .video-container {
+        .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 56.25%; /* 16:9 비율 */
             height: 0; overflow: hidden;
             max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 3rem auto 0;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
         }
-        .video-container iframe {
+        .video-wrapper iframe {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* Trusted 섹션 */
+        /* 4. Trusted by (Evidence 연결) */
         .trusted-evidence {
-            padding: 5rem 0;
+            padding: 8rem 0;
             text-align: center;
             background: #fff;
         }
-        .trusted-evidence h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
-        .trusted-evidence p { max-width: 700px; margin: 0 auto 2rem; color: #555; font-size: 1.1rem; }
+        .trusted-evidence h2 {
+            font-family: 'Cardo', serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        .trusted-evidence p {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
 
+        /* 반응형 모바일 설정 */
         @media (max-width: 768px) {
-            .system-grid { grid-template-columns: 1fr; }
-            .hero-full { height: 60vh; }
+            .system-main-visual { grid-template-columns: 1fr; }
+            .hero-full { height: 70vh; }
+            .trusted-evidence h2 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="/" class="logo"><img src="andantefit-logo.png" alt="AndanteFit"></a>
+            <a href="index.html" class="logo"><img src="andantefit-logo.png" alt="AndanteFit"></a>
             <nav class="main-nav">
-                <a href="/" class="active">Home</a>
-                <a href="/case-studies/">Case Studies</a>
-                <a href="/clients/">Clients</a>
-                <a href="/evidence/">Evidence</a>
+                <a href="index.html" class="active">Home</a>
+                <a href="case-studies/index.html">Case Studies</a>
+                <a href="clients/index.html">Clients</a>
+                <a href="evidence/index.html">Evidence</a>
                 <a href="#contact">Contact</a>
             </nav>
         </div>
@@ -118,30 +150,33 @@
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1>The next-generation physical performance assessment tool for frailty and sarcopenia</h1>
-                <p>Advanced LiDAR technology meets clinical excellence.</p>
+                <p>Advanced LiDAR technology meets clinical excellence for healthy aging.</p>
             </div>
         </section>
 
-        <section class="system-display">
+        <section class="system-showcase">
             <div class="container">
-                <div class="system-grid">
-                    <div class="hardware-box">
-                        <img src="andantefit.jpg" alt="AndanteFit LiDAR System">
-                        <p style="margin-top: 1rem; font-weight: 600;">LiDAR-Based Precision Hardware</p>
-                    </div>
-                    <div class="mobile-box">
-                        <img src="andantefit_mobile.jpg" alt="AndanteFit Mobile Application">
-                        <p style="margin-top: 1rem; font-weight: 600;">Intuitive Mobile Interface</p>
+                <div class="system-container">
+                    <h2 style="font-family: 'Cardo'; font-size: 2.5rem; text-align: center;">Unified Digital Assessment System</h2>
+                    <div class="system-main-visual">
+                        <div>
+                            <img src="andantefit.jpg" alt="AndanteFit LiDAR System">
+                            <p class="label-text">LiDAR-Based Precision Hardware</p>
+                        </div>
+                        <div>
+                            <img src="andantefit_mobile.jpg" alt="AndanteFit Mobile App">
+                            <p class="label-text">Intuitive Mobile Interface</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="video-highlight">
+        <section class="video-section">
             <div class="container">
-                <h2 style="text-align: center; margin-bottom: 3rem; font-family: 'Cardo';">Fully automated, ensuring high inter-rater reliability</h2>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/KAc9MQzz4LA?autoplay=0&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h2 style="font-family: 'Cardo'; font-size: 2.2rem;">Fully automated, ensuring high inter-rater reliability</h2>
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/KAc9MQzz4LA?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
@@ -149,36 +184,41 @@
         <section class="trusted-evidence">
             <div class="container">
                 <h2>Trusted by geriatric societies worldwide</h2>
-                <p>Validated through peer-reviewed studies with the participation of Jack Guralnik and Alfonso Cruz-Jentoft. Its reliability is supported by multiple SCI-indexed publications.</p>
-                <a href="/evidence/" class="btn-primary" style="padding: 1.2rem 3rem; border-radius: 50px;">See Publication List</a>
+                <p>Validated through peer-reviewed studies with the participation of <strong>Jack Guralnik</strong> and <strong>Alfonso Cruz-Jentoft</strong>. Our reliability is anchored in continuous R&D and SCI-indexed publications.</p>
+                <a href="evidence/index.html" class="btn-primary" style="padding: 1.25rem 4rem; border-radius: 50px; font-size: 1.1rem; letter-spacing: 1px;">SEE PUBLICATION LIST</a>
             </div>
         </section>
 
-        <section class="timeline-section" style="padding: 5rem 0; background: #f1f5f9;">
-            <div class="container text-center">
-                <h2 style="font-size: 2.5rem; font-style: italic; font-family: 'Cardo';">Since 2018</h2>
-                <p style="max-width: 800px; margin: 1.5rem auto;">AndanteFit has been provided to support frailty prevention among older adults in community settings. As part of our social responsibility initiatives, demo units are also available for community services and research purposes.</p>
+        <section class="timeline-section" style="padding: 6rem 0; background: #f1f5f9; text-align: center;">
+            <div class="container">
+                <h2 style="font-family: 'Cardo'; font-size: 3rem; font-style: italic; margin-bottom: 2rem;">Since 2018</h2>
+                <p style="max-width: 850px; margin: 0 auto; color: #444; line-height: 1.8; font-size: 1.1rem;">
+                    AndanteFit has been dedicated to supporting frailty prevention for older adults. 
+                    As part of our social responsibility, we provide demo units for community services and academic research purposes globally.
+                </p>
             </div>
         </section>
     </main>
 
     <footer class="site-footer" id="contact">
         <div class="container">
-            <div class="footer-content" style="text-align: left; width: 100%;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem;">Contact Us</h2>
-                <div style="display: flex; gap: 4rem; flex-wrap: wrap;">
-                    <div>
-                        <p style="font-weight: bold; color: #aaa; text-transform: uppercase; font-size: 0.8rem;">E-mail</p>
-                        <a href="mailto:snm@dyphi.com" style="color: white; text-decoration: none; font-size: 1.2rem;">snm@dyphi.com</a>
-                    </div>
-                    <div>
-                        <p style="font-weight: bold; color: #aaa; text-transform: uppercase; font-size: 0.8rem;">Social</p>
-                        <a href="https://medium.com/andantefit" style="color: white; margin-right: 15px;">Medium</a>
-                        <a href="https://x.com/AndanteFit" style="color: white;">X (Twitter)</a>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: left; width: 100%;">
+                <div>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem; color: white;">Contact Us</h2>
+                    <p style="color: #aaa; text-transform: uppercase; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.5rem;">E-mail</p>
+                    <a href="mailto:snm@dyphi.com" style="color: white; text-decoration: none; font-size: 1.2rem;">snm@dyphi.com</a>
+                </div>
+                <div>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem; color: white;">Follow Us</h2>
+                    <div style="display: flex; gap: 1.5rem;">
+                        <a href="https://medium.com/andantefit" style="color: white; text-decoration: underline;">Medium</a>
+                        <a href="https://x.com/AndanteFit" style="color: white; text-decoration: underline;">X (Twitter)</a>
                     </div>
                 </div>
             </div>
-            <p style="margin-top: 4rem; border-top: 1px solid #333; pt: 2rem; width: 100%; text-align: center;">&copy; 2026 DYPHI Inc. All Rights Reserved.</p>
+            <div style="margin-top: 5rem; pt: 2rem; border-top: 1px solid #333; width: 100%; opacity: 0.5;">
+                <p style="font-size: 0.8rem;">&copy; 2026 DYPHI Inc. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
 </body>

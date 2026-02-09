@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>연구 브리프: PRO–SPPB 공통의 해석 기준 마련</title>
+  <title>연구 브리프: PRO–SPPB 공통의 해석 기준 마련 | AndanteFit</title>
+
+  <link rel="stylesheet" href="../css/style.css">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -36,12 +38,6 @@
     .section-padding { padding: 6rem 1.25rem; }
     .text-deep { color: var(--brand-deep); }
     .text-mint { color: var(--brand-mint); }
-    
-    .glass-nav {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
 
     .card {
       background: var(--card);
@@ -105,30 +101,41 @@
 
 <body class="antialiased">
 
-  <nav class="glass-nav border-b border-slate-200 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="flex justify-between h-18 items-center py-4">
-        <div class="flex items-center space-x-3">
-          <span class="text-deep font-poppins font-extrabold text-2xl tracking-tight">AndanteFit</span>
-          <span class="text-slate-300 w-px h-4 bg-slate-300"></span>
-          <span class="text-slate-500 text-xs font-bold uppercase tracking-[0.2em]">Research Brief</span>
-        </div>
-      </div>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/andantefit-logo.png" alt="AndanteFit">
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../product.html" class="nav-link">Product</a></li>
+        <li><a href="../validation.html" class="nav-link">Validation</a></li>
+        <li><a href="../case-studies.html" class="nav-link active">Case Studies</a></li>
+        <li><a href="../references.html" class="nav-link">References</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
     </div>
   </nav>
 
-  <header id="overview" class="bg-white hero-gradient border-b border-slate-100 overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 py-20 lg:py-32 relative">
+  <header style="background: #FFFFFF; padding: 60px 20px; text-align: center; border-bottom: 2px solid #E2E8F0;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <span class="section-label">Research Brief</span>
+      <h1 style="font-size: 2.5rem; color: #0F172A; margin-top: 15px; font-weight: 800; line-height: 1.2;">
+        자기보고 기반 신체기능(PRO)과 SPPB 수행 결과를,<br class="hidden md:block"> 하나의 공통 척도(T-score)에서 비교 해석
+      </h1>
+      <div style="color: #64748B; font-size: 0.875rem; margin-top: 10px;">February 08, 2026 · DYPHI Research Team</div>
+    </div>
+  </header>
+
+  <section id="overview" class="bg-white hero-gradient border-b border-slate-100 overflow-hidden" style="padding: 40px 0;">
+    <div class="max-w-6xl mx-auto px-6 relative">
       <div class="max-w-4xl relative z-10">
         <span class="badge mb-8">
           <i class="fa-solid fa-shield-halved"></i>
           자기보고의 표준화 연결
         </span>
-
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.15] tracking-tight">
-          자기보고 기반 신체기능(PRO)과 <br class="hidden md:block">
-          SPPB 수행 결과를, 하나의 공통 척도(T-score)에서 비교해 해석할 수 있습니다.
-        </h1>
 
         <div class="mt-10 space-y-6 text-lg md:text-xl text-slate-600 leading-relaxed font-light">
           <p>
@@ -164,7 +171,7 @@
         </div>
       </div>
     </div>
-  </header>
+  </section>
 
   <section id="linking" class="section-padding">
     <div class="max-w-6xl mx-auto px-6">
@@ -201,26 +208,24 @@
             </div>
           </div>
 
-        <div class="lg:col-span-2 flex flex-col items-center justify-center gap-3">
-  <div class="arrow" aria-hidden="true">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M5 12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-
-  <div class="text-center px-3">
-    <div class="text-slate-900 font-bold">공통 척도로 연결</div>
-    <div class="text-xs text-slate-600 mt-1">T-score 기준에서 상호 비교</div>
-  </div>
-
-  <div class="arrow" aria-hidden="true">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="transform: rotate(180deg);">
-      <path d="M5 12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
+          <div class="lg:col-span-2 flex flex-col items-center justify-center gap-3">
+            <div class="arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="text-center px-3">
+              <div class="text-slate-900 font-bold">공통 척도로 연결</div>
+              <div class="text-xs text-slate-600 mt-1">T-score 기준에서 상호 비교</div>
+            </div>
+            <div class="arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="transform: rotate(180deg);">
+                <path d="M5 12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
 
           <div class="lg:col-span-4 card p-8 lift border-slate-100 bg-slate-50/50">
             <div class="flex items-center gap-4 mb-6">
@@ -338,7 +343,6 @@
                   <div id="levelOut" class="text-xs text-slate-500 uppercase mt-1">Below average</div>
                 </div>
                 <div class="sm:col-span-2 card p-6 bg-slate-900 text-white border-none shadow-lg">
-                  
                   <p id="reportOut" class="text-md font-medium leading-relaxed">
                     SPPB 9점은 T-score 40.0 수준으로, 평균보다 낮은 기능 수준으로 해석할 수 있습니다.
                   </p>
@@ -351,69 +355,71 @@
     </div>
   </section>
 
-<footer id="references" class="bg-deep2 text-white py-24" style="background: var(--brand-deep-2);">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-      <div class="lg:col-span-4">
-        <div class="text-mint font-black text-3xl font-poppins mb-8 tracking-tighter">AndanteFit</div>
-        <p class="text-slate-200/90 text-sm leading-[1.8] font-light">
-          본 연구에서 제시된 SPPB–PROMIS Physical Function T-score 연결 개념은, AndanteFit이 지향하는 표준화된 신체기능 평가 방향성과 맞닿아 있습니다. AndanteFit은 SPPB 표준 프로토콜을 준수하는 전자동 신체기능평가 도구로, 검사자 간 신뢰도를 제고하고 연속적이고 일관된 수행 데이터 획득을 가능하게 합니다.
-        </p>
+  <section class="section-padding bg-slate-100/30">
+    <div class="max-w-6xl mx-auto px-6">
+      <h3 class="text-xl font-bold mb-8">Selected References</h3>
+      <ul class="space-y-6">
+        <li class="group">
+          <div class="text-mint font-bold text-xs mb-1 opacity-90">Primary Source</div>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Liegl, et al. (2026). Bridging patient-reported outcomes and performance assessments in older adults: linking the Short Physical Performance Battery to the standardised PROMIS Physical Function scale. <em>Age and Ageing</em>.
+            <br><a href="https://doi.org/10.1093/ageing/afaf375" target="_blank" rel="noopener noreferrer" class="text-mint underline underline-offset-2">https://doi.org/10.1093/ageing/afaf375</a>
+          </p>
+        </li>
+        <li>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Cella, D., et al. (2010). The Patient-Reported Outcomes Measurement Information System (PROMIS). Journal of Clinical Epidemiology.
+          </p>
+        </li>
+        <li>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Guralnik, J. M., et al. (1994). A short physical performance battery assessing lower extremity function. Journal of Gerontology.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>AndanteFit</h4>
+          <p>
+            Developed and provided by DYPHI Inc.<br>
+            Automated physical performance assessment for frailty and sarcopenia research.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <p>
+            <a href="../product.html">Product</a><br>
+            <a href="../validation.html">Validation</a><br>
+            <a href="../case-studies.html">Case Studies</a><br>
+            <a href="../references.html">References</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>
+            Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br>
+            Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br>
+            Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu
+          </p>
+        </div>
       </div>
 
-      <div class="lg:col-span-8">
-        <h4 class="text-xs font-black mb-8 text-white uppercase tracking-[0.4em] flex items-center gap-4">
-          Selected References
-          <span class="flex-1 h-px bg-white/20"></span>
-        </h4>
-
-        <ul class="space-y-6">
-     <li class="group">
-  <div class="text-mint font-bold text-xs mb-1 opacity-90">Primary Source</div>
-  <p class="text-slate-100 text-sm leading-relaxed group-hover:text-white transition-colors">
-    Liegl, et al. (2026).<br/>
-    Bridging patient-reported outcomes and performance assessments in older adults:
-    linking the Short Physical Performance Battery to the standardised PROMIS Physical Function scale.
-    <em>Age and Ageing</em>.<br/>
-    <a
-      href="https://doi.org/10.1093/ageing/afaf375"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-mint underline underline-offset-2 hover:text-white transition-colors"
-    >
-      https://doi.org/10.1093/ageing/afaf375
-    </a>
-  </p>
-</li>
-
-
-          <li>
-            <p class="text-slate-200/80 text-sm leading-relaxed">
-              Cella, D., et al. (2010). The Patient-Reported Outcomes Measurement Information System (PROMIS). Journal of Clinical Epidemiology.
-            </p>
-          </li>
-
-          <li>
-            <p class="text-slate-200/80 text-sm leading-relaxed">
-              Guralnik, J. M., et al. (1994). A short physical performance battery assessing lower extremity function. Journal of Gerontology.
-            </p>
-          </li>
-        </ul>
-
-        <p class="mt-8 text-[11px] text-slate-200/70">
-          본 브리프의 자세한 내용과 수치는 원문(Liegl et al., 2026)을 참고하시기 바랍니다.
-        </p>
+      <div class="footer-bottom">
+        © 2026 DYPHI Inc. All Rights Reserved.
       </div>
     </div>
+  </footer>
 
-    <div class="mt-20 pt-8 border-t border-white/10 text-center text-slate-200/60 text-[10px] tracking-[0.3em] uppercase">
-      © 2026 AndanteFit | Research Brief
-    </div>
-  </div>
-</footer>
-
-
+  <script src="../js/main.js"></script>
   <script>
+    // 기존 시뮬레이션 스크립트 유지
     const mapping = [
       { sppb: 0, t: 25.0 },
       { sppb: 4, t: 33.0 },

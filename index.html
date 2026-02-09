@@ -10,82 +10,188 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  </head>
+</head>
+
 <body>
 <header class="site-header" role="banner">
-  <div class="container header-row">
-    <a class="logo" href="/">
+  <div class="header-row">
+    <a class="logo" href="./">
       <img src="img/andantefit-logo-black.png" alt="AndanteFit" />
       <span class="logo-text">AndanteFit</span>
     </a>
-    <button class="nav-toggle" type="button" aria-label="Open menu">Menu</button>
-    <nav class="main-nav">
-      <a href="/" class="active">Product</a>
+
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a href="./" class="active">Product</a>
       <a href="case-studies/">Case Studies</a>
       <a href="clients/">References</a>
       <a href="evidence/">Evidence</a>
       <a href="#contact">Contact</a>
-      <a class="btn btn-primary" style="margin-left:10px" href="#contact">Request demo</a>
+      <a class="btn btn-primary" href="#contact">Request demo</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <section class="section" style="background: radial-gradient(circle at 90% 10%, #e8f9f8 0%, transparent 40%);">
-    <div class="container" style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:40px; align-items:center;">
+  <section class="section hero">
+    <div class="container hero-grid">
       <div>
-        <div class="kicker">Automated SPPB platform</div>
-        <h1 class="h1">Standardized physical performance assessment</h1>
-        <p class="lead" style="margin-inline:0">AndanteFit operationalizes the Short Physical Performance Battery (SPPB) for clinical workflows with automated capture of gait speed, chair stand, and balance.</p>
-        <div style="margin-top:30px; display:flex; gap:12px">
-          <a class="btn btn-primary" href="mailto:contact@andantefit.info">Request a demo</a>
-          <a class="btn btn-ghost" href="evidence/">View publications</a>
+        <div class="kicker"><span class="dot" aria-hidden="true"></span>Automated SPPB platform</div>
+        <h1 class="h1">Standardized physical performance assessment, ready for real-world use</h1>
+        <p class="lead">
+          AndanteFit operationalizes the Short Physical Performance Battery (SPPB) for clinical workflows and research protocols,
+          with automated capture of gait speed, five-times sit-to-stand, and balance.
+        </p>
+
+        <ul class="heroPoints" aria-label="Key highlights">
+          <li><span class="tick" aria-hidden="true">✓</span><span>Automated capture and scoring aligned to the protocol.</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span>Designed for non-specialist operation in real settings.</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span>Improves repeatability by reducing inter-rater variability.</span></li>
+        </ul>
+
+        <div class="heroActions">
+          <a class="btn btn-primary" href="evidence/">Open evidence</a>
+          <a class="btn btn-ghost" href="case-studies/">How it works</a>
         </div>
       </div>
-      <div class="card" style="padding:0; overflow:hidden; border-radius:24px;">
-        <img src="img/andantefit.jpg" alt="AndanteFit setup" style="width:100%; height:auto;">
+
+      <div class="heroCard">
+        <div class="heroMedia">
+          <img src="img/andantefit.jpg" alt="AndanteFit device and setup" loading="eager" />
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="contact" style="background: var(--surface);">
+  <section class="section alt">
     <div class="container">
-      <div class="section-head">
-        <h2 class="h2">Contact</h2>
-        <p class="lead">워크플로우 도입 문의나 기술 자료가 필요하시면 연락해 주세요.</p>
-      </div>
-      <div class="grid">
-        <div class="card col-6">
-          <h3>Email</h3>
-          <p><a href="mailto:contact@andantefit.info" class="text-brand" style="color:var(--brand); font-weight:600">contact@andantefit.info</a></p>
+      <h2 class="sectionTitle">Designed for repeatable measurement</h2>
+      <p class="sectionDesc">
+        When programs scale to multiple sites and multiple assessors, measurement consistency becomes a primary risk.
+        AndanteFit is built to standardize timing, instructions, and sensor capture.
+      </p>
+
+      <div class="grid3">
+        <div class="card">
+          <h3 class="cardTitle">SPPB automation</h3>
+          <p class="cardDesc">Guided administration for gait speed, chair stand, and balance with automated capture.</p>
         </div>
-        <div class="card col-6">
-          <h3>Resources</h3>
-          <div style="display:flex; gap:20px; margin-top:10px">
-            <a href="case-studies/">Case studies</a>
-            <a href="evidence/">Evidence</a>
-            <a href="clients/">References</a>
-          </div>
+        <div class="card">
+          <h3 class="cardTitle">High-throughput workflow</h3>
+          <p class="cardDesc">Optimized for screening, baseline characterization, and repeated follow-up assessments.</p>
+        </div>
+        <div class="card">
+          <h3 class="cardTitle">Research-grade outputs</h3>
+          <p class="cardDesc">Exports structured data to support cohorts, trials, and implementation programs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="sectionTitle">A practical protocol, from check-in to reporting</h2>
+      <p class="sectionDesc">
+        A simple flow that supports consistent administration across clinics, community settings, and research sites.
+      </p>
+
+      <div class="steps" aria-label="Workflow steps">
+        <div class="step">
+          <div class="stepTitle">Select assessment</div>
+          <p class="stepDesc">Choose SPPB modules (optional add-ons per site workflow).</p>
+        </div>
+        <div class="step">
+          <div class="stepTitle">On-screen guidance</div>
+          <p class="stepDesc">Standardizes instructions and timing for repeatable administration.</p>
+        </div>
+        <div class="step">
+          <div class="stepTitle">Automated capture</div>
+          <p class="stepDesc">Sensors capture performance and generate outputs aligned to the protocol.</p>
+        </div>
+        <div class="step">
+          <div class="stepTitle">Use results</div>
+          <p class="stepDesc">Supports screening, stratification, and longitudinal outcome tracking.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:18px">
+        <span class="badge">Tip: If you need a short one-page brief to forward, see Case Studies.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container split">
+      <div>
+        <h2 class="sectionTitle">Validation anchored in the SPPB community</h2>
+        <p class="sectionDesc">
+          AndanteFit is an example of an automated system designed to operationalize the SPPB in clinical and research settings.
+          Its validation involved Dr. Jack Guralnik, who originally developed the SPPB during his work at the U.S. National Institutes of Health.
+          In addition, Professor Alfonso Cruz-Jentoft and colleagues from the Global Leadership Initiative on Sarcopenia (GLIS) participated in the validation process,
+          supporting its applicability in studies involving older adults.
+        </p>
+
+        <div class="heroActions">
+          <a class="btn btn-primary" href="evidence/">View publication list</a>
+          <a class="btn btn-ghost" href="clients/">See reference sites</a>
+        </div>
+      </div>
+
+      <div class="mediaFrame" aria-label="Illustration image">
+        <img src="img/healthy_aging.png" alt="Healthy aging illustration" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="sectionTitle">Contact</h2>
+      <p class="sectionDesc">
+        If you are planning a cohort, trial, or implementation program using physical performance outcomes, we can share a short technical overview and workflow fit.
+      </p>
+
+      <div class="grid3" style="grid-template-columns: 1.2fr .8fr .8fr;">
+        <div class="card">
+          <h3 class="cardTitle">Email</h3>
+          <p class="cardDesc">contact@andantefit.info</p>
+          <p class="cardDesc" style="margin-top:10px">Include your study or program context and preferred dates for a demo.</p>
+        </div>
+        <div class="card">
+          <h3 class="cardTitle">Materials</h3>
+          <p class="cardDesc"><a href="case-studies/">Case studies</a></p>
+          <p class="cardDesc"><a href="evidence/">Evidence & publication list</a></p>
+        </div>
+        <div class="card">
+          <h3 class="cardTitle">Pages</h3>
+          <p class="cardDesc"><a href="clients/">References</a></p>
+          <p class="cardDesc"><a href="case-studies/">How it works</a></p>
         </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="site-footer">
+<footer class="footer" role="contentinfo">
   <div class="container footer-grid">
     <div>
-      <div class="logo-text" style="color:var(--brand-deep); font-weight:800; margin-bottom:10px">AndanteFit</div>
-      <p class="muted" style="font-size:14px">© 2026 AndanteFit. Automated physical performance assessment.</p>
+      <div class="logo" style="gap:10px">
+        <img src="img/andantefit-logo-black.png" alt="AndanteFit" />
+        <span class="logo-text">AndanteFit</span>
+      </div>
+      <small>Automated physical performance assessment for clinical workflows and research.</small>
+      <small>© 2026 AndanteFit. All rights reserved.</small>
     </div>
-    <nav class="footer-links">
+    <div class="footerLinks" aria-label="Footer links">
+      <a href="./">Product</a>
       <a href="case-studies/">Case Studies</a>
       <a href="clients/">References</a>
       <a href="evidence/">Evidence</a>
-      <a href="mailto:contact@andantefit.info">Email</a>
-    </nav>
+      <a href="#contact">Contact</a>
+    </div>
   </div>
 </footer>
-<script src="js/site.js"></script>
+
+<script src="js/site.js" defer></script>
 </body>
 </html>

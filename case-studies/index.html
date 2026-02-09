@@ -3,48 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Case Studies | AndanteFit</title>
-  <meta name="description" content="Research briefs and implementation notes related to SPPB automation and digital assessment workflows." />
+  <title>AndanteFit | Case Studies</title>
+  <meta name="description" content="Practical briefs and examples you can forward to collaborators." />
   <link rel="icon" href="../img/favicon_1024px.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cardo:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MH5P9YQQN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} 
-    gtag('js', new Date());
-    gtag('config', 'G-3MH5P9YQQN');
-  </script>
 </head>
 <body>
+<header class="site-header" role="banner">
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="container header-row">
+    <a class="logo" href="../">
+      <img src="../img/andantefit-logo.png" alt="AndanteFit" />
+      <span class="logo-text" aria-hidden="true">AndanteFit</span>
+    </a>
 
-  <header class="site-header" role="banner">
-    <div class="container header-inner">
-      <a class="brand" href="../">
-        <img class="brand-logo" src="../img/andantefit-logo.png" alt="AndanteFit" />
-      </a>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+      Menu
+    </button>
 
-      <nav class="nav" aria-label="Primary">
-        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-          <span class="nav-toggle-bar" aria-hidden="true"></span>
-        </button>
-        <div class="nav-panel" data-nav-panel>
-          <a class="nav-link" href="../">Product</a>
-          <a class="nav-link active" href="./">Case Studies</a>
-          <a class="nav-link" href="../clients/">Clients</a>
-          <a class="nav-link" href="../evidence/">Evidence</a>
-          <a class="nav-link" href="../#contact">Contact</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main" class="section">
+    <nav class="main-nav" aria-label="Primary">
+      <a href="../" class="">Product</a>
+      <a href="../case-studies/" class="active">Case Studies</a>
+      <a href="../clients/" class="">Clients</a>
+      <a href="../evidence/" class="">Evidence</a>
+      <a href="../../#contact" class="">Contact</a>
+      <a class="btn btn-primary nav-cta" href="mailto:contact@andantefit.info">Request demo</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="section">
     <div class="container">
       <div class="section-head">
         <h1 class="h1">Case studies</h1>
@@ -79,31 +69,21 @@
       </div>
     </div>
   </main>
-
-  <footer class="footer" role="contentinfo">
-    <div class="container footer-inner">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-title">AndanteFit</div>
-          <div class="footer-sub">Automated physical performance assessment</div>
-        </div>
-        <div>
-          <div class="footer-title">Pages</div>
-          <a class="footer-link" href="../">Product</a>
-          <a class="footer-link" href="../evidence/">Evidence</a>
-          <a class="footer-link" href="../clients/">Clients</a>
-        </div>
-        <div>
-          <div class="footer-title">Contact</div>
-          <div class="footer-sub">For demos, protocols, or research collaboration</div>
-          <a class="footer-link" href="../#contact">Contact form</a>
-        </div>
-      </div>
-      <div class="footer-bottom">© <span id="y"></span> AndanteFit</div>
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="kicker">AndanteFit</div>
+      <p>Automated physical performance assessment for clinical workflows and research protocols.</p>
+      <p class="muted">© 2026 AndanteFit</p>
     </div>
-    <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
-  </footer>
-
-  <script src="../js/site.js"></script>
+    <div class="footer-links">
+      <a href="../case-studies/">Case studies</a>
+      <a href="../clients/">Clients</a>
+      <a href="../evidence/">Evidence</a>
+      <a href="mailto:contact@andantefit.info">Email</a>
+    </div>
+  </div>
+</footer>
+<script src="../js/site.js"></script>
 </body>
 </html>

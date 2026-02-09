@@ -1,97 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Studies - AndanteFit</title>
-    <link rel="icon" href="/favicon_1024px.png">
-    <link rel="stylesheet" href="/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MH5P9YQQN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3MH5P9YQQN');
-    </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Studies | AndanteFit</title>
+  <meta name="description" content="Research briefs and implementation notes related to SPPB automation and digital assessment workflows." />
+  <link rel="icon" href="../img/favicon_1024px.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cardo:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MH5P9YQQN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-3MH5P9YQQN');
+  </script>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="/" class="logo">
-                <img src="/andantefit-logo.png" alt="AndanteFit">
-            </a>
-            <nav class="main-nav">
-                <a href="/">Home</a>
-                <a href="/case-studies/" class="active">Case Studies</a>
-                <a href="/clients/">Clients</a>
-                <a href="/evidence/">Evidence</a>
-                <a href="#contact">Contact</a>
-            </nav>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../">
+        <img class="brand-logo" src="../img/andantefit-logo.png" alt="AndanteFit" />
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+        <div class="nav-panel" data-nav-panel>
+          <a class="nav-link" href="../">Product</a>
+          <a class="nav-link active" href="./">Case Studies</a>
+          <a class="nav-link" href="../clients/">Clients</a>
+          <a class="nav-link" href="../evidence/">Evidence</a>
+          <a class="nav-link" href="../#contact">Contact</a>
         </div>
-    </header>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Case Studies</h1>
-                <p>Real-world applications of AndanteFit technology in healthcare and research</p>
-            </div>
-        </section>
+  <main id="main" class="section">
+    <div class="container">
+      <div class="section-head">
+        <h1 class="h1">Case studies</h1>
+        <p class="sub">Short, practical briefs that connect measurement standardization to real-world research and implementation needs.</p>
+      </div>
 
-        <section class="case-studies-list" style="padding: 4rem 0;">
-            <div class="container" style="max-width: 900px;">
-                
-                <article class="case-brief-card" style="margin-bottom: 4rem;">
-                    <h2 style="font-family: var(--font-heading); color: var(--color-primary); margin-bottom: 1rem;">
-                        PROMIS PF와 SPPB를 하나의 척도(T-score)로 연결
-                    </h2>
-                    <p style="line-height: 1.8; color: var(--color-secondary); margin-bottom: 1.5rem;">
-                        독일 샤리테 의과대학 연구진은 자기보고(PRO)와 수행 기반 평가를 동일한 언어로 해석할 수 있는 표준화된 근거를 제시했습니다. 
-                        특히 SPPB 9점이 평균보다 낮은 기능 상태(T-score 약 40)임을 명확히 규명하여 임상적 활용도를 높였습니다. 
-                        본 브리프에서는 해당 연구의 핵심 요약과 점수 변환 시뮬레이션을 제공합니다.
-                    </p>
-                    <a href="/case-studies/pro-sppb.html" class="btn-primary">Read Research Brief →</a>
-                </article>
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-title">Automating the SPPB</div>
+          <div class="card-body">Why standardized capture matters, and how automation supports reliability and scale.</div>
+          <div class="spacer"></div>
+          <a class="btn btn-secondary" href="pro-sppb.html">Read brief</a>
+        </article>
 
-                <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 4rem;">
+        <article class="card">
+          <div class="card-title">Digital care implementation</div>
+          <div class="card-body">Operational notes for integrating standardized assessment into a service workflow.</div>
+          <div class="spacer"></div>
+          <a class="btn btn-secondary" href="digital-care.html">Open article</a>
+        </article>
 
-                <article class="case-brief-card" style="margin-bottom: 4rem;">
-                    <h2 style="font-family: var(--font-heading); color: var(--color-primary); margin-bottom: 1rem;">
-                        디지털 기반 통합돌봄의 시작, ‘신체기능’이라는 공통언어 구축부터
-                    </h2>
-                    <p style="line-height: 1.8; color: var(--color-secondary); margin-bottom: 1.5rem;">
-                        단순한 장비 보급을 넘어 ‘측정-분석-개입-재평가’의 선순환 구조를 제안합니다. 
-                        SPPB를 어르신·실무자·정책 입안자의 공통 언어로 설정하여, 데이터 중심의 맞춤형 서비스를 실현하고 새로운 AI 기술 도입의 명분과 연속성을 확보하는 강력한 플랫폼 구축 방향을 정리했습니다.
-                    </p>
-                    <a href="/case-studies/digital-care.html" class="btn-primary">View Implementation Strategy →</a>
-                </article>
+        <article class="card">
+          <div class="card-title">Occupational health report</div>
+          <div class="card-body">Example of structured reporting for monitoring functional status over time.</div>
+          <div class="spacer"></div>
+          <a class="btn btn-secondary" href="sppb-occupational-health.html">View report</a>
+        </article>
+      </div>
 
-                <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 4rem;">
+      <div class="section" style="padding:0; margin-top: 24px;">
+        <div class="note">These pages are designed as lightweight, linkable resources. If you need a study-specific protocol appendix or data dictionary, use the Contact section on the product page.</div>
+      </div>
+    </div>
+  </main>
 
-                <article class="case-brief-card">
-                    <h2 style="font-family: var(--font-heading); color: var(--color-primary); margin-bottom: 1rem;">
-                        SPPB Utilization in Occupational Health: 초고령사회 지속 가능한 근로 환경 구축
-                    </h2>
-                    <p style="line-height: 1.8; color: var(--color-secondary); margin-bottom: 1.5rem;">
-                        질병 진단을 넘어 ‘기능적 위험’을 파악하는 노인의학적 관점의 직장 건강검진 모델입니다. 
-                        고령 근로자의 낙상 위험과 신체적 취약성을 조기에 선별하여 안전 사고를 예방하고, 업무 복귀(RTW) 가능성을 데이터로 예측하는 실제 활용 사례와 임상적 근거를 인터랙티브 리포트로 확인해 보세요.
-                    </p>
-                    <a href="/case-studies/sppb-occupational-health.html" class="btn-primary">Explore Interactive Report →</a>
-                </article>
-
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 DYPHI Inc. All rights reserved.</p>
-            <div class="social-links">
-                <a href="https://x.com/AndanteFit">Twitter</a>
-                <a href="https://medium.com/andantefit">Medium</a>
-            </div>
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">AndanteFit</div>
+          <div class="footer-sub">Automated physical performance assessment</div>
         </div>
-    </footer>
+        <div>
+          <div class="footer-title">Pages</div>
+          <a class="footer-link" href="../">Product</a>
+          <a class="footer-link" href="../evidence/">Evidence</a>
+          <a class="footer-link" href="../clients/">Clients</a>
+        </div>
+        <div>
+          <div class="footer-title">Contact</div>
+          <div class="footer-sub">For demos, protocols, or research collaboration</div>
+          <a class="footer-link" href="../#contact">Contact form</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© <span id="y"></span> AndanteFit</div>
+    </div>
+    <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+  </footer>
+
+  <script src="../js/site.js"></script>
 </body>
 </html>

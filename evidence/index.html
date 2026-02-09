@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evidence - AndanteFit</title>
-    <link rel="icon" href="/favicon_1024px.png">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="../img/favicon_1024px.png">
+    <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MH5P9YQQN"></script>
     <script>
@@ -16,25 +16,37 @@
     </script>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="/" class="logo">
-                <img src="/andantefit-logo.png" alt="AndanteFit">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" role="banner">
+        <div class="container header-inner">
+            <a class="brand" href="../">
+                <img class="brand-logo" src="../img/andantefit-logo.png" alt="AndanteFit">
             </a>
-            <nav class="main-nav">
-                <a href="/">Home</a>
-                <a href="/case-studies/">Case Studies</a>
-                <a href="/clients/">Clients</a>
-                <a href="/evidence/" class="active">Evidence</a>
-                <a href="#contact">Contact</a>
+
+            <nav class="nav" aria-label="Primary">
+                <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
+                    <span class="nav-toggle-bar" aria-hidden="true"></span>
+                    <span class="nav-toggle-bar" aria-hidden="true"></span>
+                    <span class="nav-toggle-bar" aria-hidden="true"></span>
+                </button>
+                <div class="nav-panel" data-nav-panel>
+                    <a class="nav-link" href="../">Product</a>
+                    <a class="nav-link" href="../case-studies/">Case Studies</a>
+                    <a class="nav-link" href="../clients/">Clients</a>
+                    <a href="./" class="nav-link active">Evidence</a>
+                    <a class="nav-link" href="#contact">Contact</a>
+                </div>
             </nav>
         </div>
     </header>
 
-    <main class="container content-wrapper">
-        <section class="evidence-header">
-            <h1 style="text-align: center; margin-bottom: 0.5rem;">AndanteFit Trusted by Geriatric Societies Worldwide</h1>
-            <p style="text-align: center; color: #666; margin-bottom: 3rem;">Key peer-reviewed studies involving SPPB automation and validation</p>
+    <main id="main" class="container content-wrapper">
+        <section class="section" style="padding: 28px 0 6px;">
+            <div class="section-head" style="text-align: center; margin-bottom: 14px;">
+                <h1 class="h2" style="margin: 0;">Evidence and publications</h1>
+                <p class="sub" style="max-width: 820px; margin: 10px auto 0;">Selected peer-reviewed studies related to automated physical performance assessment.</p>
+            </div>
         </section>
 
         <section class="featured-publications">
@@ -44,7 +56,7 @@
                 <div class="af-card-title">Validation of a Multi-Sensor-Based Kiosk for Short Physical Performance Battery <span class="tag">Guralnik included</span></div>
                 <div class="af-card-meta">Journal of the American Geriatrics Society, 2019 (67(12), 2605–2609).</div>
                 <div class="af-authors">Hee-Won Jung, Hyunchul Roh, Younggun Cho, Jinyong Jeong, Young-Sik Shin, Jae-Young Lim, Jack M. Guralnik, Jihong Park.</div>
-                <p class="af-small"><strong>Objective summary:</strong> This study validated a multi-sensor-based kiosk designed to automate standardized administration of SPPB components in older adults, and demonstrated strong agreement with conventional assessments conducted by trained personnel.</p>
+                <p class="af-small"><span class="em">Objective summary:</span> This study validated a multi-sensor-based kiosk designed to automate standardized administration of SPPB components in older adults, and demonstrated strong agreement with conventional assessments conducted by trained personnel.</p>
                 <a href="https://doi.org/10.1111/jgs.16135" class="pub-link" target="_blank">DOI: 10.1111/jgs.16135</a>
             </article>
 
@@ -52,7 +64,7 @@
                 <div class="af-card-title">Functional Age Predicted by Electronic Short Physical Performance Battery Can Detect Frailty Status in Older Adults <span class="tag">Guralnik included</span></div>
                 <div class="af-card-meta">Clinical Interventions in Aging, 2020 (15, 2175–2182).</div>
                 <div class="af-authors">Hee-Won Jung, Taeyang Jin, Ji Yeon Baek, Seongjun Yoon, Eunju Lee, Jack M. Guralnik, Il-Young Jang.</div>
-                <p class="af-small"><strong>Objective summary:</strong> This study proposed a functional age metric derived from electronically captured SPPB data and demonstrated its ability to discriminate frailty status in community-dwelling older adults.</p>
+                <p class="af-small"><span class="em">Objective summary:</span> This study proposed a functional age metric derived from electronically captured SPPB data and demonstrated its ability to discriminate frailty status in community-dwelling older adults.</p>
                 <a href="https://doi.org/10.2147/CIA.S280542" class="pub-link" target="_blank">DOI: 10.2147/CIA.S280542</a>
             </article>
 
@@ -60,7 +72,7 @@
                 <div class="af-card-title">Comparison of Two Electronic Physical Performance Batteries by Measurement Time and Sarcopenia Classification</div>
                 <div class="af-card-meta">Sensors, 2021 (21(15), 5147).</div>
                 <div class="af-authors">Chan Mi Park, Hee-Won Jung, Il-Young Jang, Ji Yeon Baek, Seongjun Yoon, Hyunchul Roh, Eunju Lee.</div>
-                <p class="af-small"><strong>Objective summary:</strong> This study compared two electronic physical performance assessment systems in terms of testing time efficiency and sarcopenia classification, providing evidence on the feasibility of electronic SPPB-based assessments.</p>
+                <p class="af-small"><span class="em">Objective summary:</span> This study compared two electronic physical performance assessment systems in terms of testing time efficiency and sarcopenia classification, providing evidence on the feasibility of electronic SPPB-based assessments.</p>
                 <a href="https://doi.org/10.3390/s21155147" class="pub-link" target="_blank">DOI: 10.3390/s21155147</a>
             </article>
 
@@ -68,7 +80,7 @@
                 <div class="af-card-title">Comparison of Human Interpretation and a Rule-Based Algorithm for Instrumented Sit-to-Stand Test</div>
                 <div class="af-card-meta">Annals of Geriatric Medicine and Research, 2021 (25(2), 86–92).</div>
                 <div class="af-authors">Hee-Won Jung, Seongjun Yoon, Ji Yeon Baek, Eunju Lee, Il-Young Jang, Hyunchul Roh.</div>
-                <p class="af-small"><strong>Objective summary:</strong> This study evaluated agreement between human raters and a rule-based algorithm applied to instrumented sit-to-stand data, supporting algorithm-based interpretation of lower-extremity performance.</p>
+                <p class="af-small"><span class="em">Objective summary:</span> This study evaluated agreement between human raters and a rule-based algorithm applied to instrumented sit-to-stand data, supporting algorithm-based interpretation of lower-extremity performance.</p>
                 <a href="https://doi.org/10.4235/agmr.21.0034" class="pub-link" target="_blank">DOI: 10.4235/agmr.21.0034</a>
             </article>
 
@@ -76,7 +88,7 @@
                 <div class="af-card-title">Development and Validation of 2D-LiDAR-Based Gait Analysis Instrument and Algorithm</div>
                 <div class="af-card-meta">Sensors, 2021 (21, 414).</div>
                 <div class="af-authors">Seongjun Yoon, Hee-Won Jung, Heeyoune Jung, Keewon Kim, Suk-Koo Hong, Hyunchul Roh, Byung-Mo Oh.</div>
-                <p class="af-small"><strong>Objective summary:</strong> This study developed and validated a 2D-LiDAR-based system for automated gait analysis, providing technical foundations for sensor-based gait speed measurement relevant to SPPB.</p>
+                <p class="af-small"><span class="em">Objective summary:</span> This study developed and validated a 2D-LiDAR-based system for automated gait analysis, providing technical foundations for sensor-based gait speed measurement relevant to SPPB.</p>
                 <a href="https://doi.org/10.3390/s21020414" class="pub-link" target="_blank">DOI: 10.3390/s21020414</a>
             </article>
 
@@ -84,7 +96,7 @@
                 <div class="af-card-title">Validation of a Multi-Sensor-Based Kiosk in the Use of the Short Physical Performance Battery in Older Adults Attending a Fall and Balance Clinic</div>
                 <div class="af-card-meta">Annals of Geriatric Medicine and Research, 2022 (26(2), 125–133).</div>
                 <div class="af-authors">Herb Howard C. Hernandez, Eng Hui Ong, Louise Heyzer, Cai Ning Tan, Faezah Ghazali, Daphne Zihui Yang, Hee-Won Jung, Noor Hafizah Ismail, Wee Shiong Lim.</div>
-                <p class="af-small"><strong>Objective summary:</strong> This study validated the clinical usability of a multi-sensor-based SPPB kiosk in a fall and balance clinic setting, supporting its applicability in real-world geriatric assessment workflows.</p>
+                <p class="af-small"><span class="em">Objective summary:</span> This study validated the clinical usability of a multi-sensor-based SPPB kiosk in a fall and balance clinic setting, supporting its applicability in real-world geriatric assessment workflows.</p>
                 <a href="https://doi.org/10.4235/agmr.22.0022" class="pub-link" target="_blank">DOI: 10.4235/agmr.22.0022</a>
             </article>
         </section>
@@ -150,5 +162,6 @@
             </div>
         </div>
     </footer>
+    <script src="../js/site.js" defer></script>
 </body>
 </html>

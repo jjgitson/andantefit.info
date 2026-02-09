@@ -1,225 +1,217 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AndanteFit - Precision Physical Performance Assessment</title>
-    <link rel="icon" href="favicon_1024px.png">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MH5P9YQQN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date()); gtag('config', 'G-3MH5P9YQQN');
-    </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AndanteFit | Automated Physical Performance Assessment</title>
+  <meta name="description" content="AndanteFit is an automated system that operationalizes the SPPB in clinical and research settings, enabling standardized, high-throughput physical performance assessment." />
 
-    <style>
-        /* 1. 화면을 꽉 채우는 Healthy Aging Hero 섹션 */
-        .hero-full {
-            position: relative;
-            width: 100%;
-            height: 100vh; /* 브라우저 높이 100% */
-            background: url('healthy_aging.png') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.25); /* 가독성을 위한 레이어 */
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 1000px;
-            padding: 0 2rem;
-        }
-        .hero-content h1 {
-            font-family: 'Cardo', serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        }
-        .hero-content p {
-            font-size: clamp(1.1rem, 2vw, 1.5rem);
-            font-weight: 300;
-            opacity: 0.9;
-        }
+  <link rel="icon" href="img/favicon_1024px.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cardo:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 
-        /* 2. 하드웨어 및 모바일 통합 전시 섹션 */
-        .system-showcase {
-            padding: 6rem 0;
-            background: #fff;
-        }
-        .system-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4rem;
-        }
-        .system-main-visual {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: end;
-        }
-        .system-main-visual img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .label-text {
-            margin-top: 1.5rem;
-            font-weight: 600;
-            color: #111;
-            font-size: 1.1rem;
-            text-align: center;
-        }
-
-        /* 3. YouTube 섹션 */
-        .video-section {
-            background: #f8fafc;
-            padding: 6rem 0;
-            text-align: center;
-        }
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 비율 */
-            height: 0; overflow: hidden;
-            max-width: 1000px;
-            margin: 3rem auto 0;
-            border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-        }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        /* 4. Trusted by (Evidence 연결) */
-        .trusted-evidence {
-            padding: 8rem 0;
-            text-align: center;
-            background: #fff;
-        }
-        .trusted-evidence h2 {
-            font-family: 'Cardo', serif;
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-        .trusted-evidence p {
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            color: #666;
-            line-height: 1.8;
-            font-size: 1.15rem;
-        }
-
-        /* 반응형 모바일 설정 */
-        @media (max-width: 768px) {
-            .system-main-visual { grid-template-columns: 1fr; }
-            .hero-full { height: 70vh; }
-            .trusted-evidence h2 { font-size: 2rem; }
-        }
-    </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MH5P9YQQN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3MH5P9YQQN');
+  </script>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="index.html" class="logo"><img src="andantefit-logo.png" alt="AndanteFit"></a>
-            <nav class="main-nav">
-                <a href="index.html" class="active">Home</a>
-                <a href="case-studies/index.html">Case Studies</a>
-                <a href="clients/index.html">Clients</a>
-                <a href="evidence/index.html">Evidence</a>
-                <a href="#contact">Contact</a>
-            </nav>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img class="brand-logo" src="img/andantefit-logo.png" alt="AndanteFit" />
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+
+        <div class="nav-panel" data-nav-panel>
+          <a class="nav-link active" href="/">Product</a>
+          <a class="nav-link" href="case-studies/">Case Studies</a>
+          <a class="nav-link" href="clients/">Clients</a>
+          <a class="nav-link" href="evidence/">Evidence</a>
+          <a class="nav-link" href="#contact">Contact</a>
         </div>
-    </header>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <section class="hero-full">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1>The next-generation physical performance assessment tool for frailty and sarcopenia</h1>
-                <p>Advanced LiDAR technology meets clinical excellence for healthy aging.</p>
-            </div>
-        </section>
+  <main id="main">
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <div class="pill">Automated SPPB platform</div>
+          <h1 class="hero-title">Standardize physical performance assessment at scale</h1>
+          <p class="hero-lead">
+            AndanteFit operationalizes the Short Physical Performance Battery (SPPB) for clinical workflows and research protocols,
+            with automated capture of gait speed, five-times sit-to-stand, and balance.
+          </p>
 
-        <section class="system-showcase">
-            <div class="container">
-                <div class="system-container">
-                    <h2 style="font-family: 'Cardo'; font-size: 2.5rem; text-align: center;">Unified Digital Assessment System</h2>
-                    <div class="system-main-visual">
-                        <div>
-                            <img src="andantefit.jpg" alt="AndanteFit LiDAR System">
-                            <p class="label-text">LiDAR-Based Precision Hardware</p>
-                        </div>
-                        <div>
-                            <img src="andantefit_mobile.jpg" alt="AndanteFit Mobile App">
-                            <p class="label-text">Intuitive Mobile Interface</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="evidence/">Publication list</a>
+            <a class="btn btn-secondary" href="#how">How it works</a>
+          </div>
 
-        <section class="video-section">
-            <div class="container">
-                <h2 style="font-family: 'Cardo'; font-size: 2.2rem;">Fully automated, ensuring high inter-rater reliability</h2>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/KAc9MQzz4LA?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+          <div class="hero-metrics" role="list">
+            <div class="metric" role="listitem">
+              <div class="metric-k">SPPB</div>
+              <div class="metric-v">Automated capture and scoring</div>
             </div>
-        </section>
-
-        <section class="trusted-evidence">
-            <div class="container">
-                <h2>Trusted by geriatric societies worldwide</h2>
-                <p>Validated through peer-reviewed studies with the participation of <strong>Jack Guralnik</strong> and <strong>Alfonso Cruz-Jentoft</strong>. Our reliability is anchored in continuous R&D and SCI-indexed publications.</p>
-                <a href="evidence/index.html" class="btn-primary" style="padding: 1.25rem 4rem; border-radius: 50px; font-size: 1.1rem; letter-spacing: 1px;">SEE PUBLICATION LIST</a>
+            <div class="metric" role="listitem">
+              <div class="metric-k">Workflow</div>
+              <div class="metric-v">Designed for non-specialist operation</div>
             </div>
-        </section>
-
-        <section class="timeline-section" style="padding: 6rem 0; background: #f1f5f9; text-align: center;">
-            <div class="container">
-                <h2 style="font-family: 'Cardo'; font-size: 3rem; font-style: italic; margin-bottom: 2rem;">Since 2018</h2>
-                <p style="max-width: 850px; margin: 0 auto; color: #444; line-height: 1.8; font-size: 1.1rem;">
-                    AndanteFit has been dedicated to supporting frailty prevention for older adults. 
-                    As part of our social responsibility, we provide demo units for community services and academic research purposes globally.
-                </p>
+            <div class="metric" role="listitem">
+              <div class="metric-k">Reliability</div>
+              <div class="metric-v">Minimizes inter-rater variability</div>
             </div>
-        </section>
-    </main>
-
-    <footer class="site-footer" id="contact">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: left; width: 100%;">
-                <div>
-                    <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem; color: white;">Contact Us</h2>
-                    <p style="color: #aaa; text-transform: uppercase; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.5rem;">E-mail</p>
-                    <a href="mailto:snm@dyphi.com" style="color: white; text-decoration: none; font-size: 1.2rem;">snm@dyphi.com</a>
-                </div>
-                <div>
-                    <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem; color: white;">Follow Us</h2>
-                    <div style="display: flex; gap: 1.5rem;">
-                        <a href="https://medium.com/andantefit" style="color: white; text-decoration: underline;">Medium</a>
-                        <a href="https://x.com/AndanteFit" style="color: white; text-decoration: underline;">X (Twitter)</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-top: 5rem; pt: 2rem; border-top: 1px solid #333; width: 100%; opacity: 0.5;">
-                <p style="font-size: 0.8rem;">&copy; 2026 DYPHI Inc. All Rights Reserved.</p>
-            </div>
+          </div>
         </div>
-    </footer>
+
+        <div class="hero-visual" aria-label="AndanteFit system preview">
+          <div class="device-grid">
+            <figure class="device-card">
+              <img src="img/andantefit.jpg" alt="AndanteFit automated assessment hardware" loading="lazy" />
+              <figcaption>LiDAR-based measurement hardware</figcaption>
+            </figure>
+            <figure class="device-card">
+              <img src="img/andantefit_mobile.jpg" alt="AndanteFit mobile interface" loading="lazy" />
+              <figcaption>Mobile interface for guided administration</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="h2">Designed for repeatable measurement</h2>
+          <p class="sub">
+            When studies scale to multiple sites and multiple assessors, measurement consistency becomes a primary risk.
+            AndanteFit is built to reduce variation by standardizing timing, instructions, and sensor capture.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-title">SPPB automation</div>
+            <div class="card-body">Guided administration for gait speed, chair stand, and balance with automated capture.</div>
+          </article>
+          <article class="card">
+            <div class="card-title">High-throughput workflow</div>
+            <div class="card-body">Optimized for screening, baseline characterization, and repeated follow-up assessments.</div>
+          </article>
+          <article class="card">
+            <div class="card-title">Research-grade outputs</div>
+            <div class="card-body">Exports structured data to support cohort studies, trials, and implementation programs.</div>
+          </article>
+        </div>
+
+        <div class="split">
+          <div class="split-copy">
+            <h3 class="h3">A practical protocol, from check-in to reporting</h3>
+            <ol class="steps">
+              <li><span class="step-k">1</span><span class="step-v">Select assessment (SPPB modules; optional add-ons per site workflow).</span></li>
+              <li><span class="step-k">2</span><span class="step-v">On-screen guidance standardizes instructions and timing.</span></li>
+              <li><span class="step-k">3</span><span class="step-v">Sensors capture performance and generate outputs aligned to the protocol.</span></li>
+              <li><span class="step-k">4</span><span class="step-v">Results can be used for screening, stratification, and longitudinal outcome tracking.</span></li>
+            </ol>
+          </div>
+
+          <div class="split-media">
+            <div class="video-card">
+              <div class="video-top">Demo</div>
+              <div class="video-wrapper">
+                <iframe
+                  src="https://www.youtube.com/embed/KAc9MQzz4LA?rel=0"
+                  title="AndanteFit demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="note" style="padding: 12px 14px 0 14px;">Video is embedded from YouTube.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="h2">Validation anchored in the SPPB community</h2>
+          <p class="sub">
+            AndanteFit is an example of an automated system designed to operationalize the SPPB in clinical and research settings.
+            Its validation involved Dr. Jack Guralnik, who originally developed the SPPB during his work at the U.S. National Institutes of Health.
+            In addition, Professor Alfonso Cruz-Jentoft and colleagues from the Global Leadership Initiative on Sarcopenia (GLIS) participated in the validation process,
+            supporting its applicability in studies involving older adults.
+          </p>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Want the full list of peer-reviewed studies?</div>
+          <div class="callout-body">See curated publications and summaries relevant to automation, reliability, and clinical implementation.</div>
+          <div class="callout-actions"><a class="btn btn-primary" href="evidence/">Open Evidence</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="h2">Contact</h2>
+          <p class="sub">If you are planning a cohort, trial, or implementation program using physical performance outcomes, we can share a short technical overview and workflow fit.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a class="link" href="mailto:contact@andantefit.info">contact@andantefit.info</a></div>
+            <div class="note">Replace this address with your preferred inbox.</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">Materials</div>
+            <div class="contact-value"><a class="link" href="case-studies/">Case Studies</a></div>
+            <div class="note">Short briefs you can forward to collaborators.</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">Evidence</div>
+            <div class="contact-value"><a class="link" href="evidence/">Publication list</a></div>
+            <div class="note">Peer-reviewed studies related to automated SPPB.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="img/andantefit-logo-black.png" alt="AndanteFit" loading="lazy" />
+        <div class="footer-note">Automated physical performance assessment for clinical and research settings.</div>
+      </div>
+      <div class="footer-links">
+        <a href="evidence/">Evidence</a>
+        <a href="case-studies/">Case Studies</a>
+        <a href="clients/">Clients</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js" defer></script>
 </body>
 </html>

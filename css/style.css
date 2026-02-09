@@ -86,6 +86,12 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
   line-height: 1.05;
   margin: 10px 0 14px 0;
 }
+.h2{
+  font-size: clamp(22px, 2.6vw, 34px);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
 .lead{
   color: var(--muted);
   font-size: 18px;
@@ -136,7 +142,10 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
+
 .header-row{
+  width: min(var(--container), calc(100% - 40px));
+  margin: 0 auto;
   display:flex;
   align-items:center;
   justify-content: space-between;
@@ -234,6 +243,12 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
 }
 .btn-ghost{
   background: rgba(255,255,255,0.85);
+}
+
+/* legacy button name (case-studies) */
+.btn-secondary{
+  background: rgba(255,255,255,0.90);
+  border-color: var(--line);
 }
 
 .heroActions, .sectionActions{
@@ -354,6 +369,7 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
   color: var(--brand);
 }
 
+/* HOW IT WORKS */
 .steps{
   display:grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -422,7 +438,7 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
   gap: 12px;
 }
 .calloutTitle{
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 .calloutDesc{
@@ -436,6 +452,8 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
   background: #fff;
 }
 .footer-grid{
+  width: min(var(--container), calc(100% - 40px));
+  margin: 0 auto;
   display:grid;
   grid-template-columns: 1.2fr .8fr;
   gap: 18px;
@@ -459,7 +477,93 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
   height: 26px;
 }
 
-/* Responsive */
+/* -------------------------------------------------
+   Compatibility layer for existing case-studies / evidence pages
+   (keeps your existing HTML, matches the new look)
+-------------------------------------------------- */
+
+/* case-studies uses these names */
+.section-head{
+  margin-bottom: 18px;
+}
+.sub{
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 80ch;
+}
+.grid-3{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.card-title{
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.card-body{
+  color: var(--muted);
+  font-size: 14px;
+}
+.spacer{ height: 12px; }
+
+/* evidence uses these names */
+.content-wrapper{
+  padding: 42px 0 0;
+}
+.af-section-title{
+  font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: -0.02em;
+  margin: 0 0 14px 0;
+}
+.af-card{
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 16px 14px;
+  box-shadow: 0 8px 22px rgba(2,6,23,0.05);
+  margin-bottom: 12px;
+}
+.af-card-title{
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.af-card-meta,
+.af-authors{
+  color: var(--muted);
+  font-size: 13px;
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.85);
+  color: var(--muted);
+  margin-left: 8px;
+}
+.featured-publications{
+  padding: 10px 0 22px;
+}
+.publication-list{
+  margin-top: 18px;
+}
+.publication-list ul{
+  padding-left: 18px;
+  margin: 10px 0 0 0;
+}
+.publication-list li{
+  margin: 8px 0;
+  color: var(--muted);
+}
+
+/* mobile: grid-3 fallback */
 @media (max-width: 1024px){
   .hero-grid, .split{
     grid-template-columns: 1fr;
@@ -473,11 +577,8 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
   .footer-grid{
     grid-template-columns: 1fr;
   }
-}
-
-@media (max-width: 820px){
-  .main-nav{
-    gap: 10px;
+  .grid-3{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -500,20 +601,24 @@ small{ display:block; color: var(--muted); margin-top: 8px; }
     border-radius: 16px;
     box-shadow: var(--shadow);
   }
-  .nav-toggle[aria-expanded="true"] + .main-nav{
+
+  /* open state: supports both aria-expanded pattern and legacy .is-open */
+  .nav-toggle[aria-expanded="true"] + .main-nav,
+  .main-nav.is-open{
     display:flex;
   }
+
   .main-nav a{
     padding: 12px 12px;
-  }
-  .nav-cta{
-    justify-content:center;
   }
 
   .grid3{
     grid-template-columns: 1fr;
   }
   .grid4{
+    grid-template-columns: 1fr;
+  }
+  .grid-3{
     grid-template-columns: 1fr;
   }
   .steps{

@@ -16,22 +16,20 @@
   </script>
 
   <style>
-    /* Region 구분을 위한 추가 스타일 - 기존 UI 일관성 유지 */
+    /* UI 일관성 유지 및 지도 레이아웃 */
     .region-header { border-bottom: 2px solid var(--color-deep-blue); padding-bottom: 12px; margin-bottom: 32px; margin-top: 60px; }
     .region-header h3 { margin-bottom: 0; color: var(--color-deep-blue); font-size: 1.5rem; }
     
-    /* 한국 지도 섹션 레이아웃 */
     .korea-map-section { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: start; background: white; padding: 40px; border-radius: 20px; box-shadow: var(--shadow-md); margin-top: 20px; }
-    .map-container { position: relative; width: 100%; height: 550px; background: #f8fafc; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-    .hospital-list-container { height: 550px; overflow-y: auto; padding-right: 20px; }
-    .hospital-item { padding: 12px 0; border-bottom: 1px solid var(--color-border); font-weight: 500; color: var(--color-text-primary); font-size: 0.9375rem; }
+    .map-container { position: relative; width: 100%; height: 600px; background: #f8fafc; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .hospital-list-container { height: 600px; overflow-y: auto; padding-right: 20px; }
+    .hospital-item { padding: 14px 0; border-bottom: 1px solid var(--color-border); font-weight: 500; color: var(--color-text-primary); font-size: 0.9375rem; }
     .hospital-item:last-child { border-bottom: none; }
     
-    /* Simplified Map Marker Styles */
     .map-marker { fill: var(--color-deep-blue); opacity: 0.6; transition: opacity 0.3s; cursor: pointer; }
     .map-marker:hover { opacity: 1; }
     
-    @media (max-width: 992px) { .korea-map-section { grid-template-columns: 1fr; } }
+    @media (max-width: 992px) { .korea-map-section { grid-template-columns: 1fr; } .map-container, .hospital-list-container { height: auto; max-height: 400px; } }
   </style>
 </head>
 <body>
@@ -55,7 +53,7 @@
 
   <section class="hero">
     <div class="container hero-content">
-      <span class="section-label">Global Network</span>
+      <span class="section-label">Institutional Trust</span>
       <h1 class="hero-headline">Trusted by Leading Institutions Worldwide</h1>
       <p class="hero-subtitle">
         AndanteFit is standardized in leading medical and research centers across Asia, Europe, and North America.
@@ -84,10 +82,8 @@
         <div class="card"><strong>Nagoya University</strong><p class="card-description">Japan</p></div>
         <div class="card"><strong>St. Luke's International University</strong><p class="card-description">Japan</p></div>
         <div class="card"><strong>Kobe City Medical Center</strong><p class="card-description">Japan</p></div>
-        <div class="card"><strong>Hanyang Pacific University</strong><p class="card-description">Japan</p></div>
-        <div class="card"><strong>National University Health System (NUHS)</strong><p class="card-description">Singapore</p></div>
-        <div class="card"><strong>Tan Tock Seng Hospital</strong><p class="card-description">Singapore</p></div>
-        <div class="card"><strong>Singapore General Hospital</strong><p class="card-description">Singapore</p></div>
+        <div class="card"><strong>Sagae Family Clinic</strong><p class="card-description">Japan</p></div>
+        <div class="card"><strong>NUHS / Tan Tock Seng Hospital</strong><p class="card-description">Singapore</p></div>
         <div class="card"><strong>National Cancer Institute (NCI)</strong><p class="card-description">Malaysia</p></div>
         <div class="card"><strong>Universiti Putra Malaysia (UPM)</strong><p class="card-description">Malaysia</p></div>
         <div class="card"><strong>Chulalongkorn University</strong><p class="card-description">Thailand</p></div>
@@ -119,77 +115,49 @@
           <div class="hospital-item">서울대학교병원</div>
           <div class="hospital-item">세브란스병원</div>
           <div class="hospital-item">분당서울대학교병원</div>
-          <div class="hospital-item">서울성모병원</div>
+          <div class="hospital-item">서울성모병원 (은평/부천/의정부/성빈센트 포함)</div>
           <div class="hospital-item">고려대학교의료원 (안암/구로/안산)</div>
-          <div class="hospital-item">가톨릭대학교병원 (의정부/부천/성빈센트/은평)</div>
           <div class="hospital-item">경북대학교병원 (칠곡경북대학교병원 포함)</div>
           <div class="hospital-item">부산대학교병원 (양산부산대학교병원 포함)</div>
           <div class="hospital-item">전남대학교병원 (화순전남대학교병원 포함)</div>
-          <div class="hospital-item">원주세브란스기독병원</div>
-          <div class="hospital-item">한양대학교병원</div>
-          <div class="hospital-item">중앙대학교광명병원</div>
-          <div class="hospital-item">영남대학교병원</div>
-          <div class="hospital-item">인제대학교병원 (일산/해운대)</div>
+          <div class="hospital-item">한양대학교병원 (구리 포함)</div>
+          <div class="hospital-item">이화여자대학교목동병원</div>
+          <div class="hospital-item">인제대학교백병원 (일산/해운대)</div>
           <div class="hospital-item">한림대학교병원 (성심/동탄성심)</div>
           <div class="hospital-item">국립암센터</div>
           <div class="hospital-item">중앙보훈병원</div>
-          <div class="hospital-item">이화여자대학교목동병원</div>
-          <div class="hospital-item">순천향대학교부속부천병원</div>
           <div class="hospital-item">강원대학교병원</div>
           <div class="hospital-item">경상대학교병원</div>
+          <div class="hospital-item">충남대학교병원 (대전성모병원 포함)</div>
+          <div class="hospital-item">원주세브란스기독병원</div>
           <div class="hospital-item">용인세브란스병원</div>
-          <div class="hospital-item">희연재활병원</div>
-          <div class="hospital-item">파크사이드재활병원</div>
-          <div class="hospital-item">해븐리병원</div>
-          <div class="hospital-item">Public Health Centers (Seoul, Gyeonggi, Gangwon, etc.)</div>
-          <div class="hospital-item">Senior Welfare Centers & Community Sites</div>
+          <div class="hospital-item">중앙대학교광명병원</div>
+          <div class="hospital-item">순천향대학교부속부천병원</div>
+          <div class="hospital-item">인하대학교병원</div>
+          <div class="hospital-item">영남대학교병원</div>
+          <div class="hospital-item">대구계명대동산병원</div>
+          <div class="hospital-item">분당차병원</div>
+          <div class="hospital-item">새길병원 / 새길정형외과</div>
+          <div class="hospital-item">강남베드로병원</div>
+          <div class="hospital-item">부산힘내라병원</div>
+          <div class="hospital-item">부평더편한정형외과</div>
+          <div class="hospital-item">청구제일내과 / 대전엔도내과</div>
+          <div class="hospital-item">희연재활병원 / 파크사이드재활병원</div>
+          <div class="hospital-item">인천로뎀요양병원 / 대정요양병원</div>
+          <div class="hospital-item">해븐리병원 / 광동병원</div>
+          <div class="hospital-item">성동구 스마트헬스케어센터</div>
+          <div class="hospital-item">서초구 / 강서구 / 금천구 / 인천광역시 광역치매센터</div>
+          <div class="hospital-item">하남시 / 과천시 / 홍성군 / 평창군 / 인천계양구 보건소</div>
+          <div class="hospital-item">목동어르신복지관 / 삼성노블카운티</div>
+          <div class="hospital-item">한국건강관리협회 경북지부</div>
         </div>
       </div>
     </div>
   </div>
 
-  <section class="section" style="background-color: var(--color-white);">
-    <div class="container">
-      <div class="card" style="max-width: 800px; margin: 0 auto; text-align: center; padding: 40px;">
-        <p style="font-size: 1.125rem; line-height: 1.8; color: var(--color-text-secondary); margin: 0;">
-          <strong>Note:</strong> This list represents a selection of AndanteFit implementation sites. 
-          For partnership inquiries, please refer to the <a href="product.html" style="color: var(--color-deep-blue); font-weight: 600;">Product page</a>.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>AndanteFit</h4>
-          <p>
-            Developed and provided by DYPHI Inc.<br>
-            Automated physical performance assessment for frailty and sarcopenia research.
-          </p>
-        </div>
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <p>
-            <a href="product.html">Product</a><br>
-            <a href="validation.html">Validation</a><br>
-            <a href="case-studies.html">Case Studies</a><br>
-            <a href="references.html">References</a>
-          </p>
-        </div>
-        <div class="footer-section">
-          <h4>Contact</h4>
-          <p>
-            Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br>
-            Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br>
-            Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu
-          </p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        © 2026 DYPHI Inc. All Rights Reserved.
-      </div>
+    <div class="container text-center">
+      <p>© 2026 DYPHI Inc. All Rights Reserved. | Standardizing Mobility Assessment for Older Adults</p>
     </div>
   </footer>
 

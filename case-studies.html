@@ -3,95 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AndanteFit case studies and research reports">
   <title>Case Studies - AndanteFit</title>
   <link rel="stylesheet" href="css/style.css">
-  
   <style>
-    /* 리스트 형식 커스텀 스타일 */
-    .report-list {
-      max-width: 900px;
-      margin: 0 auto;
-      border-top: 2px solid var(--color-deep-blue);
-    }
-    .report-item {
-      display: flex;
-      align-items: center;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--color-soft-gray);
-      transition: background-color 0.2s;
-    }
-    .report-item:hover {
-      background-color: #fcfcfc;
-    }
-    .report-date {
-      width: 150px;
-      font-size: 0.9rem;
-      color: var(--color-text-muted);
-      flex-shrink: 0;
-    }
-    .report-main {
-      flex-grow: 1;
-      padding: 0 20px;
-    }
-    .report-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--color-deep-blue);
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .report-link {
-      flex-shrink: 0;
-    }
-    /* 한국어 배지 */
-    .lang-badge {
-      font-size: 0.7rem;
-      background-color: #f1f5f9;
-      color: #475569;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-weight: 700;
-      border: 1px solid #e2e8f0;
-    }
-    /* 버튼 크기 조정 */
-    .btn-small {
-      padding: 8px 16px;
-      font-size: 0.85rem;
-      border-radius: 6px;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 768px) {
-      .report-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .report-date {
-        margin-bottom: 8px;
-      }
-      .report-main {
-        padding: 0 0 15px 0;
-      }
-    }
+    .report-list { max-width: 900px; margin: 0 auto; border-top: 2px solid var(--color-deep-blue); }
+    .report-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--color-soft-gray); transition: background-color 0.2s; }
+    .report-item:hover { background-color: #fcfcfc; }
+    .report-date { width: 130px; font-size: 0.9rem; color: var(--color-text-muted); flex-shrink: 0; }
+    .report-main { flex-grow: 1; padding: 0 20px; }
+    .report-title { font-size: 1.1rem; font-weight: 600; color: var(--color-deep-blue); margin: 0; display: flex; align-items: center; gap: 10px; }
+    .lang-badge { font-size: 0.7rem; background-color: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px; font-weight: 700; border: 1px solid #e2e8f0; }
+    .btn-small { padding: 8px 16px; font-size: 0.85rem; border-radius: 6px; white-space: nowrap; }
+    @media (max-width: 768px) { .report-item { flex-direction: column; align-items: flex-start; } .report-date { margin-bottom: 8px; } .report-main { padding: 0 0 15px 0; } }
   </style>
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-0L4ENVHFYP');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0L4ENVHFYP');</script>
 </head>
 <body>
   <nav class="nav">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        <img src="assets/andantefit-logo.png" alt="AndanteFit">
-      </a>
+      <a href="index.html" class="nav-logo"><img src="assets/andantefit-logo.png" alt="AndanteFit"></a>
       <ul class="nav-menu" id="navMenu">
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="product.html" class="nav-link">Product</a></li>
@@ -99,147 +30,60 @@
         <li><a href="case-studies.html" class="nav-link active">Case Studies</a></li>
         <li><a href="references.html" class="nav-link">References</a></li>
       </ul>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+      <button class="nav-toggle" id="navToggle">☰</button>
     </div>
   </nav>
 
   <section class="hero">
     <div class="container hero-content">
       <span class="section-label">Research Reports</span>
-      <h1 class="hero-headline">Case Studies & Applications</h1>
-      <p class="hero-subtitle">
-        Real-world implementations of AndanteFit across clinical and research settings.
-      </p>
+      <h1 class="hero-headline">Case Studies</h1>
+      <p class="hero-subtitle">Real-world implementations of AndanteFit across clinical and research settings.</p>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
       <div id="caseStudiesContainer" class="report-list">
-        <p style="text-align: center; color: var(--color-text-muted); padding: 40px;">
-          Loading case studies...
-        </p>
-      </div>
-
-      <div id="emptyState" class="hidden" style="text-align: center; padding: 60px 20px;">
-        <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.3;">📄</div>
-        <h3 style="color: var(--color-text-secondary); margin-bottom: 12px;">No Case Studies Yet</h3>
+        <p style="text-align: center; color: var(--color-text-muted); padding: 40px;">Loading reports...</p>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>AndanteFit</h4>
-          <p>Developed and provided by DYPHI Inc.<br>Automated physical performance assessment for frailty and sarcopenia research.</p>
-        </div>
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <p>
-            <a href="product.html">Product</a><br>
-            <a href="validation.html">Validation</a><br>
-            <a href="case-studies.html">Case Studies</a>
-          </p>
-        </div>
-        <div class="footer-section">
-          <h4>Contact</h4>
-          <p>Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a></p>
-        </div>
-      </div>
-      <div class="footer-bottom">© 2026 DYPHI Inc. All Rights Reserved.</div>
-    </div>
+    <div class="container"><div class="footer-bottom">© 2026 DYPHI Inc. All Rights Reserved.</div></div>
   </footer>
 
   <script src="js/main.js"></script>
   <script>
-    const GITHUB_CONFIG = {
-      owner: 'jjgitson',
-      repo: 'andantefit.info',
-      folder: 'case-studies',
-      branch: 'main'
-    };
-
-    function parseFilename(filename) {
-      const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
-      if (match) {
-        const [, year, month, day, titlePart] = match;
-        const title = titlePart.replace(/-/g, ' ');
-        const date = new Date(year, month - 1, day);
-        return {
-          date,
-          dateStr: `${year}.${month}.${day}`, // 전형적인 리스트용 날짜 표기
-          title,
-          filename
-        };
-      }
-      return {
-        date: new Date(),
-        dateStr: '----.--.--',
-        title: filename.replace('.html', '').replace(/-/g, ' '),
-        filename
-      };
+    const GITHUB_CONFIG = { owner: 'jjgitson', repo: 'andantefit.info', folder: 'case-studies', branch: 'main' };
+    function parseFilename(f) {
+      const m = f.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
+      if (m) return { date: new Date(m[1], m[2]-1, m[3]), dateStr: `${m[1]}.${m[2]}.${m[3]}`, title: m[4].replace(/-/g, ' '), filename: f };
+      return { date: new Date(), dateStr: '----.--.--', title: f.replace('.html', '').replace(/-/g, ' '), filename: f };
     }
-
     async function loadCaseStudies() {
       const container = document.getElementById('caseStudiesContainer');
-      const emptyState = document.getElementById('emptyState');
-      
       try {
-        const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${GITHUB_CONFIG.branch}`;
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`);
+        const files = await res.json();
+        const htmlFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.html'));
+        const caseStudies = htmlFiles.map(f => ({ ...parseFilename(f.name), url: `case-studies/${f.name}` })).sort((a,b) => b.date - a.date);
         
-        const files = await response.json();
-        const htmlFiles = files.filter(file => file.type === 'file' && file.name.endsWith('.html'));
-        
-        if (htmlFiles.length === 0) {
-          container.innerHTML = '';
-          emptyState.classList.remove('hidden');
-          return;
-        }
-        
-        const caseStudies = htmlFiles
-          .map(file => ({
-            ...parseFilename(file.name),
-            url: `${GITHUB_CONFIG.folder}/${file.name}`
-          }))
-          .sort((a, b) => b.date - a.date);
-       container.innerHTML = caseStudies.map(study => {
-    // 1. 파일명에 한글이 포함되어 있거나
-    // 2. 파일명이 'Digital-Care-Platform'으로 시작하거나
-    // 3. 파일명 끝에 '-KO'가 붙어있는 경우 한국어로 간주
-    const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(study.title) || 
-                     study.filename.includes('Digital-Care-Platform') ||
-                     study.filename.includes('-KO');
-                     
-    const langBadge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
-
-    return `
-      <div class="report-item">
-        <div class="report-date">${study.dateStr}</div>
-        <div class="report-main">
-          <h3 class="report-title">
-            ${study.title}
-            ${langBadge}
-          </h3>
-        </div>
-        <div class="report-link">
-          <a href="${study.url}" class="btn btn-primary btn-small">
-            View Report →
-          </a>
-        </div>
-      </div>
-    `;
-  }).join('');
-        
-      } catch (error) {
-        console.error('Error loading case studies:', error);
-        container.innerHTML = `<p style="padding: 40px; text-align: center; color: #ef4444;">Failed to load reports. Please check your configuration.</p>`;
-      }
+        container.innerHTML = caseStudies.map(s => {
+          const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(s.title) || 
+                           s.filename.includes('Digital-Care-Platform') || 
+                           s.filename.includes('Linking-Study') ||
+                           s.filename.includes('Pilot-Study');
+          const badge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
+          return `<div class="report-item">
+                    <div class="report-date">${s.dateStr}</div>
+                    <div class="report-main"><h3 class="report-title">${s.title} ${badge}</h3></div>
+                    <div class="report-link"><a href="${s.url}" class="btn btn-primary btn-small">View Report →</a></div>
+                  </div>`;
+        }).join('');
+      } catch (e) { container.innerHTML = '<p>Error loading reports.</p>'; }
     }
-
     loadCaseStudies();
   </script>
 </body>

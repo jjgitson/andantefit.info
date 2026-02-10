@@ -232,30 +232,31 @@ const App = () => {
 
   const slides = [
     
-    // Slide 1: Intro
-(
-  <SlideLayout
-    title="도입"
-    headline="디지털 복지관 중심 예방적 건강관리 플랫폼 구축 방향"
-  >
-    <div className="h-full flex items-center">
-      <div className="bg-white p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-sm max-w-4xl">
-        <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-          국내 여러 지자체가 추진 중인 스마트경로당과 디지털 복지관은 화려한 장비 도입에 비해,
-          지역사회 통합돌봄 안에서 고령자의 삶이 어떻게 개선되었는가라는 질문에는 충분히 답하지 못하고 있습니다.
-          <br/><br/>
-          현재의 인프라는 일회성 측정에 머물러, 수집된 데이터가 실제 중재나 사례 관리로 이어지지 못하는 한계가 있습니다.
-          <br/><br/>
-          이를 해결하기 위해 노인의학의 핵심인 신체기능을 공통 언어로 설정하고,
-          SPPB와 같은 표준 지표를 중심으로
-          측정–분석–개입–재평가의 선순환 구조를 제안합니다.
-        </p>
+  // Slide 1: Intro
+  (
+    <SlideLayout
+      title="도입"
+      headline="디지털 복지관 중심 예방적 건강관리 플랫폼 구축 방향"
+    >
+      <div className="h-full flex items-center">
+        <div className="bg-white p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-sm max-w-4xl">
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+            국내 여러 지자체가 추진 중인 스마트경로당과 디지털 복지관은 화려한 장비 도입에 비해,
+            지역사회 통합돌봄 안에서 고령자의 삶이 어떻게 개선되었는가라는 질문에는 충분히 답하지 못하고 있습니다.
+            <br/><br/>
+            현재의 인프라는 일회성 측정에 머물러, 수집된 데이터가 실제 중재나 사례 관리로 이어지지 못하는 한계가 있습니다.
+            <br/><br/>
+            이를 해결하기 위해 노인의학의 핵심인 신체기능을 공통 언어로 설정하고,
+            SPPB와 같은 표준 지표를 중심으로
+            측정–분석–개입–재평가의 선순환 구조를 제안합니다.
+          </p>
+        </div>
       </div>
-    </div>
-  </SlideLayout>
-),
+    </SlideLayout>
+  ),
 
-// 기존 Slide 1 (레이어 구조 슬라이드)
+
+// 기존 Slide 2 (레이어 구조 슬라이드)
 (
   <div className="w-full md:h-full p-5 sm:p-10 flex flex-col">
 
@@ -353,7 +354,7 @@ const App = () => {
       </div>
     ),
 
-    // Slide 2: 배경과 문제
+    // Slide 3: 배경과 문제
     (
       <SlideLayout
         title="배경과 문제"
@@ -391,7 +392,7 @@ const App = () => {
       </SlideLayout>
     ),
 
-    // Slide 3: 방향성과 구조
+    // Slide 4: 방향성과 구조
     (
       <SlideLayout
         title="방향성과 구조"
@@ -435,7 +436,7 @@ const App = () => {
       </SlideLayout>
     ),
 
-    // Slide 4: 표준화 평가
+    // Slide 5: 표준화 평가
     (
       <SlideLayout
         title="① 표준화 평가"
@@ -485,7 +486,7 @@ const App = () => {
       </SlideLayout>
     ),
 
-    // Slide 5: 개인 변화
+    // Slide 6: 개인 변화
     (
       <SlideLayout
         title="② 개인 변화"
@@ -543,7 +544,7 @@ const App = () => {
       </SlideLayout>
     ),
 
-    // Slide 6: 공유 성과
+    // Slide 7: 공유 성과
     (
       <SlideLayout
         title="③ 공유 성과"
@@ -576,10 +577,10 @@ const App = () => {
       </SlideLayout>
     ),
 
-    // Slide 7-13: Additional slides (복사된 내용 유지)
+    // Slide 8-14: Additional slides (복사된 내용 유지)
     // ... [나머지 슬라이드들은 원본과 동일하게 유지] ...
 
-    // Slide 13: 요약
+    // Slide 14: 요약
     (
   <SlideLayout
     title="요약"
@@ -686,7 +687,7 @@ const App = () => {
   </SlideLayout>
 ),
 
-    // Slide 14: 마무리
+    // Slide 15: 마무리
     (
       <div className="w-full md:h-full bg-slate-900 p-8 sm:p-16 flex flex-col justify-center items-center text-center relative overflow-hidden">
     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>

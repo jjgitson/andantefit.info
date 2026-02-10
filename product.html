@@ -232,36 +232,77 @@
   </section>
 
   <!-- Specifications -->
-  <section class="section" style="background-color: var(--color-white);">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Technical Specifications</span>
-        <h2>System Requirements</h2>
+<section class="section" style="background-color: var(--color-white);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Technical Specifications</span>
+      <h2>System Requirements & Sensor Specs</h2>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3 class="card-title">Supported Assessments</h3>
+        <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+          <li>SPPB (automated): Static balance, 4-meter gait speed, five-times sit-to-stand</li>
+          <li>TUG (Timed Up and Go): Supported</li>
+          <li>Single-leg stance: Supported</li>
+        </ul>
       </div>
 
       <div class="card">
-        <h3 class="card-title">Physical Dimensions & Setup</h3>
-        <div class="grid grid-2">
-          <div>
-            <ul style="line-height: 1.9; color: var(--color-text-secondary);">
-              <li><strong>Gait module:</strong> LiDAR on tripod (adjustable height 100-170cm)</li>
-              <li><strong>Sit-to-stand module:</strong> Standard chair with sensor platform (43cm seat height)</li>
-              <li><strong>Balance module:</strong> Footplate 60cm × 40cm × 5cm</li>
-              <li><strong>Space requirement:</strong> Minimum 4m × 2m clear area</li>
-            </ul>
-          </div>
-          <div>
-            <ul style="line-height: 1.9; color: var(--color-text-secondary);">
-              <li><strong>Power:</strong> 100-240V AC, 50/60Hz, &lt;150W total</li>
-              <li><strong>Connectivity:</strong> Wi-Fi 802.11ac or Bluetooth 5.0</li>
-              <li><strong>Mobile device:</strong> iOS 13+ or Android 9+, tablet recommended</li>
-              <li><strong>Installation:</strong> &lt;30 minutes, no tools required</li>
-            </ul>
-          </div>
-        </div>
+        <h3 class="card-title">Setup Footprint</h3>
+        <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+          <li>Space requirement: 4 m straight walk lane + surrounding clearance (fits in a compact room)</li>
+          <li>Non-contact measurement: No wearables, markers, or in-lane instruments required</li>
+          <li>Recommended chair: Seat height 45 cm (±5 cm), seat width ≥ 35 cm, seat depth ≥ 40 cm</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Balance Module (Force Plate)</h3>
+        <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+          <li>Load cells: 4 (full bridge) × 4 (16 total)</li>
+          <li>Rated capacity: 150 kg per full bridge</li>
+          <li>Weight resolution: 0.1 kg per full bridge</li>
+          <li>Sampling rate: 10 Hz</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Gait Speed Module (LiDAR)</h3>
+        <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+          <li>Operating range: 0.1–10 m @ 10% reflectivity</li>
+          <li>Distance accuracy: ±1% @ 90% reflectivity (25°C)</li>
+          <li>Distance resolution: 10 mm</li>
+          <li>Horizontal FoV: 3°</li>
+          <li>Recommended installation height: 90 cm (±10 cm)</li>
+          <li>Sampling rate: 50 Hz</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Sit-to-Stand Module (LiDAR + Force Plate)</h3>
+        <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+          <li>LiDAR operating range: 50–700 mm @ 17% reflectivity</li>
+          <li>LiDAR distance accuracy: ±7% @ 17% reflectivity (23°C)</li>
+          <li>FoV: 25°</li>
+          <li>Force plate rated capacity: 150 kg</li>
+          <li>Weight resolution: 0.1 kg</li>
+          <li>Sampling rate: 50 Hz</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Power & Connectivity</h3>
+        <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+          <li>Battery: 3.7 V, 2000 mAh (Li-Polymer) per module</li>
+          <li>Wireless: Bluetooth 5.2</li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- Materials Download Form -->
   <section class="section">

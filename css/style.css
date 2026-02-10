@@ -491,3 +491,7 @@ a:hover {
 .hidden {
   display: none;
 }
+.name-highlight {
+  color: var(--color-primary);
+  font-weight: 500;
+}

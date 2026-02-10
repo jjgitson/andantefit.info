@@ -229,26 +229,71 @@
     </div>
   </section>
 
-  <!-- Since 2018 -->
 <!-- Since 2018 -->
-<section class="section" style="
-  background: 
-    linear-gradient(135deg, rgba(15, 76, 129, 0.85) 0%, rgba(15, 76, 129, 0.75) 100%),
-    url('assets/healthy_aging.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: white;
-">
-  <div class="container text-center">
-    <span class="section-label" style="background-color: rgba(255, 255, 255, 0.2); color: white;">Established 2018</span>
-    <h2 style="color: white;">Supporting Frailty Prevention</h2>
-    <p style="max-width: 720px; margin: 0 auto; font-size: 1.125rem; color: rgba(255, 255, 255, 0.95);">
-      Since 2018, AndanteFit has been provided to support frailty prevention among older adults 
-      in community settings. As part of our social responsibility initiatives, demo units are also 
-      available for community services and research purposes.
-    </p>
+<section class="section" style="background: linear-gradient(135deg, #0F4C81 0%, #1F6FB2 100%); padding: 0;">
+  <div class="container" style="max-width: 1200px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: center; min-height: 400px;">
+      
+      <!-- 좌측: 텍스트 -->
+      <div style="padding: 80px 60px; color: white;">
+        <span style="
+          display: inline-block;
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: rgba(255, 255, 255, 0.8);
+          background-color: rgba(255, 255, 255, 0.15);
+          padding: 8px 16px;
+          border-radius: 999px;
+          margin-bottom: 24px;
+        ">Established 2018</span>
+        
+        <h2 style="
+          font-size: 2.5rem;
+          font-weight: 800;
+          line-height: 1.2;
+          color: white;
+          margin-bottom: 24px;
+        ">Supporting Frailty Prevention</h2>
+        
+        <p style="
+          font-size: 1.125rem;
+          line-height: 1.7;
+          color: rgba(255, 255, 255, 0.95);
+        ">
+          Since 2018, AndanteFit has been provided to support frailty prevention among older adults 
+          in community settings. As part of our social responsibility initiatives, demo units are also 
+          available for community services and research purposes.
+        </p>
+      </div>
+      
+      <!-- 우측: 이미지 -->
+      <div style="
+        height: 100%;
+        background: url('assets/healthy_aging.png');
+        background-size: cover;
+        background-position: center center;
+        min-height: 400px;
+      "></div>
+      
+    </div>
   </div>
+  
+  <!-- 모바일 대응 -->
+  <style>
+    @media (max-width: 768px) {
+      section[style*="linear-gradient"] .container > div {
+        grid-template-columns: 1fr !important;
+      }
+      section[style*="linear-gradient"] .container > div > div:first-child {
+        padding: 60px 30px !important;
+      }
+      section[style*="linear-gradient"] .container > div > div:last-child {
+        min-height: 300px !important;
+      }
+    }
+  </style>
 </section>
 
   <!-- Footer -->

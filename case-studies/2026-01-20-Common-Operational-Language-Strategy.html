@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategic Proposal: Seamless Integrated Care - AndanteFit</title>
+  
+  <!-- AndanteFit Base Stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  
+  <!-- External Resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* CSS Variables for McKinsey/BCG Style Consistency */
+    :root {
+      --primary-blue: #002D54;
+      --accent-lime: #DEFF9A;
+      --text-white: #F5F5F5;
+      --text-dim: #DAFFDE;
+      --bg-dark: #000000;
+      --tile-bg: #1A1A1A;
+      --font-main: 'Urbanist', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    
+    /* Override body for slide presentation */
+    body { 
+      margin: 0; 
+      padding: 0; 
+      background-color: #e2e8f0; 
+    }
+
+    /* Slide Container Wrapper */
+    .slides-wrapper {
+      display: grid;
+      place-items: center;
+      padding: 20px 0;
+      gap: 40px;
+    }
+
+    .slide-container {
+      width: 1280px; 
+      height: 720px;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: var(--font-main);
+      position: relative;
+      overflow: hidden;
+      display: flex; 
+      flex-direction: column;
+      padding: 60px;
+    }
+
+    /* Abstract Background Decoration */
+    .slide-container::before {
+      content: ''; 
+      position: absolute; 
+      top: -100px; 
+      right: -100px;
+      width: 400px; 
+      height: 400px;
+      background: radial-gradient(circle, rgba(222, 255, 154, 0.1) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    .slide-title {
+      font-size: 54px; 
+      font-weight: 500; 
+      line-height: 1.1; 
+      margin-bottom: 40px; 
+      z-index: 2;
+    }
+    .slide-title span { color: var(--accent-lime); }
+
+    .content-area { 
+      flex-grow: 1; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      width: 100%; 
+      z-index: 2; 
+    }
+
+    /* Title Slide Layout */
+    .title-layout { 
+      text-align: center; 
+      height: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+    }
+    .title-layout h1 { 
+      font-size: 72px; 
+      margin-bottom: 20px; 
+    }
+    .title-layout .subtitle { 
+      font-size: 24px; 
+      color: var(--text-dim); 
+      margin-bottom: 60px; 
+      letter-spacing: 1px; 
+    }
+    .title-layout .footer-info { 
+      display: flex; 
+      justify-content: center; 
+      gap: 80px; 
+      font-size: 18px; 
+      border-top: 1px solid rgba(255,255,255,0.2); 
+      padding-top: 30px; 
+    }
+
+    /* Tiled Layouts */
+    .two-column { display: flex; gap: 40px; width: 100%; }
+    .column { flex: 1; }
+    
+    .tile { 
+      background: var(--tile-bg); 
+      border-radius: 20px; 
+      padding: 35px; 
+      border-left: 4px solid var(--accent-lime); 
+      margin-bottom: 20px; 
+    }
+    .tile h3 { 
+      color: var(--accent-lime); 
+      font-size: 28px; 
+      margin-top: 0; 
+    }
+    .tile p { 
+      font-family: var(--font-body); 
+      font-size: 18px; 
+      line-height: 1.5; 
+      color: #CCC; 
+    }
+
+    /* Bullet Points */
+    .bullet-list { list-style: none; padding: 0; }
+    .bullet-list li { 
+      position: relative; 
+      padding-left: 35px; 
+      margin-bottom: 20px; 
+      font-size: 20px; 
+      line-height: 1.4; 
+    }
+    .bullet-list li::before { 
+      content: '\f058'; 
+      font-family: 'Font Awesome 6 Free'; 
+      font-weight: 900; 
+      position: absolute; 
+      left: 0; 
+      color: var(--accent-lime); 
+    }
+
+    /* Charts */
+    .chart-container { 
+      width: 100%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-around; 
+    }
+    .doughnut-box { 
+      position: relative; 
+      width: 300px; 
+      height: 300px; 
+      border-radius: 50%; 
+      background: conic-gradient(var(--accent-lime) 98%, #333 0); 
+    }
+    .doughnut-box::after { 
+      content: '98%'; 
+      position: absolute; 
+      inset: 20px; 
+      background: var(--bg-dark); 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 48px; 
+      font-weight: 700; 
+      color: var(--accent-lime); 
+    }
+
+    /* Bar Chart */
+    .bar-chart { 
+      width: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 30px; 
+    }
+    .bar-row { 
+      display: flex; 
+      align-items: center; 
+      gap: 20px; 
+    }
+    .bar-label { 
+      width: 250px; 
+      font-size: 20px; 
+      text-align: right; 
+    }
+    .bar-rail { 
+      flex-grow: 1; 
+      height: 40px; 
+      background: #222; 
+      border-radius: 20px; 
+      overflow: hidden; 
+      position: relative; 
+    }
+    .bar-fill { 
+      height: 100%; 
+      background: linear-gradient(90deg, #002D54, #DEFF9A); 
+    }
+
+    /* Table */
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      font-family: var(--font-body); 
+    }
+    th { 
+      text-align: left; 
+      padding: 20px; 
+      border-bottom: 2px solid var(--accent-lime); 
+      color: var(--accent-lime); 
+      font-size: 22px; 
+    }
+    td { 
+      padding: 20px; 
+      border-bottom: 1px solid rgba(255,255,255,0.1); 
+      font-size: 18px; 
+    }
+
+    /* Images */
+    .image-wrapper { 
+      width: 100%; 
+      height: 100%; 
+      border-radius: 24px; 
+      overflow: hidden; 
+      border: 1px solid var(--accent-lime); 
+    }
+    .image-wrapper img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+    }
+
+    /* Disclaimer */
+    .disclaimer { 
+      position: absolute; 
+      bottom: 30px; 
+      left: 60px; 
+      font-size: 12px; 
+      color: rgba(255,255,255,0.4); 
+      font-style: italic; 
+    }
+
+    /* Bleed Image */
+    .bleed-image-layout { 
+      padding: 0; 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      align-items: start; 
+    }
+    .bleed-image-layout .content-side { padding: 60px; }
+    .bleed-image-side { 
+      width: 100%; 
+      height: 720px; 
+      object-fit: cover; 
+      border-radius: 0; 
+    }
+
+    /* Quote */
+    .quote-box { 
+      text-align: center; 
+      max-width: 900px; 
+      margin: 0 auto; 
+    }
+    .quote-box h2 { 
+      font-size: 48px; 
+      font-style: italic; 
+      font-weight: 300; 
+      line-height: 1.4; 
+      color: var(--text-dim); 
+    }
+    .quote-box::before { 
+      content: '"'; 
+      font-size: 120px; 
+      color: var(--accent-lime); 
+      opacity: 0.3; 
+      line-height: 0; 
+    }
+
+    .highlight-number { 
+      font-size: 120px; 
+      font-weight: 700; 
+      color: var(--accent-lime); 
+      line-height: 1; 
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><img src="../assets/andantefit-logo.png" alt="AndanteFit"></a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../product.html" class="nav-link">Product</a></li>
+        <li><a href="../validation.html" class="nav-link">Validation</a></li>
+        <li><a href="../case-studies.html" class="nav-link active">Case Studies</a></li>
+        <li><a href="../references.html" class="nav-link">References</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle">☰</button>
+    </div>
+  </nav>
+
+  <!-- Case Study Entry Header -->
+  <header class="case-study-entry-header" style="background: linear-gradient(135deg, #000000 0%, #002D54 100%); padding: 60px 20px; text-align: center;">
+    <div class="max-w-5xl mx-auto">
+      <span style="display: inline-block; padding: 8px 16px; background: rgba(222, 255, 154, 0.2); color: #DEFF9A; font-size: 14px; font-weight: 600; border-radius: 20px; margin-bottom: 20px;">STRATEGIC PROPOSAL</span>
+      <h1 style="font-size: 48px; font-weight: 700; color: #F5F5F5; margin-bottom: 16px; font-family: 'Urbanist', sans-serif;">
+        Seamless Integrated Care for Older Adults
+      </h1>
+      <p style="font-size: 20px; color: #DAFFDE; max-width: 800px; margin: 0 auto;">
+        Establishing a Common Operational Language with AndanteFit
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="content-wrapper">
+    <div class="slides-wrapper">
+
+      <!-- Slide 1: Title Slide -->
+      <div class="slide-container" id="slide1">
+        <div class="title-layout">
+          <p class="subtitle">STRATEGIC PROPOSAL</p>
+          <h1>Seamless Integrated Care<br>for Older Adults</h1>
+          <p style="font-size: 28px; color: #AAA;">Establishing a <span>Common Operational Language</span> with <span>AndanteFit</span></p>
+          <div class="footer-info">
+            <div><p style="font-size: 14px; opacity: 0.6;">PREPARED FOR</p><strong>Strategic Health Partners</strong></div>
+            <div><p style="font-size: 14px; opacity: 0.6;">PRESENTED BY</p><strong>DYPHI Inc.</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: The Structural Challenge -->
+      <div class="slide-container" id="slide2">
+        <h2 class="slide-title">The <span>Structural Challenge</span></h2>
+        <div class="content-area">
+          <div class="quote-box">
+            <h2>"The challenge is not the absence of vision, but the absence of a mechanism that translates vision into coordinated action."</h2>
+          </div>
+          <div class="two-column" style="margin-top: 50px; justify-content: space-around; text-align: center;">
+            <div class="tile" style="width: 30%;"><h3>Policy Vision</h3><p>Healthy Ageing & Prevention</p></div>
+            <div style="display: flex; align-items: center;"><i class="fa-solid fa-arrow-right-long" style="font-size: 40px; color: var(--accent-lime);"></i></div>
+            <div class="tile" style="border-color: #ef4444; width: 30%;"><h3>Execution Gap</h3><p>Operational Complexity</p></div>
+            <div style="display: flex; align-items: center;"><i class="fa-solid fa-arrow-right-long" style="font-size: 40px; color: var(--accent-lime);"></i></div>
+            <div class="tile" style="width: 30%;"><h3>Coordinated Action</h3><p>Execution at Scale</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Policy Vision -->
+      <div class="slide-container" id="slide3">
+        <h2 class="slide-title">Policy Vision: <span>The Prevention Imperative</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column">
+              <p style="font-size: 22px; margin-bottom: 30px;">Aligned with National Strategic Frameworks & WHO ICOPE</p>
+              <ul class="bullet-list">
+                <li><strong>WHO Healthy Ageing:</strong> Focusing on Intrinsic Capacity rather than just the absence of disease.</li>
+                <li><strong>ICOPE Implementation:</strong> Integrated Care for Older People emphasizes maintaining functional ability.</li>
+                <li><strong>Standardized Metric:</strong> Establishing a shared global standard for functional assessment.</li>
+              </ul>
+            </div>
+            <div class="column">
+              <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop" alt="Elderly fitness session">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Fragmented Data -->
+      <div class="slide-container" id="slide4">
+        <h2 class="slide-title">Fragmented Data <span>Bottlenecks</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column">
+              <div class="tile">
+                <h3>Policy Intent</h3>
+                <p>Vision for integrated care and population screening programs.</p>
+              </div>
+              <div class="tile">
+                <h3>Field Reality</h3>
+                <p>Manual, staff-dependent clinical assessment tools.</p>
+              </div>
+            </div>
+            <div class="column" style="display: flex; align-items: center; justify-content: center;">
+              <div style="text-align: center;">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size: 100px; color: #ef4444; margin-bottom: 20px;"></i>
+                <p style="font-size: 24px;">"Fragmented, subjective data<br>cannot scale across the system."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Operational Reality -->
+      <div class="slide-container" id="slide5">
+        <h2 class="slide-title">Current Gap: <span>The Operational Reality</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+              <div class="doughnut-box"></div>
+              <p style="margin-top: 20px; text-align: center;">Multimorbid older adults with<br>reduced Intrinsic Capacity</p>
+            </div>
+            <div class="column">
+              <div class="tile">
+                <h3>The Step-2 Bottleneck</h3>
+                <p>98% of identified seniors require Step-2 functional assessment. Traditional manual tools (SPPB) require 15-20 minutes per person.</p>
+                <p style="margin-top: 15px; color: #ef4444;"><strong>Conclusion:</strong> Manual assessments cannot absorb population volume.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: The Core Solution -->
+      <div class="slide-container" id="slide6">
+        <h2 class="slide-title">The Strategic Core: <span>Shared Operational Language</span></h2>
+        <div class="content-area">
+          <div class="quote-box">
+            <h2>"Alignment is achieved not by coordination, but by shared interpretation."</h2>
+            <p style="font-size: 24px; margin-top: 40px; color: var(--accent-lime);">The strategic entry point is not a new program, but a common operational language.</p>
+          </div>
+          <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px;">
+            <div class="tile" style="width: 300px; text-align: center;">
+              <i class="fa-solid fa-code-merge" style="font-size: 40px; margin-bottom: 15px;"></i>
+              <p>Bridging Policy & Field</p>
+            </div>
+            <div class="tile" style="width: 300px; text-align: center;">
+              <i class="fa-solid fa-language" style="font-size: 40px; margin-bottom: 15px;"></i>
+              <p>Standardizing Meaning</p>
+            </div>
+            <div class="tile" style="width: 300px; text-align: center;">
+              <i class="fa-solid fa-scale-balanced" style="font-size: 40px; margin-bottom: 15px;"></i>
+              <p>Enabling Precision Triage</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Physical Function -->
+      <div class="slide-container" id="slide7">
+        <h2 class="slide-title">Physical Function as a <span>Common Reference</span></h2>
+        <div class="content-area">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            <div class="tile">
+              <i class="fa-solid fa-comments" style="font-size: 40px; margin-bottom: 15px;"></i>
+              <h3>Intuitively Understood</h3>
+              <p>Translatability across families, community volunteers, and clinical specialists.</p>
+            </div>
+            <div class="tile">
+              <i class="fa-solid fa-file-medical" style="font-size: 40px; margin-bottom: 15px;"></i>
+              <h3>Clinically Validated</h3>
+              <p>Grounded in decades of research as a primary health outcome measure.</p>
+            </div>
+            <div class="tile">
+              <i class="fa-solid fa-hospital-user" style="font-size: 40px; margin-bottom: 15px;"></i>
+              <h3>Versatile Settings</h3>
+              <p>Deployment from home visits to senior centers and acute care hospitals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: SPPB Predictive Vital Sign -->
+      <div class="slide-container" id="slide8">
+        <h2 class="slide-title">SPPB as a <span>Predictive Vital Sign</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column">
+              <ul class="bullet-list">
+                <li><strong>Clinically Validated Predictor:</strong> Identifies functional vulnerability before it progresses to clinical frailty.</li>
+                <li><strong>Resource Preservation:</strong> Distinguishes independent adults from those at risk to avoid resource dilution.</li>
+                <li><strong>Primary Outcome:</strong> Strongly associated with mortality and disability onset.</li>
+              </ul>
+            </div>
+            <div class="column">
+              <div class="image-wrapper" style="object-fit: contain;">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" alt="Assessment process">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Scaling with AndanteFit -->
+      <div class="slide-container" id="slide9">
+        <h2 class="slide-title">AndanteFit: <span>The Standardizer</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+              <p style="font-size: 24px; color: var(--accent-lime);">Common Operational Language</p>
+              <div class="highlight-number">AndanteFit</div>
+              <p style="font-size: 18px; margin-top: 20px;">Objective Data for Population Health</p>
+            </div>
+            <div class="column">
+              <div class="tile"><h3>Consistent</h3><p>Removes human error and subjectivity from assessment.</p></div>
+              <div class="tile"><h3>Scalable</h3><p>Deployable to any location without specialized medical staff.</p></div>
+              <div class="tile"><h3>Interpretable</h3><p>Objective scores that mean the same thing to everyone.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Automation Flow -->
+      <div class="slide-container" id="slide10">
+        <h2 class="slide-title">Automation Converts <span>Bottlenecks into Flow</span></h2>
+        <div class="content-area">
+          <div class="bar-chart">
+            <div class="bar-row">
+              <div class="bar-label">Conventional (Manual)</div>
+              <div class="bar-rail"><div class="bar-fill" style="width: 100%;"></div></div>
+              <div style="width: 100px; color: #ef4444;">15-20 Min</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">AndanteFit-Enabled</div>
+              <div class="bar-rail"><div class="bar-fill" style="width: 15%;"></div></div>
+              <div style="width: 100px; color: var(--accent-lime);">&lt; 3 Min</div>
+            </div>
+          </div>
+          <p style="margin-top: 40px; font-size: 20px; opacity: 0.8; border-left: 2px solid var(--accent-lime); padding-left: 20px;">
+            Scaling the 'Language' across the community requires automation to handle population volume.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 11: Operational Triage -->
+      <div class="slide-container" id="slide11">
+        <h2 class="slide-title">Operational <span>Triage Mechanism</span></h2>
+        <div class="content-area">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="tile" style="width: 250px;"><h3>Input</h3><p>AndanteFit Assessment</p></div>
+            <i class="fa-solid fa-chevron-right" style="font-size: 30px;"></i>
+            <div style="text-align: center;">
+              <div class="tile" style="background: #333;"><h3>Score > 9</h3><p>Community Action</p></div>
+            </div>
+            <div style="text-align: center;">
+              <div class="tile" style="border-color: #ef4444;"><h3>Score ≤ 9</h3><p>Clinical Referral</p></div>
+            </div>
+          </div>
+          <p style="text-align: center; margin-top: 40px; opacity: 0.6;">Shared decision structure based on objective data (WHO, 2019)</p>
+        </div>
+      </div>
+
+      <!-- Slide 12: Digitizing the Standard -->
+      <div class="slide-container bleed-image-layout" id="slide12">
+        <div class="content-side">
+          <h2 class="slide-title" style="font-size: 40px;">Digitizing <span>the Standard</span></h2>
+          <div class="tile">
+            <h3>Standard Protocol</h3>
+            <p>"Human interpretation is removed not to automate care, but to standardize meaning."</p>
+          </div>
+          <div class="tile">
+            <h3>Sensor Fusion</h3>
+            <p>Technological enablers that ensure every assessment is identical, regardless of the operator.</p>
+          </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2070&auto=format&fit=crop" alt="AndanteFit Sensor" class="bleed-image-side">
+      </div>
+
+      <!-- Slide 13: Frailty Intelligence -->
+      <div class="slide-container" id="slide13">
+        <h2 class="slide-title">From Local to <span>National Intelligence</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column">
+              <p style="font-size: 20px; line-height: 1.6;">A Shared Language enables data aggregation for national health insights.</p>
+              <ul class="bullet-list" style="margin-top: 20px;">
+                <li>Identify high-risk neighborhoods</li>
+                <li>Prioritize regional interventions</li>
+                <li>Efficient resource allocation</li>
+              </ul>
+            </div>
+            <div class="column">
+              <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1551288049-bbbda5366991?q=80&w=2070&auto=format&fit=crop" alt="Data Visualization">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Sufficiency vs Complexity -->
+      <div class="slide-container" id="slide14">
+        <h2 class="slide-title">Sufficiency <span>vs. Complexity</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column">
+              <div class="tile" style="border-color: #ef4444;">
+                <h3>Complex Metrics</h3>
+                <p>Hard to scale, requires intensive training, high barrier to entry in community settings.</p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="tile">
+                <h3>Standard SPPB</h3>
+                <p>Universal adoption. The gold standard balance between clinical depth and operational usability.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Economic Case -->
+      <div class="slide-container" id="slide15">
+        <h2 class="slide-title">Economic Case: <span>ROI via Early Precision</span></h2>
+        <div class="content-area">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div class="tile">
+              <h3>Preventing False Positives</h3>
+              <p>Precision triage preserves clinical capacity for those in true need, avoiding referral overload.</p>
+            </div>
+            <div class="tile">
+              <h3>Delaying the Cost Curve</h3>
+              <p>Preserving physical function delays entry into high-cost institutional care systems.</p>
+            </div>
+          </div>
+          <p style="font-size: 24px; color: var(--accent-lime); margin-top: 30px; text-align: center;">Outcome: Lower per-capita costs through precise early triage.</p>
+        </div>
+      </div>
+
+      <!-- Slide 16: Operational Capabilities -->
+      <div class="slide-container" id="slide16">
+        <h2 class="slide-title">Operational <span>Capabilities</span></h2>
+        <div class="content-area">
+          <div style="display: flex; justify-content: space-around;">
+            <div style="text-align: center; width: 300px;">
+              <i class="fa-solid fa-expand" style="font-size: 50px; color: var(--accent-lime);"></i>
+              <h3 style="margin: 20px 0;">Scalability</h3>
+              <p>Designed for rapid deployment across nationwide community centers.</p>
+            </div>
+            <div style="text-align: center; width: 300px;">
+              <i class="fa-solid fa-layer-group" style="font-size: 50px; color: var(--accent-lime);"></i>
+              <h3 style="margin: 20px 0;">Consistency</h3>
+              <p>Uniform data collection regardless of site or staff experience level.</p>
+            </div>
+            <div style="text-align: center; width: 300px;">
+              <i class="fa-solid fa-arrows-spin" style="font-size: 50px; color: var(--accent-lime);"></i>
+              <h3 style="margin: 20px 0;">Repeatability</h3>
+              <p>Enables longitudinal tracking of functional health trends over time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: Proposed Pilot -->
+      <div class="slide-container" id="slide17">
+        <h2 class="slide-title">Proposed <span>Pilot Framework</span></h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="column">
+              <table>
+                <tr><th>Objective</th><td>Test standardized score as a shared reference point.</td></tr>
+                <tr><th>Scale</th><td>3–5 sites | 100–300 participants</td></tr>
+                <tr><th>Duration</th><td>3 Months</td></tr>
+                <tr><th>Setting</th><td>Existing community programs</td></tr>
+              </table>
+            </div>
+            <div class="column">
+              <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop" alt="Map illustrative">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="disclaimer">* 지도 이미지는 데이터 시각화 방안을 설명하기 위한 예시이며 실제 서비스 지역과는 무관합니다.</div>
+      </div>
+
+      <!-- Slide 18: Proven and Ready -->
+      <div class="slide-container" id="slide18">
+        <h2 class="slide-title">Proven, Validated, and <span>Ready</span></h2>
+        <div class="content-area">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="tile"><h3>Clinically Validated</h3><p>Tested in hospital environments aligned with geriatric assessments.</p></div>
+            <div class="tile"><h3>Community Proven</h3><p>Deployed in community settings operated by non-clinical staff.</p></div>
+            <div class="tile"><h3>System Ready</h3><p>Designed for integration with national health data systems.</p></div>
+            <div class="tile"><h3>User Accepted</h3><p>High acceptance due to non-intrusive experience.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: Closing Slide -->
+      <div class="slide-container" id="slide19">
+        <div class="title-layout">
+          <h1>Standardize Meaning.<br>Scale Care.</h1>
+          <p class="subtitle">Establishing a Common Operational Language for Population Health.</p>
+          <div style="margin-top: 50px;">
+            <p><strong>DYPHI Inc.</strong></p>
+            <p style="color: var(--accent-lime);">AndanteFit – Seamless Integrated Care Strategy</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>AndanteFit</h4>
+          <p>Developed and provided by DYPHI Inc.<br>Automated physical performance assessment for frailty and sarcopenia research.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <p><a href="../product.html">Product</a><br><a href="../validation.html">Validation</a><br><a href="../case-studies.html">Case Studies</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 DYPHI Inc. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/main.js"></script>
+</body>
+</html>

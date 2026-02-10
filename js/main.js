@@ -1,13 +1,13 @@
 // AndanteFit Main JavaScript
 // Common functionality across all pages
 
-document.addEventListener('DOMContentLoaded', function() {
+document.('DOMContentLoaded', function() {
   // Mobile navigation toggle
   const navToggle = document.getElementById('navToggle');
   const navMenu = document.getElementById('navMenu');
   
   if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function() {
+    navToggle.('click', function() {
       navMenu.classList.toggle('active');
       
       // Toggle aria-expanded for accessibility
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
+    document.('click', function(event) {
       const isClickInsideNav = navToggle.contains(event.target) || navMenu.contains(event.target);
       
       if (!isClickInsideNav && navMenu.classList.contains('active')) {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close mobile menu when clicking on a link
     const navLinks = navMenu.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
-      link.addEventListener('click', function() {
+      link.('click', function() {
         navMenu.classList.remove('active');
         navToggle.setAttribute('aria-expanded', 'false');
       });
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.('click', function(e) {
       const href = this.getAttribute('href');
       
       // Ignore empty anchors

@@ -495,3 +495,12 @@ a:hover {
   color: var(--color-deep-blue-light);
 }
 
+/* 제목 링크 스타일: 밑줄 제거 및 색상 유지 */
+.report-title .title-link {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit;       /* <h3>의 원래 색상 유지 */
+}
+
+.report-title .title-link:hover {
+    text-decoration: none; /* 마우스 올려도 밑줄 안 생기게 */
+}

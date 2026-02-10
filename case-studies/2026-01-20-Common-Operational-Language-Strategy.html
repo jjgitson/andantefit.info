@@ -575,76 +575,80 @@
           </SlideLayout>
         ),
 
-// Slide 13: Digitizing Standard
+// Slide 13: Digitizing Standard (이미지 축소 및 잘림 방지)
         (
           <SlideLayout title="Implementation" headline="Digitizing the Standard">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 h-full items-center">
               <div className="space-y-6">
                 <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-2xl border-2 border-teal-200">
                   <div className="flex items-start gap-4">
-                    <div className="w-2 h-20 bg-teal-600 rounded-full flex-shrink-0"></div>
-                    <p className="text-lg text-slate-800 leading-relaxed italic">
+                    <div className="w-1.5 h-16 bg-teal-600 rounded-full flex-shrink-0"></div>
+                    <p className="text-base lg:text-lg text-slate-800 leading-relaxed italic">
                       "Human interpretation is removed not to automate care, but to standardize meaning."
                     </p>
                   </div>
                 </div>
-                <div className="bg-slate-900 p-6 rounded-2xl text-white">
+                <div className="bg-slate-900 p-6 rounded-2xl text-white shadow-lg">
                   <h3 className="text-lg font-bold text-teal-400 mb-3">Sensor Fusion & Standard Protocol</h3>
                   <p className="text-sm text-slate-300 leading-relaxed">
                     Technological enablers that ensure every assessment is identical, regardless of the operator.
                   </p>
                 </div>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                <img 
-                  src="/assets/andatefit-sample-report.png" 
-                  alt="SPPB Report Preview" 
-                  className="w-full h-auto rounded-xl"
-                />
+
+              {/* 이미지 영역: 잘림 방지를 위해 max-height 제한 */}
+              <div className="flex justify-center items-center h-full">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm overflow-hidden max-w-full">
+                  <img 
+                    src="/assets/andatefit-sample-report.png" 
+                    alt="SPPB Report Preview" 
+                    className="w-full h-auto max-h-[480px] object-contain rounded-lg"
+                  />
+                </div>
               </div>
             </div>
           </SlideLayout>
         ),
 
-        // Slide 14: National Intelligence
+        // Slide 14: National Intelligence (지도 크기 최적화)
         (
           <SlideLayout title="System Impact" headline="From Local Assessments to National Frailty Intelligence">
-            <div className="space-y-6">
+            <div className="space-y-4">
               <p className="text-base text-slate-600">Standardized Step-2 functional data becomes a core indicator for ageing policy.</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <div className="bg-white p-4 rounded-2xl border border-slate-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div className="flex flex-col gap-3">
+                  {/* 지도가 잘리지 않도록 높이 제한 및 여백 조정 */}
+                  <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-inner flex justify-center items-center">
                     <img 
                       src="/assets/frailty-map.svg" 
                       alt="National Frailty Monitoring Map" 
-                      className="w-full h-auto rounded-xl"
+                      className="w-full h-auto max-h-[380px] object-contain" 
                     />
                   </div>
-                  {/* 지도 하단 안내 문구 추가 */}
-                  <p className="text-[10px] text-slate-400 leading-tight">
+                  <p className="text-[10px] text-slate-400 leading-tight px-1">
                     ※ Map shown is for illustrative purposes only and does not represent an actual program location.
                   </p>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                <div className="space-y-3">
+                  <div className="bg-blue-50/80 p-4 rounded-xl border border-blue-200">
                     <p className="text-sm text-slate-700 leading-relaxed">
                       Automated functional assessments at community and primary care levels generate standardized performance data in real time.
                     </p>
                   </div>
-                  <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                  <div className="bg-blue-50/80 p-4 rounded-xl border border-blue-200">
                     <p className="text-sm text-slate-700 leading-relaxed">
                       This allows health authorities to identify high-risk neighborhoods, prioritize interventions, and allocate resources more efficiently across the system.
                     </p>
                   </div>
                   <div className="bg-teal-50 p-4 rounded-xl border-2 border-teal-200">
-                    <p className="text-sm font-semibold text-slate-800">
+                    <p className="text-sm font-bold text-slate-800">
                       Standardized functional scores transform individual screenings into actionable national frailty intelligence.
                     </p>
                   </div>
-                  <div className="bg-slate-100 p-3 rounded-lg border-l-4 border-slate-300">
-                    <p className="text-xs text-slate-600 italic leading-relaxed">
+                  <div className="bg-slate-100 p-3 rounded-lg border-l-4 border-slate-400">
+                    <p className="text-[12px] text-slate-600 italic leading-relaxed">
                       "Frailty and sarcopenia are now central drivers of late-life disability. Functional performance data is becoming a core indicator for ageing policy"
                     </p>
                   </div>

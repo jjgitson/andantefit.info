@@ -71,7 +71,6 @@
         const caseStudies = htmlFiles.map(f => ({ ...parseFilename(f.name), url: `case-studies/${f.name}` })).sort((a,b) => b.date - a.date);
         
         container.innerHTML = caseStudies.map(s => {
-          // 한국어 판단 로직: 한글 포함 여부 또는 특정 파일 키워드
           const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(s.title) || 
                            s.filename.includes('Digital-Care-Platform') || 
                            s.filename.includes('Linking-Study') ||

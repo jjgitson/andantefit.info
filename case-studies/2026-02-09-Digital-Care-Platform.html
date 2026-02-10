@@ -323,29 +323,57 @@ const App = () => {
       </div>
     ),
 
-    // Slide 2: 도입
-    (
-      <SlideLayout
-        title="도입"
-        headline="디지털 복지관 중심 예방적 건강관리 플랫폼 구축 방향"
-      >
-        <div className="h-full flex items-center">
-          <div className="bg-white p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-sm max-w-4xl">
-            <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-              국내 여러 지자체가 추진 중인 스마트경로당과 디지털 복지관은 화려한 장비 도입에 비해,
-              지역사회 통합돌봄 안에서 고령자의 삶이 어떻게 개선되었는가라는 질문에는 충분히 답하지 못하고 있습니다.
-              <br/><br/>
-              현재의 인프라는 일회성 측정에 머물러, 수집된 데이터가 실제 중재나 사례 관리로 이어지지 못하는 한계가 있습니다.
-              <br/><br/>
-              이를 해결하기 위해 노인의학의 핵심인 신체기능을 공통 언어로 설정하고,
-              SPPB와 같은 표준 지표를 중심으로
-              측정–분석–개입–재평가의 선순환 구조를 제안합니다.
+// Slide 2: 도입
+(
+  <SlideLayout
+    title="도입"
+    headline="디지털 복지관 중심 예방적 건강관리 플랫폼 구축 방향"
+  >
+    <div className="h-full flex flex-col justify-center px-4 sm:px-12">
+      
+      {/* 문제 제기 */}
+      <div className="mb-12">
+        <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed mb-6">
+          국내 여러 지자체가 추진 중인 스마트경로당과 디지털 복지관은 화려한 장비 도입에 비해,
+          <span className="block mt-2 text-slate-500">
+            지역사회 통합돌봄 안에서 고령자의 삶이 어떻게 개선되었는가라는 질문에는 충분히 답하지 못하고 있습니다.
+          </span>
+        </p>
+      </div>
+
+      {/* 현재 한계 */}
+      <div className="mb-12">
+        <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed">
+          현재의 인프라는 <span className="font-bold text-slate-900">일회성 측정</span>에 머물러,
+          <span className="block mt-2 text-slate-500">
+            수집된 데이터가 실제 중재나 사례 관리로 이어지지 못하는 한계가 있습니다.
+          </span>
+        </p>
+      </div>
+
+      {/* 핵심 솔루션 - 강조 */}
+      <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-8 sm:p-10 rounded-3xl border-2 border-teal-200 shadow-lg">
+        <div className="flex items-start gap-4 mb-4">
+          <div className="w-2 h-16 bg-teal-600 rounded-full flex-shrink-0"></div>
+          <div>
+            <p className="text-lg sm:text-xl text-teal-700 font-semibold mb-3">
+              해결 방안
+            </p>
+            <p className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight mb-6">
+              <span className="text-teal-600">신체기능</span>을 
+              <span className="text-teal-600"> 공통 언어</span>로 설정
+            </p>
+            <p className="text-lg sm:text-xl text-slate-700 leading-relaxed">
+              SPPB와 같은 표준 지표를 중심으로<br/>
+              <span className="font-bold text-slate-900">측정 → 분석 → 개입 → 재평가</span>의 선순환 구조를 제안합니다.
             </p>
           </div>
         </div>
-      </SlideLayout>
-    ),
+      </div>
 
+    </div>
+  </SlideLayout>
+),
     // Slide 3: 배경과 문제
     (
       <SlideLayout

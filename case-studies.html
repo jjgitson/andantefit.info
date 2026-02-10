@@ -75,12 +75,16 @@
   <script>
     const GITHUB_CONFIG = { owner: 'jjgitson', repo: 'andantefit.info', folder: 'case-studies', branch: 'main' };
     
-    // 한국어 제목 매핑 테이블
+    // 한국어 제목 매핑 테이블 (실제 한국어 파일만)
     const koreanTitles = {
       'PRO-SPPB-Linking-Study': '자기보고 기반 신체기능(PRO)과 SPPB 공통 해석 기준',
-      'Digital-Care-Platform': '디지털 복지관 중심 예방적 건강관리 플랫폼',
-      'Common-Operational-Language-Strategy': '노인 통합 돌봄을 위한 공통 운영 언어 구축 전략',
-      'SPPB-Occupational-Health': 'SPPB 활용한 직업 건강 관리'
+      'Digital-Care-Platform': '디지털 복지관 중심 예방적 건강관리 플랫폼'
+    };
+    
+    // 영어 제목 매핑 (기본 제목보다 읽기 좋은 버전)
+    const englishTitles = {
+      'SPPB-Occupational-Health': 'SPPB Utilization in Occupational Health',
+      'Common-Operational-Language-Strategy': 'Strategic Proposal: Seamless Integrated Care for Older Adults'
     };
 
     function parseFilename(f) {
@@ -89,10 +93,13 @@
         const fileKey = m[4]; // 날짜 제외한 파일명 키
         const defaultTitle = m[4].replace(/-/g, ' ');
         
+        // 한국어 제목이 있으면 사용, 없으면 영어 제목, 그것도 없으면 기본 제목
+        const title = koreanTitles[fileKey] || englishTitles[fileKey] || defaultTitle;
+        
         return { 
           date: new Date(m[1], m[2]-1, m[3]), 
           dateStr: `${m[1]}.${m[2]}.${m[3]}`, 
-          title: koreanTitles[fileKey] || defaultTitle, // 매핑된 한국어 제목 우선 사용
+          title: title,
           filename: f,
           fileKey: fileKey
         };
@@ -116,8 +123,8 @@
         const caseStudies = htmlFiles.map(f => ({ ...parseFilename(f.name), url: `case-studies/${f.name}` })).sort((a,b) => b.date - a.date);
         
         container.innerHTML = caseStudies.map(s => {
-          // 한국어 제목이 매핑된 경우 또는 제목에 한글이 포함된 경우
-          const isKorean = koreanTitles[s.fileKey] || /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(s.title);
+          // koreanTitles에 매핑된 경우에만 한국어 배지 표시
+          const isKorean = koreanTitles.hasOwnProperty(s.fileKey);
           
           const badge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
           return `<div class="report-item">

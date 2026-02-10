@@ -495,12 +495,20 @@ a:hover {
   color: var(--color-deep-blue-light);
 }
 
-/* 제목 링크 스타일: 밑줄 제거 및 색상 유지 */
-.report-title .title-link {
-    text-decoration: none; /* 밑줄 제거 */
-    color: inherit;       /* <h3>의 원래 색상 유지 */
+/* 제목 링크 스타일 */
+.title-link {
+  color: var(--color-deep-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
 }
 
-.report-title .title-link:hover {
-    text-decoration: none; /* 마우스 올려도 밑줄 안 생기게 */
+.title-link:hover {
+  color: var(--color-deep-blue-light);
+  text-decoration: underline;
+}
+
+/* 전체 카드에도 호버 피드백 강화 (선택사항) */
+.report-item:hover .title-link {
+  color: var(--color-deep-blue-light);
 }

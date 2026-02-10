@@ -206,29 +206,33 @@
             url: `${GITHUB_CONFIG.folder}/${file.name}`
           }))
           .sort((a, b) => b.date - a.date);
-        
-        container.innerHTML = caseStudies.map(study => {
-          // 한국어 포함 여부 체크 (정규표현식)
-          const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(study.title);
-          const langBadge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
+       container.innerHTML = caseStudies.map(study => {
+    // 1. 파일명에 한글이 포함되어 있거나
+    // 2. 파일명이 'Digital-Care-Platform'으로 시작하거나
+    // 3. 파일명 끝에 '-KO'가 붙어있는 경우 한국어로 간주
+    const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(study.title) || 
+                     study.filename.includes('Digital-Care-Platform') ||
+                     study.filename.includes('-KO');
+                     
+    const langBadge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
 
-          return `
-            <div class="report-item">
-              <div class="report-date">${study.dateStr}</div>
-              <div class="report-main">
-                <h3 class="report-title">
-                  ${study.title}
-                  ${langBadge}
-                </h3>
-              </div>
-              <div class="report-link">
-                <a href="${study.url}" class="btn btn-primary btn-small">
-                  View Report →
-                </a>
-              </div>
-            </div>
-          `;
-        }).join('');
+    return `
+      <div class="report-item">
+        <div class="report-date">${study.dateStr}</div>
+        <div class="report-main">
+          <h3 class="report-title">
+            ${study.title}
+            ${langBadge}
+          </h3>
+        </div>
+        <div class="report-link">
+          <a href="${study.url}" class="btn btn-primary btn-small">
+            View Report →
+          </a>
+        </div>
+      </div>
+    `;
+  }).join('');
         
       } catch (error) {
         console.error('Error loading case studies:', error);

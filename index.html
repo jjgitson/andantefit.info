@@ -7,6 +7,9 @@
   <title>AndanteFit - Automated Physical Performance Assessment</title>
   <link rel="stylesheet" href="css/style.css">
   
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
   <script>
@@ -86,6 +89,70 @@
           The system's reliability is supported by multiple SCI-indexed publications demonstrating strong 
           agreement with conventional manual assessments.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Minute Assessment Process -->
+  <section class="section process-section">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-label">Seamless Workflow</span>
+        <h2 class="section-title">Standardized Assessment in Under 3 Minutes</h2>
+        <p class="section-subtitle">
+          AndanteFit streamlines physical performance testing through a fully automated pipeline, 
+          from sensor calibration to clinical reporting.
+        </p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-card">
+          <div class="process-icon-wrapper">
+            <i class="fas fa-person-standing process-icon"></i>
+            <span class="step-number">01</span>
+          </div>
+          <h3 class="process-step-title">Standing Balance</h3>
+          <p class="process-step-desc">
+            Automatically tracks holding times for side-by-side, semi-tandem, and tandem stances 
+            with zero manual intervention.
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-icon-wrapper">
+            <i class="fas fa-gauge-high process-icon"></i>
+            <span class="step-number">02</span>
+          </div>
+          <h3 class="process-step-title">Gait Speed</h3>
+          <p class="process-step-desc">
+            Precision LiDAR technology captures 3m/4m gait speed at millisecond accuracy, 
+            eliminating human timing errors.
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-icon-wrapper">
+            <i class="fas fa-chair process-icon"></i>
+            <span class="step-number">03</span>
+          </div>
+          <h3 class="process-step-title">Chair Stand</h3>
+          <p class="process-step-desc">
+            Real-time motion tracking records five repetitive sit-to-stand cycles, 
+            ensuring strict protocol adherence.
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-icon-wrapper">
+            <i class="fas fa-file-medical process-icon"></i>
+            <span class="step-number">04</span>
+          </div>
+          <h3 class="process-step-title">Clinical Report</h3>
+          <p class="process-step-desc">
+            Instantly generates a standardized SPPB report with tailored intervention guides 
+            and longitudinal data analysis.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -255,6 +322,166 @@
       </p>
     </div>
   </section>
+
+  <!-- Process Section CSS -->
+  <style>
+    /* Process Section */
+    .process-section {
+      padding: 80px 0;
+      background-color: #ffffff;
+    }
+
+    .section-header.center {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 60px;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #666;
+      margin-top: 16px;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      position: relative;
+    }
+
+    .process-card {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      padding: 40px 24px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      text-align: center;
+      height: 100%;
+    }
+
+    .process-card:hover {
+      transform: translateY(-8px);
+      border-color: #1F6FB2;
+      box-shadow: 0 20px 40px rgba(15, 76, 129, 0.08);
+    }
+
+    .process-icon-wrapper {
+      width: 72px;
+      height: 72px;
+      background-color: #F8F9FA;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: #0F4C81;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .process-card:hover .process-icon-wrapper {
+      background-color: #0F4C81;
+      color: #ffffff;
+      transform: rotate(-5deg);
+    }
+
+    .process-icon {
+      font-size: 32px;
+    }
+
+    .step-number {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #1F6FB2;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #ffffff;
+    }
+
+    .process-step-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1a1a1a;
+      letter-spacing: -0.02em;
+    }
+
+    .process-step-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #666;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .process-section {
+        padding: 60px 20px;
+      }
+
+      .section-header.center {
+        margin-bottom: 40px;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .process-card {
+        padding: 32px 20px;
+      }
+
+      .process-icon-wrapper {
+        width: 64px;
+        height: 64px;
+      }
+
+      .process-icon {
+        font-size: 28px;
+      }
+
+      .process-step-title {
+        font-size: 1.125rem;
+      }
+
+      .process-step-desc {
+        font-size: 0.875rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-subtitle {
+        font-size: 1rem;
+      }
+
+      .process-icon-wrapper {
+        width: 56px;
+        height: 56px;
+      }
+
+      .process-icon {
+        font-size: 24px;
+      }
+
+      .step-number {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+      }
+    }
+  </style>
 
   <!-- 모바일 대응 스타일 -->
   <style>

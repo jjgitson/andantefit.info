@@ -79,76 +79,77 @@
 
 
 
-  
-  <script src="js/main.js"></script>
-  <script>
+<script src="js/main.js"></script>
+<script>
     const GITHUB_CONFIG = { owner: 'jjgitson', repo: 'andantefit.info', folder: 'case-studies', branch: 'main' };
     
     // 한국어 제목 매핑 테이블 (실제 한국어 파일만)
     const koreanTitles = {
-      'PRO-SPPB-Linking-Study': '자기보고 기반 신체기능(PRO)과 SPPB 공통 해석 기준',
-      'Digital-Care-Platform': '디지털 복지관 중심 예방적 건강관리 플랫폼'
+        'PRO-SPPB-Linking-Study': '자기보고 기반 신체기능(PRO)과 SPPB 공통 해석 기준',
+        'Digital-Care-Platform': '디지털 복지관 중심 예방적 건강관리 플랫폼'
     };
     
     // 영어 제목 매핑 (기본 제목보다 읽기 좋은 버전)
     const englishTitles = {
-      'SPPB-Occupational-Health': 'SPPB Utilization in Occupational Health',
-      'Common-Operational-Language-Strategy': 'Strategic Proposal: Seamless Integrated Care for Older Adults'
+        'SPPB-Occupational-Health': 'SPPB Utilization in Occupational Health',
+        'Common-Operational-Language-Strategy': 'Strategic Proposal: Seamless Integrated Care for Older Adults'
     };
 
     function parseFilename(f) {
-      const m = f.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
-      if (m) {
-        const fileKey = m[4]; // 날짜 제외한 파일명 키
-        const defaultTitle = m[4].replace(/-/g, ' ');
-        
-        // 한국어 제목이 있으면 사용, 없으면 영어 제목, 그것도 없으면 기본 제목
-        const title = koreanTitles[fileKey] || englishTitles[fileKey] || defaultTitle;
-        
+        const m = f.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
+        if (m) {
+            const fileKey = m[4]; 
+            const defaultTitle = m[4].replace(/-/g, ' ');
+            const title = koreanTitles[fileKey] || englishTitles[fileKey] || defaultTitle;
+            
+            return { 
+                date: new Date(m[1], m[2]-1, m[3]), 
+                dateStr: `${m[1]}.${m[2]}.${m[3]}`, 
+                title: title,
+                filename: f,
+                fileKey: fileKey
+            };
+        }
+        console.warn('Invalid filename format:', f);
         return { 
-          date: new Date(m[1], m[2]-1, m[3]), 
-          dateStr: `${m[1]}.${m[2]}.${m[3]}`, 
-          title: title,
-          filename: f,
-          fileKey: fileKey
+            date: new Date(0), 
+            dateStr: '----.--.--', 
+            title: f.replace('.html', '').replace(/-/g, ' '), 
+            filename: f,
+            fileKey: f
         };
-      }
-      console.warn('Invalid filename format:', f);
-      return { 
-        date: new Date(0), 
-        dateStr: '----.--.--', 
-        title: f.replace('.html', '').replace(/-/g, ' '), 
-        filename: f,
-        fileKey: f
-      };
     }
 
     async function loadCaseStudies() {
-      const container = document.getElementById('caseStudiesContainer');
-      try {
-        const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`);
-        const files = await res.json();
-        const htmlFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.html'));
-        const caseStudies = htmlFiles.map(f => ({ ...parseFilename(f.name), url: `case-studies/${f.name}` })).sort((a,b) => b.date - a.date);
-        
-        container.innerHTML = caseStudies.map(s => {
-          // koreanTitles에 매핑된 경우에만 한국어 배지 표시
-          const isKorean = koreanTitles.hasOwnProperty(s.fileKey);
-          
-          const badge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
-          return `<div class="report-item">
-                    <div class="report-date">${s.dateStr}</div>
-                    <div class="report-main"><h3 class="report-title">${s.title} ${badge}</h3></div>
-                    <div class="report-link"><a href="${s.url}" class="btn btn-primary btn-small">View Report →</a></div>
-                  </div>`;
-        }).join('');
-      } catch (e) { 
-        console.error('Error loading case studies:', e);
-        container.innerHTML = '<p>Error loading reports.</p>'; 
-      }
+        const container = document.getElementById('caseStudiesContainer');
+        try {
+            const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`);
+            const files = await res.json();
+            const htmlFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.html'));
+            const caseStudies = htmlFiles.map(f => ({ ...parseFilename(f.name), url: `case-studies/${f.name}` })).sort((a,b) => b.date - a.date);
+            
+            container.innerHTML = caseStudies.map(s => {
+                const isKorean = koreanTitles.hasOwnProperty(s.fileKey);
+                const badge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
+                
+                // 수정된 부분: s.title을 a 태그로 감싸고 title-link 클래스 부여
+                return `<div class="report-item">
+                            <div class="report-date">${s.dateStr}</div>
+                            <div class="report-main">
+                                <h3 class="report-title">
+                                    <a href="${s.url}" class="title-link">${s.title}</a> ${badge}
+                                </h3>
+                            </div>
+                            <div class="report-link"><a href="${s.url}" class="btn btn-primary btn-small">View Report →</a></div>
+                        </div>`;
+            }).join('');
+        } catch (e) { 
+            console.error('Error loading case studies:', e);
+            container.innerHTML = '<p>Error loading reports.</p>'; 
+        }
     }
     
     loadCaseStudies();
-  </script>
+</script>
 </body>
 </html>

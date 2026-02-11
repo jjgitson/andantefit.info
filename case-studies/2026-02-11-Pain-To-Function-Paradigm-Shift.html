@@ -1,34 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>통증 치료의 새로운 활력 징후, 기능(Function) | AndanteFit</title>
-  <link rel="stylesheet" href="../css/style.css">
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- React CDN -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Babel for JSX -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
-  <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="통증 치료에서 주관적 통증 점수(NRS/VAS)를 넘어, SPPB 기반 기능 지표로 회복을 추적하는 임상 적용 개요. AndanteFit 사례 자료." name="description"/>
+<meta content="AndanteFit, SPPB, 신체기능평가, 통증 치료, 기능 회복, 보행속도, 5회 의자 일어서기, 균형검사, 근감소증, 노쇠, 척추관협착증, ESI" name="keywords"/>
+<meta content="DYPHI Inc." name="author"/>
+<meta content="index,follow" name="robots"/>
+<meta content="website" property="og:type"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="AndanteFit" property="og:site_name"/>
+<meta content="통증 치료의 새로운 활력 징후, 기능(Function) | AndanteFit" property="og:title"/>
+<meta content="통증 점수만으로 설명이 어려운 임상 상황에서, SPPB 기반 기능 지표를 함께 확인해 치료 반응과 추세를 파악하는 접근을 소개합니다." property="og:description"/>
+<meta content="../assets/andantefit-logo.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="통증 치료의 새로운 활력 징후, 기능(Function) | AndanteFit" name="twitter:title"/>
+<meta content="SPPB 기반 기능 지표로 통증 치료의 반응과 회복을 추적하는 임상 적용 개요." name="twitter:description"/>
+<title>통증 치료의 새로운 활력 징후, 기능(Function) | AndanteFit</title>
+<link href="../css/style.css" rel="stylesheet"/>
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- React CDN -->
+<script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<!-- Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+<script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-0L4ENVHFYP');
   </script>
-
-  <style>
+<style>
     html, body { height: 100%; }
     body { margin: 0; background: #e2e8f0; }
     #root { min-height: 100%; }
@@ -42,29 +50,26 @@
     .slideSurface { background: white; }
   </style>
 </head>
-
 <body>
-  <!-- AndanteFit Navigation -->
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="../index.html" class="nav-logo">
-        <img src="../assets/andantefit-logo.png" alt="AndanteFit">
-      </a>
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="../index.html" class="nav-link">Home</a></li>
-        <li><a href="../product.html" class="nav-link">Product</a></li>
-        <li><a href="../validation.html" class="nav-link">Validation</a></li>
-        <li><a href="../case-studies.html" class="nav-link active">Case Studies</a></li>
-        <li><a href="../references.html" class="nav-link">References</a></li>
-      </ul>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
-    </div>
-  </nav>
-
-  <div id="root" class="appFont"></div>
-
-  <!-- React App -->
-  <script type="text/babel">
+<!-- AndanteFit Navigation -->
+<nav class="nav">
+<div class="nav-container">
+<a class="nav-logo" href="../index.html">
+<img alt="AndanteFit" src="../assets/andantefit-logo.png"/>
+</a>
+<ul class="nav-menu" id="navMenu">
+<li><a class="nav-link" href="../index.html">Home</a></li>
+<li><a class="nav-link" href="../product.html">Product</a></li>
+<li><a class="nav-link" href="../validation.html">Validation</a></li>
+<li><a class="nav-link active" href="../case-studies.html">Case Studies</a></li>
+<li><a class="nav-link" href="../references.html">References</a></li>
+</ul>
+<button aria-label="Toggle navigation" class="nav-toggle" id="navToggle">☰</button>
+</div>
+</nav>
+<div class="appFont" id="root"></div>
+<!-- React App -->
+<script type="text/babel">
     const { useState, useEffect } = React;
 
     // Embedded SVG assets (local, for this page)
@@ -136,7 +141,7 @@
                 <p className="text-sm text-slate-500">
                   정형외과 · 신경외과 · 마취통증의학과 · 재활의학과 전문의를 위한
                 </p>
-                <p className="text-xs text-slate-400 mt-2">Prepared by DYPHI Inc.</p>
+                <p className="text-xs text-slate-400 mt-2">제작: DYPHI Inc.</p>
               </div>
             </div>
           </div>
@@ -300,7 +305,7 @@
                   참고 이미지(예시): 기능 지표를 포함한 평가 항목 구성
                 </p>
                 <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
-                  <img src={CMS_TABLE_SVG} alt="Functional outcome example table" className="w-full h-auto block" />
+                  <img src={CMS_TABLE_SVG} alt="기능 지표 예시 표" className="w-full h-auto block" />
                 </div>
               </div>
 
@@ -367,7 +372,7 @@
                   참고 이미지(예시): 시술 전후 기능 지표 변화 시각화
                 </p>
                 <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
-                  <img src={NERVE_BLOCK_CHART_SVG} alt="Functional outcome example chart" className="w-full h-auto block" />
+                  <img src={NERVE_BLOCK_CHART_SVG} alt="기능 지표 예시 그래프" className="w-full h-auto block" />
                 </div>
               </div>
 
@@ -685,7 +690,7 @@
               <div className="mt-12 pt-8 border-t border-white/20">
                 <p className="text-slate-300 text-xs leading-relaxed mb-3">본 자료는 의료진을 위한 정보 제공 목적이며, 개별 환자에 대한 진단·치료 판단은 의료진의 임상적 판단과 환자 상태에 따라 결정됩니다.</p>
                 <p className="text-white text-sm font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
-                <p className="text-slate-400 text-xs">Automated Physical Performance Assessment for Clinical Excellence</p>
+                <p className="text-slate-400 text-xs">임상 현장을 위한 자동화 신체기능 평가</p>
               </div>
             </div>
           </div>
@@ -712,30 +717,29 @@
     // Render
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
-
-  <!-- AndanteFit Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>AndanteFit</h4>
-          <p>Developed and provided by DYPHI Inc.<br>
-          Automated physical performance assessment for frailty and sarcopenia research.</p>
-        </div>
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <p>
-            <a href="../product.html">Product</a><br>
-            <a href="../validation.html">Validation</a><br>
-            <a href="../case-studies.html">Case Studies</a><br>
-            <a href="../references.html">References</a>
-          </p>
-        </div>
-        <div class="footer-section">
-          <h4>Contact</h4>
-          <p>Email: <a href="/cdn-cgi/l/email-protection#6a1904072a0e131a020344090507"><span class="__cf_email__" data-cfemail="0d7e63604d69747d6564236e6260">[email&#160;protected]</span></a><br>
-          Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br>
+<!-- AndanteFit Footer -->
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h4>AndanteFit</h4>
+<p>개발 및 제공: DYPHI Inc.<br/>
+          노쇠 및 근감소증 연구를 위한 자동화 신체기능 평가 솔루션.</p>
+</div>
+<div class="footer-section">
+<h4>바로가기</h4>
+<p>
+<a href="../product.html">Product</a><br/>
+<a href="../validation.html">Validation</a><br/>
+<a href="../case-studies.html">Case Studies</a><br/>
+<a href="../references.html">References</a>
+</p>
+</div>
+<div class="footer-section">
+<h4>문의</h4>
+<p>Email: <a href="/cdn-cgi/l/email-protection#6a1904072a0e131a020344090507"><span class="__cf_email__" data-cfemail="0d7e63604d69747d6564236e6260">[email protected]</span></a><br/>
+          Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
           Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu</p>
-        </div>
-      </div>
-      <div class="footer-bottom">© 
+</div>
+</div>
+<div class="footer-bottom">© </div></div></footer></body></html>

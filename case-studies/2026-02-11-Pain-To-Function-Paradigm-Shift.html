@@ -77,8 +77,8 @@
       const num = String(index + 1).padStart(2, "0");
       return (
         <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
-          <div className={`relative w-full max-w-[1280px] md:h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
-            <div className="w-full md:h-full h-auto overflow-visible">
+          <div className={`relative w-full max-w-[1280px] md:min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+            <div className="w-full h-auto overflow-visible pb-12">
               {children}
             </div>
             <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
@@ -92,7 +92,7 @@
     };
 
     const SlideLayout = ({ title, headline, children }) => (
-      <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
+      <div className="w-full h-auto flex flex-col p-6 sm:p-10">
         <header className="mb-5 sm:mb-6">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
@@ -100,7 +100,7 @@
           </div>
           <h2 className="text-[24px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
         </header>
-        <div className="flex-1 md:overflow-hidden overflow-visible">
+        <div className="flex-1 overflow-visible">
           {children}
         </div>
       </div>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>연구 브리프: PRO–SPPB 공통의 해석 기준 마련 | AndanteFit</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --brand-deep: #0B2F4C;
+      --brand-deep-2: #0A2540;
+      --brand-grey: #1f2937;
+      --brand-bg: #F8FAFC;
+      --brand-mint: #18bfb3;
+      --brand-mint-dark: #14a399;
+      --brand-mint-light: #E8F9F8;
+      --card: #ffffff;
+      --line: #E2E8F0;
+      --muted: #64748B;
+      --shadow: rgba(15, 23, 42, 0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+      background: var(--brand-bg);
+      color: #1E293B;
+      scroll-behavior: smooth;
+      word-break: keep-all;
+    }
+
+    .font-poppins { font-family: 'Poppins', sans-serif; }
+    .section-padding { padding: 6rem 1.25rem; }
+    .text-deep { color: var(--brand-deep); }
+    .text-mint { color: var(--brand-mint); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .lift:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -12px var(--shadow);
+      border-color: var(--brand-mint);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: var(--brand-mint-light);
+      color: var(--brand-deep);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .kbd {
+      font-family: ui-monospace, monospace;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.4rem;
+      background: #F1F5F9;
+      color: var(--brand-deep);
+      font-weight: 600;
+    }
+
+    input[type="range"] {
+      height: 6px;
+      -webkit-appearance: none;
+      background: #E2E8F0;
+      border-radius: 9999px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--brand-mint);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid white;
+    }
+
+    .hero-gradient {
+      background: radial-gradient(circle at top right, #f0fdfa, transparent 40%),
+                  radial-gradient(circle at bottom left, #f8fafc, transparent 40%);
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/andantefit-logo.png" alt="AndanteFit">
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../product.html" class="nav-link">Product</a></li>
+        <li><a href="../validation.html" class="nav-link">Validation</a></li>
+        <li><a href="../case-studies.html" class="nav-link active">Case Studies</a></li>
+        <li><a href="../references.html" class="nav-link">References</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+    </div>
+  </nav>
+
+  <header style="background: #FFFFFF; padding: 60px 20px; text-align: center; border-bottom: 2px solid #E2E8F0;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <span class="section-label">Research Brief</span>
+      <h1 style="font-size: 2.5rem; color: #0F172A; margin-top: 15px; font-weight: 800; line-height: 1.2;">
+        자기보고 기반 신체기능(PRO)과 SPPB 수행 결과를,<br class="hidden md:block"> 하나의 공통 척도(T-score)에서 비교 해석
+      </h1>
+      <div style="color: #64748B; font-size: 0.875rem; margin-top: 10px;">February 08, 2026 · DYPHI Research Team</div>
+    </div>
+  </header>
+
+  <section id="overview" class="bg-white hero-gradient border-b border-slate-100 overflow-hidden" style="padding: 40px 0;">
+    <div class="max-w-6xl mx-auto px-6 relative">
+      <div class="max-w-4xl relative z-10">
+        <span class="badge mb-8">
+          <i class="fa-solid fa-shield-halved"></i>
+          자기보고의 표준화 연결
+        </span>
+
+        <div class="mt-10 space-y-6 text-lg md:text-xl text-slate-600 leading-relaxed font-light">
+          <p>
+            독일 샤리테 의과대학 연구진은 SPPB를 PRO의 표준 지표인 <span class="font-semibold text-slate-800">PROMIS Physical Function T-score</span>와 같은 축에서 해석할 수 있음을 제시했습니다.
+          </p>
+          <p>
+            임상과 연구 현장에서는 자기보고(PRO)와 수행 기반 평가(SPPB)가 병행되지만, 서로 다른 척도를 사용해 직접 비교나 통합 해석이 어렵다는 한계가 있었습니다.
+          </p>
+          <p>
+            이번 결과는 두 평가를 대체 관계가 아니라 <span class="font-semibold text-slate-800 underline decoration-mint decoration-4 underline-offset-4">연결 가능한 관계</span>로 정리해, 동일한 언어로 요약·보고할 수 있는 기반을 제공합니다.
+          </p>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-6 bg-white/50 backdrop-blur-sm">
+            <div class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-3">핵심 메시지</div>
+            <div class="text-slate-900 font-medium leading-relaxed">
+              서로 다른 측정(자가 보고, 기능 평가)을 같은 기준 위에서 비교하고 설명할 수 있음.
+            </div>
+          </div>
+          <div class="card p-6 bg-white/50 backdrop-blur-sm">
+            <div class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-3">임상 포인트</div>
+            <div class="text-slate-900 font-medium leading-relaxed">
+              SPPB 9점을 “평균보다 낮은 기능(T-score 약 40)”처럼 표준화된 언어로 리포트할 수 있음.
+            </div>
+          </div>
+          <div class="card p-6 bg-white/50 backdrop-blur-sm">
+            <div class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-3">현장 적용</div>
+            <div class="text-slate-900 font-medium leading-relaxed">
+              AndanteFit은 eSPPB 형태로 표준 프로토콜 기반의 일관된 데이터 획득을 지원함.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="linking" class="section-padding">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="text-mint font-bold text-xs uppercase tracking-[0.3em]">Conceptual infographic</span>
+        <h2 class="mt-4 text-3xl md:text-4xl font-extrabold text-slate-900">PROMIS PF와 SPPB를 하나의 척도(T-score)로 연결</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          SPPB 결과를 PROMIS PF T-score라는 공통 기준에서 비교해 해석할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="card p-8 md:p-12 shadow-xl shadow-slate-200/50 border-none">
+        <div class="grid grid-cols-1 lg:grid-cols-11 gap-8 items-center">
+          <div class="lg:col-span-4 card p-8 lift border-slate-100 bg-slate-50/50">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-100 grid place-items-center text-deep text-xl">
+                <i class="fa-solid fa-comment-dots"></i>
+              </div>
+              <div>
+                <div class="text-slate-900 font-bold text-lg">PROMIS Physical Function</div>
+                <div class="text-mint text-xs font-bold uppercase tracking-wider">자기보고 기반 신체기능</div>
+              </div>
+            </div>
+            <div class="space-y-4 text-sm text-slate-600">
+              <div class="flex items-start gap-3">
+                <span class="kbd">자기보고</span> <span>환자가 느끼는 기능을 구조적으로 측정합니다.</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="kbd">T-점수</span> <span>일반 인구 평균 50, 표준편차 10으로 표준화해 해석합니다.</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="kbd">활용</span> <span>연구와 임상 커뮤니케이션에서 널리 쓰입니다.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 flex flex-col items-center justify-center gap-3">
+            <div class="arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="text-center px-3">
+              <div class="text-slate-900 font-bold">공통 척도로 연결</div>
+              <div class="text-xs text-slate-600 mt-1">T-score 기준에서 상호 비교</div>
+            </div>
+            <div class="arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="transform: rotate(180deg);">
+                <path d="M5 12h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 card p-8 lift border-slate-100 bg-slate-50/50">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-100 grid place-items-center text-deep text-xl">
+                <i class="fa-solid fa-person-walking"></i>
+              </div>
+              <div>
+                <div class="text-slate-900 font-bold text-lg">SPPB</div>
+                <div class="text-mint text-xs font-bold uppercase tracking-wider">신체수행능력 평가</div>
+              </div>
+            </div>
+            <div class="space-y-4 text-sm text-slate-600">
+              <div class="flex items-start gap-3">
+                <span class="kbd">보행</span> <span>4m 보행속도를 측정합니다.</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="kbd">하지</span> <span>5회 일어서기 능력을 평가합니다.</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="kbd">균형</span> <span>정적 균형 과제 수행으로 기능을 관찰합니다.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-11 mt-8">
+            <div class="rounded-[2rem] bg-slate-900 p-8 text-white">
+              <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                  <h3 class="text-xl font-bold mb-3">공통 척도: PROMIS PF T-score</h3>
+                  <p class="text-slate-400 text-sm leading-relaxed max-w-lg">
+                    동일한 기준으로 보고하고 비교할 수 있어, 연구·병원·정책 커뮤니케이션의 일관성이 높아집니다.
+                  </p>
+                </div>
+                <div class="w-full md:w-auto bg-white/10 rounded-2xl p-6 border border-white/10">
+                   <div class="text-xs font-bold text-mint uppercase tracking-wider mb-2">Example Case</div>
+                   <div class="text-xl font-black text-white mb-4 text-center">SPPB 9점 ≈ T-score 40</div>
+                   <div class="space-y-2">
+                      <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                        <span>20</span><span>40</span><span class="text-mint font-bold">50</span><span>60</span><span>80</span>
+                      </div>
+                      <div class="h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+                        <div class="h-full bg-mint" style="width: 40%"></div>
+                      </div>
+                      <p class="text-[10px] text-slate-400 mt-2 italic text-center">평균(50)보다 낮은 기능 수준으로 해석</p>
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="crosswalk" class="section-padding bg-slate-50/50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="text-mint font-bold text-xs uppercase tracking-[0.3em]">Cross-walk (Korean)</span>
+        <h2 class="mt-4 text-3xl font-extrabold text-slate-900">SPPB 9점의 새로운 의미</h2>
+        <p class="mt-4 text-slate-700 max-w-3xl mx-auto leading-relaxed">
+          SPPB 결과를 PROMIS Physical Function T-score라는 공통 척도에서 해석할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="card p-8 md:p-10 border-slate-200">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+            <div class="md:col-span-4">
+              <div class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-2">Key point</div>
+              <div class="text-slate-900 font-bold text-xl">SPPB 9점 ≈ T-score 40.0</div>
+              <div class="mt-2 text-slate-600 text-sm">평균보다 낮은 기능 수준을 표준화 언어로 설명</div>
+            </div>
+            <div class="md:col-span-8">
+              <p class="text-slate-700 leading-relaxed">
+                연구는 SPPB 점수가 PROMIS Physical Function T-score와 같은 축에서 해석될 수 있음을 보여줍니다. 특히 SPPB 9점은 T-score 약 40.0 수준으로 제시되며, 평균(50)보다 1 표준편차 낮은 수준으로 설명할 수 있습니다.
+              </p>
+              <div class="mt-6 rounded-2xl border border-mint/30 bg-mint/5 p-5 text-sm text-slate-800 font-medium">
+                <i class="fa-solid fa-circle-info text-mint mr-2"></i>
+                해석 포인트: SPPB와 PRO를 하나의 기준에서 비교 가능한 형태로 정리할 수 있습니다.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-8 md:p-10 border-slate-200">
+          <div class="mb-8">
+            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Simulation</span>
+            <h3 class="text-xl font-bold text-slate-900 mt-2">점수 변환 예시</h3>
+            <p class="text-slate-600 text-sm mt-1">SPPB 점수를 입력하면 예상 T-score와 해석 문장이 표시됩니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div class="lg:col-span-5 space-y-6">
+              <div>
+                <label class="text-xs font-bold text-slate-500 uppercase mb-3 block">SPPB 입력 (0-12)</label>
+                <div class="flex items-center gap-4">
+                  <input id="sppbInput" type="number" min="0" max="12" value="9" class="w-20 text-center rounded-xl border-2 border-slate-100 px-3 py-2 text-xl font-bold text-deep outline-none focus:border-mint transition-colors" />
+                  <input id="sppbRange" type="range" min="0" max="12" value="9" class="flex-1 cursor-pointer" />
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-500 leading-relaxed italic border-l-2 border-slate-200 pl-4">
+                변환 값은 연구의 cross-walk 결과(Table 4)를 참고해 구성했으며, 표에 없는 점수는 구간 내 단순 보간으로 표시한 예시입니다.
+              </p>
+            </div>
+
+            <div class="lg:col-span-7">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="card p-6 bg-slate-50 border-none">
+                  <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">예상 T-score</div>
+                  <div id="tScoreOut" class="text-4xl font-black text-deep">40.0</div>
+                </div>
+                <div class="card p-6 bg-slate-50 border-none">
+                  <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">해석(예시)</div>
+                  <div id="levelKoOut" class="text-xl font-bold text-slate-900">평균보다 낮음</div>
+                  <div id="levelOut" class="text-xs text-slate-500 uppercase mt-1">Below average</div>
+                </div>
+                <div class="sm:col-span-2 card p-6 bg-slate-900 text-white border-none shadow-lg">
+                  <p id="reportOut" class="text-md font-medium leading-relaxed">
+                    SPPB 9점은 T-score 40.0 수준으로, 평균보다 낮은 기능 수준으로 해석할 수 있습니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-slate-100/30">
+    <div class="max-w-6xl mx-auto px-6">
+      <h3 class="text-xl font-bold mb-8">Selected References</h3>
+      <ul class="space-y-6">
+        <li class="group">
+          <div class="text-mint font-bold text-xs mb-1 opacity-90">Primary Source</div>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Liegl, et al. (2026). Bridging patient-reported outcomes and performance assessments in older adults: linking the Short Physical Performance Battery to the standardised PROMIS Physical Function scale. <em>Age and Ageing</em>.
+            <br><a href="https://doi.org/10.1093/ageing/afaf375" target="_blank" rel="noopener noreferrer" class="text-mint underline underline-offset-2">https://doi.org/10.1093/ageing/afaf375</a>
+          </p>
+        </li>
+        <li>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Cella, D., et al. (2010). The Patient-Reported Outcomes Measurement Information System (PROMIS). Journal of Clinical Epidemiology.
+          </p>
+        </li>
+        <li>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Guralnik, J. M., et al. (1994). A short physical performance battery assessing lower extremity function. Journal of Gerontology.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>AndanteFit</h4>
+          <p>
+            Developed and provided by DYPHI Inc.<br>
+            Automated physical performance assessment for frailty and sarcopenia research.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <p>
+            <a href="../product.html">Product</a><br>
+            <a href="../validation.html">Validation</a><br>
+            <a href="../case-studies.html">Case Studies</a><br>
+            <a href="../references.html">References</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>
+            Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br>
+            Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br>
+            Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 DYPHI Inc. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // 기존 시뮬레이션 스크립트 유지
+    const mapping = [
+      { sppb: 0, t: 25.0 },
+      { sppb: 4, t: 33.0 },
+      { sppb: 8, t: 39.0 },
+      { sppb: 9, t: 40.0 },
+      { sppb: 10, t: 45.0 },
+      { sppb: 12, t: 51.1 },
+    ];
+
+    function clamp(v, min, max){ return Math.min(max, Math.max(min, v)); }
+
+    function interpT(sppb){
+      const x = clamp(Number(sppb), 0, 12);
+      for (const p of mapping){ if (p.sppb === x) return p.t; }
+      let left = mapping[0], right = mapping[mapping.length-1];
+      for (let i=0;i<mapping.length-1;i++){
+        if (x > mapping[i].sppb && x < mapping[i+1].sppb){
+          left = mapping[i]; right = mapping[i+1]; break;
+        }
+      }
+      const ratio = (x - left.sppb) / (right.sppb - left.sppb);
+      return left.t + ratio * (right.t - left.t);
+    }
+
+    function labelFromT(t){
+      if (t < 35) return { en: "Well below average", ko: "평균보다 크게 낮음", color: "text-red-500" };
+      if (t < 45) return { en: "Below average", ko: "평균보다 낮음", color: "text-amber-500" };
+      return { en: "Near average", ko: "평균에 근접", color: "text-mint" };
+    }
+
+    function updateCalc(v){
+      const sppb = clamp(parseInt(v,10) || 0, 0, 12);
+      const t = interpT(sppb);
+      const tFixed = (Math.round(t * 10) / 10).toFixed(1);
+      const lab = labelFromT(t);
+
+      document.getElementById("sppbInput").value = sppb;
+      document.getElementById("sppbRange").value = sppb;
+      document.getElementById("tScoreOut").textContent = tFixed;
+      document.getElementById("levelOut").textContent = lab.en;
+      
+      const levelKoEl = document.getElementById("levelKoOut");
+      levelKoEl.textContent = lab.ko;
+      levelKoEl.className = "text-xl font-bold " + lab.color;
+
+      const report = `SPPB ${sppb}점은 T-score ${tFixed} 수준으로, ${lab.ko} 기능 수준으로 해석할 수 있습니다.`;
+      document.getElementById("reportOut").textContent = report;
+    }
+
+    const input = document.getElementById("sppbInput");
+    const range = document.getElementById("sppbRange");
+    input.addEventListener("input", (e)=> updateCalc(e.target.value));
+    range.addEventListener("input", (e)=> updateCalc(e.target.value));
+    updateCalc(9);
+  </script>
+</body>
+</html>

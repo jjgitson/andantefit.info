@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPPB Utilization in Occupational Health - AndanteFit</title>
+  
+  <!-- AndanteFit Base Stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Page-Specific Styles */
+    body {
+      font-family: 'Noto Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    
+    /* Chart Container Styling */
+    .chart-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 300px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .chart-wrapper {
+        height: 350px;
+      }
+    }
+    
+    /* Custom Range Slider */
+    input[type=range] {
+      -webkit-appearance: none; 
+      background: transparent; 
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #0F4C81;
+      cursor: pointer;
+      margin-top: -10px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 4px;
+      cursor: pointer;
+      background: #cbd5e1;
+      border-radius: 2px;
+    }
+
+    /* AndanteFit Brand Palette Overrides */
+    :root {
+      --af-primary: #0F4C81;
+      --af-primary-700: #0B3A62;
+      --af-primary-500: #1F6FB2;
+      --af-primary-100: #E8F1FB;
+      --af-primary-50: #F4F8FE;
+      --af-text: #0F172A;
+    }
+    
+    /* Override Tailwind Blue Utilities */
+    .text-blue-900, .text-blue-800, .text-blue-700, .text-blue-600 {
+      color: var(--af-primary) !important;
+    }
+    .text-blue-400 { color: var(--af-primary-500) !important; }
+    .text-blue-300 { color: rgba(31,111,178,0.75) !important; }
+    .text-blue-100 { color: rgba(232,241,251,0.92) !important; }
+    
+    .bg-blue-600, .bg-blue-500 { background-color: var(--af-primary) !important; }
+    .bg-blue-100 { background-color: var(--af-primary-100) !important; }
+    .bg-blue-50 { background-color: var(--af-primary-50) !important; }
+    
+    .border-blue-200 { border-color: rgba(15,76,129,0.18) !important; }
+    .border-blue-100 { border-color: rgba(15,76,129,0.12) !important; }
+    .border-blue-400 { border-color: rgba(15,76,129,0.35) !important; }
+    
+    .hover\:text-blue-600:hover { color: var(--af-primary) !important; }
+    .hover\:border-blue-500:hover { border-color: rgba(15,76,129,0.45) !important; }
+    .hover\:bg-blue-700:hover { background-color: var(--af-primary-700) !important; }
+    .bg-blue-600.hover\:bg-blue-700:hover { background-color: var(--af-primary-700) !important; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><img src="../assets/andantefit-logo.png" alt="AndanteFit"></a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../product.html" class="nav-link">Product</a></li>
+        <li><a href="../validation.html" class="nav-link">Validation</a></li>
+        <li><a href="../case-studies.html" class="nav-link active">Case Studies</a></li>
+        <li><a href="../references.html" class="nav-link">References</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle">☰</button>
+    </div>
+  </nav>
+
+  <!-- Case Study Entry Header -->
+  <header class="case-study-entry-header bg-gradient-to-br from-slate-100 to-white pt-16 pb-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-4">Geriatric Perspective</span>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
+        SPPB Utilization in <br class="hidden sm:block" />
+        <span class="text-blue-600">Occupational Health</span>
+      </h1>
+      <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-500">
+        Societies are entering a super-aged era. To maintain a sustainable workforce, we must shift from identifying disease to identifying <strong>functional risk</strong>.
+      </p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="#simulator" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300">
+          Explore the Assessment
+        </a>
+        <a href="#use-cases" class="inline-flex items-center justify-center px-8 py-3 border border-slate-200 text-base font-medium rounded-md text-slate-600 bg-white hover:bg-slate-50 transition-all duration-300">
+          See Use Cases
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="content-wrapper">
+    
+    <!-- SECTION 1: Context & The Problem -->
+    <section id="context" class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center mb-12">
+          <h2 class="text-base text-blue-600 font-semibold tracking-wide uppercase">The Paradigm Shift</h2>
+          <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            Why Function Matters More Than Diagnosis
+          </p>
+          <p class="mt-4 max-w-2xl text-xl text-slate-500 lg:mx-auto">
+            The aging workforce presents a hidden challenge: physiological decline often precedes overt disease.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+          <!-- Traditional Card -->
+          <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-md transition duration-300">
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 h-12 w-12 rounded-full bg-slate-200 flex items-center justify-center text-xl font-bold text-slate-500">Old</div>
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Traditional Industrial Medicine</h3>
+            <ul class="space-y-3 text-slate-600">
+              <li class="flex items-start">
+                <span class="mr-2 text-red-400">✖</span> Focuses on <strong>Disease & Injury</strong> (Reactive).
+              </li>
+              <li class="flex items-start">
+                <span class="mr-2 text-red-400">✖</span> Screens for existing clinical diagnoses.
+              </li>
+              <li class="flex items-start">
+                <span class="mr-2 text-red-400">✖</span> Often misses early functional decline.
+              </li>
+            </ul>
+          </div>
+
+          <!-- New Perspective Card -->
+          <div class="relative bg-blue-50 p-8 rounded-2xl border border-blue-100 hover:shadow-lg transition duration-300 transform md:-translate-y-2">
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center text-xl font-bold text-white">New</div>
+            <h3 class="text-xl font-bold text-blue-900 mb-4">Geriatric Occupational Health</h3>
+            <ul class="space-y-3 text-blue-800">
+              <li class="flex items-start">
+                <span class="mr-2 text-blue-600">✔</span> Focuses on <strong>Vulnerability & Reserve</strong> (Preventive).
+              </li>
+              <li class="flex items-start">
+                <span class="mr-2 text-blue-600">✔</span> Identifies <strong>Sarcopenia & Frailty</strong> early.
+              </li>
+              <li class="flex items-start">
+                <span class="mr-2 text-blue-600">✔</span> Uses physical function to predict work ability.
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="mt-12 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-md">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <span class="text-blue-400 text-xl">ℹ</span>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-blue-700">
+                <strong>Key Concept:</strong> Sarcopenia and frailty are core concepts explaining age-related decline. These conditions directly affect strength, balance, and mobility—critical factors for workplace safety.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: SPPB Interactive Simulator -->
+    <section id="simulator" class="py-16 bg-slate-50">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 text-center">
+          <h2 class="text-3xl font-extrabold text-slate-900">The Gold Standard: SPPB</h2>
+          <p class="mt-2 text-lg text-slate-600">Short Physical Performance Battery (Gait Speed + Chair Stand + Balance)</p>
+          <p class="mt-4 max-w-3xl mx-auto text-sm text-slate-500">
+            Use the simulator below to understand how SPPB scores (0-12) translate into clinical categories and interventions based on the <strong>Vivifrail Model</strong>.
+          </p>
+        </div>
+
+        <!-- The Simulator Card -->
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+          <div class="p-8 md:p-12">
+            <!-- Slider Control -->
+            <div class="mb-10">
+              <div class="flex justify-between items-end mb-4">
+                <label for="sppb-slider" class="text-sm font-medium text-slate-500 uppercase tracking-wide">Adjust Score</label>
+                <span id="score-display" class="text-6xl font-bold text-blue-600">12</span>
+              </div>
+              <input type="range" min="0" max="12" value="12" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" id="sppb-slider">
+              <div class="flex justify-between text-xs text-slate-400 mt-2 px-1">
+                <span>0 (Severe)</span>
+                <span>12 (Robust)</span>
+              </div>
+            </div>
+
+            <!-- Dynamic Result Area -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Status Panel -->
+              <div id="status-panel" class="bg-blue-50 rounded-xl p-6 border border-blue-100 transition-colors duration-300">
+                <h3 class="text-sm font-semibold text-slate-500 uppercase mb-1">Patient Status</h3>
+                <div id="status-title" class="text-2xl font-bold text-blue-900 mb-2">Robust</div>
+                <p id="status-desc" class="text-slate-600">High functional reserve. Capable of demanding tasks.</p>
+              </div>
+
+              <!-- Intervention Panel -->
+              <div id="intervention-panel" class="bg-slate-50 rounded-xl p-6 border border-slate-100 transition-colors duration-300">
+                <h3 class="text-sm font-semibold text-slate-500 uppercase mb-1">Recommended Intervention</h3>
+                <div id="intervention-focus" class="text-lg font-bold text-slate-800 mb-2">Maintenance & Intensity</div>
+                <p id="intervention-detail" class="text-sm text-slate-600">High-intensity exercise to preserve functional reserve and prevent future decline.</p>
+              </div>
+            </div>
+
+            <!-- Components Visual -->
+            <div class="mt-10 pt-8 border-t border-slate-100">
+              <h4 class="text-center text-sm font-medium text-slate-400 uppercase mb-6">Components of Assessment</h4>
+              <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="p-4 bg-slate-50 rounded-lg">
+                  <div class="text-2xl mb-2">🚶</div>
+                  <div class="font-semibold text-slate-700">Gait Speed</div>
+                  <div class="text-xs text-slate-500">Walking Pace</div>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-lg">
+                  <div class="text-2xl mb-2">🪑</div>
+                  <div class="font-semibold text-slate-700">Chair Stand</div>
+                  <div class="text-xs text-slate-500">Leg Strength</div>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-lg">
+                  <div class="text-2xl mb-2">⚖️</div>
+                  <div class="font-semibold text-slate-700">Balance</div>
+                  <div class="text-xs text-slate-500">Stability</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Strategic Use Cases -->
+    <section id="use-cases" class="py-16 bg-slate-900 text-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10">
+          <h2 class="text-base text-blue-300 font-semibold tracking-wide uppercase">Strategic Application</h2>
+          <p class="mt-2 text-3xl font-extrabold tracking-tight">
+            Where to Apply SPPB?
+          </p>
+          <p class="mt-4 text-xl text-blue-100 max-w-3xl">
+            Physical function is critical for demanding roles. We identified two key utilization cases where SPPB serves as a vital proxy for "Fitness for Duty."
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Use Case 1: Manual Labor -->
+          <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700 hover:border-blue-500 transition-all duration-300">
+            <div class="flex items-center mb-6">
+              <div class="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-2xl mr-4">🏗️</div>
+              <h3 class="text-2xl font-bold">Aging Manual Workers</h3>
+            </div>
+            <p class="text-blue-100 mb-6">
+              For workers in construction and industrial sectors, functional decline poses immediate safety risks.
+            </p>
+            <div class="bg-slate-900/50 rounded-lg p-4 mb-4">
+              <h4 class="text-sm font-bold text-blue-300 uppercase mb-2">Assessment Focus</h4>
+              <ul class="space-y-2 text-sm text-slate-50">
+                <li class="flex items-start"><span class="mr-2">🔹</span><strong>Balance & Chair Stand:</strong> Critical for stability on uneven ground.</li>
+                <li class="flex items-start"><span class="mr-2">🔹</span><strong>Fall Risk:</strong> Direct screening for fall probability.</li>
+                <li class="flex items-start"><span class="mr-2">🔹</span><strong>Musculoskeletal:</strong> Identifying early vulnerability.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Use Case 2: Return to Work -->
+          <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700 hover:border-blue-500 transition-all duration-300">
+            <div class="flex items-center mb-6">
+              <div class="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-2xl mr-4">🏥</div>
+              <h3 class="text-2xl font-bold">Return to Work (RTW)</h3>
+            </div>
+            <p class="text-blue-100 mb-6">
+              For survivors of major health events (e.g., Stroke, ICU), discharge status predicts future work capability.
+            </p>
+            <div class="bg-slate-900/50 rounded-lg p-4 mb-4">
+              <h4 class="text-sm font-bold text-blue-300 uppercase mb-2">Predictive Value</h4>
+              <ul class="space-y-2 text-sm text-slate-50">
+                <li class="flex items-start"><span class="mr-2">🔹</span><strong>Functional Independence:</strong> SPPB at discharge predicts limitations months later.</li>
+                <li class="flex items-start"><span class="mr-2">🔹</span><strong>Readiness:</strong> Objective metric for "Fitness for Duty."</li>
+                <li class="flex items-start"><span class="mr-2">🔹</span><strong>Timeline:</strong> Helps estimate recovery time before RTW.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Evidence Dashboard -->
+    <section id="evidence" class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-12">
+          <h2 class="text-3xl font-extrabold text-slate-900">Evidence from the Field</h2>
+          <p class="mt-4 text-lg text-slate-500">SPPB is not just a clinical metric; it is a proven predictor of workforce sustainability.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          
+          <!-- Chart 1: Berner Study -->
+          <div class="bg-white rounded-xl shadow-lg border border-slate-100 p-6">
+            <div class="mb-6">
+              <h3 class="text-lg font-bold text-slate-800">Employment Retention</h3>
+              <p class="text-sm text-slate-500">Berner et al. (2018) - Rheumatoid Arthritis Patients (18-65y)</p>
+            </div>
+            
+            <div class="chart-wrapper">
+              <canvas id="employmentChart"></canvas>
+            </div>
+
+            <div class="mt-6 bg-amber-50 p-4 rounded-lg border border-amber-100">
+              <p class="text-sm text-amber-800">
+                <strong>Key Finding:</strong> High SPPB scores are a significant predictor of maintaining employment with an <strong>Odds Ratio of 1.71</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Chart 2: FRAILMERIT Study -->
+          <div class="bg-white rounded-xl shadow-lg border border-slate-100 p-6">
+            <div class="mb-6">
+              <h3 class="text-lg font-bold text-slate-800">Impact of Intervention</h3>
+              <p class="text-sm text-slate-500">FRAILMERIT Study (Spain) - Community Intervention</p>
+            </div>
+
+            <div class="chart-wrapper">
+              <canvas id="riskChart"></canvas>
+            </div>
+
+            <div class="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <p class="text-sm text-blue-800">
+                <strong>Key Finding:</strong> A multicomponent intervention led to an <strong>11.9% absolute risk reduction</strong> in functional decline. A 1-point change is clinically meaningful.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Integrated Care Models -->
+    <section id="models" class="py-16 bg-slate-50">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-extrabold text-slate-900 mb-8 text-center">Integrated Care Frameworks</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- WHO ICOPE -->
+          <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+            <div class="flex items-center mb-4">
+              <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold mr-4">W</div>
+              <h3 class="text-xl font-bold text-slate-800">WHO ICOPE Framework</h3>
+            </div>
+            <p class="text-slate-600 mb-4">
+              Functional ability is the core outcome of healthy aging. SPPB serves as a <strong>"Common Language"</strong> bridging gaps between professionals.
+            </p>
+            <div class="flex justify-between text-xs text-slate-400 border-t border-slate-100 pt-4">
+              <span>Physicians</span>
+              <span>↔</span>
+              <span>Therapists</span>
+              <span>↔</span>
+              <span>Community</span>
+            </div>
+          </div>
+
+          <!-- Hong Kong Model -->
+          <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+            <div class="flex items-center mb-4">
+              <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold mr-4">HK</div>
+              <h3 class="text-xl font-bold text-slate-800">Hong Kong Model</h3>
+            </div>
+            <p class="text-slate-600 mb-4">
+              Uses SPPB as a <strong>secondary screening tool</strong> to guide resource allocation.
+            </p>
+            <ul class="text-sm text-slate-500 space-y-2 list-disc list-inside">
+              <li>Objective data drives referrals.</li>
+              <li>Links seniors to specific nutrition & exercise programs.</li>
+              <li>Ensures continuity of care.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>AndanteFit</h4>
+          <p>Developed and provided by DYPHI Inc.<br>Automated physical performance assessment for frailty and sarcopenia research.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <p><a href="../product.html">Product</a><br><a href="../validation.html">Validation</a><br><a href="../case-studies.html">Case Studies</a></p>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 DYPHI Inc. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // --- 1. SPPB Simulator Logic ---
+      const slider = document.getElementById('sppb-slider');
+      const scoreDisplay = document.getElementById('score-display');
+      const statusPanel = document.getElementById('status-panel');
+      const statusTitle = document.getElementById('status-title');
+      const statusDesc = document.getElementById('status-desc');
+      const interventionPanel = document.getElementById('intervention-panel');
+      const interventionFocus = document.getElementById('intervention-focus');
+      const interventionDetail = document.getElementById('intervention-detail');
+
+      // Data mapping from Vivifrail Model
+      const vivifrailData = {
+        disability: {
+          range: [0, 1, 2, 3],
+          title: "Disability / High Risk",
+          desc: "Severe functional limitation. High risk of falls and dependency.",
+          focus: "Basic Mobility & Safety",
+          detail: "Low intensity, multi-component. Focus on regaining basic mobility and fall prevention.",
+          colorClass: "bg-red-50",
+          borderClass: "border-red-200",
+          textClass: "text-red-900"
+        },
+        frailty: {
+          range: [4, 5, 6],
+          title: "Frailty",
+          desc: "Reduced physiological reserve. Vulnerable to stressors.",
+          focus: "Reversal of Decline",
+          detail: "Progressive strength and balance training to reverse functional decline.",
+          colorClass: "bg-orange-50",
+          borderClass: "border-orange-200",
+          textClass: "text-orange-900"
+        },
+        prefrailty: {
+          range: [7, 8, 9],
+          title: "Pre-frailty",
+          desc: "Early signs of decline. Crucial window for prevention.",
+          focus: "Endurance & Prevention",
+          detail: "Endurance training. Preventing the slide into frailty.",
+          colorClass: "bg-yellow-50",
+          borderClass: "border-yellow-200",
+          textClass: "text-yellow-900"
+        },
+        robust: {
+          range: [10, 11, 12],
+          title: "Robust",
+          desc: "Good functional capacity. Fit for duty.",
+          focus: "Maintenance",
+          detail: "High-intensity exercise to preserve functional reserve.",
+          colorClass: "bg-blue-50",
+          borderClass: "border-blue-200",
+          textClass: "text-blue-900"
+        }
+      };
+
+      function updateSimulator(score) {
+        scoreDisplay.textContent = score;
+        let data = null;
+
+        if (score <= 3) data = vivifrailData.disability;
+        else if (score <= 6) data = vivifrailData.frailty;
+        else if (score <= 9) data = vivifrailData.prefrailty;
+        else data = vivifrailData.robust;
+
+        // Update Text
+        statusTitle.textContent = data.title;
+        statusDesc.textContent = data.desc;
+        interventionFocus.textContent = data.focus;
+        interventionDetail.textContent = data.detail;
+
+        // Update Styles
+        statusPanel.className = `rounded-xl p-6 border transition-colors duration-300 ${data.colorClass} ${data.borderClass}`;
+        statusTitle.className = `text-2xl font-bold mb-2 ${data.textClass}`;
+        interventionPanel.className = `rounded-xl p-6 border transition-colors duration-300 ${data.colorClass} ${data.borderClass}`;
+      }
+
+      slider.addEventListener('input', (e) => {
+        updateSimulator(parseInt(e.target.value));
+      });
+
+      // Initialize
+      updateSimulator(12);
+
+
+      // --- 2. Chart.js Implementations ---
+      
+      // Chart 1: Employment Retention (Odds Ratio)
+      const ctx1 = document.getElementById('employmentChart').getContext('2d');
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['Low SPPB Score', 'High SPPB Score'],
+          datasets: [{
+            label: 'Likelihood of Employment (Odds Ratio)',
+            data: [1.0, 1.71],
+            backgroundColor: ['#cbd5e1', '#0F4C81'],
+            borderRadius: 6,
+            barPercentage: 0.6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Odds Ratio: ${context.raw}`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Odds Ratio (Reference = 1.0)'
+              }
+            }
+          }
+        }
+      });
+
+      // Chart 2: Risk Reduction (FRAILMERIT)
+      const ctx2 = document.getElementById('riskChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Risk Reduced', 'Remaining Risk'],
+          datasets: [{
+            data: [11.9, 88.1],
+            backgroundColor: ['#0F4C81', '#e2e8f0'],
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          },
+          cutout: '70%'
+        },
+        plugins: [{
+          id: 'textCenter',
+          beforeDraw: function(chart) {
+            var width = chart.width,
+                height = chart.height,
+                ctx = chart.ctx;
+            ctx.restore();
+            var fontSize = (height / 114).toFixed(2);
+            ctx.font = "bold " + fontSize + "em sans-serif";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#0F4C81";
+            var text = "11.9%",
+                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                textY = height / 2;
+            ctx.fillText(text, textX, textY);
+            
+            var subFontSize = (height / 200).toFixed(2);
+            ctx.font = subFontSize + "em sans-serif";
+            ctx.fillStyle = "#64748b";
+            var subText = "Risk Reduction",
+                subTextX = Math.round((width - ctx.measureText(subText).width) / 2),
+                subTextY = height / 2 + 25;
+            ctx.fillText(subText, subTextX, subTextY);
+            ctx.save();
+          }
+        }]
+      });
+    });
+  </script>
+</body>
+</html>

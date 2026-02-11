@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Strategic Proposal: Seamless Integrated Care for Older Adults | AndanteFit</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+    
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    }
+    
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+    .slideSurface { background: white; }
+  </style>
+</head>
+
+<body>
+  <!-- AndanteFit Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/andantefit-logo.png" alt="AndanteFit">
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../product.html" class="nav-link">Product</a></li>
+        <li><a href="../validation.html" class="nav-link">Validation</a></li>
+        <li><a href="../case-studies.html" class="nav-link active">Case Studies</a></li>
+        <li><a href="../references.html" class="nav-link">References</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+    </div>
+  </nav>
+
+  <div id="root" class="appFont"></div>
+
+  <!-- React App -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Core Components
+    const SlideFrame = ({ index, total, children }) => {
+      const num = String(index + 1).padStart(2, "0");
+      return (
+        <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+          <div className={`relative w-full max-w-[1280px] md:h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+            <div className="w-full md:h-full h-auto overflow-visible">
+              {children}
+            </div>
+            <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
+              <div className="text-[12px] font-bold text-slate-400 tracking-widest">
+                {num}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const SlideLayout = ({ title, headline, children }) => (
+      <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
+        <header className="mb-5 sm:mb-6">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
+            <span className="text-sm font-bold text-slate-500 tracking-wider uppercase">{title}</span>
+          </div>
+          <h2 className="text-[24px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
+        </header>
+        <div className="flex-1 md:overflow-hidden overflow-visible">
+          {children}
+        </div>
+      </div>
+    );
+
+    function LucideIcon({ name, className = "" }) {
+      return <i data-lucide={name} className={className}></i>;
+    }
+
+    // Main App
+    function App() {
+      const slides = [
+        // Slide 1: Cover
+        (
+          <div className="w-full md:h-full p-8 sm:p-12 flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-600/20 rounded-full blur-[120px] -mr-48 -mt-48"></div>
+            
+            <div className="relative z-10 max-w-4xl">
+              <p className="text-sm uppercase tracking-wider text-teal-600 font-bold mb-4">STRATEGIC PROPOSAL</p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
+                Seamless Integrated Care <span className="text-teal-600">for Older Adults</span>
+              </h1>
+              <p className="text-lg sm:text-xl text-slate-600 mb-12 leading-relaxed">
+                From Policy Vision to Community Action:<br/>
+                Establishing a Common Operational Language with AndanteFit
+              </p>
+              
+              <div className="border-t border-slate-200 pt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12">
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">PREPARED FOR</p>
+                  <p className="text-base font-semibold text-slate-700">Public Health & Integrated Care Stakeholders</p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">PRESENTED BY</p>
+                  <p className="text-base font-semibold text-slate-700">DYPHI Inc.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+
+        // Slide 2: The Structural Challenge
+        (
+          <SlideLayout title="Strategic Context" headline="The Structural Challenge">
+            <div className="h-full flex flex-col justify-center space-y-8">
+              <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-8 rounded-3xl border-2 border-teal-200">
+                <div className="flex items-start gap-4">
+                  <div className="w-2 h-16 bg-teal-600 rounded-full flex-shrink-0"></div>
+                  <p className="text-xl sm:text-2xl text-slate-800 leading-relaxed italic">
+                    "The challenge is not the absence of vision, but the absence of a mechanism that translates vision into coordinated action."
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="target" className="w-6 h-6 text-blue-600" />
+                    <h3 className="font-bold text-blue-900">Policy Vision</h3>
+                  </div>
+                  <p className="text-sm text-slate-700">Healthy Ageing & Prevention</p>
+                </div>
+
+                <div className="flex justify-center">
+                  <div className="bg-red-100 px-6 py-3 rounded-full border-2 border-red-300">
+                    <p className="text-sm font-bold text-red-700 uppercase tracking-wide">Disconnect</p>
+                    <p className="text-xs text-red-600 text-center">Operational Complexity Gap</p>
+                  </div>
+                </div>
+
+                <div className="bg-green-50 p-6 rounded-2xl border border-green-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="check-circle-2" className="w-6 h-6 text-green-600" />
+                    <h3 className="font-bold text-green-900">Execution</h3>
+                  </div>
+                  <p className="text-sm text-slate-700">Coordinated Action</p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 3: Policy Vision
+        (
+          <SlideLayout title="Policy Context" headline="Policy Vision: The Prevention Imperative">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600 leading-relaxed">
+                Aligned with national healthy ageing strategies and WHO frameworks
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600 shadow-sm">
+                  <h3 className="text-lg font-bold text-teal-700 mb-3">WHO Healthy Ageing</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Focusing on <span className="font-bold text-slate-900">Intrinsic Capacity</span> rather than just the absence of disease.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600 shadow-sm">
+                  <h3 className="text-lg font-bold text-teal-700 mb-3">ICOPE Implementation</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Integrated Care for Older People emphasizes maintaining <span className="font-bold text-slate-900">functional ability</span> as the key metric.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 4: Structural Challenge (Comparison)
+        (
+          <SlideLayout title="Problem Analysis" headline="Structural Challenge">
+            <div className="h-full flex flex-col justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                  <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <LucideIcon name="target" className="w-5 h-5 text-slate-600" />
+                    Policy Intent
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <LucideIcon name="check-circle-2" className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Policy vision for integrated care</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <LucideIcon name="check-circle-2" className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Community screening programs</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <LucideIcon name="check-circle-2" className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Clinical assessment tools</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-red-50 p-6 rounded-2xl border border-red-200">
+                  <h3 className="text-lg font-bold text-red-900 mb-4 flex items-center gap-2">
+                    <LucideIcon name="alert-circle" className="w-5 h-5 text-red-600" />
+                    Field Reality
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <LucideIcon name="x-circle" className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Manual, staff-dependent assessments</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <LucideIcon name="x-circle" className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Create a bottleneck between community screening and clinical care</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-sm text-slate-500 italic text-center mt-6">
+                "Fragmented, subjective data cannot scale across the system."
+              </p>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 5: Current Gap
+        (
+          <SlideLayout title="Operational Analysis" headline="Current Gap: The Operational Reality">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600">Operational Bottleneck in Step-2 Assessment</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white p-8 rounded-2xl border border-slate-200 text-center">
+                  <div className="text-6xl font-black text-red-600 mb-4">98%</div>
+                  <p className="text-sm font-bold text-slate-900 mb-3">98% of multimorbid older adults in primary care are identified with reduced Intrinsic Capacity</p>
+                  <div className="h-1 w-20 bg-red-600 mx-auto mb-3"></div>
+                  <p className="text-sm text-red-700 font-semibold">98% require Step-2 functional assessment</p>
+                </div>
+
+                <div className="bg-red-50 p-8 rounded-2xl border-2 border-red-200">
+                  <h3 className="text-xl font-bold text-red-900 mb-4">The Step-2 Bottleneck</h3>
+                  <p className="text-sm text-slate-700 mb-4 leading-relaxed">
+                    Standard Step-2 assessments (e.g., SPPB) require trained staff and 15–20 minutes per person.
+                  </p>
+                  <p className="text-sm font-bold text-red-800">Traditional manual assessments cannot absorb this volume</p>
+                </div>
+              </div>
+
+              <div className="bg-slate-100 p-4 rounded-xl">
+                <p className="text-sm text-slate-700 text-center">
+                  The gap lies not in the concept, but in the feasibility of large-scale execution.
+                </p>
+                <p className="text-xs text-slate-500 text-right mt-2">Sim et al., BMC Geriatrics, 2025</p>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 6: Root Cause
+        (
+          <SlideLayout title="Problem Diagnosis" headline="The Root Cause: Lack of Standard">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+              <div className="space-y-6">
+                <div className="bg-slate-100 p-6 rounded-2xl border border-slate-300">
+                  <p className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">Current State: Subjective</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-slate-700">Self-reported / Broad Criteria</p>
+                    <p className="text-sm text-slate-700">98% Flagged as "At Risk"</p>
+                  </div>
+                </div>
+
+                <div className="bg-slate-100 p-6 rounded-2xl border border-slate-300">
+                  <p className="text-sm text-slate-700 mb-2 font-semibold">Low Discrimination Power</p>
+                  <p className="text-sm text-slate-700">High False Positives</p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-teal-50 p-6 rounded-2xl border-2 border-teal-300">
+                  <p className="text-xs uppercase tracking-wider text-teal-700 font-bold mb-3">Target State: Objective</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-slate-800 font-semibold">Validated Standard Protocol</p>
+                    <p className="text-sm text-slate-700">Precise Risk Stratification</p>
+                  </div>
+                </div>
+
+                <div className="bg-teal-50 p-6 rounded-2xl border-2 border-teal-300">
+                  <p className="text-sm text-slate-800 mb-2 font-semibold">Objective Data Points</p>
+                  <p className="text-sm text-slate-700">Actionable Triage</p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 7: Alignment Quote (Dark)
+        (
+          <div className="w-full md:h-full bg-slate-900 p-8 sm:p-16 flex flex-col justify-center items-center text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
+            
+            <div className="relative z-10 space-y-8 max-w-4xl">
+              <LucideIcon name="quote" className="w-12 h-12 text-teal-500 mx-auto" />
+              <h2 className="text-3xl sm:text-5xl text-white font-black leading-tight">
+                "Alignment is achieved not by coordination, but by shared interpretation."
+              </h2>
+              
+              <div className="h-1 w-24 bg-teal-500 mx-auto"></div>
+              
+              <p className="text-slate-300 text-lg leading-relaxed">
+                Therefore, the strategic entry point is not a new program, but a common operational language.
+              </p>
+
+              <p className="text-slate-400 text-sm mt-8">
+                Informed by field implementation experience of ICOPE-aligned models<br/>
+                <span className="text-xs">(Sim et al., BMC Geriatrics, 2025)</span>
+              </p>
+            </div>
+          </div>
+        ),
+
+        // Slide 8: Physical Function
+        (
+          <SlideLayout title="Solution Framework" headline="Physical Function as a Common Reference Point">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600">Why this specific metric?</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                  <LucideIcon name="users" className="w-10 h-10 text-teal-600 mx-auto mb-4" />
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Intuitively Understood</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Translatability across families, community volunteers, and clinical specialists.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                  <LucideIcon name="clipboard-check" className="w-10 h-10 text-teal-600 mx-auto mb-4" />
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Clinically Validated</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Grounded in decades of geriatric research as a primary health outcome measure.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                  <LucideIcon name="map-pin" className="w-10 h-10 text-teal-600 mx-auto mb-4" />
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Applicable Settings</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Versatile deployment from home visits and senior centers to acute care hospitals.
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-sm text-slate-600 text-center italic">
+                Physical function provides a practical, objective reference point that can be deployed at scale in community and primary care settings.
+              </p>
+
+              <p className="text-xs text-slate-400 text-right">Vellas et al., 2023</p>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 9: SPPB Predictive
+        (
+          <SlideLayout title="Clinical Evidence" headline="SPPB AS A PREDICTIVE VITAL SIGN">
+            <div className="h-full flex items-center gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-48 h-48 rounded-full bg-blue-600 flex items-center justify-center shadow-lg">
+                  <span className="text-white text-4xl font-black">SPPB</span>
+                </div>
+              </div>
+
+              <div className="flex-1 space-y-6">
+                <p className="text-base text-slate-600 leading-relaxed">
+                  Physical function is a powerful predictor of downstream health utilization and dependency.
+                </p>
+
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                  <h3 className="text-lg font-bold text-teal-700 mb-3">Clinically Validated Predictor</h3>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">•</span>
+                      <span>SPPB scores identify functional vulnerability before it progresses to clinical frailty.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">•</span>
+                      <span>Strongly associated with mortality and disability onset.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                  <h3 className="text-lg font-bold text-teal-700 mb-3">Effective Risk Stratification</h3>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">•</span>
+                      <span>Distinguishes independent older adults from those at imminent risk.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">•</span>
+                      <span>Enables targeted intervention and avoids resource dilution.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 10: Digital Translator
+        (
+          <SlideLayout title="Technology Solution" headline="Why a Digital Translator?">
+            <div className="h-full flex items-center gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-56 h-56 rounded-full bg-gradient-to-br from-teal-50 to-blue-50 border-4 border-teal-200 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-black text-slate-900 mb-2">AndanteFit</span>
+                  <span className="text-sm text-slate-600">The Standardizer</span>
+                </div>
+              </div>
+
+              <div className="flex-1 space-y-1">
+                <p className="text-base text-slate-600 mb-6">Scaling the common language with AndanteFit</p>
+
+                <div className="space-y-4">
+                  <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                    <h3 className="text-lg font-bold text-teal-700 mb-2">Consistent</h3>
+                    <p className="text-sm text-slate-700">
+                      Removes human error and subjectivity from the assessment process.
+                    </p>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                    <h3 className="text-lg font-bold text-teal-700 mb-2">Scalable</h3>
+                    <p className="text-sm text-slate-700">
+                      Deployable to any location without need for specialized medical staff.
+                    </p>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                    <h3 className="text-lg font-bold text-teal-700 mb-2">Interpretable</h3>
+                    <p className="text-sm text-slate-700">
+                      Provides an objective score that means the same thing to everyone.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 11: Scalability Barrier
+        (
+          <SlideLayout title="Efficiency Gains" headline="OVERCOMING THE SCALABILITY BARRIER">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600">Automation converts bottlenecks into flow. Time is the currency of feasibility.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-slate-50 p-8 rounded-2xl border border-slate-300 text-center">
+                  <h3 className="text-base font-bold text-slate-900 mb-4">Conventional Assessment</h3>
+                  <div className="text-5xl font-black text-red-600 mb-6">15–20 Min</div>
+                  <div className="space-y-2 text-sm text-slate-700 text-left">
+                    <div className="flex items-start gap-2">
+                      <LucideIcon name="user" className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                      <span>Requires trained professionals</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <LucideIcon name="edit" className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                      <span>Manual scoring & data entry</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <LucideIcon name="alert-triangle" className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                      <span>Bottleneck at first screening</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-teal-50 p-8 rounded-2xl border-2 border-teal-300 text-center">
+                  <h3 className="text-base font-bold text-teal-900 mb-4">AndanteFit-Enabled</h3>
+                  <div className="text-5xl font-black text-green-600 mb-6">&lt; 3 Min</div>
+                  <div className="space-y-2 text-sm text-slate-700 text-left">
+                    <div className="flex items-start gap-2">
+                      <LucideIcon name="users" className="w-4 h-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                      <span>Community staff/volunteers</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <LucideIcon name="cpu" className="w-4 h-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                      <span>Objective automated digitization</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <LucideIcon name="trending-up" className="w-4 h-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                      <span>High-throughput screening</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-600 p-4 rounded-xl">
+                <p className="text-white text-sm text-center font-semibold">
+                  Automation eliminates operational complexity and frees manpower for intervention.
+                </p>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 12: Triage Mechanism
+        (
+          <SlideLayout title="Decision Framework" headline="Operational Triage Mechanism">
+            <div className="h-full flex flex-col justify-center">
+              <p className="text-base text-slate-600 mb-8">Shared decision structure based on objective data</p>
+
+              <div className="flex items-center justify-center gap-8">
+                <div className="bg-slate-900 p-8 rounded-2xl text-center shadow-lg">
+                  <h3 className="text-white font-bold mb-2">AndanteFit Assessment</h3>
+                  <p className="text-slate-400 text-sm">Objective Data Input</p>
+                </div>
+
+                <LucideIcon name="arrow-right" className="w-8 h-8 text-slate-400" />
+
+                <div className="space-y-4">
+                  <div className="bg-green-50 p-6 rounded-2xl border-2 border-green-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-bold text-green-800">SCORE &gt; 9</span>
+                      <LucideIcon name="check-circle-2" className="w-5 h-5 text-green-600" />
+                    </div>
+                    <p className="text-sm font-semibold text-green-900">Community Action</p>
+                    <p className="text-xs text-green-700">(Prevention / Exercise)</p>
+                  </div>
+
+                  <div className="bg-red-50 p-6 rounded-2xl border-2 border-red-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-bold text-red-800">SCORE ≤ 9</span>
+                      <LucideIcon name="alert-circle" className="w-5 h-5 text-red-600" />
+                    </div>
+                    <p className="text-sm font-semibold text-red-900">Clinical Referral</p>
+                    <p className="text-xs text-red-700">(Step 2 Assessment)</p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-400 text-right mt-8">World Health Organization. (2019).</p>
+            </div>
+          </SlideLayout>
+        ),
+
+// Slide 13: Digitizing Standard (이미지 축소 및 잘림 방지)
+        (
+          <SlideLayout title="Implementation" headline="Digitizing the Standard">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 h-full items-center">
+              <div className="space-y-6">
+                <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-2xl border-2 border-teal-200">
+                  <div className="flex items-start gap-4">
+                    <div className="w-1.5 h-16 bg-teal-600 rounded-full flex-shrink-0"></div>
+                    <p className="text-base lg:text-lg text-slate-800 leading-relaxed italic">
+                      "Human interpretation is removed not to automate care, but to standardize meaning."
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-slate-900 p-6 rounded-2xl text-white shadow-lg">
+                  <h3 className="text-lg font-bold text-teal-400 mb-3">Sensor Fusion & Standard Protocol</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Technological enablers that ensure every assessment is identical, regardless of the operator.
+                  </p>
+                </div>
+              </div>
+
+              {/* 이미지 영역: 잘림 방지를 위해 max-height 제한 */}
+              <div className="flex justify-center items-center h-full">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm overflow-hidden max-w-full">
+                  <img 
+                    src="/assets/andatefit-sample-report.png" 
+                    alt="SPPB Report Preview" 
+                    className="w-full h-auto max-h-[480px] object-contain rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 14: National Intelligence (지도 크기 최적화)
+        (
+          <SlideLayout title="System Impact" headline="From Local Assessments to National Frailty Intelligence">
+            <div className="space-y-4">
+              <p className="text-base text-slate-600">Standardized Step-2 functional data becomes a core indicator for ageing policy.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div className="flex flex-col gap-3">
+                  {/* 지도가 잘리지 않도록 높이 제한 및 여백 조정 */}
+                  <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-inner flex justify-center items-center">
+                    <img 
+                      src="/assets/frailty-map.svg" 
+                      alt="National Frailty Monitoring Map" 
+                      className="w-full h-auto max-h-[380px] object-contain" 
+                    />
+                  </div>
+                  <p className="text-[10px] text-slate-400 leading-tight px-1">
+                    ※ Map shown is for illustrative purposes only and does not represent an actual program location.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="bg-blue-50/80 p-4 rounded-xl border border-blue-200">
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      Automated functional assessments at community and primary care levels generate standardized performance data in real time.
+                    </p>
+                  </div>
+                  <div className="bg-blue-50/80 p-4 rounded-xl border border-blue-200">
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      This allows health authorities to identify high-risk neighborhoods, prioritize interventions, and allocate resources more efficiently across the system.
+                    </p>
+                  </div>
+                  <div className="bg-teal-50 p-4 rounded-xl border-2 border-teal-200">
+                    <p className="text-sm font-bold text-slate-800">
+                      Standardized functional scores transform individual screenings into actionable national frailty intelligence.
+                    </p>
+                  </div>
+                  <div className="bg-slate-100 p-3 rounded-lg border-l-4 border-slate-400">
+                    <p className="text-[12px] text-slate-600 italic leading-relaxed">
+                      "Frailty and sarcopenia are now central drivers of late-life disability. Functional performance data is becoming a core indicator for ageing policy"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+        // Slide 15: Sufficiency
+        (
+          <SlideLayout title="Design Philosophy" headline="Sufficiency vs. Complexity">
+            <div className="h-full flex flex-col justify-center">
+              <p className="text-base text-slate-600 mb-2">Why we stop at SPPB</p>
+
+              <p className="text-xl text-center text-slate-800 mb-10 italic">
+                "For shared decisions, sufficiency matters more than complexity."
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-slate-100 p-8 rounded-2xl border border-slate-300 text-center opacity-60">
+                  <LucideIcon name="bar-chart-3" className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-bold text-slate-600 mb-3">Complex Metrics</h3>
+                  <p className="text-sm text-slate-600">Hard to scale, requires training, high barrier to entry.</p>
+                </div>
+
+                <div className="bg-teal-50 p-8 rounded-2xl border-2 border-teal-300 text-center">
+                  <LucideIcon name="check-circle-2" className="w-12 h-12 text-teal-600 mx-auto mb-4" />
+                  <h3 className="text-lg font-bold text-teal-700 mb-3">Standard SPPB</h3>
+                  <p className="text-sm font-semibold text-slate-800 mb-2">Universal Adoption</p>
+                  <p className="text-sm text-slate-700">Gold standard balance between depth and usability.</p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 16: Economic Case
+        (
+          <SlideLayout title="Business Case" headline="THE ECONOMIC CASE: ROI VIA EARLY PRECISION">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-6">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200">
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Preventing False Positives</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Broad screening generates unnecessary referrals. Precision triage preserves clinical capacity for those in true need.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200">
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Delaying the Cost Curve</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Preserving physical function delays entry into high-cost disability and institutional care systems.
+                  </p>
+                </div>
+
+                <div className="bg-blue-600 p-6 rounded-2xl text-white">
+                  <h3 className="text-base font-bold mb-3">Outcome: Lower per-capita costs through precise early triage</h3>
+                  <p className="text-sm leading-relaxed">
+                    Shifting spend from reactionary acute care to preventive community action at population scale.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center">
+                <div className="space-y-4 w-full">
+                  <div className="bg-blue-600 p-4 rounded-xl text-center text-white font-bold">
+                    Screening
+                  </div>
+                  <div className="bg-teal-500 p-4 rounded-xl text-center text-white font-bold ml-8">
+                    Stratification
+                  </div>
+                  <div className="bg-green-500 p-4 rounded-xl text-center text-white font-bold ml-16">
+                    Reduced Cost
+                  </div>
+                  <div className="flex justify-center">
+                    <LucideIcon name="arrow-down" className="w-8 h-8 text-green-600" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 17: Operational Workflow
+        (
+          <SlideLayout title="Deployment" headline="Operational Workflow">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600">Policy enablement capabilities</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                  <LucideIcon name="maximize" className="w-10 h-10 text-teal-600 mx-auto mb-4" />
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Scalability</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Designed for rapid deployment across nationwide community centers.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                  <LucideIcon name="check-square" className="w-10 h-10 text-teal-600 mx-auto mb-4" />
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Consistency</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Uniform data collection regardless of site or staff experience level.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                  <LucideIcon name="repeat" className="w-10 h-10 text-teal-600 mx-auto mb-4" />
+                  <h3 className="text-base font-bold text-slate-900 mb-3">Repeatability</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Enables longitudinal tracking of functional health trends over time.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 18: Proposed Pilot
+        (
+          <SlideLayout title="Next Steps" headline="Proposed Pilot">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600">Testing Physical Function as a Shared Operational Language</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-slate-900 p-6 rounded-2xl text-white">
+                  <h3 className="text-base font-bold text-teal-400 mb-4">Pilot Objective</h3>
+                  <p className="text-sm text-slate-200 leading-relaxed">
+                    To test whether a standardized physical function score can serve as a shared reference point for decision-making across community and clinical settings.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-2 border-teal-300">
+                  <h3 className="text-base font-bold text-teal-700 mb-4">Setting</h3>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li>• 3–5 representative sites</li>
+                    <li>• Existing community programs</li>
+                    <li>• No new service design</li>
+                  </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-2 border-teal-300">
+                  <h3 className="text-base font-bold text-teal-700 mb-4">Scale</h3>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li>• 100–300 participants</li>
+                    <li>• 1–2 devices per site</li>
+                    <li>• Duration: 3 months</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-teal-50 p-4 rounded-xl border border-teal-200">
+                <h3 className="text-sm font-bold text-teal-800 mb-2">Key evaluation points</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <LucideIcon name="check-circle-2" className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                    <span>Consistency of decision thresholds</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <LucideIcon name="check-circle-2" className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                    <span>Reduction of redundant assessments</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <LucideIcon name="check-circle-2" className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                    <span>Feasibility of population stratification</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 19: Proven Ready
+        (
+          <SlideLayout title="Credentials" headline="PROVEN, VALIDATED, AND READY">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600 leading-relaxed">
+                This is not a concept pilot. It is a field-tested operational solution bridging community and clinical care.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="check-circle-2" className="w-6 h-6 text-green-600" />
+                    <h3 className="text-base font-bold text-slate-900">Clinically Validated</h3>
+                  </div>
+                  <p className="text-sm text-slate-700">
+                    Tested in hospital environments aligned with geriatric assessments.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="check-circle-2" className="w-6 h-6 text-green-600" />
+                    <h3 className="text-base font-bold text-slate-900">Community Proven</h3>
+                  </div>
+                  <p className="text-sm text-slate-700">
+                    Deployed in community settings operated by non-clinical staff.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="check-circle-2" className="w-6 h-6 text-green-600" />
+                    <h3 className="text-base font-bold text-slate-900">System Ready</h3>
+                  </div>
+                  <p className="text-sm text-slate-700">
+                    Designed for integration with national health data systems.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-teal-600">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="check-circle-2" className="w-6 h-6 text-green-600" />
+                    <h3 className="text-base font-bold text-slate-900">User Accepted</h3>
+                  </div>
+                  <p className="text-sm text-slate-700">
+                    High acceptance due to non-intrusive, intuitive experience.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 20: Thank You
+        (
+          <div className="w-full md:h-full p-8 sm:p-12 flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-600/20 rounded-full blur-[120px] -mr-48 -mt-48"></div>
+            
+            <div className="relative z-10 max-w-3xl">
+              <h1 className="text-4xl sm:text-5xl font-black text-slate-900 mb-8">Thank you</h1>
+              
+              <div className="space-y-4 text-base sm:text-lg text-slate-700 leading-relaxed mb-12">
+                <p>             
+We appreciate the opportunity to explore a scalable, evidence-based approach to healthy ageing.
+
+
+                  
+                </p>
+                <p>
+We look forward to supporting community-based prevention initiatives                </p>
+              </div>
+
+              <div className="border-t border-slate-200 pt-6">
+                <p className="text-lg font-bold text-slate-900 mb-1">DYPHI Inc.</p>
+                <p className="text-base text-slate-600">AndanteFit – Standardizing Physical Function Assessment</p>
+              </div>
+            </div>
+
+            <div className="absolute bottom-8 right-8 w-64 h-64 opacity-20">
+              <div className="w-full h-full bg-slate-100 rounded-2xl flex items-center justify-center">
+                <p className="text-slate-400 text-sm text-center px-4">Seniors Outdoor<br/>Activity Image</p>
+              </div>
+            </div>
+          </div>
+        ),
+      ];
+
+      useEffect(() => {
+        if (window.lucide && window.lucide.createIcons) {
+          window.lucide.createIcons();
+        }
+      });
+
+      return (
+        <div className="w-full">
+          {slides.map((slide, idx) => (
+            <SlideFrame key={idx} index={idx} total={slides.length}>
+              {slide}
+            </SlideFrame>
+          ))}
+        </div>
+      );
+    }
+
+    // Render
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+
+  <!-- AndanteFit Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>AndanteFit</h4>
+          <p>Developed and provided by DYPHI Inc.<br>
+          Automated physical performance assessment for frailty and sarcopenia research.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <p>
+            <a href="../product.html">Product</a><br>
+            <a href="../validation.html">Validation</a><br>
+            <a href="../case-studies.html">Case Studies</a><br>
+            <a href="../references.html">References</a>
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br>
+          Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br>
+          Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 DYPHI Inc. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

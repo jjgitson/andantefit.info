@@ -525,3 +525,43 @@ a:hover {
 .nav-lang-selector a:hover {
   color: #0F4C81; /* AndanteFit 포인트 컬러 */
 }
+/* Hero typography tuning (override global h1 clamp) */
+.hero .hero-headline {
+  font-size: clamp(2.0rem, 3.2vw, 3.0rem); /* 약 32px ~ 48px */
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+}
+
+.hero .hero-subtitle {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.65;
+  max-width: 720px;
+  margin-bottom: calc(var(--spacing-unit) * 4);
+}
+.hero .hero-points {
+  margin-top: calc(var(--spacing-unit) * 4);
+  display: grid;
+  gap: calc(var(--spacing-unit) * 1.5);
+  max-width: 520px;
+}
+
+.hero .hero-point {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  padding-left: 14px;
+  position: relative;
+}
+
+.hero .hero-point::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-deep-blue);
+}
+.video-section h2 {
+  font-size: clamp(1.6rem, 2.6vw, 2.25rem); /* 약 26px~36px */
+  margin-bottom: calc(var(--spacing-unit) * 3);
+}

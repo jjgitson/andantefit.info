@@ -561,10 +561,7 @@ a:hover {
   top: 0;
   color: var(--color-deep-blue);
 }
-.video-section h2 {
-  font-size: clamp(1.6rem, 2.6vw, 2.25rem); /* 약 26px~36px */
-  margin-bottom: calc(var(--spacing-unit) * 3);
-}
+
 
 .title-sub {
   font-weight: 600;

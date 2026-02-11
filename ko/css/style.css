@@ -566,4 +566,8 @@ a:hover {
   margin-bottom: calc(var(--spacing-unit) * 3);
 }
 
+.title-sub {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
 

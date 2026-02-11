@@ -512,3 +512,16 @@ a:hover {
 .report-item:hover .title-link {
   color: var(--color-deep-blue-light);
 }
+.nav-lang-selector {
+  margin-left: 20px;
+  font-size: 0.9rem;
+  color: #666;
+}
+.nav-lang-selector a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0 5px;
+}
+.nav-lang-selector a:hover {
+  color: #0F4C81; /* AndanteFit 포인트 컬러 */
+}

@@ -90,29 +90,32 @@
 
 
 
-
 <script src="js/main.js"></script>
 <script>
     const GITHUB_CONFIG = { owner: 'jjgitson', repo: 'andantefit.info', folder: 'case-studies', branch: 'main' };
     
     // 한국어 제목 매핑 테이블 (실제 한국어 파일만)
-    const koreanTitles = {
-        'PRO-SPPB-Linking-Study': '자기보고 기반 신체기능(PRO)과 SPPB 공통 해석 기준',
-        'Digital-Care-Platform': '디지털 복지관 중심 예방적 건강관리 플랫폼',
-    };
+ const koreanTitles = {
+    'CIBERFES-Consensus-Frailty-Screening-KR': 'CIBERFES 유럽 노쇠 평가 도구로 SPPB 제안',
+    'PRO-SPPB-Linking-Study': '자기보고 기반 신체기능(PRO)과 SPPB 공통 해석 기준',
+    'Digital-Care-Platform': '디지털 복지관 중심 예방적 건강관리 플랫폼',
+};
     
+
+  
     // 영어 제목 매핑 (기본 제목보다 읽기 좋은 버전)
     const englishTitles = {
         'SPPB-Occupational-Health': 'SPPB Utilization in Occupational Health',
         'Common-Operational-Language-Strategy': 'Strategic Proposal: Seamless Integrated Care for Older Adults'
     };
-
+    
     function parseFilename(f) {
         const m = f.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
         if (m) {
             const fileKey = m[4]; 
             const defaultTitle = m[4].replace(/-/g, ' ');
-            const title = koreanTitles[fileKey] || englishTitles[fileKey] || defaultTitle;
+            // 스페인어 제목도 확인하도록 수정
+            const title = spanishTitles[fileKey] || koreanTitles[fileKey] || englishTitles[fileKey] || defaultTitle;
             
             return { 
                 date: new Date(m[1], m[2]-1, m[3]), 
@@ -131,10 +134,11 @@
             fileKey: f
         };
     }
-
+    
     async function loadCaseStudies() {
         const container = document.getElementById('caseStudiesContainer');
         try {
+            // ★ 여기가 문제였습니다! 괄호로 수정
             const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`);
             const files = await res.json();
             const htmlFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.html'));
@@ -142,9 +146,10 @@
             
             container.innerHTML = caseStudies.map(s => {
                 const isKorean = koreanTitles.hasOwnProperty(s.fileKey);
-                const badge = isKorean ? '<span class="lang-badge">한국어</span>' : '';
+                const isSpanish = spanishTitles.hasOwnProperty(s.fileKey);
+                const badge = isKorean ? '<span class="lang-badge">한국어</span>' : 
+                             isSpanish ? '<span class="lang-badge">Español</span>' : '';
                 
-                // 수정된 부분: s.title을 a 태그로 감싸고 title-link 클래스 부여
                 return `<div class="report-item">
                             <div class="report-date">${s.dateStr}</div>
                             <div class="report-main">

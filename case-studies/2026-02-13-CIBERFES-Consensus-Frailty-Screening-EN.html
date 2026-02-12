@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  
+  <!-- SEO Meta Tags -->
+  <meta content="CIBERFES Consensus on Frailty: function-centered approach with SPPB as recommended screening tool. Clinical guide for early detection and evidence-based intervention." name="description"/>
+  <meta content="AndanteFit, SPPB, physical function assessment, frailty, screening, CIBERFES, consensus, gait speed, balance, chair stand test, sarcopenia, geriatrics, comprehensive geriatric assessment" name="keywords"/>
+  <meta content="DYPHI Inc." name="author"/>
+  <meta content="index,follow" name="robots"/>
+  
+  <!-- Open Graph Tags -->
+  <meta content="website" property="og:type"/>
+  <meta content="en_US" property="og:locale"/>
+  <meta content="AndanteFit" property="og:site_name"/>
+  <meta content="CIBERFES Consensus on Frailty | AndanteFit" property="og:title"/>
+  <meta content="Function-based frailty screening using SPPB. European standards for research and clinical practice." property="og:description"/>
+  <meta content="../assets/andantefit-logo.png" property="og:image"/>
+  <meta content="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-EN.html" property="og:url"/>
+  
+  <!-- Twitter Card Tags -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="CIBERFES Consensus on Frailty | AndanteFit" name="twitter:title"/>
+  <meta content="SPPB as functional screening standard for frailty. European guide for healthcare professionals." name="twitter:description"/>
+  <meta content="../assets/andantefit-logo.png" name="twitter:image"/>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="google-site-verification" content="" />
+  <meta name="theme-color" content="#0d9488" />
+  <link rel="canonical" href="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-EN.html" />
+  <meta name="application-name" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-title" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="language" content="en" />
+  <meta name="rating" content="general" />
+  <meta name="distribution" content="global" />
+  
+  <!-- Medical-specific meta tags -->
+  <meta name="medical-subject" content="Frailty Assessment, SPPB, Functional Screening, Geriatric Assessment" />
+  <meta name="target-audience" content="Healthcare Professionals, Physicians, Geriatricians, Physical Therapists" />
+  
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "CIBERFES Consensus on Frailty",
+    "description": "European clinical guide for functional frailty screening using SPPB as standard tool",
+    "inLanguage": "en",
+    "datePublished": "2026-02-13",
+    "dateModified": "2026-02-13",
+    "publisher": {
+      "@type": "Organization",
+      "name": "DYPHI Inc.",
+      "url": "https://andantefit.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://andantefit.com/assets/andantefit-logo.png"
+      }
+    },
+    "about": {
+      "@type": "MedicalCondition",
+      "name": "Frailty"
+    },
+    "audience": {
+      "@type": "MedicalAudience",
+      "audienceType": ["Physician", "Geriatrician", "Researcher"]
+    },
+    "citation": {
+      "@type": "ScholarlyArticle",
+      "name": "CIBERFES Consensus on Frailty",
+      "publisher": "The Journal of Nutrition, Health and Aging",
+      "identifier": "DOI: 10.1016/j.jnha.2026.100793"
+    }
+  }
+  </script>
+  
+  <title>CIBERFES Consensus on Frailty | AndanteFit</title>
+  <link href="../css/style.css" rel="stylesheet"/>
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <!-- Google Analytics -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+    
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    }
+    
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+    .slideSurface { background: white; }
+    
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+    
+    @media print {
+      .nav, .footer, .slide-counter, .nav-toggle {
+        display: none;
+      }
+      .slide-frame {
+        page-break-after: always;
+        height: 100vh;
+      }
+      .slide-frame:last-child {
+        page-break-after: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- AndanteFit Navigation -->
+<nav class="nav">
+  <div class="nav-container">
+    <a class="nav-logo" href="../index.html">
+      <img alt="AndanteFit - Automated Physical Function Assessment" src="../assets/andantefit-logo.png"/>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a class="nav-link" href="../index.html">Home</a></li>
+      <li><a class="nav-link" href="../product.html">Product</a></li>
+      <li><a class="nav-link" href="../validation.html">Validation</a></li>
+      <li><a class="nav-link active" href="../case-studies.html">Case Studies</a></li>
+      <li><a class="nav-link" href="../references.html">References</a></li>
+    </ul>
+    <button aria-label="Toggle navigation menu" class="nav-toggle" id="navToggle">☰</button>
+  </div>
+</nav>
+
+<div class="appFont" id="root"></div>
+
+<!-- React App -->
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  function SlideFrame({ children, index, total }) {
+    const handleNavClick = (e, targetIdx) => {
+      e.preventDefault();
+      window.location.hash = `slide-${targetIdx}`;
+      const target = document.getElementById(`slide-${targetIdx}`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    return (
+      <div 
+        id={`slide-${index}`} 
+        className="slide-frame min-h-screen flex flex-col relative"
+        role="article"
+        aria-label={`Slide ${index + 1} of ${total}`}
+      >
+        {children}
+        <div 
+          className="slide-counter absolute bottom-6 right-6 bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium z-50"
+          role="status"
+          aria-label={`Slide ${index + 1} of ${total}`}
+          aria-live="polite"
+        >
+          {index + 1} / {total}
+        </div>
+      </div>
+    );
+  }
+
+  function SlideLayout({ children, className = "" }) {
+    return (
+      <div className={`w-full min-h-screen bg-white p-8 sm:p-12 md:p-16 ${className}`}>
+        <div className="max-w-6xl mx-auto">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
+  function LucideIcon({ name, className = "w-6 h-6" }) {
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    }, []);
+    return <i data-lucide={name} className={className} aria-hidden="true"></i>;
+  }
+
+  function BulletPoint({ children, icon = "check-circle" }) {
+    return (
+      <div className="flex items-start gap-3 mb-4">
+        <LucideIcon name={icon} className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+        <p className="text-slate-700 leading-relaxed flex-1">{children}</p>
+      </div>
+    );
+  }
+
+  function App() {
+    const slides = [
+      // SLIDE 1: Introduction with CIBERFES image
+      (
+        <div className="w-full min-h-screen relative flex flex-col justify-center items-center overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: 'url(../assets/case-studies/CIBERFES.webp)',
+              filter: 'brightness(0.4)'
+            }}
+            role="img"
+            aria-label="CIBERFES - Biomedical Research Networking Center on Frailty and Healthy Ageing"
+          ></div>
+          
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/70"></div>
+          
+          <div className="relative z-10 text-center px-6 max-w-5xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+              CIBERFES Consensus<br/>on Frailty
+            </h1>
+            <p className="text-xl sm:text-2xl md:text-3xl text-teal-300 font-semibold mb-4">
+              A Function-Centered Approach
+            </p>
+            <p className="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto">
+              SPPB as the Recommended Screening Tool
+            </p>
+            <div className="mt-8 flex items-center justify-center gap-4 text-slate-300 text-sm">
+              <LucideIcon name="building-2" className="w-5 h-5" />
+              <span>DYPHI Inc.</span>
+              <span>•</span>
+              <span>AndanteFit</span>
+            </div>
+          </div>
+        </div>
+      ),
+
+      // SLIDE 2: Significance of the consensus
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            A National Consensus with European Impact
+          </h2>
+          
+          <div className="space-y-6 max-w-4xl">
+            <BulletPoint icon="globe">
+              <strong className="text-slate-900">Consensus led by the Spanish CIBERFES consortium</strong> — 
+              Biomedical Research Networking Center on Frailty and Healthy Ageing
+            </BulletPoint>
+            
+            <BulletPoint icon="map">
+              <strong className="text-slate-900">Designed for application across Europe</strong> — 
+              Harmonized standards to facilitate transnational comparison and collaboration
+            </BulletPoint>
+            
+            <BulletPoint icon="bookmark">
+              <strong className="text-slate-900">Common standards for research, clinical practice, and public policy</strong> — 
+              Integrated framework connecting scientific evidence with practical implementation
+            </BulletPoint>
+          </div>
+
+          <div className="mt-12 p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600">
+            <p className="text-slate-700 leading-relaxed">
+              This consensus establishes a common framework enabling standardization of screening, 
+              diagnosis, and intervention methods for frailty at a European level.
+            </p>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 3: What is frailty - With pathways diagram
+      (
+        <SlideLayout className="bg-slate-50">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            Frailty as Loss of Functional Reserve
+          </h2>
+          
+          <div className="grid md:grid-cols-5 gap-8 items-start">
+            <div className="md:col-span-2 space-y-5">
+              <BulletPoint icon="alert-circle">
+                <strong className="text-slate-900">Not simply aging</strong> nor a specific disease
+              </BulletPoint>
+              
+              <BulletPoint icon="trending-down">
+                <strong className="text-slate-900">Decreased functional reserve</strong> of organs
+              </BulletPoint>
+              
+              <BulletPoint icon="activity">
+                <strong className="text-slate-900">Reduced capacity</strong> to maintain homeostasis
+              </BulletPoint>
+              
+              <BulletPoint icon="arrow-right-circle">
+                <strong className="text-slate-900">Pre-disability state</strong> — Opportunity for preventive intervention
+              </BulletPoint>
+            </div>
+            
+            <div className="md:col-span-3">
+              <figure className="bg-white p-6 rounded-xl shadow-lg">
+                <img 
+                  src="../assets/case-studies/Main-pathways-of-frailty.webp" 
+                  alt="Diagram showing main pathways involved in frailty pathophysiology, including genetic factors, aging, inflammation, oxidative stress, mitochondrial dysfunction, neuromuscular impairment, and muscle mass loss"
+                  className="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+                <figcaption className="mt-4 text-sm text-slate-600 text-center leading-relaxed">
+                  <strong>Main pathways involved in the pathophysiology of frailty.</strong><br/>
+                  Source: CIBERFES Consensus on Frailty. <em>The Journal of Nutrition, Health and Aging</em>. 
+                  DOI: 10.1016/j.jnha.2026.100793
+                </figcaption>
+                <div id="pathways-description" className="sr-only">
+                  The diagram shows main frailty pathways including genetic factors, aging, 
+                  systemic inflammation, oxidative stress, mitochondrial dysfunction, 
+                  neuromuscular impairment, and muscle mass loss.
+                </div>
+              </figure>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 4: Recommended screening tool - CORE MESSAGE
+      (
+        <div className="w-full min-h-screen bg-gradient-to-br from-teal-600 to-teal-700 p-8 sm:p-16 flex flex-col justify-center items-center text-center">
+          <div className="max-w-5xl">
+            <div className="mb-8">
+              <LucideIcon name="clipboard-check" className="w-20 h-20 text-white mx-auto mb-6 opacity-90" />
+            </div>
+            
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
+              SPPB as the Standard<br/>for Early Screening
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6 mt-12 text-left">
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="zap" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Quick and Simple Assessment</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  of physical function without specialized equipment
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="ruler" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Sensitive and Standardized Method</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  with internationally validated cut-off values
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="check-circle-2" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Aligned with European Recommendations</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  prior guidelines on functional frailty screening
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="puzzle" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Complementary Tools</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  Gait speed and FRAIL scale for specific contexts
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+
+      // SLIDE 5: After diagnosis
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+            Comprehensive Assessment and Evidence-Based Interventions
+          </h2>
+          <p className="text-lg text-slate-600 mb-10 max-w-3xl">
+            Once frailty is identified through functional screening, proceed to:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <div className="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
+              <div className="flex items-center gap-3 mb-4">
+                <LucideIcon name="stethoscope" className="w-7 h-7 text-blue-600" />
+                <h3 className="text-xl font-bold text-blue-900">Diagnosis</h3>
+              </div>
+              <p className="text-slate-700 leading-relaxed mb-3">
+                <strong>Fried Phenotype</strong> — Assessment of five criteria: unintentional weight loss, 
+                fatigue, low physical activity, slow gait speed, and muscle weakness
+              </p>
+              <p className="text-slate-700 leading-relaxed">
+                <strong>Comprehensive Geriatric Assessment</strong> — Multidimensional evaluation of physical, 
+                cognitive, functional, social, and nutritional aspects
+              </p>
+            </div>
+
+            <div className="bg-teal-50 p-6 rounded-xl border-l-4 border-teal-600">
+              <div className="flex items-center gap-3 mb-4">
+                <LucideIcon name="heart-pulse" className="w-7 h-7 text-teal-600" />
+                <h3 className="text-xl font-bold text-teal-900">Interventions</h3>
+              </div>
+              <div className="space-y-3">
+                <BulletPoint icon="dumbbell">
+                  <strong>Strength and Power Training</strong> — Progressive resistance exercises
+                </BulletPoint>
+                
+                <BulletPoint icon="footprints">
+                  <strong>Balance and Gait Retraining</strong> — Fall prevention
+                </BulletPoint>
+                
+                <BulletPoint icon="activity">
+                  <strong>Aerobic Exercise</strong> — Cardiovascular improvement and endurance
+                </BulletPoint>
+                
+                <BulletPoint icon="utensils">
+                  <strong>Nutritional Optimization</strong> — Protein, vitamin D, adequate calories
+                </BulletPoint>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+            <div className="flex items-start gap-3">
+              <LucideIcon name="lightbulb" className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+              <p className="text-slate-700 leading-relaxed">
+                <strong>Multicomponent Approach:</strong> The combination of physical exercise 
+                and nutritional interventions shows the strongest evidence for reversing frailty.
+              </p>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 6: System integration + conclusion
+      (
+        <div className="w-full min-h-screen bg-slate-900 p-8 sm:p-16 flex flex-col justify-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -ml-40 -mb-40"></div>
+
+          <div className="relative z-10 max-w-5xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 text-center">
+              Frailty Must Be Addressed Across<br/>the Healthcare and Social System
+            </h2>
+            <p className="text-xl text-slate-300 text-center mb-12">
+              Coordinated integration at all levels of care
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-5 mb-12">
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="home" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Primary Care</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Population screening, early detection, and initiation of preventive interventions
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="hospital" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Hospitals</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Comprehensive assessment, comorbidity management, and discharge planning
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="users" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Care Centers</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Rehabilitation programs and continuous functional maintenance
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="map-pin" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Community Services</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Social support, promotion of physical activity and healthy nutrition
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-teal-600/20 to-blue-600/20 backdrop-blur-sm p-6 rounded-xl border border-teal-400/30 mb-12">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="link" className="w-7 h-7 text-teal-400 flex-shrink-0 mt-1" />
+                <p className="text-white text-lg leading-relaxed">
+                  <strong>Coordination between health and social services</strong> — 
+                  Effective response to frailty requires integration of healthcare and social systems, 
+                  facilitating smooth transitions between care levels.
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center pt-8 border-t border-white/20">
+              <p className="text-2xl sm:text-3xl font-bold text-teal-300 mb-8">
+                Standardized functional screening is the first step<br/>in frailty prevention
+              </p>
+              
+              <div className="mt-8 text-slate-400 text-sm leading-relaxed space-y-2">
+                <p>
+                  This material is provided for informational purposes for medical professionals. 
+                  Diagnosis and treatment decisions for individual patients should be based 
+                  on the clinical judgment of healthcare providers and patient conditions.
+                </p>
+              </div>
+              
+              <div className="mt-8">
+                <p className="text-white text-base font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
+                <p className="text-slate-400 text-sm">Automated physical function assessment for clinical practice</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    ];
+
+    useEffect(() => {
+      const handleKeyDown = (e) => {
+        const currentHash = window.location.hash.replace('#slide-', '');
+        const currentSlide = currentHash ? parseInt(currentHash) : 0;
+        const totalSlides = slides.length;
+        
+        if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+          window.location.hash = `slide-${currentSlide + 1}`;
+          document.getElementById(`slide-${currentSlide + 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+          window.location.hash = `slide-${currentSlide - 1}`;
+          document.getElementById(`slide-${currentSlide - 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          window.location.hash = 'slide-0';
+          document.getElementById('slide-0')?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          window.location.hash = `slide-${totalSlides - 1}`;
+          document.getElementById(`slide-${totalSlides - 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [slides.length]);
+
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    });
+
+    return (
+      <div className="w-full">
+        {slides.map((slide, idx) => (
+          <SlideFrame key={idx} index={idx} total={slides.length}>
+            {slide}
+          </SlideFrame>
+        ))}
+      </div>
+    );
+  }
+
+  ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+
+<!-- AndanteFit Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>AndanteFit</h4>
+        <p>Developed and provided by: DYPHI Inc.<br/>
+        Automated physical function assessment solution for frailty and sarcopenia research.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <p>
+          <a href="../product.html">Product</a><br/>
+          <a href="../validation.html">Validation</a><br/>
+          <a href="../case-studies.html">Case Studies</a><br/>
+          <a href="../references.html">References</a>
+        </p>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:[email protected]">[email protected]</a><br/>
+        Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
+        Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 DYPHI Inc. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

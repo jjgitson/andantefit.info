@@ -99,12 +99,13 @@
         branch: 'main'
     };
     
-    const spanishTitles = {
-        'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad',
-        'Digital-Care-Platform': 'Plataforma de Atención Digital',
+    // 커스텀 제목 매핑 (선택사항)
+    const customTitles = {
+        'CIBERFES-Consensus-Frailty-Screening': 'CIBERFES Consensus on Frailty Screening',
+        // 필요한 경우 여기에 추가
     };
     
-    const CACHE_KEY = 'case_studies_cache_es';
+    const CACHE_KEY = 'case_studies_cache';
     const CACHE_DURATION = 24 * 60 * 60 * 1000;
     
     function parseFilename(filename) {
@@ -112,11 +113,7 @@
         if (!match) return null;
         
         const [, year, month, day, fileKey] = match;
-        
-        // 언어 접미사가 있는 파일은 제외 (스페인어는 접미사 없음)
-        if (fileKey.endsWith('-EN') || fileKey.endsWith('-KR')) return null;
-        
-        const title = spanishTitles[fileKey] || fileKey.replace(/-/g, ' ');
+        const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
         
         return { 
             date: new Date(year, month - 1, day), 
@@ -136,11 +133,10 @@
                         <div class="report-main">
                             <h3 class="report-title">
                                 <a href="${study.url}" class="title-link">${study.title}</a>
-                                <span class="lang-badge">Español</span>
                             </h3>
                         </div>
                         <div class="report-link">
-                            <a href="${study.url}" class="btn btn-primary btn-small">Ver Informe →</a>
+                            <a href="${study.url}" class="btn btn-primary btn-small">View Report →</a>
                         </div>
                     </div>`;
         }).join('');
@@ -150,16 +146,16 @@
     
     function showError(container, message) {
         container.innerHTML = `<div style="color: #dc2626; padding: 20px; background: #fee2e2; border-radius: 8px;">
-            <strong>Error al cargar los informes</strong><br>
+            <strong>Error loading reports</strong><br>
             ${message}<br>
-            <small style="margin-top: 8px; display: block;">Por favor, inténtelo de nuevo más tarde.</small>
+            <small style="margin-top: 8px; display: block;">Please try again later.</small>
         </div>`;
     }
     
     function showCacheWarning(container) {
         container.insertAdjacentHTML('afterbegin', 
             `<div style="background: #fef3c7; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
-                ⚠️ Mostrando datos en caché. Las actualizaciones están temporalmente limitadas.
+                ⚠️ Showing cached data.
             </div>`
         );
     }
@@ -173,28 +169,28 @@
             const cacheTime = localStorage.getItem(CACHE_KEY + '_time');
             
             if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CACHE_DURATION) {
-                console.log('✓ Usando caché');
+                console.log('✓ Using cache');
                 renderCaseStudies(container, JSON.parse(cached));
                 return;
             }
             
-            console.log('→ Consultando GitHub API...');
+            console.log('→ Fetching from GitHub API...');
             const response = await fetch(
                 `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`
             );
             
             if (!response.ok) {
                 if (cached) {
-                    console.log('⚠ API falló, usando caché expirado');
+                    console.log('⚠ API failed, using cache');
                     renderCaseStudies(container, JSON.parse(cached));
                     showCacheWarning(container);
                     return;
                 }
-                throw new Error('Solicitud API falló: ' + response.status);
+                throw new Error('API request failed: ' + response.status);
             }
             
             const data = await response.json();
-            if (!Array.isArray(data)) throw new Error('Respuesta API inválida');
+            if (!Array.isArray(data)) throw new Error('Invalid API response');
             
             const htmlFiles = data.filter(function(f) {
                 return f.type === 'file' && f.name.endsWith('.html');
@@ -214,7 +210,7 @@
             localStorage.setItem(CACHE_KEY + '_time', Date.now().toString());
             
             renderCaseStudies(container, caseStudies);
-            console.log('✓ Cargado:', caseStudies.length, 'elementos');
+            console.log('✓ Loaded:', caseStudies.length, 'items');
             
         } catch (error) {
             console.error('Error:', error);

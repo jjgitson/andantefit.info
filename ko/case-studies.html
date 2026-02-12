@@ -94,7 +94,6 @@
 (function() {
     'use strict';
     
-    // ==================== 설정 ====================
     const GITHUB_CONFIG = { 
         owner: 'jjgitson', 
         repo: 'andantefit.info', 
@@ -102,39 +101,25 @@
         branch: 'main'
     };
     
-
-    
     const koreanTitles = {
-        'PRO-SPPB-Linking-Study': '자기보고 기반 신체기능(PRO)과 SPPB 공통 해석 기준',
-        'Digital-Care-Platform': '디지털 복지관 중심 예방적 건강관리 플랫폼',
-       'CIBERFES-Consensus-Frailty-Screening-KR': 'CIBERFES 프레일티 컨센서스',
+        'CIBERFES-Consensus-Frailty-Screening-KR': 'CIBERFES 프레일티 컨센서스',
+        'PRO-SPPB-Linking-Study-KR': '자기보고 기반 신체기능(PRO)과 SPPB 공통 해석 기준',
+        'Digital-Care-Platform-KR': '디지털 복지관 중심 예방적 건강관리 플랫폼',
     };
     
-    const englishTitles = {
-        'SPPB-Occupational-Health': 'SPPB Utilization in Occupational Health',
-        'Common-Operational-Language-Strategy': 'Strategic Proposal: Seamless Integrated Care for Older Adults'
-    };
+    const CACHE_KEY = 'case_studies_cache_kr';
+    const CACHE_DURATION = 24 * 60 * 60 * 1000;
     
-    const CACHE_KEY = 'case_studies_cache';
-    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24시간
-    
-    // ==================== 헬퍼 함수 ====================
     function parseFilename(filename) {
         const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
-        
-        if (!match) {
-            return { 
-                date: new Date(0), 
-                dateStr: '----.--.--', 
-                title: filename.replace('.html', '').replace(/-/g, ' '), 
-                filename: filename,
-                fileKey: filename
-            };
-        }
+        if (!match) return null;
         
         const [, year, month, day, fileKey] = match;
-        const defaultTitle = fileKey.replace(/-/g, ' ');
-        const title = spanishTitles[fileKey] || koreanTitles[fileKey] || englishTitles[fileKey] || defaultTitle;
+        
+        // 한국어 파일이 아니면 제외
+        if (!fileKey.endsWith('-KR')) return null;
+        
+        const title = koreanTitles[fileKey] || fileKey.replace(/-/g, ' ');
         
         return { 
             date: new Date(year, month - 1, day), 
@@ -146,26 +131,19 @@
     }
     
     function renderCaseStudies(container, caseStudies) {
-        if (!container) {
-            console.error('Container element not found');
-            return;
-        }
+        if (!container) return;
         
         const html = caseStudies.map(function(study) {
-            const isKorean = koreanTitles.hasOwnProperty(study.fileKey);
-            const isSpanish = spanishTitles.hasOwnProperty(study.fileKey);
-            const badge = isKorean ? '<span class="lang-badge">한국어</span>' : 
-                         isSpanish ? '<span class="lang-badge">Español</span>' : '';
-            
             return `<div class="report-item">
                         <div class="report-date">${study.dateStr}</div>
                         <div class="report-main">
                             <h3 class="report-title">
-                                <a href="${study.url}" class="title-link">${study.title}</a> ${badge}
+                                <a href="${study.url}" class="title-link">${study.title}</a>
+                                <span class="lang-badge">한국어</span>
                             </h3>
                         </div>
                         <div class="report-link">
-                            <a href="${study.url}" class="btn btn-primary btn-small">Ver Informe →</a>
+                            <a href="${study.url}" class="btn btn-primary btn-small">보고서 보기 →</a>
                         </div>
                     </div>`;
         }).join('');
@@ -174,115 +152,79 @@
     }
     
     function showError(container, message) {
-        container.innerHTML = `<div style="color: #dc2626; padding: 20px; background: #fee2e2; border-radius: 8px; border-left: 4px solid #dc2626;">
-            <strong>Error al cargar los informes</strong><br>
+        container.innerHTML = `<div style="color: #dc2626; padding: 20px; background: #fee2e2; border-radius: 8px;">
+            <strong>보고서를 불러오는 중 오류가 발생했습니다</strong><br>
             ${message}<br>
-            <small style="color: #991b1b; margin-top: 8px; display: block;">
-                Por favor, actualice la página en unos minutos.
-            </small>
+            <small style="margin-top: 8px; display: block;">잠시 후 다시 시도해주세요.</small>
         </div>`;
     }
     
     function showCacheWarning(container) {
         container.insertAdjacentHTML('afterbegin', 
-            `<div style="background: #fef3c7; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; border-left: 4px solid #f59e0b;">
-                ⚠️ Mostrando datos en caché. La actualización está temporalmente limitada.
+            `<div style="background: #fef3c7; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
+                ⚠️ 캐시된 데이터를 표시하고 있습니다. 업데이트가 일시적으로 제한되었습니다.
             </div>`
         );
     }
     
-    // ==================== 메인 함수 ====================
     async function loadCaseStudies() {
         const container = document.getElementById('caseStudiesContainer');
-        
-        if (!container) {
-            console.error('Container #caseStudiesContainer not found');
-            return;
-        }
+        if (!container) return;
         
         try {
-            // 1. 캐시 확인
             const cached = localStorage.getItem(CACHE_KEY);
             const cacheTime = localStorage.getItem(CACHE_KEY + '_time');
             
-            if (cached && cacheTime) {
-                const age = Date.now() - parseInt(cacheTime);
-                
-                // 캐시가 유효하면 바로 사용
-                if (age < CACHE_DURATION) {
-                    console.log('✓ Using valid cache (age: ' + Math.floor(age / 1000 / 60) + ' minutes)');
-                    const caseStudies = JSON.parse(cached);
-                    renderCaseStudies(container, caseStudies);
-                    return;
-                }
+            if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CACHE_DURATION) {
+                console.log('✓ 캐시 사용');
+                renderCaseStudies(container, JSON.parse(cached));
+                return;
             }
             
-            // 2. API 호출
-            console.log('→ Fetching from GitHub API...');
+            console.log('→ GitHub API 호출...');
             const response = await fetch(
                 `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`
             );
             
-            // 3. API 실패 처리
             if (!response.ok) {
-                console.warn('API returned status:', response.status);
-                
-                // 캐시가 있으면 만료되었어도 사용
                 if (cached) {
-                    console.log('⚠ Using expired cache due to API failure');
-                    const caseStudies = JSON.parse(cached);
-                    renderCaseStudies(container, caseStudies);
+                    console.log('⚠ API 실패, 만료된 캐시 사용');
+                    renderCaseStudies(container, JSON.parse(cached));
                     showCacheWarning(container);
                     return;
                 }
-                
-                throw new Error('API request failed with status ' + response.status);
+                throw new Error('API 요청 실패: ' + response.status);
             }
             
-            // 4. 데이터 파싱
             const data = await response.json();
+            if (!Array.isArray(data)) throw new Error('잘못된 API 응답');
             
-            if (!Array.isArray(data)) {
-                throw new Error('Invalid API response format');
-            }
-            
-            console.log('✓ API response received:', data.length, 'items');
-            
-            // 5. HTML 파일 필터링
-            const htmlFiles = data.filter(function(file) {
-                return file.type === 'file' && file.name.endsWith('.html');
+            const htmlFiles = data.filter(function(f) {
+                return f.type === 'file' && f.name.endsWith('.html');
             });
             
-            console.log('✓ Found', htmlFiles.length, 'HTML files');
-            
-            // 6. 파싱 및 정렬
             const caseStudies = htmlFiles
-                .map(function(file) {
-                    const parsed = parseFilename(file.name);
-                    parsed.url = 'case-studies/' + file.name;
+                .map(function(f) {
+                    const parsed = parseFilename(f.name);
+                    if (!parsed) return null;
+                    parsed.url = 'case-studies/' + f.name;
                     return parsed;
                 })
-                .sort(function(a, b) {
-                    return b.date - a.date;
-                });
+                .filter(function(item) { return item !== null; })
+                .sort(function(a, b) { return b.date - a.date; });
             
-            // 7. 캐시 저장
             localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
             localStorage.setItem(CACHE_KEY + '_time', Date.now().toString());
-            console.log('✓ Cache updated');
             
-            // 8. 렌더링
             renderCaseStudies(container, caseStudies);
-            console.log('✓ Case studies loaded successfully');
+            console.log('✓ 로드 완료:', caseStudies.length, '개');
             
         } catch (error) {
-            console.error('Error loading case studies:', error);
+            console.error('오류:', error);
             showError(container, error.message);
         }
     }
     
-    // ==================== 실행 ====================
-    // DOM 로드 확인 후 실행
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', loadCaseStudies);
     } else {

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  
+  <!-- SEO Meta Tags -->
+  <meta content="Consenso CIBERFES sobre fragilidad: enfoque centrado en la función con SPPB como herramienta de cribado recomendada. Guía clínica para la detección temprana e intervención basada en evidencia." name="description"/>
+  <meta content="AndanteFit, SPPB, evaluación de función física, fragilidad, cribado, CIBERFES, consenso, velocidad de marcha, equilibrio, test de silla, sarcopenia, geriatría, valoración geriátrica integral" name="keywords"/>
+  <meta content="DYPHI Inc." name="author"/>
+  <meta content="index,follow" name="robots"/>
+  
+  <!-- Open Graph Tags -->
+  <meta content="website" property="og:type"/>
+  <meta content="es_ES" property="og:locale"/>
+  <meta content="AndanteFit" property="og:site_name"/>
+  <meta content="Consenso CIBERFES sobre Fragilidad | AndanteFit" property="og:title"/>
+  <meta content="Enfoque funcional para el cribado de fragilidad basado en SPPB. Estándares europeos para investigación y práctica clínica." property="og:description"/>
+  <meta content="../assets/andantefit-logo.png" property="og:image"/>
+  <meta content="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening.html" property="og:url"/>
+  
+  <!-- Twitter Card Tags -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="Consenso CIBERFES sobre Fragilidad | AndanteFit" name="twitter:title"/>
+  <meta content="SPPB como estándar de cribado funcional para fragilidad. Guía europea para profesionales de la salud." name="twitter:description"/>
+  <meta content="../assets/andantefit-logo.png" name="twitter:image"/>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="google-site-verification" content="" />
+  <meta name="theme-color" content="#0d9488" />
+  <link rel="canonical" href="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening.html" />
+  <meta name="application-name" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-title" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="language" content="es" />
+  <meta name="rating" content="general" />
+  <meta name="distribution" content="global" />
+  
+  <!-- Medical-specific meta tags -->
+  <meta name="medical-subject" content="Frailty Assessment, SPPB, Functional Screening, Geriatric Assessment" />
+  <meta name="target-audience" content="Healthcare Professionals, Physicians, Geriatricians, Physical Therapists" />
+  
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "Consenso CIBERFES sobre Fragilidad",
+    "description": "Guía clínica europea para el cribado funcional de fragilidad utilizando SPPB como herramienta estándar",
+    "inLanguage": "es",
+    "datePublished": "2026-02-13",
+    "dateModified": "2026-02-13",
+    "publisher": {
+      "@type": "Organization",
+      "name": "DYPHI Inc.",
+      "url": "https://andantefit.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://andantefit.com/assets/andantefit-logo.png"
+      }
+    },
+    "about": {
+      "@type": "MedicalCondition",
+      "name": "Frailty"
+    },
+    "audience": {
+      "@type": "MedicalAudience",
+      "audienceType": ["Physician", "Geriatrician", "Researcher"]
+    },
+    "citation": {
+      "@type": "ScholarlyArticle",
+      "name": "CIBERFES Consensus on Frailty",
+      "publisher": "The Journal of Nutrition, Health and Aging",
+      "identifier": "DOI: 10.1016/j.jnha.2026.100793"
+    }
+  }
+  </script>
+  
+  <title>Consenso CIBERFES sobre Fragilidad | AndanteFit</title>
+  <link href="../css/style.css" rel="stylesheet"/>
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <!-- Google Analytics -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+    
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    }
+    
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+    .slideSurface { background: white; }
+    
+    /* Screen reader only class */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+    
+    /* Print styles */
+    @media print {
+      .nav, .footer, .slide-counter, .nav-toggle {
+        display: none;
+      }
+      .slide-frame {
+        page-break-after: always;
+        height: 100vh;
+      }
+      .slide-frame:last-child {
+        page-break-after: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- AndanteFit Navigation -->
+<nav class="nav">
+  <div class="nav-container">
+    <a class="nav-logo" href="../index.html">
+      <img alt="AndanteFit - Automated Physical Function Assessment" src="../assets/andantefit-logo.png"/>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a class="nav-link" href="../index.html">Inicio</a></li>
+      <li><a class="nav-link" href="../product.html">Producto</a></li>
+      <li><a class="nav-link" href="../validation.html">Validación</a></li>
+      <li><a class="nav-link active" href="../case-studies.html">Casos de Estudio</a></li>
+      <li><a class="nav-link" href="../references.html">Referencias</a></li>
+    </ul>
+    <button aria-label="Abrir menú de navegación" class="nav-toggle" id="navToggle">☰</button>
+  </div>
+</nav>
+
+<div class="appFont" id="root"></div>
+
+<!-- React App -->
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  // Slide Frame Component
+  function SlideFrame({ children, index, total }) {
+    const handleNavClick = (e, targetIdx) => {
+      e.preventDefault();
+      window.location.hash = `slide-${targetIdx}`;
+      const target = document.getElementById(`slide-${targetIdx}`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    return (
+      <div 
+        id={`slide-${index}`} 
+        className="slide-frame min-h-screen flex flex-col relative"
+        role="article"
+        aria-label={`Diapositiva ${index + 1} de ${total}`}
+      >
+        {children}
+        <div 
+          className="slide-counter absolute bottom-6 right-6 bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium z-50"
+          role="status"
+          aria-label={`Diapositiva ${index + 1} de ${total}`}
+          aria-live="polite"
+        >
+          {index + 1} / {total}
+        </div>
+      </div>
+    );
+  }
+
+  // Slide Layout Component
+  function SlideLayout({ children, className = "" }) {
+    return (
+      <div className={`w-full min-h-screen bg-white p-8 sm:p-12 md:p-16 ${className}`}>
+        <div className="max-w-6xl mx-auto">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
+  // Lucide Icon Component
+  function LucideIcon({ name, className = "w-6 h-6" }) {
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    }, []);
+    return <i data-lucide={name} className={className} aria-hidden="true"></i>;
+  }
+
+  // Bullet Point Component
+  function BulletPoint({ children, icon = "check-circle" }) {
+    return (
+      <div className="flex items-start gap-3 mb-4">
+        <LucideIcon name={icon} className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+        <p className="text-slate-700 leading-relaxed flex-1">{children}</p>
+      </div>
+    );
+  }
+
+  // Main App Component
+  function App() {
+    const slides = [
+      // SLIDE 1: Introducción con imagen CIBERFES
+      (
+        <div className="w-full min-h-screen relative flex flex-col justify-center items-center overflow-hidden">
+          {/* Background Image - CIBERFES.webp should be placed in /assets/case-studies/ */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: 'url(../assets/case-studies/CIBERFES.webp)',
+              filter: 'brightness(0.4)'
+            }}
+            role="img"
+            aria-label="CIBERFES - Centro de Investigación Biomédica en Red de Fragilidad y Envejecimiento Saludable"
+          ></div>
+          
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/70"></div>
+          
+          {/* Content */}
+          <div className="relative z-10 text-center px-6 max-w-5xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+              Consenso de CIBERFES<br/>sobre Fragilidad
+            </h1>
+            <p className="text-xl sm:text-2xl md:text-3xl text-teal-300 font-semibold mb-4">
+              Un enfoque centrado en la función
+            </p>
+            <p className="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto">
+              SPPB como herramienta recomendada de cribado
+            </p>
+            <div className="mt-8 flex items-center justify-center gap-4 text-slate-300 text-sm">
+              <LucideIcon name="building-2" className="w-5 h-5" />
+              <span>DYPHI Inc.</span>
+              <span>•</span>
+              <span>AndanteFit</span>
+            </div>
+          </div>
+        </div>
+      ),
+
+      // SLIDE 2: Significado del consenso
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            Un consenso nacional con impacto europeo
+          </h2>
+          
+          <div className="space-y-6 max-w-4xl">
+            <BulletPoint icon="globe">
+              <strong className="text-slate-900">Consenso liderado por el consorcio español CIBERFES</strong> — 
+              Centro de Investigación Biomédica en Red de Fragilidad y Envejecimiento Saludable
+            </BulletPoint>
+            
+            <BulletPoint icon="map">
+              <strong className="text-slate-900">Diseñado para su aplicación en toda Europa</strong> — 
+              Estándares armonizados para facilitar la comparación y colaboración transnacional
+            </BulletPoint>
+            
+            <BulletPoint icon="bookmark">
+              <strong className="text-slate-900">Estándares comunes para investigación, práctica clínica y políticas públicas</strong> — 
+              Marco integrado que conecta la evidencia científica con la implementación práctica
+            </BulletPoint>
+          </div>
+
+          <div className="mt-12 p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600">
+            <p className="text-slate-700 leading-relaxed">
+              Este consenso establece un marco común que permite la estandarización de métodos de cribado, 
+              diagnóstico e intervención en fragilidad a nivel europeo.
+            </p>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 3: Qué es la fragilidad - Con imagen Main-pathways
+      (
+        <SlideLayout className="bg-slate-50">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            La fragilidad como pérdida de reserva funcional
+          </h2>
+          
+          <div className="grid md:grid-cols-5 gap-8 items-start">
+            {/* Left column: Text (40%) */}
+            <div className="md:col-span-2 space-y-5">
+              <BulletPoint icon="alert-circle">
+                <strong className="text-slate-900">No es simplemente envejecimiento</strong> ni una enfermedad específica
+              </BulletPoint>
+              
+              <BulletPoint icon="trending-down">
+                <strong className="text-slate-900">Disminución de la reserva funcional</strong> de los órganos
+              </BulletPoint>
+              
+              <BulletPoint icon="activity">
+                <strong className="text-slate-900">Reducción de la capacidad</strong> de mantener la homeostasis
+              </BulletPoint>
+              
+              <BulletPoint icon="arrow-right-circle">
+                <strong className="text-slate-900">Estado previo a la discapacidad</strong> — Oportunidad para intervención preventiva
+              </BulletPoint>
+            </div>
+            
+            {/* Right column: Image (60%) */}
+            <div className="md:col-span-3">
+              <figure className="bg-white p-6 rounded-xl shadow-lg">
+                {/* Main-pathways-of-frailty.webp should be placed in /assets/case-studies/ */}
+                <img 
+                  src="../assets/case-studies/Main-pathways-of-frailty.webp" 
+                  alt="Diagrama de las principales vías involucradas en la fisiopatología de la fragilidad, mostrando factores genéticos, envejecimiento, inflamación, estrés oxidativo, disfunción mitocondrial, deterioro neuromuscular y pérdida de masa muscular"
+                  className="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+                <figcaption className="mt-4 text-sm text-slate-600 text-center leading-relaxed">
+                  <strong>Vías principales involucradas en la fisiopatología de la fragilidad.</strong><br/>
+                  Fuente: Consenso de CIBERFES sobre fragilidad. <em>The Journal of Nutrition, Health and Aging</em>. 
+                  DOI: 10.1016/j.jnha.2026.100793
+                </figcaption>
+                <div id="pathways-description" className="sr-only">
+                  El diagrama muestra las vías principales de la fragilidad incluyendo factores genéticos, 
+                  envejecimiento, inflamación sistémica, estrés oxidativo, disfunción mitocondrial, 
+                  deterioro neuromuscular y pérdida de masa muscular.
+                </div>
+              </figure>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 4: Herramienta de cribado recomendada - CORE MESSAGE
+      (
+        <div className="w-full min-h-screen bg-gradient-to-br from-teal-600 to-teal-700 p-8 sm:p-16 flex flex-col justify-center items-center text-center">
+          <div className="max-w-5xl">
+            <div className="mb-8">
+              <LucideIcon name="clipboard-check" className="w-20 h-20 text-white mx-auto mb-6 opacity-90" />
+            </div>
+            
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
+              SPPB como estándar de<br/>cribado temprano
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6 mt-12 text-left">
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="zap" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Evaluación rápida y sencilla</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  de la función física sin necesidad de equipamiento especializado
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="ruler" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Método sensible y estandarizado</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  con valores de corte validados internacionalmente
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="check-circle-2" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Alineado con recomendaciones europeas</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  previas sobre cribado funcional de fragilidad
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="puzzle" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">Herramientas complementarias</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  Velocidad de la marcha y escala FRAIL para contextos específicos
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+
+      // SLIDE 5: Después del diagnóstico
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+            Evaluación integral e intervenciones basadas en la evidencia
+          </h2>
+          <p className="text-lg text-slate-600 mb-10 max-w-3xl">
+            Una vez identificada la fragilidad mediante el cribado funcional, se procede a:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            {/* Diagnosis column */}
+            <div className="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
+              <div className="flex items-center gap-3 mb-4">
+                <LucideIcon name="stethoscope" className="w-7 h-7 text-blue-600" />
+                <h3 className="text-xl font-bold text-blue-900">Diagnóstico</h3>
+              </div>
+              <p className="text-slate-700 leading-relaxed mb-3">
+                <strong>Fenotipo de Fried</strong> — Evaluación de cinco criterios: pérdida de peso involuntaria, 
+                fatiga, baja actividad física, lentitud de la marcha y debilidad muscular
+              </p>
+              <p className="text-slate-700 leading-relaxed">
+                <strong>Valoración geriátrica integral</strong> — Evaluación multidimensional de aspectos físicos, 
+                cognitivos, funcionales, sociales y nutricionales
+              </p>
+            </div>
+
+            {/* Interventions column */}
+            <div className="bg-teal-50 p-6 rounded-xl border-l-4 border-teal-600">
+              <div className="flex items-center gap-3 mb-4">
+                <LucideIcon name="heart-pulse" className="w-7 h-7 text-teal-600" />
+                <h3 className="text-xl font-bold text-teal-900">Intervenciones</h3>
+              </div>
+              <div className="space-y-3">
+                <BulletPoint icon="dumbbell">
+                  <strong>Entrenamiento de fuerza y potencia</strong> — Ejercicios de resistencia progresiva
+                </BulletPoint>
+                
+                <BulletPoint icon="footprints">
+                  <strong>Reentrenamiento de equilibrio y marcha</strong> — Prevención de caídas
+                </BulletPoint>
+                
+                <BulletPoint icon="activity">
+                  <strong>Ejercicio aeróbico</strong> — Mejora cardiovascular y resistencia
+                </BulletPoint>
+                
+                <BulletPoint icon="utensils">
+                  <strong>Optimización nutricional</strong> — Proteínas, vitamina D, calorías adecuadas
+                </BulletPoint>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+            <div className="flex items-start gap-3">
+              <LucideIcon name="lightbulb" className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+              <p className="text-slate-700 leading-relaxed">
+                <strong>Enfoque multicomponente:</strong> La combinación de intervenciones de ejercicio físico 
+                y nutricional muestra la mayor evidencia de efectividad en la reversión de la fragilidad.
+              </p>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 6: Integración en el sistema + conclusión
+      (
+        <div className="w-full min-h-screen bg-slate-900 p-8 sm:p-16 flex flex-col justify-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -ml-40 -mb-40"></div>
+
+          <div className="relative z-10 max-w-5xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 text-center">
+              La fragilidad debe abordarse en<br/>todo el sistema sanitario y social
+            </h2>
+            <p className="text-xl text-slate-300 text-center mb-12">
+              Integración coordinada a todos los niveles asistenciales
+            </p>
+
+            {/* System integration grid */}
+            <div className="grid md:grid-cols-2 gap-5 mb-12">
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="home" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Atención primaria</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Cribado poblacional, detección temprana e inicio de intervenciones preventivas
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="hospital" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Hospitales</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Valoración integral, manejo de comorbilidades y planificación del alta
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="users" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Centros de cuidados</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Programas de rehabilitación y mantenimiento funcional continuo
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="map-pin" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">Servicios comunitarios</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Apoyo social, promoción de actividad física y nutrición saludable
+                </p>
+              </div>
+            </div>
+
+            {/* Coordination message */}
+            <div className="bg-gradient-to-r from-teal-600/20 to-blue-600/20 backdrop-blur-sm p-6 rounded-xl border border-teal-400/30 mb-12">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="link" className="w-7 h-7 text-teal-400 flex-shrink-0 mt-1" />
+                <p className="text-white text-lg leading-relaxed">
+                  <strong>Coordinación entre salud y servicios sociales</strong> — 
+                  La respuesta efectiva a la fragilidad requiere la integración de sistemas sanitarios y sociales, 
+                  facilitando transiciones fluidas entre niveles asistenciales.
+                </p>
+              </div>
+            </div>
+
+            {/* Final message */}
+            <div className="text-center pt-8 border-t border-white/20">
+              <p className="text-2xl sm:text-3xl font-bold text-teal-300 mb-8">
+                El cribado funcional estandarizado es el primer paso<br/>para la prevención de la fragilidad
+              </p>
+              
+              <div className="mt-8 text-slate-400 text-sm leading-relaxed space-y-2">
+                <p>
+                  Este material es proporcionado con fines informativos para profesionales médicos. 
+                  Las decisiones de diagnóstico y tratamiento para pacientes individuales deben basarse 
+                  en el juicio clínico de los profesionales de la salud y las condiciones del paciente.
+                </p>
+              </div>
+              
+              <div className="mt-8">
+                <p className="text-white text-base font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
+                <p className="text-slate-400 text-sm">Evaluación automatizada de función física para la práctica clínica</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    ];
+
+    // Keyboard navigation
+    useEffect(() => {
+      const handleKeyDown = (e) => {
+        const currentHash = window.location.hash.replace('#slide-', '');
+        const currentSlide = currentHash ? parseInt(currentHash) : 0;
+        const totalSlides = slides.length;
+        
+        if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+          window.location.hash = `slide-${currentSlide + 1}`;
+          document.getElementById(`slide-${currentSlide + 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+          window.location.hash = `slide-${currentSlide - 1}`;
+          document.getElementById(`slide-${currentSlide - 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          window.location.hash = 'slide-0';
+          document.getElementById('slide-0')?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          window.location.hash = `slide-${totalSlides - 1}`;
+          document.getElementById(`slide-${totalSlides - 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [slides.length]);
+
+    // Initialize Lucide icons
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    });
+
+    return (
+      <div className="w-full">
+        {slides.map((slide, idx) => (
+          <SlideFrame key={idx} index={idx} total={slides.length}>
+            {slide}
+          </SlideFrame>
+        ))}
+      </div>
+    );
+  }
+
+  // Render
+  ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+
+<!-- AndanteFit Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>AndanteFit</h4>
+        <p>Desarrollado y proporcionado por: DYPHI Inc.<br/>
+        Solución de evaluación automatizada de función física para investigación en fragilidad y sarcopenia.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Enlaces Rápidos</h4>
+        <p>
+          <a href="../product.html">Producto</a><br/>
+          <a href="../validation.html">Validación</a><br/>
+          <a href="../case-studies.html">Casos de Estudio</a><br/>
+          <a href="../references.html">Referencias</a>
+        </p>
+      </div>
+      <div class="footer-section">
+        <h4>Contacto</h4>
+        <p>Email: <a href="mailto:[email protected]">[email protected]</a><br/>
+        Oficina Seúl: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
+        Oficina Daejeon: C17, 99 Daehak-ro, Yuseong-gu</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 DYPHI Inc. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+</body>
+</html>

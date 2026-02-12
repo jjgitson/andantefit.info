@@ -89,60 +89,145 @@
 
 <script src="js/main.js"></script>
 <script>
-const GITHUB_CONFIG = { 
-    owner: 'jjgitson', 
-    repo: 'andantefit.info', 
-    folder: 'case-studies', 
-    branch: 'main'
-    // token 제거!
-};
-
-async function loadCaseStudies() {
-    const container = document.getElementById('caseStudiesContainer');
-    try {
-        // headers 없이 호출
-        const res = await fetch(
-            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`
-        );
+(function() {
+    'use strict';
+    
+    const GITHUB_CONFIG = { 
+        owner: 'jjgitson', 
+        repo: 'andantefit.info', 
+        folder: 'case-studies', 
+        branch: 'main'
+    };
+    
+    const spanishTitles = {
+        'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad',
+        'Digital-Care-Platform': 'Plataforma de Atención Digital',
+    };
+    
+    const CACHE_KEY = 'case_studies_cache_es';
+    const CACHE_DURATION = 24 * 60 * 60 * 1000;
+    
+    function parseFilename(filename) {
+        const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
+        if (!match) return null;
         
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
+        const [, year, month, day, fileKey] = match;
         
-        const data = await res.json();
+        // 언어 접미사가 있는 파일은 제외 (스페인어는 접미사 없음)
+        if (fileKey.endsWith('-EN') || fileKey.endsWith('-KR')) return null;
         
-        if (!Array.isArray(data)) {
-            throw new Error('Invalid API response');
-        }
+        const title = spanishTitles[fileKey] || fileKey.replace(/-/g, ' ');
         
-        const htmlFiles = data.filter(f => f.type === 'file' && f.name.endsWith('.html'));
-        const caseStudies = htmlFiles
-            .map(f => ({ ...parseFilename(f.name), url: `case-studies/${f.name}` }))
-            .sort((a,b) => b.date - a.date);
+        return { 
+            date: new Date(year, month - 1, day), 
+            dateStr: `${year}.${month}.${day}`, 
+            title: title,
+            filename: filename,
+            fileKey: fileKey
+        };
+    }
+    
+    function renderCaseStudies(container, caseStudies) {
+        if (!container) return;
         
-        container.innerHTML = caseStudies.map(s => {
-            const isKorean = koreanTitles.hasOwnProperty(s.fileKey);
-            const isSpanish = spanishTitles.hasOwnProperty(s.fileKey);
-            const badge = isKorean ? '<span class="lang-badge">한국어</span>' : 
-                         isSpanish ? '<span class="lang-badge">Español</span>' : '';
-            
+        const html = caseStudies.map(function(study) {
             return `<div class="report-item">
-                        <div class="report-date">${s.dateStr}</div>
+                        <div class="report-date">${study.dateStr}</div>
                         <div class="report-main">
                             <h3 class="report-title">
-                                <a href="${s.url}" class="title-link">${s.title}</a> ${badge}
+                                <a href="${study.url}" class="title-link">${study.title}</a>
+                                <span class="lang-badge">Español</span>
                             </h3>
                         </div>
-                        <div class="report-link"><a href="${s.url}" class="btn btn-primary btn-small">View Report →</a></div>
+                        <div class="report-link">
+                            <a href="${study.url}" class="btn btn-primary btn-small">Ver Informe →</a>
+                        </div>
                     </div>`;
         }).join('');
-    } catch (e) { 
-        console.error('Error loading case studies:', e);
-        container.innerHTML = '<p style="color: #dc2626; padding: 20px;">Error loading reports. Please refresh the page.</p>'; 
+        
+        container.innerHTML = html;
     }
-}
-
-loadCaseStudies();
+    
+    function showError(container, message) {
+        container.innerHTML = `<div style="color: #dc2626; padding: 20px; background: #fee2e2; border-radius: 8px;">
+            <strong>Error al cargar los informes</strong><br>
+            ${message}<br>
+            <small style="margin-top: 8px; display: block;">Por favor, inténtelo de nuevo más tarde.</small>
+        </div>`;
+    }
+    
+    function showCacheWarning(container) {
+        container.insertAdjacentHTML('afterbegin', 
+            `<div style="background: #fef3c7; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
+                ⚠️ Mostrando datos en caché. Las actualizaciones están temporalmente limitadas.
+            </div>`
+        );
+    }
+    
+    async function loadCaseStudies() {
+        const container = document.getElementById('caseStudiesContainer');
+        if (!container) return;
+        
+        try {
+            const cached = localStorage.getItem(CACHE_KEY);
+            const cacheTime = localStorage.getItem(CACHE_KEY + '_time');
+            
+            if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CACHE_DURATION) {
+                console.log('✓ Usando caché');
+                renderCaseStudies(container, JSON.parse(cached));
+                return;
+            }
+            
+            console.log('→ Consultando GitHub API...');
+            const response = await fetch(
+                `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`
+            );
+            
+            if (!response.ok) {
+                if (cached) {
+                    console.log('⚠ API falló, usando caché expirado');
+                    renderCaseStudies(container, JSON.parse(cached));
+                    showCacheWarning(container);
+                    return;
+                }
+                throw new Error('Solicitud API falló: ' + response.status);
+            }
+            
+            const data = await response.json();
+            if (!Array.isArray(data)) throw new Error('Respuesta API inválida');
+            
+            const htmlFiles = data.filter(function(f) {
+                return f.type === 'file' && f.name.endsWith('.html');
+            });
+            
+            const caseStudies = htmlFiles
+                .map(function(f) {
+                    const parsed = parseFilename(f.name);
+                    if (!parsed) return null;
+                    parsed.url = 'case-studies/' + f.name;
+                    return parsed;
+                })
+                .filter(function(item) { return item !== null; })
+                .sort(function(a, b) { return b.date - a.date; });
+            
+            localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
+            localStorage.setItem(CACHE_KEY + '_time', Date.now().toString());
+            
+            renderCaseStudies(container, caseStudies);
+            console.log('✓ Cargado:', caseStudies.length, 'elementos');
+            
+        } catch (error) {
+            console.error('Error:', error);
+            showError(container, error.message);
+        }
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadCaseStudies);
+    } else {
+        loadCaseStudies();
+    }
+})();
 </script>
 </body>
 </html>

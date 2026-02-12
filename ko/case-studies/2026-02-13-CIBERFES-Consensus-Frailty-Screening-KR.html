@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  
+  <!-- SEO Meta Tags -->
+  <meta content="CIBERFES 프레일티 컨센서스: SPPB를 권장 선별 도구로 하는 기능 중심 접근법. 조기 발견 및 근거 기반 중재를 위한 임상 가이드." name="description"/>
+  <meta content="AndanteFit, SPPB, 신체기능 평가, 프레일티, 노쇠, 선별검사, CIBERFES, 컨센서스, 보행속도, 균형, 의자 일어서기 검사, 근감소증, 노인의학, 종합노인평가" name="keywords"/>
+  <meta content="DYPHI Inc." name="author"/>
+  <meta content="index,follow" name="robots"/>
+  
+  <!-- Open Graph Tags -->
+  <meta content="website" property="og:type"/>
+  <meta content="ko_KR" property="og:locale"/>
+  <meta content="AndanteFit" property="og:site_name"/>
+  <meta content="CIBERFES 프레일티 컨센서스 | AndanteFit" property="og:title"/>
+  <meta content="SPPB 기반 프레일티 기능 선별검사. 연구 및 임상 실무를 위한 유럽 표준." property="og:description"/>
+  <meta content="../assets/andantefit-logo.png" property="og:image"/>
+  <meta content="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-KR.html" property="og:url"/>
+  
+  <!-- Twitter Card Tags -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="CIBERFES 프레일티 컨센서스 | AndanteFit" name="twitter:title"/>
+  <meta content="프레일티 기능 선별 표준으로서의 SPPB. 의료 전문가를 위한 유럽 가이드." name="twitter:description"/>
+  <meta content="../assets/andantefit-logo.png" name="twitter:image"/>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="google-site-verification" content="" />
+  <meta name="theme-color" content="#0d9488" />
+  <link rel="canonical" href="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-KR.html" />
+  <meta name="application-name" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-title" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="language" content="ko" />
+  <meta name="rating" content="general" />
+  <meta name="distribution" content="global" />
+  
+  <!-- Medical-specific meta tags -->
+  <meta name="medical-subject" content="Frailty Assessment, SPPB, Functional Screening, Geriatric Assessment" />
+  <meta name="target-audience" content="Healthcare Professionals, Physicians, Geriatricians, Physical Therapists" />
+  
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "CIBERFES 프레일티 컨센서스",
+    "description": "SPPB를 표준 도구로 하는 프레일티 기능 선별검사를 위한 유럽 임상 가이드",
+    "inLanguage": "ko",
+    "datePublished": "2026-02-13",
+    "dateModified": "2026-02-13",
+    "publisher": {
+      "@type": "Organization",
+      "name": "DYPHI Inc.",
+      "url": "https://andantefit.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://andantefit.com/assets/andantefit-logo.png"
+      }
+    },
+    "about": {
+      "@type": "MedicalCondition",
+      "name": "Frailty"
+    },
+    "audience": {
+      "@type": "MedicalAudience",
+      "audienceType": ["Physician", "Geriatrician", "Researcher"]
+    },
+    "citation": {
+      "@type": "ScholarlyArticle",
+      "name": "CIBERFES Consensus on Frailty",
+      "publisher": "The Journal of Nutrition, Health and Aging",
+      "identifier": "DOI: 10.1016/j.jnha.2026.100793"
+    }
+  }
+  </script>
+  
+  <title>CIBERFES 프레일티 컨센서스 | AndanteFit</title>
+  <link href="../css/style.css" rel="stylesheet"/>
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <!-- Google Analytics -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+    
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    }
+    
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+    .slideSurface { background: white; }
+    
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+    
+    @media print {
+      .nav, .footer, .slide-counter, .nav-toggle {
+        display: none;
+      }
+      .slide-frame {
+        page-break-after: always;
+        height: 100vh;
+      }
+      .slide-frame:last-child {
+        page-break-after: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- AndanteFit Navigation -->
+<nav class="nav">
+  <div class="nav-container">
+    <a class="nav-logo" href="../index.html">
+      <img alt="AndanteFit - 자동화된 신체기능 평가" src="../assets/andantefit-logo.png"/>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a class="nav-link" href="../index.html">홈</a></li>
+      <li><a class="nav-link" href="../product.html">제품</a></li>
+      <li><a class="nav-link" href="../validation.html">검증</a></li>
+      <li><a class="nav-link active" href="../case-studies.html">사례 연구</a></li>
+      <li><a class="nav-link" href="../references.html">참고문헌</a></li>
+    </ul>
+    <button aria-label="네비게이션 메뉴 열기" class="nav-toggle" id="navToggle">☰</button>
+  </div>
+</nav>
+
+<div class="appFont" id="root"></div>
+
+<!-- React App -->
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  function SlideFrame({ children, index, total }) {
+    const handleNavClick = (e, targetIdx) => {
+      e.preventDefault();
+      window.location.hash = `slide-${targetIdx}`;
+      const target = document.getElementById(`slide-${targetIdx}`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    return (
+      <div 
+        id={`slide-${index}`} 
+        className="slide-frame min-h-screen flex flex-col relative"
+        role="article"
+        aria-label={`슬라이드 ${index + 1} / ${total}`}
+      >
+        {children}
+        <div 
+          className="slide-counter absolute bottom-6 right-6 bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium z-50"
+          role="status"
+          aria-label={`슬라이드 ${index + 1} / ${total}`}
+          aria-live="polite"
+        >
+          {index + 1} / {total}
+        </div>
+      </div>
+    );
+  }
+
+  function SlideLayout({ children, className = "" }) {
+    return (
+      <div className={`w-full min-h-screen bg-white p-8 sm:p-12 md:p-16 ${className}`}>
+        <div className="max-w-6xl mx-auto">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
+  function LucideIcon({ name, className = "w-6 h-6" }) {
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    }, []);
+    return <i data-lucide={name} className={className} aria-hidden="true"></i>;
+  }
+
+  function BulletPoint({ children, icon = "check-circle" }) {
+    return (
+      <div className="flex items-start gap-3 mb-4">
+        <LucideIcon name={icon} className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+        <p className="text-slate-700 leading-relaxed flex-1">{children}</p>
+      </div>
+    );
+  }
+
+  function App() {
+    const slides = [
+      // SLIDE 1: CIBERFES 이미지가 있는 소개
+      (
+        <div className="w-full min-h-screen relative flex flex-col justify-center items-center overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: 'url(../assets/case-studies/CIBERFES.webp)',
+              filter: 'brightness(0.4)'
+            }}
+            role="img"
+            aria-label="CIBERFES - 프레일티 및 건강한 노화 생의학 연구 네트워크 센터"
+          ></div>
+          
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/70"></div>
+          
+          <div className="relative z-10 text-center px-6 max-w-5xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+              CIBERFES<br/>프레일티 컨센서스
+            </h1>
+            <p className="text-xl sm:text-2xl md:text-3xl text-teal-300 font-semibold mb-4">
+              기능 중심 접근법
+            </p>
+            <p className="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto">
+              권장 선별 도구로서의 SPPB
+            </p>
+            <div className="mt-8 flex items-center justify-center gap-4 text-slate-300 text-sm">
+              <LucideIcon name="building-2" className="w-5 h-5" />
+              <span>DYPHI Inc.</span>
+              <span>•</span>
+              <span>AndanteFit</span>
+            </div>
+          </div>
+        </div>
+      ),
+
+      // SLIDE 2: 컨센서스의 의미
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            유럽적 영향력을 가진 국가 컨센서스
+          </h2>
+          
+          <div className="space-y-6 max-w-4xl">
+            <BulletPoint icon="globe">
+              <strong className="text-slate-900">스페인 CIBERFES 컨소시엄이 주도한 컨센서스</strong> — 
+              프레일티 및 건강한 노화 생의학 연구 네트워크 센터
+            </BulletPoint>
+            
+            <BulletPoint icon="map">
+              <strong className="text-slate-900">유럽 전역에 적용하도록 설계</strong> — 
+              국가 간 비교와 협력을 촉진하는 조화로운 표준
+            </BulletPoint>
+            
+            <BulletPoint icon="bookmark">
+              <strong className="text-slate-900">연구, 임상 실무, 공공 정책을 위한 공통 표준</strong> — 
+              과학적 근거와 실제 적용을 연결하는 통합 프레임워크
+            </BulletPoint>
+          </div>
+
+          <div className="mt-12 p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600">
+            <p className="text-slate-700 leading-relaxed">
+              이 컨센서스는 유럽 수준에서 프레일티의 선별검사, 진단 및 중재 방법을 
+              표준화할 수 있는 공통 프레임워크를 구축합니다.
+            </p>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 3: 프레일티란 - 병태생리 다이어그램 포함
+      (
+        <SlideLayout className="bg-slate-50">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            기능적 예비력 상실로서의 프레일티
+          </h2>
+          
+          <div className="grid md:grid-cols-5 gap-8 items-start">
+            <div className="md:col-span-2 space-y-5">
+              <BulletPoint icon="alert-circle">
+                <strong className="text-slate-900">단순한 노화가 아니며</strong> 특정 질병도 아님
+              </BulletPoint>
+              
+              <BulletPoint icon="trending-down">
+                <strong className="text-slate-900">장기의 기능적 예비력</strong> 감소
+              </BulletPoint>
+              
+              <BulletPoint icon="activity">
+                <strong className="text-slate-900">항상성 유지 능력</strong> 저하
+              </BulletPoint>
+              
+              <BulletPoint icon="arrow-right-circle">
+                <strong className="text-slate-900">장애 전 단계</strong> — 예방적 중재의 기회
+              </BulletPoint>
+            </div>
+            
+            <div className="md:col-span-3">
+              <figure className="bg-white p-6 rounded-xl shadow-lg">
+                <img 
+                  src="../assets/case-studies/Main-pathways-of-frailty.webp" 
+                  alt="프레일티 병태생리에 관여하는 주요 경로를 보여주는 다이어그램: 유전적 요인, 노화, 염증, 산화 스트레스, 미토콘드리아 기능장애, 신경근육 손상, 근육량 감소"
+                  className="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+                <figcaption className="mt-4 text-sm text-slate-600 text-center leading-relaxed">
+                  <strong>프레일티 병태생리에 관여하는 주요 경로.</strong><br/>
+                  출처: CIBERFES 프레일티 컨센서스. <em>The Journal of Nutrition, Health and Aging</em>. 
+                  DOI: 10.1016/j.jnha.2026.100793
+                </figcaption>
+                <div id="pathways-description" className="sr-only">
+                  다이어그램은 유전적 요인, 노화, 전신 염증, 산화 스트레스, 미토콘드리아 기능장애, 
+                  신경근육 손상, 근육량 감소를 포함한 프레일티의 주요 경로를 보여줍니다.
+                </div>
+              </figure>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 4: 권장 선별 도구 - 핵심 메시지
+      (
+        <div className="w-full min-h-screen bg-gradient-to-br from-teal-600 to-teal-700 p-8 sm:p-16 flex flex-col justify-center items-center text-center">
+          <div className="max-w-5xl">
+            <div className="mb-8">
+              <LucideIcon name="clipboard-check" className="w-20 h-20 text-white mx-auto mb-6 opacity-90" />
+            </div>
+            
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
+              조기 선별검사<br/>표준으로서의 SPPB
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6 mt-12 text-left">
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="zap" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">빠르고 간편한 평가</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  전문 장비 없이 신체기능 평가 가능
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="ruler" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">민감하고 표준화된 방법</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  국제적으로 검증된 절단값 보유
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="check-circle-2" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">유럽 권장사항과 일치</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  프레일티 기능 선별검사에 대한 기존 가이드라인과 정렬
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="puzzle" className="w-7 h-7 text-teal-200 flex-shrink-0" />
+                  <h3 className="text-white font-bold text-lg">보완적 도구</h3>
+                </div>
+                <p className="text-teal-50 text-sm leading-relaxed">
+                  특정 상황을 위한 보행속도 및 FRAIL 척도
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+
+      // SLIDE 5: 진단 후
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+            종합평가 및 근거 기반 중재
+          </h2>
+          <p className="text-lg text-slate-600 mb-10 max-w-3xl">
+            기능적 선별검사를 통해 프레일티가 확인되면 다음을 진행합니다:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <div className="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
+              <div className="flex items-center gap-3 mb-4">
+                <LucideIcon name="stethoscope" className="w-7 h-7 text-blue-600" />
+                <h3 className="text-xl font-bold text-blue-900">진단</h3>
+              </div>
+              <p className="text-slate-700 leading-relaxed mb-3">
+                <strong>프리드 표현형</strong> — 5가지 기준 평가: 의도하지 않은 체중 감소, 
+                피로, 낮은 신체 활동, 느린 보행 속도, 근력 약화
+              </p>
+              <p className="text-slate-700 leading-relaxed">
+                <strong>종합노인평가</strong> — 신체적, 인지적, 기능적, 사회적, 
+                영양적 측면의 다차원 평가
+              </p>
+            </div>
+
+            <div className="bg-teal-50 p-6 rounded-xl border-l-4 border-teal-600">
+              <div className="flex items-center gap-3 mb-4">
+                <LucideIcon name="heart-pulse" className="w-7 h-7 text-teal-600" />
+                <h3 className="text-xl font-bold text-teal-900">중재</h3>
+              </div>
+              <div className="space-y-3">
+                <BulletPoint icon="dumbbell">
+                  <strong>근력 및 파워 훈련</strong> — 점진적 저항 운동
+                </BulletPoint>
+                
+                <BulletPoint icon="footprints">
+                  <strong>균형 및 보행 재훈련</strong> — 낙상 예방
+                </BulletPoint>
+                
+                <BulletPoint icon="activity">
+                  <strong>유산소 운동</strong> — 심혈관 개선 및 지구력 향상
+                </BulletPoint>
+                
+                <BulletPoint icon="utensils">
+                  <strong>영양 최적화</strong> — 단백질, 비타민 D, 적절한 칼로리
+                </BulletPoint>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+            <div className="flex items-start gap-3">
+              <LucideIcon name="lightbulb" className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+              <p className="text-slate-700 leading-relaxed">
+                <strong>다성분 접근법:</strong> 신체 운동과 영양 중재의 결합이 
+                프레일티 역전에 가장 강력한 근거를 보여줍니다.
+              </p>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 6: 시스템 통합 + 결론
+      (
+        <div className="w-full min-h-screen bg-slate-900 p-8 sm:p-16 flex flex-col justify-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -ml-40 -mb-40"></div>
+
+          <div className="relative z-10 max-w-5xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 text-center">
+              프레일티는 보건의료 및<br/>사회 시스템 전반에서 다루어야 합니다
+            </h2>
+            <p className="text-xl text-slate-300 text-center mb-12">
+              모든 돌봄 수준에서의 통합적 조정
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-5 mb-12">
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="home" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">일차의료</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  인구 선별검사, 조기 발견 및 예방적 중재 시작
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="hospital" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">병원</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  종합평가, 동반질환 관리 및 퇴원 계획
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="users" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">돌봄 센터</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  재활 프로그램 및 지속적인 기능 유지
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="map-pin" className="w-7 h-7 text-teal-400" />
+                  <h3 className="text-white font-bold text-lg">지역사회 서비스</h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  사회적 지원, 신체활동 및 건강한 영양 증진
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-teal-600/20 to-blue-600/20 backdrop-blur-sm p-6 rounded-xl border border-teal-400/30 mb-12">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="link" className="w-7 h-7 text-teal-400 flex-shrink-0 mt-1" />
+                <p className="text-white text-lg leading-relaxed">
+                  <strong>보건 및 사회 서비스 간 조정</strong> — 
+                  프레일티에 대한 효과적인 대응은 보건의료 시스템과 사회 시스템의 통합을 요구하며, 
+                  돌봄 수준 간 원활한 전환을 촉진합니다.
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center pt-8 border-t border-white/20">
+              <p className="text-2xl sm:text-3xl font-bold text-teal-300 mb-8">
+                표준화된 기능 선별검사는<br/>프레일티 예방의 첫 단계입니다
+              </p>
+              
+              <div className="mt-8 text-slate-400 text-sm leading-relaxed space-y-2">
+                <p>
+                  본 자료는 의료 전문가를 위한 정보 제공 목적으로 제공됩니다. 
+                  개별 환자에 대한 진단 및 치료 결정은 의료 제공자의 임상적 판단과 
+                  환자 상태를 기반으로 이루어져야 합니다.
+                </p>
+              </div>
+              
+              <div className="mt-8">
+                <p className="text-white text-base font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
+                <p className="text-slate-400 text-sm">임상 실무를 위한 자동화된 신체기능 평가</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    ];
+
+    useEffect(() => {
+      const handleKeyDown = (e) => {
+        const currentHash = window.location.hash.replace('#slide-', '');
+        const currentSlide = currentHash ? parseInt(currentHash) : 0;
+        const totalSlides = slides.length;
+        
+        if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+          window.location.hash = `slide-${currentSlide + 1}`;
+          document.getElementById(`slide-${currentSlide + 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+          window.location.hash = `slide-${currentSlide - 1}`;
+          document.getElementById(`slide-${currentSlide - 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          window.location.hash = 'slide-0';
+          document.getElementById('slide-0')?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          window.location.hash = `slide-${totalSlides - 1}`;
+          document.getElementById(`slide-${totalSlides - 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [slides.length]);
+
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    });
+
+    return (
+      <div className="w-full">
+        {slides.map((slide, idx) => (
+          <SlideFrame key={idx} index={idx} total={slides.length}>
+            {slide}
+          </SlideFrame>
+        ))}
+      </div>
+    );
+  }
+
+  ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+
+<!-- AndanteFit Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>AndanteFit</h4>
+        <p>개발 및 제공: DYPHI Inc.<br/>
+        프레일티 및 근감소증 연구를 위한 자동화된 신체기능 평가 솔루션</p>
+      </div>
+      <div class="footer-section">
+        <h4>바로가기</h4>
+        <p>
+          <a href="../product.html">제품</a><br/>
+          <a href="../validation.html">검증</a><br/>
+          <a href="../case-studies.html">사례 연구</a><br/>
+          <a href="../references.html">참고문헌</a>
+        </p>
+      </div>
+      <div class="footer-section">
+        <h4>연락처</h4>
+        <p>이메일: <a href="mailto:[email protected]">[email protected]</a><br/>
+        서울 사무소: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
+        대전 사무소: C17, 99 Daehak-ro, Yuseong-gu</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 DYPHI Inc. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

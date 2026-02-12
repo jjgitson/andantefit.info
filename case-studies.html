@@ -95,13 +95,13 @@
         branch: 'main'
     };
     
-    const englishTitles = {
-        'CIBERFES-Consensus-Frailty-Screening-EN': 'CIBERFES Consensus on Frailty Screening',
-        'SPPB-Occupational-Health-EN': 'SPPB Utilization in Occupational Health',
-        'Common-Operational-Language-Strategy-EN': 'Strategic Proposal: Seamless Integrated Care for Older Adults'
+    // 커스텀 제목 매핑 (선택사항)
+    const customTitles = {
+        'CIBERFES-Consensus-Frailty-Screening': 'CIBERFES Consensus on Frailty Screening',
+        // 필요한 경우 여기에 추가
     };
     
-    const CACHE_KEY = 'case_studies_cache_en';
+    const CACHE_KEY = 'case_studies_cache';
     const CACHE_DURATION = 24 * 60 * 60 * 1000;
     
     function parseFilename(filename) {
@@ -109,11 +109,7 @@
         if (!match) return null;
         
         const [, year, month, day, fileKey] = match;
-        
-        // 영어 파일이 아니면 제외
-        if (!fileKey.endsWith('-EN')) return null;
-        
-        const title = englishTitles[fileKey] || fileKey.replace(/-/g, ' ');
+        const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
         
         return { 
             date: new Date(year, month - 1, day), 
@@ -155,7 +151,7 @@
     function showCacheWarning(container) {
         container.insertAdjacentHTML('afterbegin', 
             `<div style="background: #fef3c7; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
-                ⚠️ Showing cached data. Updates are temporarily limited.
+                ⚠️ Showing cached data.
             </div>`
         );
     }
@@ -181,7 +177,7 @@
             
             if (!response.ok) {
                 if (cached) {
-                    console.log('⚠ API failed, using expired cache');
+                    console.log('⚠ API failed, using cache');
                     renderCaseStudies(container, JSON.parse(cached));
                     showCacheWarning(container);
                     return;

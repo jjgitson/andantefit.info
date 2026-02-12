@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="통증 치료에서 주관적 통증 점수(NRS/VAS)를 넘어, SPPB 기반 기능 지표로 회복을 추적하는 임상 적용 개요. AndanteFit 사례 자료." name="description"/>
+<meta content="AndanteFit, SPPB, 신체기능평가, 통증 치료, 기능 회복, 보행속도, 5회 의자 일어서기, 균형검사, 근감소증, 노쇠, 척추관협착증, ESI" name="keywords"/>
+<meta content="DYPHI Inc." name="author"/>
+<meta content="index,follow" name="robots"/>
+<meta content="website" property="og:type"/>
+<meta content="ko_KR" property="og:locale"/>
+<meta content="AndanteFit" property="og:site_name"/>
+<meta content="통증 치료의 새로운 활력 징후, 기능(Function) | AndanteFit" property="og:title"/>
+<meta content="통증 점수만으로 설명이 어려운 임상 상황에서, SPPB 기반 기능 지표를 함께 확인해 치료 반응과 추세를 파악하는 접근을 소개합니다." property="og:description"/>
+<meta content="../assets/andantefit-logo.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="통증 치료의 새로운 활력 징후, 기능(Function) | AndanteFit" name="twitter:title"/>
+<meta content="SPPB 기반 기능 지표로 통증 치료의 반응과 회복을 추적하는 임상 적용 개요." name="twitter:description"/>
+<title>통증 치료의 새로운 활력 징후, 기능(Function) | AndanteFit</title>
+<link href="../css/style.css" rel="stylesheet"/>
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- React CDN -->
+<script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<!-- Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+<style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+    
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    }
+    
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+    .slideSurface { background: white; }
+  </style>
+</head>
+<body>
+<!-- AndanteFit Navigation -->
+<nav class="nav">
+<div class="nav-container">
+<a class="nav-logo" href="../index.html">
+<img alt="AndanteFit" src="../assets/andantefit-logo.png"/>
+</a>
+<ul class="nav-menu" id="navMenu">
+<li><a class="nav-link" href="../index.html">Home</a></li>
+<li><a class="nav-link" href="../product.html">Product</a></li>
+<li><a class="nav-link" href="../validation.html">Validation</a></li>
+<li><a class="nav-link active" href="../case-studies.html">Case Studies</a></li>
+<li><a class="nav-link" href="../references.html">References</a></li>
+</ul>
+<button aria-label="Toggle navigation" class="nav-toggle" id="navToggle">☰</button>
+</div>
+</nav>
+<div class="appFont" id="root"></div>
+<!-- React App -->
+<script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Embedded SVG assets (local, for this page)
+    const CMS_TABLE_SVG = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwYjEyMjAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDcwYzE3Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgZmlsbD0idXJsKCNiZykiLz4KCiAgPCEtLSBDYXJkIC0tPgogIDxyZWN0IHg9IjExMCIgeT0iOTAiIHdpZHRoPSIxMzgwIiBoZWlnaHQ9IjcyMCIgcng9IjI2IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDYpIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xNCkiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIFRpdGxlIC0tPgogIDx0ZXh0IHg9IjE2MCIgeT0iMTY1IiBmaWxsPSIjRTlFRUZDIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSI0NCI+RXBpZHVyYWwgU3Rlcm9pZCBJbmplY3Rpb25zIOKAkyBFdmFsdWF0aW9uIG9mIFN1Y2Nlc3M8L3RleHQ+CgogIDwhLS0gSGVhZGxpbmUgLS0+CiAgPHRleHQgeD0iMTYwIiB5PSIyMjAiIGZpbGw9IiNCOEMzRTYiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIKICAgICAgICBmb250LXNpemU9IjI2Ij7rr7jqta0g67O07ZeY7LKtKENNUynsnYAgRUlzIO2aqOqzvCDsuKHsoJXsl5Ag7J6I7Ja07IScIO2GteymneqzvCDsi6DssrTquLDriqUg7Y+J6rCA66W8IOuPmeyLnOyXkCDqtozqs6DtlZjqs6Ag7J6I7Iq164uI64ukLjwvdGV4dD4KCiAgPCEtLSBUYWJsZSBjb250YWluZXIgLS0+CiAgPHJlY3QgeD0iMTYwIiB5PSIyNzAiIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjQzMCIgcng9IjE4IiBmaWxsPSJyZ2JhKDAsMCwwLDAuMTgpIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xNCkiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIEhlYWRlciByb3cgLS0+CiAgPHJlY3QgeD0iMTYwIiB5PSIyNzAiIHdpZHRoPSIxMjgwIiBoZWlnaHQ9Ijc4IiByeD0iMTgiIGZpbGw9InJnYmEoMTUsMjYsNTEsMC43MCkiLz4KICA8cmVjdCB4PSIxNjAiIHk9IjMzMCIgd2lkdGg9IjEyODAiIGhlaWdodD0iMTgiIGZpbGw9InJnYmEoMTUsMjYsNTEsMC43MCkiLz4KCiAgPCEtLSBDb2x1bW4gZGl2aWRlcnMgLS0+CiAgPGxpbmUgeDE9IjUyMCIgeTE9IjI3MCIgeDI9IjUyMCIgeTI9IjcwMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTQpIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iMTA0MCIgeTE9IjI3MCIgeDI9IjEwNDAiIHkyPSI3MDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjE0KSIgc3Ryb2tlLXdpZHRoPSIyIi8+CgogIDwhLS0gUm93IGRpdmlkZXJzIC0tPgogIDxsaW5lIHgxPSIxNjAiIHkxPSI0MjQiIHgyPSIxNDQwIiB5Mj0iNDI0IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xMikiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSIxNjAiIHkxPSI1NjIiIHgyPSIxNDQwIiB5Mj0iNTYyIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xMikiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSIxNjAiIHkxPSI3MDAiIHgyPSIxNDQwIiB5Mj0iNzAwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xNCkiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIEhlYWRlciB0ZXh0IC0tPgogIDx0ZXh0IHg9IjE5MCIgeT0iMzIwIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuOTUpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIyNiI+T3V0Y29tZTwvdGV4dD4KICA8dGV4dCB4PSI1NTAiIHk9IjMyMCIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjk1KSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIgogICAgICAgIGZvbnQtc2l6ZT0iMjYiPkNyaXRlcmlhPC90ZXh0PgogIDx0ZXh0IHg9IjEwNzAiIHk9IjMyMCIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjk1KSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIgogICAgICAgIGZvbnQtc2l6ZT0iMjYiPlJlY29tbWVuZGVkIFRvb2w8L3RleHQ+CgogIDwhLS0gUm93IDEgLS0+CiAgPHRleHQgeD0iMTkwIiB5PSI1MDAiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC45MCkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIKICAgICAgICBmb250LXNpemU9IjI4Ij5QYWluPC90ZXh0PgogIDx0ZXh0IHg9IjU1MCIgeT0iNTAwIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODYpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIyOCI+NTAlIGltcHJvdmVtZW50PC90ZXh0PgogIDx0ZXh0IHg9IjEwNzAiIHk9IjUwMCIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjg2KSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIgogICAgICAgIGZvbnQtc2l6ZT0iMjgiPk5SUywgVkFTPC90ZXh0PgoKICA8IS0tIFJvdyAyIC0tPgogIDx0ZXh0IHg9IjE5MCIgeT0iNjM4IiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuOTApIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIyOCI+RnVuY3Rpb248L3RleHQ+CiAgPHRleHQgeD0iNTUwIiB5PSI2MzgiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44NikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIKICAgICAgICBmb250LXNpemU9IjI4Ij7iiaUgMSBwb2ludCBpbXByb3ZlbWVudCAoTUNJRCk8L3RleHQ+CiAgPHRleHQgeD0iMTA3MCIgeT0iNjM4IiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODYpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIyOCI+U1BQQjwvdGV4dD4KCiAgPCEtLSBTb3VyY2UgLS0+CiAgPHRleHQgeD0iMTYwIiB5PSI3NzUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC43MikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIKICAgICAgICBmb250LXNpemU9IjE4Ij5Tb3VyY2U6IENNUyBMb2NhbCBDb3ZlcmFnZSBEZXRlcm1pbmF0aW9uIChMQ0QpPC90ZXh0PgoKICA8IS0tIEZvb3RlciBzbWFsbCAtLT4KICA8dGV4dCB4PSIxNDQwIiB5PSI3NzUiIHRleHQtYW5jaG9yPSJlbmQiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC42MCkiCiAgICAgICAgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIgogICAgICAgIGZvbnQtc2l6ZT0iMTYiPlNsaWRlIDQ8L3RleHQ+Cjwvc3ZnPgo=";
+    const NERVE_BLOCK_CHART_SVG = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCI+CjxkZWZzPgogIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4gICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBiMTIyMCIvPiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNzBjMTciLz4gIDwvbGluZWFyR3JhZGllbnQ+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJhcnJvd0dyYWQiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwIj4gICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZiYmYyNCIgc3RvcC1vcGFjaXR5PSIwLjc1Ii8+ICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZiYmYyNCIgc3RvcC1vcGFjaXR5PSIxIi8+ICA8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgZmlsbD0idXJsKCNiZykiLz4KPHJlY3QgeD0iMTEwIiB5PSI5MCIgd2lkdGg9IjEzODAiIGhlaWdodD0iNzIwIiByeD0iMjYiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNikiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjE0KSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjE2MCIgeT0iMTYwIiBmaWxsPSIjRTlFRUZDIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDQiPu2RnC0xICDsnZjro4zquLDqtIAg7KKF67OEIOyLoOqyveywqOuLqOyIoCDsi5ztlokg6rG07IiYPC90ZXh0Pgo8dGV4dCB4PSIxNjAiIHk9IjIxMCIgZmlsbD0iI0I4QzNFNiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI4Ij4oMjAxOOKAkzIwMjIg7Ius7Y+J7JuQKTwvdGV4dD4KPHJlY3QgeD0iMTQwIiB5PSIxNzAiIHdpZHRoPSIxMzUwIiBoZWlnaHQ9IjU3MCIgcng9IjE4IiBmaWxsPSJyZ2JhKDAsMCwwLDAuMTIpIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xMCkiIHN0cm9rZS13aWR0aD0iMiIvPgo8bGluZSB4MT0iMTQwIiB5MT0iNzQwLjAwIiB4Mj0iMTQ5MCIgeTI9Ijc0MC4wMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTApIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iMTI4IiB5PSI3NDYuMDAiIHRleHQtYW5jaG9yPSJlbmQiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC43MCkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+ME08L3RleHQ+CjxsaW5lIHgxPSIxNDAiIHkxPSI2MjYuMDAiIHgyPSIxNDkwIiB5Mj0iNjI2LjAwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xMCkiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4PSIxMjgiIHk9IjYzMi4wMCIgdGV4dC1hbmNob3I9ImVuZCIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjcwKSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij44TTwvdGV4dD4KPGxpbmUgeDE9IjE0MCIgeTE9IjUxMi4wMCIgeDI9IjE0OTAiIHkyPSI1MTIuMDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEwKSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjEyOCIgeT0iNTE4LjAwIiB0ZXh0LWFuY2hvcj0iZW5kIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNzApIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjE2TTwvdGV4dD4KPGxpbmUgeDE9IjE0MCIgeTE9IjM5OC4wMCIgeDI9IjE0OTAiIHkyPSIzOTguMDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEwKSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjEyOCIgeT0iNDA0LjAwIiB0ZXh0LWFuY2hvcj0iZW5kIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNzApIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjI0TTwvdGV4dD4KPGxpbmUgeDE9IjE0MCIgeTE9IjI4NC4wMCIgeDI9IjE0OTAiIHkyPSIyODQuMDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEwKSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjEyOCIgeT0iMjkwLjAwIiB0ZXh0LWFuY2hvcj0iZW5kIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNzApIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjMyTTwvdGV4dD4KPGxpbmUgeDE9IjE0MCIgeTE9IjE3MC4wMCIgeDI9IjE0OTAiIHkyPSIxNzAuMDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEwKSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjEyOCIgeT0iMTc2LjAwIiB0ZXh0LWFuY2hvcj0iZW5kIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNzApIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjQwTTwvdGV4dD4KPGxpbmUgeDE9IjE0MCIgeTE9IjE3MCIgeDI9IjE0MCIgeTI9Ijc0MCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTgpIiBzdHJva2Utd2lkdGg9IjIiLz4KPGxpbmUgeDE9IjE0MCIgeTE9Ijc0MCIgeDI9IjE0OTAiIHkyPSI3NDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjE4KSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjI2MS40MCIgeT0iNzgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODUpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiPjIwMTjrhYQ8L3RleHQ+CjxyZWN0IHg9IjE0MC4wMCIgeT0iNzI0Ljk4IiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMTUuMDIiIHJ4PSI0IiBmaWxsPSIjNjBhNWZhIiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjE2MC4yOCIgeT0iNzE2Ljk4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODIpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjEsMDU0LDE3MDwvdGV4dD4KPHJlY3QgeD0iMTkwLjU2IiB5PSI3MTUuODgiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSIyNC4xMiIgcng9IjQiIGZpbGw9IiNhNzhiZmEiIG9wYWNpdHk9IjAuOTIiLz4KPHRleHQgeD0iMjEwLjg0IiB5PSI3MDcuODgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44MikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+MSw2OTIsMzYwPC90ZXh0Pgo8cmVjdCB4PSIyNDEuMTIiIHk9IjY4MS40OCIgd2lkdGg9IjQwLjU2IiBoZWlnaHQ9IjU4LjUyIiByeD0iNCIgZmlsbD0iIzM0ZDM5OSIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIyNjEuNDAiIHk9IjY3My40OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjgyKSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij40LDEwNiw5MTA8L3RleHQ+CjxyZWN0IHg9IjI5MS42OCIgeT0iNDQyLjAxIiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMjk3Ljk5IiByeD0iNCIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIzMTEuOTYiIHk9IjQzNC4wMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjgyKSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij4yMCw5MTEsODMyPC90ZXh0Pgo8cmVjdCB4PSIzNDIuMjQiIHk9IjczOS45OCIgd2lkdGg9IjQwLjU2IiBoZWlnaHQ9IjAuMDIiIHJ4PSI0IiBmaWxsPSIjZjQ3MmI2IiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjUzOC4yMCIgeT0iNzgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODUpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiPjIwMTnrhYQ8L3RleHQ+CjxyZWN0IHg9IjQxNi44MCIgeT0iNzI1LjE4IiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMTQuODIiIHJ4PSI0IiBmaWxsPSIjNjBhNWZhIiBvcGFjaXR5PSIwLjkyIi8+CjxyZWN0IHg9IjQ2Ny4zNiIgeT0iNzEyLjgxIiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMjcuMTkiIHJ4PSI0IiBmaWxsPSIjYTc4YmZhIiBvcGFjaXR5PSIwLjkyIi8+CjxyZWN0IHg9IjUxNy45MiIgeT0iNjc3LjE2IiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iNjIuODQiIHJ4PSI0IiBmaWxsPSIjMzRkMzk5IiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjUzOC4yMCIgeT0iNjY5LjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODIpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjQsNDEwLDAzMjwvdGV4dD4KPHJlY3QgeD0iNTY4LjQ4IiB5PSI0MDAuNjciIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSIzMzkuMzMiIHJ4PSI0IiBmaWxsPSIjZmJiZjI0IiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjU4OC43NiIgeT0iMzkyLjY3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODIpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjIzLDgxMiw3NjM8L3RleHQ+CjxyZWN0IHg9IjYxOS4wNCIgeT0iNzM5Ljk2IiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMC4wNCIgcng9IjQiIGZpbGw9IiNmNDcyYjYiIG9wYWNpdHk9IjAuOTIiLz4KPHRleHQgeD0iODE1LjAwIiB5PSI3ODIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44NSkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCI+MjAyMOuFhDwvdGV4dD4KPHJlY3QgeD0iNjkzLjYwIiB5PSI3MjUuNTMiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSIxNC40NyIgcng9IjQiIGZpbGw9IiM2MGE1ZmEiIG9wYWNpdHk9IjAuOTIiLz4KPHJlY3QgeD0iNzQ0LjE2IiB5PSI3MTEuNzEiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSIyOC4yOSIgcng9IjQiIGZpbGw9IiNhNzhiZmEiIG9wYWNpdHk9IjAuOTIiLz4KPHJlY3QgeD0iNzk0LjcyIiB5PSI2NzcuNDMiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSI2Mi41NyIgcng9IjQiIGZpbGw9IiMzNGQzOTkiIG9wYWNpdHk9IjAuOTIiLz4KPHRleHQgeD0iODE1LjAwIiB5PSI2NjkuNDMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44MikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+NCwzOTEsMDU4PC90ZXh0Pgo8cmVjdCB4PSI4NDUuMjgiIHk9IjM2OS41OCIgd2lkdGg9IjQwLjU2IiBoZWlnaHQ9IjM3MC40MiIgcng9IjQiIGZpbGw9IiNmYmJmMjQiIG9wYWNpdHk9IjAuOTIiLz4KPHRleHQgeD0iODY1LjU2IiB5PSIzNjEuNTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44MikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+MjUsOTk0LDExMTwvdGV4dD4KPHJlY3QgeD0iODk1Ljg0IiB5PSI3MzkuOTciIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSIwLjAzIiByeD0iNCIgZmlsbD0iI2Y0NzJiNiIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIxMDkxLjgwIiB5PSI3ODIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44NSkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCI+MjAyMeuFhDwvdGV4dD4KPHJlY3QgeD0iOTcwLjQwIiB5PSI3MjQuMDYiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSIxNS45NCIgcng9IjQiIGZpbGw9IiM2MGE1ZmEiIG9wYWNpdHk9IjAuOTIiLz4KPHJlY3QgeD0iMTAyMC45NiIgeT0iNzExLjMxIiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMjguNjkiIHJ4PSI0IiBmaWxsPSIjYTc4YmZhIiBvcGFjaXR5PSIwLjkyIi8+CjxyZWN0IHg9IjEwNzEuNTIiIHk9IjY3NC42NCIgd2lkdGg9IjQwLjU2IiBoZWlnaHQ9IjY1LjM2IiByeD0iNCIgZmlsbD0iIzM0ZDM5OSIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIxMDkxLjgwIiB5PSI2NjYuNjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44MikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+NCw1ODYsNzEyPC90ZXh0Pgo8cmVjdCB4PSIxMTIyLjA4IiB5PSIzMDIuNzkiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSI0MzcuMjEiIHJ4PSI0IiBmaWxsPSIjZmJiZjI0IiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjExNDIuMzYiIHk9IjI5NC43OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjgyKSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij4zMCw2ODEsNDUzPC90ZXh0Pgo8cmVjdCB4PSIxMTcyLjY0IiB5PSI3MzkuOTkiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSIwLjAxIiByeD0iNCIgZmlsbD0iI2Y0NzJiNiIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIxMzY4LjYwIiB5PSI3ODIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44NSkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCI+MjAyMuuFhDwvdGV4dD4KPHJlY3QgeD0iMTI0Ny4yMCIgeT0iNzI0LjY0IiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMTUuMzYiIHJ4PSI0IiBmaWxsPSIjNjBhNWZhIiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjEyNjcuNDgiIHk9IjcxNi42NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjgyKSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij4xLDA3Nyw5MjA8L3RleHQ+CjxyZWN0IHg9IjEyOTcuNzYiIHk9IjcxMS4yNSIgd2lkdGg9IjQwLjU2IiBoZWlnaHQ9IjI4Ljc1IiByeD0iNCIgZmlsbD0iI2E3OGJmYSIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIxMzE4LjA0IiB5PSI3MDMuMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44MikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+MiwwMTcsNjkxPC90ZXh0Pgo8cmVjdCB4PSIxMzQ4LjMyIiB5PSI2NzQuNzAiIHdpZHRoPSI0MC41NiIgaGVpZ2h0PSI2NS4zMCIgcng9IjQiIGZpbGw9IiMzNGQzOTkiIG9wYWNpdHk9IjAuOTIiLz4KPHRleHQgeD0iMTM2OC42MCIgeT0iNjY2LjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuODIpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPjQsNTgyLDYzODwvdGV4dD4KPHJlY3QgeD0iMTM5OC44OCIgeT0iMjMyLjUwIiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iNTA3LjUwIiByeD0iNCIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIxNDE5LjE2IiB5PSIyMjQuNTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC44MikiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+MzUsNjE0LDM3NTwvdGV4dD4KPHJlY3QgeD0iMTQ0OS40NCIgeT0iNzM5Ljk4IiB3aWR0aD0iNDAuNTYiIGhlaWdodD0iMC4wMiIgcng9IjQiIGZpbGw9IiNmNDcyYjYiIG9wYWNpdHk9IjAuOTIiLz4KPHBhdGggZD0iTSAyNjAgMjQwIEwgMTM4MCAxODAgIiBzdHJva2U9InVybCgjYXJyb3dHcmFkKSIgc3Ryb2tlLXdpZHRoPSIxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjkiLz4KPHBhdGggZD0iTSAxMzc4IDE1MiBMIDE0MzAgMTgwIEwgMTM3OCAyMDggWiIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC45NSIvPgo8cmVjdCB4PSIxNDAiIHk9Ijc5NiIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiByeD0iMyIgZmlsbD0iIzYwYTVmYSIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSIxNjYiIHk9IjgxMCIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjc4KSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2Ij7sg4HquInsooXtlanrs5Hsm5A8L3RleHQ+CjxyZWN0IHg9IjI4OCIgeT0iNzk2IiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHJ4PSIzIiBmaWxsPSIjYTc4YmZhIiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjMxNCIgeT0iODEwIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNzgpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiPuyihe2VqeuzkeybkDwvdGV4dD4KPHJlY3QgeD0iNDA0IiB5PSI3OTYiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjMiIGZpbGw9IiMzNGQzOTkiIG9wYWNpdHk9IjAuOTIiLz4KPHRleHQgeD0iNDMwIiB5PSI4MTAiIGZpbGw9InJnYmEoMjMzLDIzOCwyNTIsMC43OCkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIFNlZ29lIFVJLCBSb2JvdG8sICdOb3RvIFNhbnMgS1InLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiI+67OR7JuQ6riJPC90ZXh0Pgo8cmVjdCB4PSI1MDQiIHk9Ijc5NiIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiByeD0iMyIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC45MiIvPgo8dGV4dCB4PSI1MzAiIHk9IjgxMCIgZmlsbD0icmdiYSgyMzMsMjM4LDI1MiwwLjc4KSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgJ05vdG8gU2FucyBLUicsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2Ij7snZjsm5DquIk8L3RleHQ+CjxyZWN0IHg9IjYwNCIgeT0iNzk2IiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHJ4PSIzIiBmaWxsPSIjZjQ3MmI2IiBvcGFjaXR5PSIwLjkyIi8+Cjx0ZXh0IHg9IjYzMCIgeT0iODEwIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNzgpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiPuuztOqxtOq4sOq0gCDrk7E8L3RleHQ+Cjx0ZXh0IHg9IjE2MCIgeT0iNzkwIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNzIpIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiPlNvdXJjZTog64yA7ZWc64W47J247J2Y7ZWZ7ZqMIOygnCAz7LCoIOuFuOyduOydmO2VmSDsoITrrLjqsIAg6rO87KCVIOyekOujjOynkSwgMjAyNOuFhDwvdGV4dD4KPHRleHQgeD0iMTQ0MCIgeT0iNzkwIiB0ZXh0LWFuY2hvcj0iZW5kIiBmaWxsPSJyZ2JhKDIzMywyMzgsMjUyLDAuNjApIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCAnTm90byBTYW5zIEtSJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiPlNsaWRlIDU8L3RleHQ+Cjwvc3ZnPg==";
+
+
+    // Core Components
+    const SlideFrame = ({ index, total, children }) => {
+      const num = String(index + 1).padStart(2, "0");
+      return (
+        <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+          <div className={`relative w-full max-w-[1280px] md:min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+            <div className="w-full h-auto overflow-visible pb-12">
+              {children}
+            </div>
+            <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
+              <div className="text-[12px] font-bold text-slate-400 tracking-widest">
+                {num}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const SlideLayout = ({ title, headline, children }) => (
+      <div className="w-full h-auto flex flex-col p-6 sm:p-10">
+        <header className="mb-5 sm:mb-6">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
+            <span className="text-sm font-bold text-slate-500 tracking-wider uppercase">{title}</span>
+          </div>
+          <h2 className="text-[24px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
+        </header>
+        <div className="flex-1 overflow-visible">
+          {children}
+        </div>
+      </div>
+    );
+
+    function LucideIcon({ name, className = "" }) {
+      return <i data-lucide={name} className={className}></i>;
+    }
+
+    // Main App
+    function App() {
+      const slides = [
+        // Slide 1: Cover
+        (
+          <div className="w-full md:h-full p-8 sm:p-12 flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-600/20 rounded-full blur-[120px] -mr-48 -mt-48"></div>
+            
+            <div className="relative z-10 max-w-4xl">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
+                통증 치료의 새로운 활력 징후(Vital Sign),<br/>
+                <span className="text-teal-600">'기능(Function)'</span>
+              </h1>
+              <p className="text-xl sm:text-2xl text-slate-700 mb-8 leading-relaxed font-semibold">
+                주관적 통증 호소를 넘어 객관적 기능 회복으로
+              </p>
+              <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-2xl border-l-4 border-teal-600">
+                <p className="text-base sm:text-lg text-slate-700 leading-relaxed italic">
+                  "원장님, 주사를 맞아도 계속 아파요." 반복되는 호소 앞에서 치료의 방향을 잃지 않기 위해, 우리는 이제 환자의 <span className="font-bold text-teal-700">'움직임'</span>을 기록해야 합니다.
+                </p>
+              </div>
+              
+              <div className="border-t border-slate-200 pt-6 mt-10">
+                <p className="text-sm text-slate-500">
+                  정형외과 · 신경외과 · 마취통증의학과 · 재활의학과 전문의를 위한
+                </p>
+                <p className="text-xs text-slate-400 mt-2">제작: DYPHI Inc.</p>
+              </div>
+            </div>
+          </div>
+        ),
+
+        // Slide 2: Clinical Dilemma
+        (
+          <SlideLayout title="임상적 딜레마" headline="주사는 성공적인데, 환자는 왜 여전히 아프다고 할까요?">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600 leading-relaxed">
+                고령 환자의 통증 호소(NRS/VAS)가 갖는 불확실성
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-red-50 p-6 rounded-2xl border-l-4 border-red-500">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="activity" className="w-6 h-6 text-red-600" />
+                    <h3 className="font-bold text-red-900 text-base">변동하는 통증 역치</h3>
+                  </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    고령자는 기분, 날씨, 심리 상태에 따라 통증 민감도가 매번 달라집니다. 어제는 3점, 오늘은 8점일 수 있습니다.
+                  </p>
+                </div>
+
+                <div className="bg-orange-50 p-6 rounded-2xl border-l-4 border-orange-500">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="message-circle" className="w-6 h-6 text-orange-600" />
+                    <h3 className="font-bold text-orange-900 text-base">주관적 지표의 한계</h3>
+                  </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    "조금 나아진 것 같아요" 혹은 "똑같아요"라는 말만으로는 스테로이드 주사(ESI)나 시술의 효과를 정량적으로 판단하기 어렵습니다.
+                  </p>
+                </div>
+
+                <div className="bg-amber-50 p-6 rounded-2xl border-l-4 border-amber-500">
+                  <div className="flex items-center gap-3 mb-3">
+                    <LucideIcon name="alert-triangle" className="w-6 h-6 text-amber-600" />
+                    <h3 className="font-bold text-amber-900 text-base">치료의 미로</h3>
+                  </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    통증 점수만 쫓다 보면, 의료진은 <span className="font-bold">반복 시술(Over-treatment)</span>과 치료 중단 사이에서 갈등하게 됩니다.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-3xl border-2 border-teal-200 mt-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-2 h-16 bg-teal-600 rounded-full flex-shrink-0"></div>
+                  <p className="text-xl text-slate-800 leading-relaxed font-semibold">
+                    환자의 <span className="text-red-600">'말(Subjective Report)'</span>보다<br/>
+                    환자의 <span className="text-teal-600">'몸(Objective Performance)'</span>이 더 정직합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 3: Paradigm Shift
+        (
+          <SlideLayout title="패러다임의 전환" headline="통증 감소(Pain Relief)에서 기능 회복(Functional Recovery)으로">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600 leading-relaxed">
+                치료의 목표가 재정의되고 있습니다
+              </p>
+
+              <div className="space-y-4">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                      <LucideIcon name="repeat" className="w-5 h-5 text-red-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-2">Vicious Cycle 끊기</h3>
+                      <p className="text-sm text-slate-700 leading-relaxed">
+                        퇴행성 척추질환(척추관협착증 등)은 <span className="font-semibold text-red-700">[통증 → 활동 감소 → 근감소/기능저하 → 통증 악화]</span>의 악순환을 만듭니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+                      <LucideIcon name="target" className="w-5 h-5 text-teal-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-2">진정한 치료 성공</h3>
+                      <p className="text-sm text-slate-700 leading-relaxed">
+                        단순히 안 아픈 상태가 아니라, <span className="font-semibold text-teal-700">다시 걷고, 의자에서 일어나는 일상(ADL)의 회복</span>이 치료의 종착점이어야 합니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                      <LucideIcon name="globe" className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-2">글로벌 스탠다드</h3>
+                      <p className="text-sm text-slate-700 leading-relaxed">
+                        통증 점수만 보지 않고, 보행·일어서기 같은 기능 지표를 함께 확인하는 접근이 해외 임상·연구 현장에서 점차 널리 사용되고 있습니다. 기능 중심의 목표를 세우는 데 도움이 됩니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 4: Case Study
+        (
+          <SlideLayout title="실제 사례" headline="통증 호소가 남아있을 때, 기능 변화를 함께 확인해 본 사례">
+            <div className="space-y-5">
+              <p className="text-sm text-slate-600 italic">어느 마취통증의학과 의사의 선택</p>
+
+              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                <div className="flex items-start gap-3 mb-4">
+                  <LucideIcon name="user" className="w-5 h-5 text-slate-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-1">환자</h4>
+                    <p className="text-sm text-slate-700">70대 척추관협착증 환자. 시술 후에도 통증을 반복적으로 호소하여, 치료 반응을 설명하고 방향을 잡는 데 어려움이 있었음.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-red-50 p-5 rounded-xl border-l-4 border-red-500">
+                  <div className="flex items-center gap-2 mb-3">
+                    <LucideIcon name="x-circle" className="w-5 h-5 text-red-600" />
+                    <h4 className="font-bold text-red-900 text-sm">기존 접근</h4>
+                  </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    통증 점수(VAS)가 제자리라 시술 효과 의심, 추가 시술 고민.
+                  </p>
+                </div>
+
+                <div className="bg-teal-50 p-5 rounded-xl border-l-4 border-teal-600">
+                  <div className="flex items-center gap-2 mb-3">
+                    <LucideIcon name="check-circle-2" className="w-5 h-5 text-teal-600" />
+                    <h4 className="font-bold text-teal-900 text-sm">새로운 접근 (SPPB 도입)</h4>
+                  </div>
+                  <ul className="text-sm text-slate-700 space-y-2">
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">•</span>
+                      <span>기능 평가에서 개선이 관찰됨(예: 보행 속도 0.6m/s → 0.8m/s)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">•</span>
+                      <span>기능 평가에서 개선이 관찰됨(예: 5회 의자 일어서기 15초 → 12초)</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <p className="text-xs text-slate-500 mb-3">
+                  참고 이미지(예시): 기능 지표를 포함한 평가 항목 구성
+                </p>
+                <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                  <img src={CMS_TABLE_SVG} alt="기능 지표 예시 표" className="w-full h-auto block" />
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-teal-600 to-blue-600 p-6 rounded-2xl text-white">
+                <div className="flex items-start gap-3 mb-3">
+                  <LucideIcon name="message-square" className="w-6 h-6 flex-shrink-0" />
+                  <p className="text-base leading-relaxed">
+                    "통증은 남아 있을 수 있습니다. 다만 기능은 개선 추세가 보입니다. 현재 치료와 함께, 안전한 활동·운동 계획을 같이 조정해 보겠습니다."
+                  </p>
+                </div>
+                <p className="text-sm text-teal-100 mt-3">→ 환자 안심 및 순응도 증가</p>
+              </div>
+
+              <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                <div className="flex items-center gap-3">
+                  <LucideIcon name="lightbulb" className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                  <p className="text-sm font-semibold text-blue-900">
+                    기능 데이터는 치료 반응을 설명하고, 다음 계획(활동·운동·추적 관찰)을 함께 정하는 데 도움이 됩니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 5: Evidence
+        (
+          <SlideLayout title="근거" headline="통증 치료에서 기능 평가를 함께 보는 이유">
+            <div className="space-y-6">
+              <p className="text-lg font-semibold text-slate-700">
+                "일부 연구에서 시술 전후 기능 지표 변화가 보고되었습니다"
+              </p>
+
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                  <LucideIcon name="bar-chart-3" className="w-5 h-5 text-teal-600" />
+                  연구 결과
+                </h3>
+                <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                  65세 이상 척추 협착증 환자를 대상으로 한 연구(Przkora et al.)에서는 시술 후 일정 시점에 SPPB 총점 및 일부 하위 항목 변화가 보고되었습니다. (개별 환자 적용과 해석은 임상 상황에 따라 달라질 수 있습니다.)
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-teal-50 p-4 rounded-xl">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-slate-900">보행 속도</span>
+                      <span className="text-xs font-bold text-teal-700 bg-white px-2 py-1 rounded">p=0.001</span>
+                    </div>
+                    <p className="text-xs text-slate-600">매우 유의미한 개선</p>
+                  </div>
+
+                  <div className="bg-blue-50 p-4 rounded-xl">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-slate-900">균형 및 일어서기</span>
+                      <span className="text-xs font-bold text-blue-700 bg-white px-2 py-1 rounded">p&lt;0.05</span>
+                    </div>
+                    <p className="text-xs text-slate-600">유의미한 개선</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <p className="text-xs text-slate-500 mb-3">
+                  참고 이미지(예시): 시술 전후 기능 지표 변화 시각화
+                </p>
+                <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                  <img src={NERVE_BLOCK_CHART_SVG} alt="기능 지표 예시 그래프" className="w-full h-auto block" />
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-2xl border-2 border-teal-200">
+                <div className="flex items-start gap-4">
+                  <div className="w-2 h-16 bg-teal-600 rounded-full flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-bold text-teal-900 mb-2">해석 시 유의점</h4>
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      통증 점수만으로는 치료 반응을 설명하기 어려운 경우가 있어, 기능 지표를 함께 확인하면 변화의 방향(개선/정체/저하)을 더 명확히 볼 수 있습니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 6: Trend Management
+        (
+          <SlideLayout title="모니터링 전략" headline="단발성 검사가 아닌, '기능 변화의 추세'를 보십시오">
+            <div className="space-y-6">
+              <p className="text-base text-slate-600">
+                고령자는 베이스라인(Baseline)이 매번 다를 수 있습니다
+              </p>
+
+              <div className="space-y-4">
+                <div className="bg-white p-6 rounded-2xl border-l-4 border-amber-500 shadow-sm">
+                  <h3 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                    <LucideIcon name="trending-up" className="w-5 h-5 text-amber-600" />
+                    Baseline의 변동성
+                  </h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    고령자는 컨디션에 따라 수행 능력의 기복이 있습니다. 한 번의 측정보다 <span className="font-bold text-teal-700">반복 측정(Serial Measurement)을 통한 추세선(Trendline)</span>이 중요합니다.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <h3 className="font-bold text-slate-900 mb-4">치료 반응성 모니터링</h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
+                      <div className="flex items-center gap-2 mb-2">
+                        <LucideIcon name="trending-up" className="w-5 h-5 text-green-600" />
+                        <h4 className="font-bold text-green-900 text-sm">상승 곡선</h4>
+                      </div>
+                      <p className="text-sm text-slate-700">
+                        통증이 있어도 기능이 좋아지면<br/>
+                        → 현 치료 유지 + 재활 독려
+                      </p>
+                    </div>
+
+                    <div className="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                      <div className="flex items-center gap-2 mb-2">
+                        <LucideIcon name="trending-down" className="w-5 h-5 text-red-600" />
+                        <h4 className="font-bold text-red-900 text-sm">하강 곡선</h4>
+                      </div>
+                      <p className="text-sm text-slate-700">
+                        통증이 줄어도 기능이 떨어지면<br/>
+                        → 근감소증/노쇠 의심, 치료 계획 수정
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 rounded-2xl text-white">
+                  <div className="flex items-start gap-3">
+                    <LucideIcon name="bar-chart-2" className="w-6 h-6 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold mb-2">데이터의 힘</h4>
+                      <p className="text-sm leading-relaxed">
+                        환자에게 "좋아졌다"는 말 대신 <span className="font-bold">"지난달 대비 기능 점수가 2점 올랐습니다"</span>라고 보여주는 시각적 데이터는 강력한 동기부여가 됩니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 7: Sarcopenia
+        (
+          <SlideLayout title="숨겨진 질환" headline="통증 뒤에 숨어 있는 '근감소증(Sarcopenia)'을 찾아내십시오">
+            <div className="space-y-6">
+              <div className="bg-red-50 p-4 rounded-xl border-l-4 border-red-600">
+                <p className="text-lg font-bold text-red-900">
+                  척추 환자 4명 중 1명은 근감소증을 앓고 있습니다
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                      <LucideIcon name="users" className="w-5 h-5 text-red-600" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-base">높은 동반 이환율</h3>
+                  </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    퇴행성 척추 협착증(DLSS) 환자의 약 <span className="font-bold text-red-700">24%</span>는 근감소증을 동반합니다.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                      <LucideIcon name="alert-triangle" className="w-5 h-5 text-orange-600" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-base">나쁜 예후의 원인</h3>
+                  </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    근육량이 적고 기능이 떨어진(Low SPPB Score) 환자는 <span className="font-semibold">수술 후 합병증 위험이 높고</span>, 주사 치료의 효과 지속 기간도 짧을 수 있습니다.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
+                      <LucideIcon name="shield-check" className="w-5 h-5 text-teal-600" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-base">조기 선별</h3>
+                  </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    SPPB는 근감소증 진단 가이드라인(AWGS, KWGS)에서 권고하는 <span className="font-semibold text-teal-700">표준 신체기능 평가 도구</span>입니다.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-2xl border-2 border-teal-200">
+                <p className="text-base font-semibold text-slate-800 text-center">
+                  통증 치료와 동시에 근감소증 리스크를 관리해야 합니다
+                </p>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 8: SPPB Protocol
+        (
+          <SlideLayout title="솔루션" headline="3분이면 충분합니다. 가장 검증된 기능 평가 도구">
+            <div className="space-y-6">
+              <div className="bg-teal-600 p-4 rounded-xl">
+                <p className="text-white font-bold text-lg text-center">
+                  SPPB - Short Physical Performance Battery
+                </p>
+                <p className="text-teal-100 text-sm text-center mt-1">
+                  전 세계적으로 30년 이상 검증된 노인 신체기능 평가의 Gold Standard
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-2xl border-2 border-teal-200 shadow-sm">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mb-4">
+                      <LucideIcon name="gauge" className="w-8 h-8 text-teal-600" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-lg mb-3">균형 검사</h3>
+                    <p className="text-sm text-slate-700 leading-relaxed mb-2">
+                      척추/관절의 고유수용감각 및 안정성 평가
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      (나란히/반일렬/일렬 서기)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-2 border-teal-200 shadow-sm">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mb-4">
+                      <LucideIcon name="footprints" className="w-8 h-8 text-teal-600" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-lg mb-3">보행 속도</h3>
+                    <p className="text-sm text-slate-700 leading-relaxed mb-2">
+                      4m 보행. 전반적인 신체 활력과 이동성(Mobility)의 핵심 지표
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border-2 border-teal-200 shadow-sm">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mb-4">
+                      <LucideIcon name="armchair" className="w-8 h-8 text-teal-600" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-lg mb-3">의자 일어서기</h3>
+                    <p className="text-sm text-slate-700 leading-relaxed mb-2">
+                      하지 근력과 파워를 측정
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      (5회 일어서는 시간 측정)
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                <div className="flex items-center gap-3">
+                  <LucideIcon name="clock" className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                  <p className="text-sm text-slate-700">
+                    <span className="font-bold text-blue-900">복잡한 장비 없이,</span> 외래 진료 대기 시간이나 전후 처치 시간에 2~3분 내외로 수행 가능합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 9: Implementation
+        (
+          <SlideLayout title="실행 방안" headline="바쁜 외래, 어떻게 적용할 것인가?">
+            <div className="space-y-6">
+              <p className="text-lg font-semibold text-slate-700">
+                자동화된 솔루션으로 진료 효율을 높이십시오
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-red-50 p-6 rounded-2xl border-l-4 border-red-500">
+                  <h3 className="font-bold text-red-900 mb-3 flex items-center gap-2">
+                    <LucideIcon name="x-circle" className="w-5 h-5" />
+                    기존의 문제
+                  </h3>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600 mt-0.5">•</span>
+                      <span>수기 측정의 번거로움</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600 mt-0.5">•</span>
+                      <span>데이터 입력의 시간 소요</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600 mt-0.5">•</span>
+                      <span>기록의 비표준화</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-teal-50 p-6 rounded-2xl border-l-4 border-teal-600">
+                  <h3 className="font-bold text-teal-900 mb-3 flex items-center gap-2">
+                    <LucideIcon name="check-circle-2" className="w-5 h-5" />
+                    AndanteFit 솔루션
+                  </h3>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">✓</span>
+                      <span><span className="font-semibold">자동 측정:</span> 센서 기반으로 3분 이내 자동 측정 및 결과 저장</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">✓</span>
+                      <span><span className="font-semibold">데이터 시각화:</span> 환자의 기능 변화 추이(Trend)를 그래프로 즉시 확인</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-600 mt-0.5">✓</span>
+                      <span><span className="font-semibold">진료 연계:</span> 별도의 인력 추가 없이 간호사/물리치료사가 수행 가능</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 rounded-2xl text-white">
+                <div className="flex items-center gap-4">
+                  <LucideIcon name="sparkles" className="w-8 h-8 flex-shrink-0" />
+                  <p className="text-base leading-relaxed">
+                    <span className="font-bold">근감소증(인정비급여) 수가 청구 연계 가능</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SlideLayout>
+        ),
+
+        // Slide 10: Conclusion
+        (
+          <div className="w-full md:h-full bg-slate-900 p-8 sm:p-16 flex flex-col justify-center items-center text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
+            
+            <div className="relative z-10 space-y-8 max-w-4xl">
+              <h2 className="text-4xl sm:text-5xl text-white font-black leading-tight">
+                "통증을 넘어 기능으로,<br/>
+                느낌을 넘어 데이터로"
+              </h2>
+              
+              <div className="h-1 w-24 bg-teal-500 mx-auto"></div>
+              
+              <p className="text-xl text-slate-300 leading-relaxed">
+                데이터 기반의 근골격계 명의(名醫)가 되는 길
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                  <LucideIcon name="heart" className="w-8 h-8 text-teal-400 mx-auto mb-3" />
+                  <h3 className="text-white font-bold mb-2">환자 만족</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    통증이 남아있어도 기능이 좋아졌음을 눈으로 확인시켜 주어 치료 신뢰도를 높입니다.
+                  </p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                  <LucideIcon name="shield-check" className="w-8 h-8 text-teal-400 mx-auto mb-3" />
+                  <h3 className="text-white font-bold mb-2">임상적 확신</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    주관적 통증 호소에 흔들리지 않고, 객관적 지표에 근거하여 소신 진료를 할 수 있습니다.
+                  </p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                  <LucideIcon name="trending-up" className="w-8 h-8 text-teal-400 mx-auto mb-3" />
+                  <h3 className="text-white font-bold mb-2">미래 준비</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    단순 반복 시술에 대한 외부의 우려를 넘어서, '기능적 회복'을 입증하는 선진적인 병원으로 자리매김하십시오.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-white/20">
+                <p className="text-slate-300 text-xs leading-relaxed mb-3">본 자료는 의료진을 위한 정보 제공 목적이며, 개별 환자에 대한 진단·치료 판단은 의료진의 임상적 판단과 환자 상태에 따라 결정됩니다.</p>
+                <p className="text-white text-sm font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
+                <p className="text-slate-400 text-xs">임상 현장을 위한 자동화 신체기능 평가</p>
+              </div>
+            </div>
+          </div>
+        ),
+      ];
+
+      useEffect(() => {
+        if (window.lucide && window.lucide.createIcons) {
+          window.lucide.createIcons();
+        }
+      });
+
+      return (
+        <div className="w-full">
+          {slides.map((slide, idx) => (
+            <SlideFrame key={idx} index={idx} total={slides.length}>
+              {slide}
+            </SlideFrame>
+          ))}
+        </div>
+      );
+    }
+
+    // Render
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+<!-- AndanteFit Footer -->
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h4>AndanteFit</h4>
+<p>개발 및 제공: DYPHI Inc.<br/>
+          노쇠 및 근감소증 연구를 위한 자동화 신체기능 평가 솔루션.</p>
+</div>
+<div class="footer-section">
+<h4>바로가기</h4>
+<p>
+<a href="../product.html">Product</a><br/>
+<a href="../validation.html">Validation</a><br/>
+<a href="../case-studies.html">Case Studies</a><br/>
+<a href="../references.html">References</a>
+</p>
+</div>
+<div class="footer-section">
+<h4>문의</h4>
+<p>Email: <a href="/cdn-cgi/l/email-protection#6a1904072a0e131a020344090507"><span class="__cf_email__" data-cfemail="0d7e63604d69747d6564236e6260">[email protected]</span></a><br/>
+          Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
+          Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu</p>
+</div>
+</div>
+<div class="footer-bottom">© </div></div></footer></body></html>

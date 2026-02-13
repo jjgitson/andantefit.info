@@ -199,13 +199,16 @@
             
             const htmlFiles = data.filter(function(f) {
                 return f.type === 'file' && f.name.endsWith('.html');
-            });
+            
+            const baseDir = window.location.pathname.replace(/[^\/]*$/, '');
+});
             
             const caseStudies = htmlFiles
                 .map(function(f) {
                     const parsed = parseFilename(f.name);
                     if (!parsed) return null;
-                    parsed.url = 'case-studies/' + f.name;
+                    const baseDir = window.location.pathname.replace(/[^\/]*$/, '');
+                    parsed.url = baseDir + 'case-studies/' + encodeURIComponent(f.name);
                     return parsed;
                 })
                 .filter(function(item) { return item !== null; })

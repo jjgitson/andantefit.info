@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nofrailty.org/sitemap.xml
+Sitemap: https://andantefit.info/sitemap.xml
+

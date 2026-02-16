@@ -525,3 +525,69 @@ a:hover {
 .nav-lang-selector a:hover {
   color: #0F4C81; /* AndanteFit 포인트 컬러 */
 }
+
+/* --- Nav layout stabilization (fixed language block, prevent layout shift) --- */
+.nav-container{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+.nav-menu{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.nav-lang{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex:0 0 auto;
+  font-size:0.875rem;
+  color:var(--color-text-secondary);
+  margin-left:auto;
+}
+
+.nav-lang a{
+  color:var(--color-text-secondary);
+  text-decoration:none;
+}
+
+.nav-lang a[aria-current="page"]{
+  color:var(--color-deep-blue);
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+
+.nav-lang .sep{ opacity:0.6; }
+
+@media (max-width:768px){
+  .nav-lang{ display:none; }
+}
+
+/* Mobile language switcher (inside hamburger menu) */
+.nav-lang-mobile {
+  display: none;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+.nav-lang-mobile a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+.nav-lang-mobile a[aria-current="page"] {
+  color: var(--color-deep-blue);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.nav-lang-mobile .sep { opacity: 0.6; padding: 0 6px; }
+
+@media (max-width: 768px) {
+  /* show inside opened mobile menu */
+  .nav-menu.open .nav-lang-mobile { display: block; }
+}

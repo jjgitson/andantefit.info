@@ -85,146 +85,144 @@
 
 
 
-<script src="js/main.js"></script>
 <script>
 (function() {
-    'use strict';
-    
-    const GITHUB_CONFIG = { 
-        owner: 'jjgitson', 
-        repo: 'andantefit.info', 
-        folder: 'case-studies',  // ★ 루트의 case-studies
-        branch: 'main'
+  'use strict';
+
+  const GITHUB_CONFIG = {
+    owner: 'jjgitson',
+    repo: 'andantefit.info',
+    folder: 'es/case-studies',
+    branch: 'main'
+  };
+
+  const customTitles = {
+    'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad'
+  };
+
+  // 언어/폴더별로 캐시 분리
+  const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
+  const CACHE_TIME_KEY = CACHE_KEY + '_time';
+  const CACHE_DURATION = 24 * 60 * 60 * 1000;
+
+  function parseFilename(filename) {
+    const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
+    if (!match) return null;
+
+    const [, year, month, day, fileKey] = match;
+    const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
+
+    return {
+      date: new Date(Number(year), Number(month) - 1, Number(day)),
+      dateStr: `${year}.${month}.${day}`,
+      title,
+      filename,
+      fileKey
     };
-    
-    const customTitles = {
-        'Common-Operational-Language-Strategy-EN': 'Strategic Proposal: Seamless Integrated Care for Older Adults',
-        'SPPB-Occupational-Health-EN': 'SPPB Utilization in Occupational Health',
-        'CIBERFES-Consensus-Frailty-Screening-EN': 'CIBERFES Consensus on Frailty Screening'
-    };
-    
-    const CACHE_KEY = 'case_studies_cache';
-    const CACHE_DURATION = 24 * 60 * 60 * 1000;
-    
-    function parseFilename(filename) {
-        const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
-        if (!match) return null;
-        
-        const [, year, month, day, fileKey] = match;
-        const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
-        
-        return { 
-            date: new Date(year, month - 1, day), 
-            dateStr: `${year}.${month}.${day}`, 
-            title: title,
-            filename: filename,
-            fileKey: fileKey
-        };
-    }
-    
-    function renderCaseStudies(container, caseStudies) {
-        if (!container) return;
-        
-        const html = caseStudies.map(function(study) {
-            return `<div class="report-item">
-                        <div class="report-date">${study.dateStr}</div>
-                        <div class="report-main">
-                            <h3 class="report-title">
-                                <a href="${study.url}" class="title-link">${study.title}</a>
-                            </h3>
-                        </div>
-                        <div class="report-link">
-                            <a href="${study.url}" class="btn btn-primary btn-small">View Report →</a>
-                        </div>
-                    </div>`;
-        }).join('');
-        
-        container.innerHTML = html;
-    }
-    
-    function showError(container, message) {
-        container.innerHTML = `<div style="color: #dc2626; padding: 20px; background: #fee2e2; border-radius: 8px;">
-            <strong>Error loading reports</strong><br>
-            ${message}<br>
-            <small style="margin-top: 8px; display: block;">Please try again later.</small>
-        </div>`;
-    }
-    
-    function showCacheWarning(container) {
-        container.insertAdjacentHTML('afterbegin', 
-            `<div style="background: #fef3c7; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
-                ⚠️ Showing cached data.
-            </div>`
-        );
-    }
-    
-    async function loadCaseStudies() {
-        const container = document.getElementById('caseStudiesContainer');
-        if (!container) return;
-        
-        try {
-            const cached = localStorage.getItem(CACHE_KEY);
-            const cacheTime = localStorage.getItem(CACHE_KEY + '_time');
-            
-            if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CACHE_DURATION) {
-                console.log('✓ Using cache');
-                renderCaseStudies(container, JSON.parse(cached));
-                return;
-            }
-            
-            console.log('→ Fetching from GitHub API...');
-            const response = await fetch(
-                `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}`
-            );
-            
-            if (!response.ok) {
-                if (cached) {
-                    console.log('⚠ API failed, using cache');
-                    renderCaseStudies(container, JSON.parse(cached));
-                    showCacheWarning(container);
-                    return;
-                }
-                throw new Error('API request failed: ' + response.status);
-            }
-            
-            const data = await response.json();
-            if (!Array.isArray(data)) throw new Error('Invalid API response');
-            
-            const htmlFiles = data.filter(function(f) {
-                return f.type === 'file' && f.name.endsWith('.html');
-            
-            const baseDir = window.location.pathname.replace(/[^\/]*$/, '');
-});
-            
-            const caseStudies = htmlFiles
-                .map(function(f) {
-                    const parsed = parseFilename(f.name);
-                    if (!parsed) return null;
-                    const baseDir = window.location.pathname.replace(/[^\/]*$/, '');
-                    parsed.url = baseDir + 'case-studies/' + encodeURIComponent(f.name);
-                    return parsed;
-                })
-                .filter(function(item) { return item !== null; })
-                .sort(function(a, b) { return b.date - a.date; });
-            
-            localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
-            localStorage.setItem(CACHE_KEY + '_time', Date.now().toString());
-            
-            renderCaseStudies(container, caseStudies);
-            console.log('✓ Loaded:', caseStudies.length, 'items');
-            
-        } catch (error) {
-            console.error('Error:', error);
-            showError(container, error.message);
+  }
+
+  function renderCaseStudies(container, caseStudies) {
+    const html = caseStudies.map(function(study) {
+      return `
+        <div class="report-item">
+          <div class="report-date">${study.dateStr}</div>
+          <div class="report-main">
+            <h3 class="report-title">
+              <a href="${study.url}" class="title-link">${study.title}</a>
+            </h3>
+          </div>
+          <div class="report-link">
+            <a href="${study.url}" class="btn btn-primary btn-small">Ver Informe →</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+    container.innerHTML = html;
+  }
+
+  function showError(container, message) {
+    container.innerHTML = `
+      <div style="color:#dc2626; padding:20px; background:#fee2e2; border-radius:8px;">
+        <div style="font-weight:700;">Error al cargar los informes</div>
+        <div style="margin-top:6px;">${message}</div>
+        <div style="margin-top:8px; font-size:12px;">Por favor, inténtelo de nuevo más tarde.</div>
+      </div>
+    `;
+  }
+
+  function showCacheWarning(container) {
+    container.insertAdjacentHTML('afterbegin',
+      `<div style="background:#fef3c7; padding:12px; border-radius:8px; margin-bottom:20px; border-left:4px solid #f59e0b;">
+        Mostrando datos en caché.
+      </div>`
+    );
+  }
+
+  async function loadCaseStudies() {
+    const container = document.getElementById('caseStudiesContainer');
+    if (!container) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const forceNoCache = params.get('nocache') === '1';
+
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      const cacheTime = localStorage.getItem(CACHE_TIME_KEY);
+
+      if (!forceNoCache && cached && cacheTime && (Date.now() - Number(cacheTime)) < CACHE_DURATION) {
+        renderCaseStudies(container, JSON.parse(cached));
+        return;
+      }
+
+      const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${encodeURIComponent(GITHUB_CONFIG.branch)}`;
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        if (cached) {
+          renderCaseStudies(container, JSON.parse(cached));
+          showCacheWarning(container);
+          return;
         }
+        throw new Error('Solicitud API falló: ' + response.status);
+      }
+
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error('Respuesta API inválida');
+
+      const htmlFiles = data.filter(function(f) {
+        return f.type === 'file' && f.name.endsWith('.html');
+      });
+
+      const caseStudies = htmlFiles
+        .map(function(f) {
+          const parsed = parseFilename(f.name);
+          if (!parsed) return null;
+
+          // 폴더 기준 절대경로로 링크 생성 (언어 페이지 위치에 영향 없음)
+          parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
+          return parsed;
+        })
+        .filter(Boolean)
+        .sort(function(a, b) { return b.date - a.date; });
+
+      localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
+      localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+
+      renderCaseStudies(container, caseStudies);
+
+    } catch (error) {
+      console.error(error);
+      showError(container, error.message || String(error));
     }
-    
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadCaseStudies);
-    } else {
-        loadCaseStudies();
-    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadCaseStudies);
+  } else {
+    loadCaseStudies();
+  }
 })();
 </script>
+
 </body>
 </html>

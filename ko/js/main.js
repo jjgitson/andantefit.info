@@ -214,14 +214,3 @@ document.head.appendChild(style);
 
 // Expose utility functions globally
 window.AndanteFit = AndanteFit;
-
-// 언어 선택 메뉴 자동 삽입 (한국어용)
-document.addEventListener('DOMContentLoaded', function() {
-  const navMenu = document.getElementById('navMenu');
-  if (navMenu) {
-    const langLi = document.createElement('li');
-    langLi.className = 'nav-lang-selector';
-    langLi.innerHTML = '<a href="../index.html">EN</a> | <a href="index.html" style="font-weight:bold;">KO</a> | <a href="../es/index.html">ES</a>';
-    navMenu.appendChild(langLi);
-  }
-});

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+  <!-- SEO Meta Tags -->
+  <meta content="Análisis de estudios españoles 2025: la SPPB como indicador funcional estándar en cribado de fragilidad, ejercicio, rehabilitación y pronóstico clínico en hospitales y atención primaria." name="description"/>
+  <meta content="AndanteFit, SPPB, evaluación función física, fragilidad, cribado, España, ejercicio, rehabilitación, atención primaria, geriatría, sarcopenia, batería física breve" name="keywords"/>
+  <meta content="DYPHI Inc." name="author"/>
+  <meta content="index,follow" name="robots"/>
+  
+  <!-- Open Graph Tags -->
+  <meta content="website" property="og:type"/>
+  <meta content="es_ES" property="og:locale"/>
+  <meta content="AndanteFit" property="og:site_name"/>
+  <meta content="Utilización de la SPPB en España 2025 | AndanteFit" property="og:title"/>
+  <meta content="La SPPB se consolida como indicador funcional estándar en investigación clínica y programas preventivos comunitarios." property="og:description"/>
+  <meta content="../assets/andantefit-logo.png" property="og:image"/>
+  <meta content="https://andantefit.com/case-studies/2025-SPPB-Utilization-Spain-ES.html" property="og:url"/>
+  
+  <!-- Twitter Card Tags -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="Utilización de la SPPB en España 2025 | AndanteFit" name="twitter:title"/>
+  <meta content="Análisis de estudios españoles 2025: SPPB como indicador funcional común en fragilidad, ejercicio y pronóstico." name="twitter:description"/>
+  <meta content="../assets/andantefit-logo.png" name="twitter:image"/>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="google-site-verification" content="" />
+  <meta name="theme-color" content="#0d9488" />
+  <link rel="canonical" href="https://andantefit.com/case-studies/2025-SPPB-Utilization-Spain-ES.html" />
+  <meta name="application-name" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-title" content="AndanteFit" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="language" content="es" />
+  <meta name="rating" content="general" />
+  <meta name="distribution" content="global" />
+  
+  <!-- Medical-specific meta tags -->
+  <meta name="medical-subject" content="SPPB, Evaluación Funcional, Cribado Fragilidad, Ejercicio Terapéutico, Rehabilitación Geriátrica" />
+  <meta name="target-audience" content="Profesionales Sanitarios, Médicos, Geriatras, Fisioterapeutas, Investigadores" />
+  
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "Utilización de la SPPB en España 2025",
+    "description": "Análisis de estudios españoles: la SPPB como indicador funcional estándar en cribado de fragilidad, ejercicio y pronóstico clínico",
+    "inLanguage": "es",
+    "datePublished": "2026-02-16",
+    "dateModified": "2026-02-16",
+    "publisher": {
+      "@type": "Organization",
+      "name": "DYPHI Inc.",
+      "url": "https://andantefit.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://andantefit.com/assets/andantefit-logo.png"
+      }
+    },
+    "about": {
+      "@type": "MedicalTest",
+      "name": "SPPB (Short Physical Performance Battery)"
+    },
+    "audience": {
+      "@type": "MedicalAudience",
+      "audienceType": ["Physician", "Geriatrician", "Researcher", "Physical Therapist"]
+    }
+  }
+  </script>
+  
+  <title>Utilización de la SPPB en España 2025 | AndanteFit</title>
+  <link href="../css/style.css" rel="stylesheet"/>
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <!-- Google Analytics -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+    
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    }
+    
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+    .slideSurface { background: white; }
+    
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+    
+    @media print {
+      .nav, .footer, .slide-counter, .nav-toggle {
+        display: none;
+      }
+      .slide-frame {
+        page-break-after: always;
+        height: 100vh;
+      }
+      .slide-frame:last-child {
+        page-break-after: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- AndanteFit Navigation -->
+<nav class="nav">
+  <div class="nav-container">
+    <a class="nav-logo" href="../index.html">
+      <img alt="AndanteFit - Evaluación Automatizada de Función Física" src="../assets/andantefit-logo.png"/>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a class="nav-link" href="../index.html">Inicio</a></li>
+      <li><a class="nav-link" href="../product.html">Producto</a></li>
+      <li><a class="nav-link" href="../validation.html">Validación</a></li>
+      <li><a class="nav-link active" href="../case-studies.html">Casos de Estudio</a></li>
+      <li><a class="nav-link" href="../references.html">Referencias</a></li>
+        <li class="nav-lang-mobile" aria-label="Language">
+          <a href="../../index.html">EN</a>
+          <span class="sep">|</span>
+          <a href="../../ko/index.html">KO</a>
+          <span class="sep">|</span>
+          <a href="../../es/index.html" aria-current="page">ES</a>
+        </li>
+      </ul>
+    <div class="nav-lang" aria-label="Language">
+        <a href="../../index.html">EN</a>
+        <span class="sep">|</span>
+        <a href="../../ko/index.html">KO</a>
+        <span class="sep">|</span>
+        <a href="../index.html" aria-current="page">ES</a>
+      </div>
+    <button aria-label="Activar menú de navegación" class="nav-toggle" id="navToggle">☰</button>
+  </div>
+</nav>
+
+<div class="appFont" id="root"></div>
+
+<!-- React App -->
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  function ContentSection({ children, id }) {
+    return (
+      <div 
+        id={id}
+        className="min-h-screen flex items-center justify-center p-4 sm:p-8"
+        role="article"
+      >
+        {children}
+      </div>
+    );
+  }
+
+  function LucideIcon({ name, className = "w-5 h-5" }) {
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    });
+    
+    return React.createElement('i', {
+      'data-lucide': name,
+      className: className
+    });
+  }
+
+  function SlideLayout({ title, subtitle, children, bgImage }) {
+    return (
+      <div className="w-full max-w-6xl mx-auto">
+        <div className="slideSurface rounded-2xl shadow-2xl overflow-hidden">
+          {bgImage && (
+            <div 
+              className="w-full h-48 sm:h-64 bg-cover bg-center relative"
+              style={{ backgroundImage: `url(${bgImage})` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 to-slate-900/40"></div>
+              <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-lg">
+                  {title}
+                </h2>
+                {subtitle && (
+                  <p className="text-base sm:text-lg text-slate-100 mt-2 drop-shadow">
+                    {subtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+          
+          {!bgImage && (
+            <div className="bg-gradient-to-r from-teal-600 to-teal-700 p-6 sm:p-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
+                {title}
+              </h2>
+              {subtitle && (
+                <p className="text-base sm:text-lg text-teal-50 mt-2">
+                  {subtitle}
+                </p>
+              )}
+            </div>
+          )}
+          
+          <div className="p-6 sm:p-10 space-y-6">
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function BulletPoint({ icon, children }) {
+    return (
+      <div className="flex items-start gap-3">
+        <LucideIcon name={icon} className="w-5 h-5 text-teal-600 flex-shrink-0 mt-1" />
+        <p className="text-slate-700 leading-relaxed">{children}</p>
+      </div>
+    );
+  }
+
+  function App() {
+    const sections = [
+      // SECTION 1: Portada con imagen de fondo
+      (
+        <div 
+          className="w-full min-h-screen bg-cover bg-center relative"
+          style={{ backgroundImage: 'url(../assets/case-studies/sppb-utilization-spain.webp)' }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/80"></div>
+          
+          <div className="relative z-10 h-full min-h-screen flex flex-col justify-center items-center p-8 sm:p-16">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="mb-8">
+                <span className="inline-block px-4 py-2 bg-teal-500/20 backdrop-blur-sm border border-teal-400/30 rounded-full text-teal-300 text-sm font-semibold mb-6">
+                  Análisis de Estudios Españoles 2025
+                </span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight drop-shadow-2xl">
+                Por qué la SPPB se ha consolidado como indicador estándar de función física
+              </h1>
+              
+              <p className="text-xl sm:text-2xl md:text-3xl text-slate-200 mb-8 leading-relaxed drop-shadow-lg">
+                Panorama observado en el sistema sanitario y en la comunidad durante 2025
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+                <div className="bg-white/10 backdrop-blur-md px-6 py-3 rounded-lg border border-white/20">
+                  <p className="text-white font-semibold">Investigación Clínica Hospitalaria</p>
+                </div>
+                <div className="text-white text-2xl hidden sm:block">+</div>
+                <div className="bg-white/10 backdrop-blur-md px-6 py-3 rounded-lg border border-white/20">
+                  <p className="text-white font-semibold">Programas Preventivos Comunitarios</p>
+                </div>
+              </div>
+              
+              <div className="mt-16 text-slate-300 text-sm">
+                <p className="mb-2">AndanteFit by DYPHI Inc.</p>
+                <p>Evaluación automatizada de función física para la práctica clínica</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+
+      // SECTION 2: Contexto general
+      (
+        <SlideLayout
+          title="Contexto general"
+          subtitle="La SPPB como resultado funcional común en múltiples ámbitos"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              A partir del análisis de los estudios españoles indexados en PubMed y publicados a lo largo de 2025, 
+              se confirma que la SPPB (Short Physical Performance Battery) ha dejado de ser una herramienta limitada 
+              a una especialidad concreta. En la práctica, se está utilizando como resultado (outcome) funcional común 
+              en múltiples ámbitos clínicos y también en entornos comunitarios.
+            </p>
+
+            <div className="bg-teal-50 rounded-xl p-6 border-l-4 border-teal-600">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="trending-up" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  <strong>Liderazgo europeo en investigación:</strong> Al aplicar criterios estrictos de selección 
+                  —primer autor y estudios realizados en un solo país—, España aparece como uno de los países europeos 
+                  con mayor actividad investigadora basada en la SPPB.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 rounded-xl p-6 border-l-4 border-amber-500">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="activity" className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  <strong>Indicador de práctica clínica real:</strong> Este fenómeno no solo refleja productividad 
+                  científica, sino también un indicador clave de que la SPPB se ha consolidado como indicador funcional 
+                  estándar en la práctica clínica real.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 3: Dos ejes de utilización
+      (
+        <SlideLayout
+          title="Dos ejes de utilización"
+          subtitle="Aplicación simultánea en investigación y prevención"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              El conjunto de estudios publicados en España durante 2025 muestra que la SPPB se aplica de forma 
+              simultánea en dos grandes ejes:
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <LucideIcon name="hospital" className="w-8 h-8 text-blue-600" />
+                  <h3 className="text-xl font-bold text-slate-800">Investigación Clínica Hospitalaria</h3>
+                </div>
+                <ul className="space-y-3 text-slate-700">
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <span>Ensayos clínicos multicéntricos</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <span>Estudios de intervención con ejercicio</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <span>Evaluación pronóstica en cardiología</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <span>Rehabilitación post-hospitalización</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <LucideIcon name="users" className="w-8 h-8 text-green-600" />
+                  <h3 className="text-xl font-bold text-slate-800">Programas Preventivos en la Comunidad</h3>
+                </div>
+                <ul className="space-y-3 text-slate-700">
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span>Programas de prevención de fragilidad</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span>Ejercicio multicomponente comunitario</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span>Atención primaria SNS</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <LucideIcon name="check" className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span>Servicios de atención domiciliaria</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 4: Distribución de temas de investigación (imagen)
+      (
+        <SlideLayout
+          title="Distribución de los temas de investigación con SPPB"
+          subtitle="España, 2025"
+        >
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+              <img 
+                src="../assets/case-studies/sppb_spain_topics_2025.webp" 
+                alt="Distribución de temas de investigación con SPPB en España 2025"
+                className="w-full h-auto"
+              />
+            </div>
+            
+            <p className="text-sm text-slate-500 text-center italic">
+              Fuente: Análisis propio a partir de Google Scholar, 2025.
+            </p>
+
+            <div className="bg-slate-50 rounded-xl p-6">
+              <p className="text-slate-700 leading-relaxed">
+                <strong>Diversificación de aplicaciones:</strong> El análisis de Google Scholar muestra la amplitud 
+                de temas en los que se utiliza la SPPB, desde cribado de fragilidad hasta evaluación de intervenciones 
+                específicas en múltiples patologías.
+              </p>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 5: Cribado de fragilidad
+      (
+        <SlideLayout
+          title="Cribado de fragilidad y clasificación funcional"
+          subtitle="Uso más frecuente en estudios españoles 2025"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              El uso más frecuente de la SPPB en los estudios españoles de 2025 corresponde al cribado de fragilidad 
+              y a la clasificación del estado funcional.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-blue-50 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <LucideIcon name="flask-conical" className="w-7 h-7 text-blue-600" />
+                  <h3 className="text-lg font-bold text-slate-800">Ensayos Clínicos Multicéntricos</h3>
+                </div>
+                <p className="text-slate-700 leading-relaxed">
+                  La SPPB se empleó como herramienta principal junto con el fenotipo de fragilidad para analizar 
+                  los efectos de las intervenciones a nivel nacional.
+                </p>
+              </div>
+
+              <div className="bg-green-50 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <LucideIcon name="activity" className="w-7 h-7 text-green-600" />
+                  <h3 className="text-lg font-bold text-slate-800">Programas de Ejercicio Comunitario</h3>
+                </div>
+                <p className="text-slate-700 leading-relaxed">
+                  En programas multicomponente dirigidos a personas mayores, se define el grupo frágil según la 
+                  puntuación de la SPPB y se evalúa la eficacia según sus cambios.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-teal-50 rounded-xl p-6 border-l-4 border-teal-600">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="check-circle" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  <strong>Patrón consolidado:</strong> En España, la SPPB no se utiliza únicamente como herramienta 
+                  de investigación, sino como <strong>indicador clínico básico para determinar la presencia de fragilidad</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 6: Outcome principal en ejercicio
+      (
+        <SlideLayout
+          title="Outcome principal en ejercicio y rehabilitación"
+          subtitle="El campo con mayor presencia de la SPPB"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              El campo con mayor presencia de la SPPB en los artículos españoles de 2025 corresponde a los estudios 
+              de ejercicio, rehabilitación e intervenciones multicomponente.
+            </p>
+
+            <div className="space-y-4">
+              <div className="bg-white rounded-xl p-5 border-l-4 border-blue-500 shadow-sm">
+                <BulletPoint icon="bed">
+                  <strong>Personas mayores hospitalizadas:</strong> Los cambios en la SPPB se utilizaron como principal 
+                  resultado funcional en estudios de intervención con ejercicio.
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-purple-500 shadow-sm">
+                <BulletPoint icon="heart-pulse">
+                  <strong>Pacientes oncológicos:</strong> La variación en la puntuación de la SPPB se estableció como 
+                  resultado funcional primario en ensayos clínicos de ejercicio.
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-green-500 shadow-sm">
+                <BulletPoint icon="users">
+                  <strong>Personas mayores en la comunidad:</strong> La SPPB se aplicó como indicador funcional clave 
+                  en programas de ejercicio dirigidos a residentes comunitarios.
+                </BulletPoint>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 rounded-xl p-6 border-l-4 border-amber-500">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="target" className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  <strong>Práctica investigadora consolidada:</strong> En España, los efectos del ejercicio o de la 
+                  rehabilitación se evalúan mediante la SPPB, tanto en el ámbito hospitalario como en el comunitario.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 7: Indicador pronóstico
+      (
+        <SlideLayout
+          title="Expansión como indicador pronóstico"
+          subtitle="Más allá de la evaluación funcional"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              La SPPB no se limita a la evaluación funcional, sino que también se utiliza como indicador para predecir 
+              resultados clínicos.
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-5">
+              <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-5 border border-red-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <LucideIcon name="heart" className="w-6 h-6 text-red-600" />
+                  <h3 className="text-base font-bold text-slate-800">Insuficiencia Cardiaca</h3>
+                </div>
+                <p className="text-sm text-slate-700">
+                  Cribado de fragilidad en pacientes hospitalizados
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-5 border border-blue-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <LucideIcon name="stethoscope" className="w-6 h-6 text-blue-600" />
+                  <h3 className="text-base font-bold text-slate-800">TAVI</h3>
+                </div>
+                <p className="text-sm text-slate-700">
+                  Predicción de pronóstico y riesgo de reingreso tras implante valvular
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-5 border border-purple-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <LucideIcon name="activity" className="w-6 h-6 text-purple-600" />
+                  <h3 className="text-base font-bold text-slate-800">Rehabilitación</h3>
+                </div>
+                <p className="text-sm text-slate-700">
+                  Variable pronóstica para reingresos y mortalidad post-hospitalización
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-teal-50 rounded-xl p-6 border-l-4 border-teal-600">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="clipboard-check" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  <strong>Integración en decisiones clínicas:</strong> La SPPB se está integrando progresivamente 
+                  en la toma de decisiones relacionadas con la estrategia terapéutica, la planificación del alta y 
+                  la evaluación del pronóstico.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 8: Múltiples patologías
+      (
+        <SlideLayout
+          title="Resultado funcional común en múltiples patologías"
+          subtitle="No limitada a una especialidad específica"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              En los artículos españoles de 2025, la SPPB no aparece limitada a una patología específica, sino como 
+              resultado funcional común en múltiples áreas clínicas.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-5">
+              <div className="bg-white rounded-xl p-5 border-l-4 border-red-400 shadow-sm">
+                <BulletPoint icon="microscope">
+                  <strong>Neoplasias hematológicas:</strong> Función física y calidad de vida
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-purple-400 shadow-sm">
+                <BulletPoint icon="shield-plus">
+                  <strong>VIH en personas mayores:</strong> Evaluación de fragilidad
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-orange-400 shadow-sm">
+                <BulletPoint icon="virus">
+                  <strong>Post-COVID-19:</strong> Valoración del deterioro funcional
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-green-400 shadow-sm">
+                <BulletPoint icon="apple">
+                  <strong>Estado nutricional:</strong> Relación con deterioro funcional
+                </BulletPoint>
+              </div>
+            </div>
+
+            <div className="bg-slate-50 rounded-xl p-6">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="network" className="w-6 h-6 text-slate-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  <strong>Outcome funcional estándar:</strong> La SPPB actúa como indicador transversal aplicable 
+                  a diversas situaciones clínicas, independientemente de la patología específica.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 9: Expansión a comunidad
+      (
+        <SlideLayout
+          title="Expansión hacia comunidad y atención primaria"
+          subtitle="Más allá del ámbito hospitalario"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              Uno de los hallazgos relevantes en los estudios españoles de 2025 es la creciente utilización de la 
+              SPPB en entornos comunitarios.
+            </p>
+
+            <div className="space-y-4">
+              <div className="bg-white rounded-xl p-5 border-l-4 border-green-500 shadow-sm">
+                <BulletPoint icon="home">
+                  <strong>Prevención comunitaria:</strong> Principal indicador funcional en programas de prevención 
+                  de fragilidad y ejercicio para personas mayores residentes en la comunidad.
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-blue-500 shadow-sm">
+                <BulletPoint icon="users">
+                  <strong>Cohortes comunitarias:</strong> Análisis de la relación entre dolor, estado nutricional y 
+                  deterioro funcional.
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-purple-500 shadow-sm">
+                <BulletPoint icon="briefcase-medical">
+                  <strong>Servicios domiciliarios:</strong> Evaluación de cambios funcionales en programas 
+                  multicomponente para usuarios de atención domiciliaria.
+                </BulletPoint>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border-l-4 border-teal-500 shadow-sm">
+                <BulletPoint icon="building-2">
+                  <strong>Atención primaria SNS:</strong> Indicador funcional central en estudios multicéntricos 
+                  del Sistema Nacional de Salud.
+                </BulletPoint>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-xl p-6 border border-teal-200">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="trending-up" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-slate-800 font-bold mb-2">Tres ámbitos de expansión:</p>
+                  <ul className="text-slate-700 space-y-1">
+                    <li>→ Atención primaria</li>
+                    <li>→ Programas preventivos comunitarios</li>
+                    <li>→ Servicios de atención domiciliaria</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 10: Mensajes clave
+      (
+        <SlideLayout
+          title="Mensajes clave de los estudios de 2025"
+          subtitle="Cuatro tendencias principales identificadas"
+        >
+          <div className="space-y-5">
+            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border-l-4 border-blue-600">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  1
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-800 mb-2">Cribado de Fragilidad</h3>
+                  <p className="text-slate-700">La SPPB se utiliza como indicador estándar para el cribado de fragilidad.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-xl p-6 border-l-4 border-green-600">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  2
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-800 mb-2">Ejercicio y Rehabilitación</h3>
+                  <p className="text-slate-700">Es el resultado funcional más empleado en estudios de ejercicio y rehabilitación.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl p-6 border-l-4 border-purple-600">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  3
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-800 mb-2">Indicador Pronóstico</h3>
+                  <p className="text-slate-700">Se utiliza como indicador pronóstico en diversas áreas clínicas.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-teal-50 to-teal-100 rounded-xl p-6 border-l-4 border-teal-600">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-teal-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  4
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-800 mb-2">Indicador Común Transversal</h3>
+                  <p className="text-slate-700">Se aplica tanto en hospitales como en atención primaria y programas comunitarios.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 rounded-xl p-6 border-l-4 border-amber-500 mt-6">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="lightbulb" className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  <strong>Lenguaje funcional común:</strong> La SPPB se ha convertido en España en un lenguaje 
+                  funcional común que articula un modelo de atención centrado en la función.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 11: Perspectivas 2026
+      (
+        <SlideLayout
+          title="Perspectivas a partir de 2026"
+          subtitle="Dos direcciones de evolución"
+        >
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              Las tendencias observadas en los estudios de 2025 indican que el uso de la SPPB en España está 
+              evolucionando en dos direcciones paralelas:
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <LucideIcon name="hospital" className="w-8 h-8 text-blue-600" />
+                  <h3 className="text-xl font-bold text-slate-800">Hospitales</h3>
+                </div>
+                <p className="text-slate-700 leading-relaxed">
+                  Mayor sofisticación como herramienta pronóstica en entornos hospitalarios
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <LucideIcon name="home" className="w-8 h-8 text-green-600" />
+                  <h3 className="text-xl font-bold text-slate-800">Comunidad</h3>
+                </div>
+                <p className="text-slate-700 leading-relaxed">
+                  Expansión en programas de prevención de la fragilidad en atención primaria y en la comunidad
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-teal-50 rounded-xl p-6 border-l-4 border-teal-600">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="smartphone" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-slate-800 font-bold mb-3">Demanda de dispositivos digitales para SPPB:</p>
+                  <ul className="text-slate-700 space-y-2">
+                    <li className="flex items-start gap-2">
+                      <LucideIcon name="check" className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <span>Entornos de evaluación estandarizados</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <LucideIcon name="check" className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <span>Almacenamiento automático de datos</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <LucideIcon name="check" className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <span>Integración con los registros clínicos</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 rounded-xl p-6 border-l-4 border-amber-500">
+              <div className="flex items-start gap-3">
+                <LucideIcon name="arrow-right" className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+                <p className="text-slate-700 leading-relaxed">
+                  Frente a las mediciones manuales, aumentará la demanda de soluciones digitales que permitan 
+                  una evaluación más rápida, precisa y sistemática.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SECTION 12: Conclusión
+      (
+        <div className="w-full min-h-screen bg-slate-900 p-8 sm:p-16 flex flex-col justify-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -ml-40 -mb-40"></div>
+
+          <div className="relative z-10 max-w-5xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6 text-center">
+              Conclusión
+            </h2>
+
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 mb-8">
+              <p className="text-xl text-slate-200 leading-relaxed mb-6">
+                El análisis de los estudios españoles indexados en PubMed durante 2025 muestra que la SPPB ya no es 
+                una herramienta limitada a una especialidad concreta.
+              </p>
+              
+              <p className="text-xl text-slate-200 leading-relaxed mb-6">
+                Se ha consolidado como <span className="text-teal-300 font-bold">indicador funcional común</span> para 
+                el cribado de fragilidad, la evaluación de la eficacia de las intervenciones y la predicción del 
+                pronóstico clínico, con una expansión clara desde el hospital hacia la comunidad.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-teal-600/20 to-blue-600/20 backdrop-blur-sm p-8 rounded-xl border border-teal-400/30 mb-12">
+              <p className="text-2xl sm:text-3xl font-bold text-teal-300 text-center">
+                En el sistema sanitario español, la pregunta ya no es <span className="text-white">si</span> se debe 
+                utilizar la SPPB, sino <span className="text-white">cómo</span> medirla y gestionarla de forma más 
+                rápida y precisa.
+              </p>
+            </div>
+
+            <div className="text-center pt-8 border-t border-white/20">
+              <div className="mt-8 text-slate-400 text-sm leading-relaxed space-y-2 mb-8">
+                <p>
+                  Este material se proporciona con fines informativos para profesionales médicos. 
+                  Las decisiones de diagnóstico y tratamiento para pacientes individuales deben basarse 
+                  en el juicio clínico de los profesionales sanitarios y las condiciones del paciente.
+                </p>
+              </div>
+              
+              <div className="mt-8">
+                <p className="text-white text-base font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
+                <p className="text-slate-400 text-sm">Evaluación automatizada de función física para la práctica clínica</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    ];
+
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    });
+
+    return (
+      <div className="w-full">
+        {sections.map((section, idx) => (
+          <ContentSection key={idx} id={`section-${idx}`}>
+            {section}
+          </ContentSection>
+        ))}
+      </div>
+    );
+  }
+
+  ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+
+<!-- Navigation Toggle Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        const isClickInside = navToggle.contains(event.target) || navMenu.contains(event.target);
+        if (!isClickInside && navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>
+
+<!-- AndanteFit Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>AndanteFit</h4>
+        <p>Desarrollado y proporcionado por: DYPHI Inc.<br/>
+        Solución automatizada de evaluación de función física para investigación en fragilidad y sarcopenia.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Enlaces Rápidos</h4>
+        <p>
+          <a href="../product.html">Producto</a><br/>
+          <a href="../validation.html">Validación</a><br/>
+          <a href="../case-studies.html">Casos de Estudio</a><br/>
+          <a href="../references.html">Referencias</a>
+        </p>
+      </div>
+      <div class="footer-section">
+        <h4>Contacto</h4>
+        <p>Email: <a href="mailto:info@andantefit.com">info@andantefit.com</a><br/>
+        Oficina Seúl: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
+        Oficina Daejeon: C17, 99 Daehak-ro, Yuseong-gu</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 DYPHI Inc. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+</body>
+</html>

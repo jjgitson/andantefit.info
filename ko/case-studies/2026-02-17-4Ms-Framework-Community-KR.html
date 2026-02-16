@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+  <!-- SEO Meta Tags -->
+  <meta content="지역사회 노쇠 예방 실무자를 위한 4Ms 프레임워크: What Matters, Medication, Mentation, Mobility를 중심으로 한 고령친화 돌봄 체계 구축 가이드" name="description"/>
+  <meta content="AndanteFit, 4Ms, 고령친화, Age-Friendly Health Systems, 노쇠, 지역사회, What Matters, Medication, Mentation, Mobility, 기능 중심 돌봄" name="keywords"/>
+  <meta content="DYPHI Inc." name="author"/>
+  <meta content="index,follow" name="robots"/>
+  
+  <!-- Open Graph Tags -->
+  <meta content="website" property="og:type"/>
+  <meta content="ko_KR" property="og:locale"/>
+  <meta content="AndanteFit" property="og:site_name"/>
+  <meta content="지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit" property="og:title"/>
+  <meta content="What Matters, Medication, Mentation, Mobility - 고령친화 건강 시스템의 핵심 구조를 지역사회에서 활용하는 방법" property="og:description"/>
+  <meta content="../assets/andantefit-logo.png" property="og:image"/>
+  <meta content="https://andantefit.com/case-studies/2026-02-17-4Ms-Framework-Community-KR.html" property="og:url"/>
+  
+  <!-- Twitter Card Tags -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit" name="twitter:title"/>
+  <meta content="노쇠 예방 실무자를 위한 기능 중심 돌봄 구조 - 4Ms 프레임워크 완벽 가이드" name="twitter:description"/>
+  <meta content="../assets/andantefit-logo.png" name="twitter:image"/>
+  
+  <!-- AI Search Tags -->
+  <meta content="구조화된 교육 문서: 4Ms 프레임워크(What Matters, Medication, Mentation, Mobility)의 정의, 배경, 방법론, 지역사회 적용 가이드. 고령친화 건강 시스템의 핵심 개념을 지역사회 노쇠 예방 현장에서 활용하는 실무 지침서." name="description"/>
+  <meta content="지역사회 돌봄, 노인 건강관리, 기능 평가, 통합 돌봄" name="topic"/>
+  
+  <title>지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+    
+    * {
+      font-family: 'Noto Sans KR', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f8fafc;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e2e8f0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .header-content {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #1e293b;
+    }
+
+    .logo img {
+      height: 32px;
+      width: auto;
+    }
+
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #475569;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: #3b82f6;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .nav-toggle span {
+      width: 24px;
+      height: 2px;
+      background: #1e293b;
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.3s;
+        pointer-events: none;
+      }
+
+      .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    .footer {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 3rem 2rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .footer-section p {
+      line-height: 1.8;
+      color: #cbd5e1;
+      font-size: 0.9rem;
+    }
+
+    .footer-section a {
+      color: #93c5fd;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-section a:hover {
+      color: #60a5fa;
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid #334155;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .content-wrapper {
+      padding-top: 60px;
+    }
+
+    .hero-section {
+      position: relative;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('../assets/case-studies/4Ms_cover.webp');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.4);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      padding: 2rem;
+      max-width: 900px;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      line-height: 1.8;
+      opacity: 0.95;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+    }
+
+    .content-section {
+      min-height: auto;
+      padding: 4rem 2rem;
+    }
+
+    .content-section:nth-child(even) {
+      background-color: white;
+    }
+
+    .content-section:nth-child(odd) {
+      background-color: #f8fafc;
+    }
+
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 2rem;
+      line-height: 1.3;
+    }
+
+    .section-content {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #334155;
+    }
+
+    .section-content h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-content h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #475569;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-content ul {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .section-content li {
+      margin-bottom: 0.75rem;
+    }
+
+    .section-content strong {
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+    }
+
+    .highlight-box h4 {
+      color: white !important;
+      margin-top: 0 !important;
+    }
+
+    .framework-image {
+      width: 100%;
+      max-width: 800px;
+      margin: 2rem auto;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 2rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    th {
+      background: #1e293b;
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background: #f8fafc;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <a href="../index.html" class="logo">
+      <img src="../assets/andantefit-logo.png" alt="AndanteFit Logo">
+      <span class="logo-text">AndanteFit</span>
+    </a>
+    <div class="nav-toggle" id="navToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav class="nav-menu" id="navMenu">
+      <a href="../product.html" class="nav-link">제품</a>
+      <a href="../validation.html" class="nav-link">검증</a>
+      <a href="../case-studies.html" class="nav-link">케이스 스터디</a>
+      <a href="../references.html" class="nav-link">참고문헌</a>
+    </nav>
+  </div>
+</header>
+
+<div class="content-wrapper">
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">지역사회 노쇠 예방 실무자를 위한<br/>4Ms 프레임워크 이해</h1>
+      <p class="hero-subtitle">What Matters, Medication, Mentation, Mobility<br/>고령친화 건강 시스템의 핵심 구조를 지역사회에서 활용하는 방법</p>
+    </div>
+  </section>
+
+  <!-- SECTION 1: 서론 -->
+  <section class="content-section">
+    <div class="section-inner">
+      <h2 class="section-title">지역사회 돌봄의 새로운 프레임워크</h2>
+      <div class="section-content">
+        <p>지역사회에서 어르신들의 건강과 삶의 질을 책임지고 계시는 실무자들에게, 복잡한 노인 돌봄을 단순화하고 효율적으로 통합할 수 있는 구조가 필요합니다.</p>
+        
+        <p>이때 활용할 수 있는 개념이 바로 <strong>4Ms 프레임워크</strong>입니다.</p>
+        
+        <p>4Ms는 병원 중심의 의료 모델에서 출발했지만, 어르신이 생활하는 지역사회에서도 그대로 적용할 수 있도록 설계된 <strong>기능 중심 돌봄 구조</strong>입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: 정의와 배경 -->
+  <section class="content-section">
+    <div class="section-inner">
+      <h2 class="section-title">1. 정의와 배경: 4Ms의 역사와 핵심 철학</h2>
+      <div class="section-content">
+        <p>4Ms 프레임워크는 2017년 미국에서 시작된 <strong>고령친화 건강 시스템(Age-Friendly Health Systems, AFHS)</strong> 운동의 핵심 개념으로 개발되었습니다. 이 운동은 John A. Hartford Foundation과 Institute for Healthcare Improvement(IHI)가 중심이 되어 시작되었습니다.</p>
+
+        <p>이 운동의 목표는 고령자가 어떤 환경에서든 안전하고 효과적인 돌봄을 받을 수 있도록, 모든 돌봄 현장에서 공통으로 적용할 수 있는 핵심 구조를 만드는 것이었습니다.</p>
+
+        <p>기존의 노인 돌봄은 질환별로 단편적으로 이루어지는 경우가 많았고, 그 결과 돌봄이 복잡해지고 비효율적인 문제가 발생했습니다. 이러한 문제를 해결하기 위해 전문가 그룹이 다양한 근거 기반 모델을 검토하여, 고령자 돌봄에서 반드시 확인해야 할 네 가지 핵심 요소로 정리한 것이 4Ms입니다.</p>
+
+        <div class="highlight-box">
+          <h4>4Ms의 핵심 철학</h4>
+          <ul>
+            <li>4Ms는 특정 서비스나 프로그램이 아니라 <strong>돌봄을 조직하는 프레임워크</strong>입니다.</li>
+            <li>질병 중심 접근이 아니라 <strong>기능과 삶의 목표 중심 접근</strong>을 지향합니다.</li>
+            <li>모든 고령자 돌봄 접점에서 공통으로 적용됩니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: 방법론 -->
+  <section class="content-section">
+    <div class="section-inner">
+      <h2 class="section-title">2. 방법론: 4Ms의 구성 요소와 평가 구조</h2>
+      <div class="section-content">
+        <p>4Ms는 다음 네 가지 핵심 영역으로 구성됩니다.</p>
+
+        <ul>
+          <li><strong>What Matters</strong>: 무엇이 중요한가</li>
+          <li><strong>Medication</strong>: 약물</li>
+          <li><strong>Mentation</strong>: 인지와 정신상태</li>
+          <li><strong>Mobility</strong>: 이동성과 신체기능</li>
+        </ul>
+
+        <p>이 네 요소는 각각 독립적으로 적용되는 것이 아니라, 항상 함께 고려되는 하나의 세트로 운영되어야 합니다.</p>
+
+        <p>또한 4Ms는 <strong>평가(Assess)</strong>와 <strong>실행(Act On)</strong>을 동시에 수행하는 구조로 운영됩니다. 단순히 정보를 수집하는 것이 아니라, 그 결과를 실제 돌봄 계획에 반영하는 것이 핵심입니다.</p>
+
+        <img src="../assets/case-studies/4Ms_framework.webp" alt="4Ms 프레임워크 구조" class="framework-image">
+
+        <h3>4Ms 핵심 요소와 지역사회 평가 도구 예시</h3>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>4Ms 요소</th>
+                <th>정의 및 목표</th>
+                <th>지역사회에서 활용 가능한 평가 방법</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>What Matters</strong></td>
+                <td>어르신의 삶의 목표와 돌봄 선호를 확인하고, 모든 돌봄을 이에 맞추는 것</td>
+                <td>생활 목표 질문, 활동 목표 설정, 사전연명의료 의향 확인</td>
+              </tr>
+              <tr>
+                <td><strong>Medication</strong></td>
+                <td>기능과 인지에 영향을 줄 수 있는 고위험 약물을 피하고 적절한 약물 사용</td>
+                <td>복용 약물 목록 확인, 고위험 약물 점검, 약국 연계 상담</td>
+              </tr>
+              <tr>
+                <td><strong>Mentation</strong></td>
+                <td>치매, 우울, 섬망의 예방과 조기 발견 및 관리</td>
+                <td>Mini-Cog, 간이 인지검사, 우울 선별도구(PHQ 등)</td>
+              </tr>
+              <tr>
+                <td><strong>Mobility</strong></td>
+                <td>매일 안전하게 움직여 기능을 유지하고 목표 활동을 수행하도록 지원</td>
+                <td>보행속도, SPPB, TUG, 균형·근력 평가</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: 운영 방식 -->
+  <section class="content-section">
+    <div class="section-inner">
+      <h2 class="section-title">3. 운영 방식: 현장에서의 적용 원리</h2>
+      <div class="section-content">
+        <p>4Ms는 새로운 프로그램을 추가하는 방식이 아니라, <strong>기존 돌봄 과정을 재구성</strong>하는 방식으로 적용됩니다.</p>
+
+        <h3>핵심 운영 원리</h3>
+
+        <h4>1) 모든 접점에서 동일한 구조 사용</h4>
+        <p>병원, 외래, 방문서비스, 복지관, 장기요양기관 등 모든 환경에서 동일한 질문 구조를 사용합니다.</p>
+
+        <h4>2) 평가와 실행의 통합</h4>
+        <p>정보 수집으로 끝나는 것이 아니라, 평가 결과를 바탕으로 즉시 개입 계획을 수립합니다.</p>
+
+        <div class="highlight-box">
+          <h4>예시</h4>
+          <p>이동성 저하 확인 → "손주와 산책하기"가 목표 → 해당 목표를 중심으로 운동 프로그램 설계</p>
+        </div>
+
+        <h4>3) 점진적 도입(PDSA 방식)</h4>
+        <p>한 명의 대상자부터 적용해 보고, 그 경험을 바탕으로 점차 확대하는 방식이 권장됩니다.</p>
+        
+        <p>이러한 개선 사이클은 실제 4Ms 도입 과정에서 사용되는 방법입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: 지역사회 활용 방안 -->
+  <section class="content-section">
+    <div class="section-inner">
+      <h2 class="section-title">4. 지역사회에서의 활용 방안</h2>
+      <div class="section-content">
+        <p>4Ms는 특정 질환이나 진료과가 아닌, <strong>기능과 삶의 목표를 중심으로 돌봄을 조직</strong>하기 때문에 지역사회에서 특히 유용합니다.</p>
+
+        <h3>1) 선별과 상담의 공통 구조</h3>
+        <p>지역사회 서비스에서 다음과 같이 적용할 수 있습니다.</p>
+        <ul>
+          <li><strong>What Matters</strong>: 생활 목표, 사회참여 의지 확인</li>
+          <li><strong>Mentation</strong>: 인지·우울 선별</li>
+          <li><strong>Mobility</strong>: 신체기능 평가</li>
+          <li><strong>Medication</strong>: 복용 약물 확인</li>
+        </ul>
+
+        <h3>2) 지역 자원 연계의 허브 역할</h3>
+        <p>4Ms 평가를 통해 발견된 문제를 지역 자원과 연결할 수 있습니다.</p>
+
+        <div class="highlight-box">
+          <h4>예시</h4>
+          <ul>
+            <li>약물 문제 → 지역 약국 연계</li>
+            <li>우울 위험 → 정신건강복지센터 연계</li>
+            <li>이동성 저하 → 운동 프로그램 연결</li>
+          </ul>
+        </div>
+
+        <h3>3) 보호자와 주민 교육에 활용</h3>
+        <p>Mentation을 "마음"이나 "기억과 기분"처럼 쉬운 용어로 설명하면, 보호자 교육에도 활용할 수 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: 핵심 메시지 -->
+  <section class="content-section">
+    <div class="section-inner">
+      <h2 class="section-title">5. 지역사회 실무자에게 주는 핵심 메시지</h2>
+      <div class="section-content">
+        <div class="highlight-box">
+          <ul>
+            <li>4Ms는 새로운 사업이나 장비가 아니라, <strong>돌봄을 조직하는 공통 언어</strong>입니다.</li>
+            <li>질병 중심이 아니라 <strong>기능 중심 구조</strong>입니다.</li>
+            <li>모든 직종이 공유할 수 있는 <strong>핵심 질문 체계</strong>입니다.</li>
+            <li>선별, 상담, 운동, 영양, 사회참여 프로그램을 하나로 묶는 <strong>프레임</strong>입니다.</li>
+          </ul>
+        </div>
+
+        <p>이 구조를 활용하면, 지역사회에서도 어르신이 <strong>"살던 곳에서, 원하는 삶을 유지하는"</strong> 돌봄 체계를 설계할 수 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: 참고문헌 -->
+  <section class="content-section">
+    <div class="section-inner">
+      <h2 class="section-title">참고 문헌</h2>
+      <div class="section-content">
+        <ul>
+          <li>Institute for Healthcare Improvement. Age-Friendly Health Systems: Guide to Using the 4Ms in the Care of Older Adults, 2020.</li>
+          <li>Mate K, et al. Evidence for the 4Ms: Interactions and Outcomes across the Care Continuum. Journal of Aging and Health, 2021.</li>
+          <li>Emery-Tiburcio EE, et al. The 4Ms of an Age-Friendly Health System. American Journal of Nursing, 2021.</li>
+          <li>Welch SA, et al. Hospital 4Ms: Documentation and association with patient characteristics. JAGS, 2025.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>AndanteFit</h4>
+      <p>개발 및 제공: DYPHI Inc.<br/>
+      노쇠 및 근감소증 연구를 위한 자동화된 신체기능 평가 솔루션</p>
+    </div>
+    <div class="footer-section">
+      <h4>빠른 링크</h4>
+      <p>
+        <a href="../product.html">제품</a><br/>
+        <a href="../validation.html">검증</a><br/>
+        <a href="../case-studies.html">케이스 스터디</a><br/>
+        <a href="../references.html">참고문헌</a>
+      </p>
+    </div>
+    <div class="footer-section">
+      <h4>연락처</h4>
+      <p>이메일: <a href="mailto:info@andantefit.com">info@andantefit.com</a><br/>
+      서울 오피스: 서울시 송파구 법원로11길 25, A-509<br/>
+      대전 오피스: 대전시 유성구 대학로 99, C17</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 DYPHI Inc. All rights reserved.</div>
+</footer>
+
+<script>
+  // Mobile navigation toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+      });
+      
+      document.addEventListener('click', function(event) {
+        const isClickInside = navToggle.contains(event.target) || navMenu.contains(event.target);
+        if (!isClickInside && navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

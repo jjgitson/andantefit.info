@@ -161,78 +161,14 @@
 <script type="text/babel">
   const { useState, useEffect } = React;
 
-  function SlideFrame({ children, index, total }) {
-    const handleNavClick = (e, targetIdx) => {
-      e.preventDefault();
-      window.location.hash = `slide-${targetIdx}`;
-      const target = document.getElementById(`slide-${targetIdx}`);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-
+  function ContentSection({ children, id }) {
     return (
       <div 
-        id={`slide-${index}`} 
-        className="slide-frame min-h-screen flex flex-col relative"
+        id={id}
+        className="min-h-screen flex items-center justify-center p-4 sm:p-8"
         role="article"
-        aria-label={`Diapositiva ${index + 1} de ${total}`}
       >
-        <div className="flex-1 flex items-center justify-center p-4 sm:p-8">
-          {children}
-        </div>
-        
-        <div className="slide-counter" style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          background: 'rgba(15, 23, 42, 0.8)',
-          color: 'white',
-          padding: '8px 16px',
-          borderRadius: '20px',
-          fontSize: '14px',
-          fontWeight: '600',
-          backdropFilter: 'blur(8px)',
-          zIndex: 1000,
-          userSelect: 'none'
-        }}>
-          {index + 1} / {total}
-        </div>
-
-        <nav 
-          className="flex justify-between items-center px-6 py-4 bg-slate-50 border-t border-slate-200"
-          aria-label="Navegación de diapositivas"
-        >
-          <button
-            onClick={(e) => handleNavClick(e, Math.max(0, index - 1))}
-            disabled={index === 0}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
-              index === 0
-                ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                : 'bg-teal-600 text-white hover:bg-teal-700'
-            }`}
-            aria-label="Diapositiva anterior"
-          >
-            ← Anterior
-          </button>
-          
-          <span className="text-sm text-slate-600 font-medium">
-            Diapositiva {index + 1} de {total}
-          </span>
-          
-          <button
-            onClick={(e) => handleNavClick(e, Math.min(total - 1, index + 1))}
-            disabled={index === total - 1}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
-              index === total - 1
-                ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                : 'bg-teal-600 text-white hover:bg-teal-700'
-            }`}
-            aria-label="Siguiente diapositiva"
-          >
-            Siguiente →
-          </button>
-        </nav>
+        {children}
       </div>
     );
   }
@@ -304,8 +240,8 @@
   }
 
   function App() {
-    const slides = [
-      // SLIDE 1: Portada con imagen de fondo
+    const sections = [
+      // SECTION 1: Portada con imagen de fondo
       (
         <div 
           className="w-full min-h-screen bg-cover bg-center relative"
@@ -348,7 +284,7 @@
         </div>
       ),
 
-      // SLIDE 2: Contexto general
+      // SECTION 2: Contexto general
       (
         <SlideLayout
           title="Contexto general"
@@ -387,7 +323,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 3: Dos ejes de utilización
+      // SECTION 3: Dos ejes de utilización
       (
         <SlideLayout
           title="Dos ejes de utilización"
@@ -454,7 +390,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 4: Distribución de temas de investigación (imagen)
+      // SECTION 4: Distribución de temas de investigación (imagen)
       (
         <SlideLayout
           title="Distribución de los temas de investigación con SPPB"
@@ -484,7 +420,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 5: Cribado de fragilidad
+      // SECTION 5: Cribado de fragilidad
       (
         <SlideLayout
           title="Cribado de fragilidad y clasificación funcional"
@@ -533,7 +469,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 6: Outcome principal en ejercicio
+      // SECTION 6: Outcome principal en ejercicio
       (
         <SlideLayout
           title="Outcome principal en ejercicio y rehabilitación"
@@ -581,7 +517,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 7: Indicador pronóstico
+      // SECTION 7: Indicador pronóstico
       (
         <SlideLayout
           title="Expansión como indicador pronóstico"
@@ -639,7 +575,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 8: Múltiples patologías
+      // SECTION 8: Múltiples patologías
       (
         <SlideLayout
           title="Resultado funcional común en múltiples patologías"
@@ -690,7 +626,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 9: Expansión a comunidad
+      // SECTION 9: Expansión a comunidad
       (
         <SlideLayout
           title="Expansión hacia comunidad y atención primaria"
@@ -749,7 +685,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 10: Mensajes clave
+      // SECTION 10: Mensajes clave
       (
         <SlideLayout
           title="Mensajes clave de los estudios de 2025"
@@ -817,7 +753,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 11: Perspectivas 2026
+      // SECTION 11: Perspectivas 2026
       (
         <SlideLayout
           title="Perspectivas a partir de 2026"
@@ -887,7 +823,7 @@
         </SlideLayout>
       ),
 
-      // SLIDE 12: Conclusión
+      // SECTION 12: Conclusión
       (
         <div className="w-full min-h-screen bg-slate-900 p-8 sm:p-16 flex flex-col justify-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
@@ -939,33 +875,6 @@
     ];
 
     useEffect(() => {
-      const handleKeyDown = (e) => {
-        const currentHash = window.location.hash.replace('#slide-', '');
-        const currentSlide = currentHash ? parseInt(currentHash) : 0;
-        const totalSlides = slides.length;
-        
-        if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
-          window.location.hash = `slide-${currentSlide + 1}`;
-          document.getElementById(`slide-${currentSlide + 1}`)?.scrollIntoView({ behavior: 'smooth' });
-        } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
-          window.location.hash = `slide-${currentSlide - 1}`;
-          document.getElementById(`slide-${currentSlide - 1}`)?.scrollIntoView({ behavior: 'smooth' });
-        } else if (e.key === 'Home') {
-          e.preventDefault();
-          window.location.hash = 'slide-0';
-          document.getElementById('slide-0')?.scrollIntoView({ behavior: 'smooth' });
-        } else if (e.key === 'End') {
-          e.preventDefault();
-          window.location.hash = `slide-${totalSlides - 1}`;
-          document.getElementById(`slide-${totalSlides - 1}`)?.scrollIntoView({ behavior: 'smooth' });
-        }
-      };
-      
-      window.addEventListener('keydown', handleKeyDown);
-      return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [slides.length]);
-
-    useEffect(() => {
       if (window.lucide && window.lucide.createIcons) {
         window.lucide.createIcons();
       }
@@ -973,10 +882,10 @@
 
     return (
       <div className="w-full">
-        {slides.map((slide, idx) => (
-          <SlideFrame key={idx} index={idx} total={slides.length}>
-            {slide}
-          </SlideFrame>
+        {sections.map((section, idx) => (
+          <ContentSection key={idx} id={`section-${idx}`}>
+            {section}
+          </ContentSection>
         ))}
       </div>
     );

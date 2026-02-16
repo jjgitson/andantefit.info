@@ -44,7 +44,11 @@
           <a href="es/index.html">ES</a>
         </li>
       </ul>
-<div class="nav-lang" aria-label="Language"> <a href="case-studies.html" aria-current="page">EN</a> <span class="sep">|</span> <a href="ko/case-studies.html">KO</a> <span class="sep">|</span> <a href="es/case-studies.html">ES</a> </div>
+<div class="nav-lang">
+  <a href="/es/case-studies.html" class="nav-lang-link">ES</a>
+  <span class="nav-lang-sep">|</span>
+  <a href="/ko/case-studies.html" class="nav-lang-link">KO</a>
+</div>
       
       <button class="nav-toggle" id="navToggle">☰</button>
     </div>
@@ -112,7 +116,7 @@
   // 언어/폴더별로 캐시 분리
   const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
   const CACHE_TIME_KEY = CACHE_KEY + '_time';
-  const CACHE_DURATION = 24 * 60 * 60 * 1000;
+  const CACHE_DURATION = 60 * 60 * 1000;
 
   function parseFilename(filename) {
     const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);

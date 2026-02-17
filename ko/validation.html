@@ -21,37 +21,7 @@
 </head>
 <body>
   <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-container">
-   <a href="index.html" class="nav-logo">
-  <img src="assets/andantefit-logo.png" alt="AndanteFit">
-</a>
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="product.html" class="nav-link">Product</a></li>
-        <li><a href="validation.html" class="nav-link active">Validation</a></li>
-        <li><a href="case-studies.html" class="nav-link">Case Studies</a></li>
-        <li><a href="references.html" class="nav-link">References</a></li>
-        <li class="nav-lang-mobile" aria-label="Language">
-          <a href="../index.html">EN</a>
-          <span class="sep">|</span>
-          <a href="../ko/index.html" aria-current="page">KO</a>
-          <span class="sep">|</span>
-          <a href="../es/index.html">ES</a>
-        </li>
-      </ul>
-      <div class="nav-lang" aria-label="Language">
-        <a href="../index.html">EN</a>
-        <span class="sep">|</span>
-        <a href="index.html" aria-current="page">KO</a>
-        <span class="sep">|</span>
-        <a href="../es/index.html">ES</a>
-      </div>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-        ☰
-      </button>
-    </div>
-  </nav>
+  <div id="navigation-container"></div>
 
   <!-- Hero -->
   <section class="hero">
@@ -223,44 +193,8 @@ AndanteFit은 아시아(한국, 싱가포르)와 북미의 대상자 데이터�
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>AndanteFit</h4>
-      <p>
-  DYPHI Inc.에서 개발 및 제공<br>
-  임상과 지역사회 환경에서 활용되는 전자동 신체기능 평가 솔루션.
-</p>
-        </div>
+  <div data-include="../includes/footer.html"></div>
 
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <p>
-            <a href="product.html">Product</a><br>
-            <a href="validation.html">Validation</a><br>
-            <a href="case-studies.html">Case Studies</a><br>
-            <a href="references.html">References</a>
-          </p>
-        </div>
-
-        <div class="footer-section">
-          <h4>Contact</h4>
-          <p>
-            이메일: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br>
-           서울: 서울특별시 송파구 법원로11길 25 A-509<br>
-            대전: 대전광역시 유성구 대학로 99 C17
-          </p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        © 2026 DYPHI Inc. All Rights Reserved.
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
   <script>
     // Load publications from JSON file
     async function loadPublications() {
@@ -293,5 +227,8 @@ AndanteFit은 아시아(한국, 싱가포르)와 북미의 대상자 데이터�
     // Load on page load
     loadPublications();
   </script>
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
+
 </body>
 </html>

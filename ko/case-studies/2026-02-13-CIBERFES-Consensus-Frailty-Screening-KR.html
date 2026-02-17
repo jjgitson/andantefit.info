@@ -31,7 +31,7 @@
   <link rel="canonical" href="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-KR.html" />
   <meta name="application-name" content="AndanteFit" />
   <meta name="apple-mobile-web-app-title" content="AndanteFit" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="language" content="ko" />
@@ -144,35 +144,7 @@
 <body>
 
 <!-- AndanteFit Navigation -->
-<nav class="nav">
-  <div class="nav-container">
-    <a class="nav-logo" href="../index.html">
-      <img alt="AndanteFit - 자동화된 신체기능 평가" src="../assets/andantefit-logo.png"/>
-    </a>
-    <ul class="nav-menu" id="navMenu">
-      <li><a class="nav-link" href="../index.html">홈</a></li>
-      <li><a class="nav-link" href="../product.html">제품</a></li>
-      <li><a class="nav-link" href="../validation.html">검증</a></li>
-      <li><a class="nav-link active" href="../case-studies.html">사례 연구</a></li>
-      <li><a class="nav-link" href="../references.html">참고문헌</a></li>
-        <li class="nav-lang-mobile" aria-label="Language">
-          <a href="../../index.html">EN</a>
-          <span class="sep">|</span>
-          <a href="../../ko/index.html" aria-current="page">KO</a>
-          <span class="sep">|</span>
-          <a href="../../es/index.html">ES</a>
-        </li>
-      </ul>
-    <div class="nav-lang" aria-label="Language">
-        <a href="../../index.html">EN</a>
-        <span class="sep">|</span>
-        <a href="../index.html" aria-current="page">KO</a>
-        <span class="sep">|</span>
-        <a href="../../es/index.html">ES</a>
-      </div>
-    <button aria-label="네비게이션 메뉴 열기" class="nav-toggle" id="navToggle">☰</button>
-  </div>
-</nav>
+<div id="navigation-container"></div>
 
 <div class="appFont" id="root"></div>
 
@@ -615,33 +587,9 @@
 </script>
 
 <!-- AndanteFit Footer -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h4>AndanteFit</h4>
-        <p>개발 및 제공: DYPHI Inc.<br/>
-        프레일티 및 근감소증 연구를 위한 자동화된 신체기능 평가 솔루션</p>
-      </div>
-      <div class="footer-section">
-        <h4>바로가기</h4>
-        <p>
-          <a href="../product.html">제품</a><br/>
-          <a href="../validation.html">검증</a><br/>
-          <a href="../case-studies.html">사례 연구</a><br/>
-          <a href="../references.html">참고문헌</a>
-        </p>
-      </div>
-      <div class="footer-section">
-        <h4>연락처</h4>
-        <p>이메일: <a href="mailto:[email protected]">[email protected]</a><br/>
-        서울 사무소: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
-        대전 사무소: C17, 99 Daehak-ro, Yuseong-gu</p>
-      </div>
-    </div>
-    <div class="footer-bottom">© 2024 DYPHI Inc. All rights reserved.</div>
-  </div>
-</footer>
+<div data-include="../../includes/footer.html"></div>
+  <script src="../../js/main.js"></script>
+  <script src="../../js/navigation.js"></script>
 
 </body>
 </html>

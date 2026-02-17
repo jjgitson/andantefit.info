@@ -16,14 +16,14 @@
   <meta content="AndanteFit" property="og:site_name"/>
   <meta content="지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit" property="og:title"/>
   <meta content="What Matters · Medication · Mentation · Mobility - 노쇠 예방 실무자를 위한 기능 중심 돌봄 구조" property="og:description"/>
-  <meta content="../assets/andantefit-logo.png" property="og:image"/>
+  <meta content="../../assets/andantefit-logo.png" property="og:image"/>
   <meta content="https://andantefit.com/case-studies/2026-02-17-4Ms-Framework-Community-KR.html" property="og:url"/>
   
   <!-- Twitter Card Tags -->
   <meta content="summary_large_image" name="twitter:card"/>
   <meta content="지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit" name="twitter:title"/>
   <meta content="기능 중심 노인 돌봄의 4대 핵심 요소. 실무자를 위한 통합 가이드." name="twitter:description"/>
-  <meta content="../assets/andantefit-logo.png" name="twitter:image"/>
+  <meta content="../../assets/andantefit-logo.png" name="twitter:image"/>
   
   <!-- Additional SEO Meta Tags -->
   <meta name="google-site-verification" content="" />
@@ -78,7 +78,7 @@
   </script>
   
   <title>지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit</title>
-  <link href="../css/style.css" rel="stylesheet"/>
+  <link href="../../css/style.css" rel="stylesheet"/>
   
   <!-- External Libraries -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -212,7 +212,7 @@
           <div 
             className="absolute inset-0 bg-cover bg-center"
             style={{ 
-              backgroundImage: 'url(../assets/case-studies/4Ms_cover.webp)',
+              backgroundImage: 'url(../../assets/case-studies/4Ms_cover.webp)',
               filter: 'brightness(0.4)'
             }}
             role="img"
@@ -435,7 +435,7 @@
 
             <div className="flex justify-center">
               <img 
-                src="../assets/case-studies/4Ms_framework.webp" 
+                src="../../assets/case-studies/4Ms_framework.webp" 
                 alt="4Ms 프레임워크 평가와 실행 구조" 
                 className="rounded-xl shadow-lg max-w-md w-full"
               />
@@ -1010,18 +1010,36 @@
 
     useEffect(() => {
       const handleKeyDown = (e) => {
-        const current = parseInt(window.location.hash.replace('#slide-', '') || '0');
-        if (e.key === 'ArrowRight' && current < slides.length - 1) {
-          window.location.hash = `slide-${current + 1}`;
-        }
-        if (e.key === 'ArrowLeft' && current > 0) {
-          window.location.hash = `slide-${current - 1}`;
+        const currentHash = window.location.hash.replace('#slide-', '');
+        const currentSlide = currentHash ? parseInt(currentHash) : 0;
+        const totalSlides = slides.length;
+        
+        if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+          window.location.hash = `slide-${currentSlide + 1}`;
+          document.getElementById(`slide-${currentSlide + 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+          window.location.hash = `slide-${currentSlide - 1}`;
+          document.getElementById(`slide-${currentSlide - 1}`)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          window.location.hash = 'slide-0';
+          document.getElementById('slide-0')?.scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          window.location.hash = `slide-${totalSlides - 1}`;
+          document.getElementById(`slide-${totalSlides - 1}`)?.scrollIntoView({ behavior: 'smooth' });
         }
       };
       
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }, [slides.length]);
+
+    useEffect(() => {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+      }
+    });
 
     return (
       <div className="w-full">
@@ -1034,16 +1052,13 @@
     );
   }
 
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(<App />);
+  ReactDOM.render(<App />, document.getElementById('root'));
 </script>
 
-<!-- Footer Include -->
-<div data-include="../includes/footer.html"></div>
-
-<!-- Scripts -->
-<script src="../js/main.js"></script>
-<script src="../js/navigation.js"></script>
+<!-- AndanteFit Footer -->
+<div data-include="../../includes/footer.html"></div>
+  <script src="../../js/main.js"></script>
+  <script src="../../js/navigation.js"></script>
 
 </body>
 </html>

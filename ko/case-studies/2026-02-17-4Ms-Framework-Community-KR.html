@@ -4,171 +4,57 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   
-  <!-- SEO Meta Tags -->
-  <meta content="지역사회 노쇠 예방 실무자를 위한 4Ms 프레임워크: What Matters, Medication, Mentation, Mobility를 중심으로 한 고령친화 돌봄 체계 구축 가이드" name="description"/>
-  <meta content="AndanteFit, 4Ms, 고령친화, Age-Friendly Health Systems, 노쇠, 지역사회, What Matters, Medication, Mentation, Mobility, 기능 중심 돌봄, 노인의학, 종합노인평가" name="keywords"/>
-  <meta content="DYPHI Inc." name="author"/>
-  <meta content="index,follow" name="robots"/>
-  
-  <!-- Open Graph Tags -->
-  <meta content="website" property="og:type"/>
-  <meta content="ko_KR" property="og:locale"/>
-  <meta content="AndanteFit" property="og:site_name"/>
-  <meta content="지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit" property="og:title"/>
-  <meta content="What Matters, Medication, Mentation, Mobility - 고령친화 건강 시스템의 핵심 구조를 지역사회에서 활용하는 방법" property="og:description"/>
-  <meta content="../assets/andantefit-logo.png" property="og:image"/>
-  <meta content="https://andantefit.com/case-studies/2026-02-17-4Ms-Framework-Community-KR.html" property="og:url"/>
-  
-  <!-- Twitter Card Tags -->
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit" name="twitter:title"/>
-  <meta content="노쇠 예방 실무자를 위한 기능 중심 돌봄 구조 - 4Ms 프레임워크 완벽 가이드" name="twitter:description"/>
-  <meta content="../assets/andantefit-logo.png" name="twitter:image"/>
-  
-  <!-- Additional SEO Meta Tags -->
-  <meta name="google-site-verification" content="" />
   <meta name="theme-color" content="#0d9488" />
-  <link rel="canonical" href="https://andantefit.com/case-studies/2026-02-17-4Ms-Framework-Community-KR.html" />
-  <meta name="application-name" content="AndanteFit" />
-  <meta name="apple-mobile-web-app-title" content="AndanteFit" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="language" content="ko" />
-  <meta name="rating" content="general" />
-  <meta name="distribution" content="global" />
-  
-  <!-- Medical-specific meta tags -->
-  <meta name="medical-subject" content="4Ms Framework, Age-Friendly Health Systems, Geriatric Care, Community Care" />
-  <meta name="target-audience" content="Healthcare Professionals, Community Care Workers, Geriatricians, Social Workers" />
-  
-  <!-- Resource Hints -->
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
-  <link rel="preconnect" href="https://unpkg.com">
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-  
-  <!-- Schema.org structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MedicalWebPage",
-    "name": "지역사회를 위한 4Ms 프레임워크 이해",
-    "description": "What Matters, Medication, Mentation, Mobility - 고령친화 건강 시스템의 핵심 구조를 지역사회에서 활용하는 가이드",
-    "inLanguage": "ko",
-    "datePublished": "2026-02-17",
-    "dateModified": "2026-02-17",
-    "publisher": {
-      "@type": "Organization",
-      "name": "DYPHI Inc.",
-      "url": "https://andantefit.com",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://andantefit.com/assets/andantefit-logo.png"
-      }
-    },
-    "about": {
-      "@type": "MedicalCondition",
-      "name": "Frailty Prevention"
-    },
-    "audience": {
-      "@type": "MedicalAudience",
-      "audienceType": ["Healthcare Professional", "Social Worker", "Community Care Worker"]
-    }
-  }
-  </script>
+  <meta name="mobile-web-app-capable" content="yes" />
   
   <title>지역사회를 위한 4Ms 프레임워크 이해 | AndanteFit</title>
-  <link href="../css/style.css" rel="stylesheet"/>
   
-  <!-- External Libraries -->
+  <link href="../../css/style.css" rel="stylesheet"/>
+  
   <script src="https://cdn.tailwindcss.com"></script>
-  <script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   
-  <!-- Google Analytics -->
-  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-0L4ENVHFYP');
-  </script>
-  
   <style>
-    html, body { height: 100%; }
-    body { margin: 0; background: #e2e8f0; }
+    html, body { height: 100%; margin: 0; padding: 0; background: #e2e8f0; }
     #root { min-height: 100%; }
+    .appFont { font-family: Pretendard, system-ui, -apple-system, sans-serif; }
     
-    .appFont {
-      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+    /* 여백 최적화: 네비게이션(64px)을 제외한 높이 계산 */
+    .slide-frame { 
+      min-height: calc(100vh - 64px); 
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: white;
+      border-bottom: 1px solid #f1f5f9;
     }
     
-    body { overflow: auto; }
-    .safePad { padding-bottom: env(safe-area-inset-bottom); }
-    .slideSurface { background: white; }
-    
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
+    .slide-content-layout {
+      width: 100%;
+      padding: 2.5rem 1.25rem; /* 수직 여백을 더 줄임 */
     }
-    
-    @media print {
-      .nav, .footer, .slide-counter, .nav-toggle {
-        display: none;
-      }
-      .slide-frame {
-        page-break-after: always;
-        height: 100vh;
-      }
-      .slide-frame:last-child {
-        page-break-after: auto;
-      }
+
+    @media (min-width: 768px) {
+      .slide-content-layout { padding: 3.5rem 4rem; }
     }
   </style>
 </head>
-<body>
+<body class="appFont">
 
-<!-- AndanteFit Navigation -->
 <div id="navigation-container"></div>
+<div id="root"></div>
 
-<div class="appFont" id="root"></div>
-
-<!-- React App -->
 <script type="text/babel">
   const { useState, useEffect } = React;
 
   function SlideFrame({ children, index, total }) {
-    const handleNavClick = (e, targetIdx) => {
-      e.preventDefault();
-      window.location.hash = `slide-${targetIdx}`;
-      const target = document.getElementById(`slide-${targetIdx}`);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-
     return (
-      <div 
-        id={`slide-${index}`} 
-        className="slide-frame min-h-screen flex flex-col relative"
-        role="article"
-        aria-label={`슬라이드 ${index + 1} / ${total}`}
-      >
+      <div id={`slide-${index}`} className="slide-frame">
         {children}
-        
-        <div className="slide-counter absolute bottom-6 right-6 bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium z-50"
-             role="status"
-             aria-label={`슬라이드 ${index + 1} / ${total}`}
-             aria-live="polite">
+        <div className="slide-counter absolute bottom-6 right-6 bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-white text-[10px] font-medium z-50">
           {index + 1} / {total}
         </div>
       </div>
@@ -177,8 +63,8 @@
 
   function SlideLayout({ children, className = "" }) {
     return (
-      <div className={`w-full min-h-screen bg-white p-8 sm:p-12 md:p-16 ${className}`}>
-        <div className="max-w-6xl mx-auto">
+      <div className={`slide-content-layout ${className}`}>
+        <div className="max-w-4xl mx-auto">
           {children}
         </div>
       </div>
@@ -186,507 +72,196 @@
   }
 
   function LucideIcon({ name, className = "w-6 h-6" }) {
-    useEffect(() => {
-      if (window.lucide && window.lucide.createIcons) {
-        window.lucide.createIcons();
-      }
-    }, []);
-    return <i data-lucide={name} className={className} aria-hidden="true"></i>;
+    useEffect(() => { if (window.lucide) window.lucide.createIcons(); }, []);
+    return <i data-lucide={name} className={className}></i>;
   }
 
   function BulletPoint({ children, icon = "check-circle" }) {
     return (
-      <div className="flex items-start gap-3 mb-4">
-        <LucideIcon name={icon} className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
-        <p className="text-slate-700 leading-relaxed flex-1">{children}</p>
+      <div className="flex items-start gap-3 mb-4 text-slate-700">
+        <LucideIcon name={icon} className="w-5 h-5 text-teal-600 flex-shrink-0 mt-1" />
+        <p className="leading-relaxed flex-1 text-base md:text-lg">{children}</p>
       </div>
     );
   }
 
   function App() {
     const slides = [
-      // SLIDE 1: 4Ms 커버 이미지
+      // 1. COVER
       (
-        <div className="w-full min-h-screen relative flex flex-col justify-center items-center overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ 
-              backgroundImage: 'url(../assets/case-studies/4Ms_cover.webp)',
-              filter: 'brightness(0.4)'
-            }}
-            role="img"
-            aria-label="4Ms Framework - 지역사회 노쇠 예방"
-          ></div>
-          
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/70"></div>
-          
-          <div className="relative z-10 text-center px-6 max-w-5xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
-              지역사회 노쇠 예방 실무자를 위한<br/>4Ms 프레임워크 이해
-            </h1>
-            <p className="text-xl sm:text-2xl md:text-3xl text-teal-300 font-semibold mb-4">
-              What Matters · Medication · Mentation · Mobility
-            </p>
-            <p className="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto">
-              고령친화 건강 시스템의 핵심 구조를 지역사회에서 활용하는 방법
-            </p>
-            <div className="mt-8 flex items-center justify-center gap-4 text-slate-300 text-sm">
-              <LucideIcon name="building-2" className="w-5 h-5" />
-              <span>DYPHI Inc.</span>
-              <span>•</span>
-              <span>AndanteFit</span>
-            </div>
+        <div className="w-full min-h-[85vh] relative flex flex-col justify-center items-center overflow-hidden">
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(../../assets/case-studies/4Ms_cover.webp)', filter: 'brightness(0.4)' }}></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 to-slate-900/80"></div>
+          <div className="relative z-10 text-center px-6">
+            <h1 className="text-3xl md:text-5xl font-black text-white mb-4">지역사회 노쇠 예방 실무자를 위한<br/>4Ms 프레임워크 이해</h1>
+            <p className="text-lg md:text-xl text-teal-300 font-bold mb-8">What Matters · Medication · Mentation · Mobility</p>
           </div>
         </div>
       ),
 
-      // SLIDE 2: 서론
+      // 2. INTRODUCTION
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            지역사회 돌봄의 새로운 프레임워크
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-slate-700 leading-relaxed text-lg">
-              지역사회에서 어르신들의 건강과 삶의 질을 책임지고 계시는 실무자들에게, 복잡한 노인 돌봄을 단순화하고 효율적으로 통합할 수 있는 구조가 필요합니다.
-            </p>
-            
-            <p className="text-slate-700 leading-relaxed text-lg">
-              이때 활용할 수 있는 개념이 바로 <strong className="text-teal-600">4Ms 프레임워크</strong>입니다.
-            </p>
-            
-            <p className="text-slate-700 leading-relaxed text-lg">
-              4Ms는 병원 중심의 의료 모델에서 출발했지만, 어르신이 생활하는 지역사회에서도 그대로 적용할 수 있도록 설계된 <strong className="text-slate-900">기능 중심 돌봄 구조</strong>입니다.
-            </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">지역사회 돌봄의 새로운 프레임워크</h2>
+          <div className="space-y-4 text-lg text-slate-600 leading-relaxed">
+            <p>복잡한 노인 돌봄을 효율적으로 통합할 수 있는 구조가 필요합니다.</p>
+            <p>4Ms는 병원 모델을 넘어 지역사회에서 즉시 활용 가능한 <strong className="text-teal-600">기능 중심 돌봄 구조</strong>입니다.</p>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 3: 정의와 배경
+      // 3. DEFINITION & BACKGROUND
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            1. 정의와 배경: 4Ms의 역사와 핵심 철학
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-slate-700 leading-relaxed text-lg">
-              4Ms 프레임워크는 2017년 미국에서 시작된 <strong className="text-slate-900">고령친화 건강 시스템(Age-Friendly Health Systems, AFHS)</strong> 운동의 핵심 개념으로 개발되었습니다.
-            </p>
-            
-            <BulletPoint icon="landmark">
-              <strong className="text-slate-900">John A. Hartford Foundation과 IHI가 주도</strong> — 
-              모든 돌봄 현장에서 공통으로 적용할 수 있는 핵심 구조 개발
-            </BulletPoint>
-            
-            <BulletPoint icon="target">
-              <strong className="text-slate-900">질환별 단편적 돌봄의 문제 해결</strong> — 
-              복잡하고 비효율적인 돌봄을 통합적으로 재구성
-            </BulletPoint>
-            
-            <BulletPoint icon="lightbulb">
-              <strong className="text-slate-900">근거 기반 모델 검토 결과</strong> — 
-              고령자 돌봄에서 반드시 확인해야 할 네 가지 핵심 요소로 정리
-            </BulletPoint>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8">1. 정의와 배경</h2>
+          <p className="text-slate-700 text-lg mb-6">4Ms는 2017년 미국 AFHS 운동의 핵심 개념으로 개발되었습니다.</p>
+          <BulletPoint icon="landmark">John A. Hartford Foundation과 IHI가 주도</BulletPoint>
+          <BulletPoint icon="target">질환별 단편적 돌봄의 문제 해결</BulletPoint>
+          <BulletPoint icon="lightbulb">고령자 돌봄의 4대 핵심 요소 정리</BulletPoint>
+        </SlideLayout>
+      ),
+
+      // 4. PHILOSOPHY
+      (
+        <SlideLayout>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8">4Ms의 핵심 철학</h2>
+          <div className="p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600 space-y-2">
+            <BulletPoint icon="layers">돌봄을 조직하는 프레임워크</BulletPoint>
+            <BulletPoint icon="heart-pulse">기능과 삶의 목표 중심 접근</BulletPoint>
+            <BulletPoint icon="globe">모든 돌봄 접점에서 공통 적용</BulletPoint>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 4: 4Ms 핵심 철학
+      // 5. COMPONENTS
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            4Ms의 핵심 철학
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <div className="p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600">
-              <BulletPoint icon="layers">
-                4Ms는 특정 서비스나 프로그램이 아니라 <strong className="text-teal-700">돌봄을 조직하는 프레임워크</strong>입니다
-              </BulletPoint>
-              
-              <BulletPoint icon="heart-pulse">
-                질병 중심 접근이 아니라 <strong className="text-teal-700">기능과 삶의 목표 중심 접근</strong>을 지향합니다
-              </BulletPoint>
-              
-              <BulletPoint icon="globe">
-                모든 고령자 돌봄 접점에서 공통으로 적용됩니다
-              </BulletPoint>
-            </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">2. 방법론: 4Ms의 구성 요소</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <BulletPoint icon="heart"><strong>What Matters</strong> (무엇이 중요한가)</BulletPoint>
+            <BulletPoint icon="pill"><strong>Medication</strong> (약물)</BulletPoint>
+            <BulletPoint icon="brain"><strong>Mentation</strong> (인지와 정신상태)</BulletPoint>
+            <BulletPoint icon="activity"><strong>Mobility</strong> (이동성과 신체기능)</BulletPoint>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 5: 4Ms 구성 요소
+      // 6. STRUCTURE IMAGE
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            2. 방법론: 4Ms의 구성 요소
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-slate-700 leading-relaxed text-lg mb-6">
-              4Ms는 다음 네 가지 핵심 영역으로 구성됩니다:
-            </p>
-            
-            <BulletPoint icon="heart">
-              <strong className="text-slate-900">What Matters</strong> — 무엇이 중요한가
-            </BulletPoint>
-            
-            <BulletPoint icon="pill">
-              <strong className="text-slate-900">Medication</strong> — 약물
-            </BulletPoint>
-            
-            <BulletPoint icon="brain">
-              <strong className="text-slate-900">Mentation</strong> — 인지와 정신상태
-            </BulletPoint>
-            
-            <BulletPoint icon="activity">
-              <strong className="text-slate-900">Mobility</strong> — 이동성과 신체기능
-            </BulletPoint>
-            
-            <div className="mt-8 p-6 bg-slate-50 rounded-xl">
-              <p className="text-slate-700 leading-relaxed">
-                이 네 요소는 각각 독립적으로 적용되는 것이 아니라, 항상 함께 고려되는 하나의 세트로 운영되어야 합니다.
-              </p>
-            </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">평가와 실행 구조</h2>
+          <div className="flex flex-col items-center">
+            <p className="text-slate-600 mb-6 text-center">평가(Assess)와 실행(Act On)을 동시에 수행하는 구조</p>
+            <img src="../../assets/case-studies/4Ms_framework.webp" alt="4Ms 프레임워크" className="max-w-sm w-full rounded-xl shadow-md" />
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 6: 평가와 실행 구조 + 이미지
+      // 7. TABLE (ASSESSMENT TOOLS)
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            평가와 실행 구조
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-slate-700 leading-relaxed text-lg">
-              4Ms는 <strong className="text-slate-900">평가(Assess)</strong>와 <strong className="text-slate-900">실행(Act On)</strong>을 동시에 수행하는 구조로 운영됩니다.
-            </p>
-            
-            <p className="text-slate-700 leading-relaxed text-lg">
-              단순히 정보를 수집하는 것이 아니라, 그 결과를 실제 돌봄 계획에 반영하는 것이 핵심입니다.
-            </p>
-            
-            <div className="flex justify-center my-8">
-              <img 
-                src="../assets/case-studies/4Ms_framework.webp" 
-                alt="4Ms 프레임워크 구조도"
-                style={{ width: '50%', maxWidth: '400px' }}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
-        </SlideLayout>
-      ),
-
-      // SLIDE 7: 평가 도구 테이블
-      (
-        <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            지역사회 평가 도구 예시
-          </h2>
-          
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse bg-white shadow-sm">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">지역사회 평가 도구 예시</h2>
+          <div className="overflow-x-auto text-sm">
+            <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-teal-600 text-white">
-                  <th className="p-4 text-left font-semibold">4Ms 요소</th>
-                  <th className="p-4 text-left font-semibold">정의 및 목표</th>
-                  <th className="p-4 text-left font-semibold">지역사회 평가 방법</th>
-                </tr>
+                <tr className="bg-teal-600 text-white"><th className="p-3 text-left">요소</th><th className="p-3 text-left">평가 방법</th></tr>
               </thead>
-              <tbody>
-                <tr className="border-b border-slate-200">
-                  <td className="p-4 font-semibold text-slate-900">What Matters</td>
-                  <td className="p-4 text-slate-700">어르신의 삶의 목표와 돌봄 선호를 확인하고, 모든 돌봄을 이에 맞추는 것</td>
-                  <td className="p-4 text-slate-700">생활 목표 질문, 활동 목표 설정, 사전연명의료 의향 확인</td>
-                </tr>
-                <tr className="border-b border-slate-200 bg-slate-50">
-                  <td className="p-4 font-semibold text-slate-900">Medication</td>
-                  <td className="p-4 text-slate-700">기능과 인지에 영향을 줄 수 있는 고위험 약물을 피하고 적절한 약물 사용</td>
-                  <td className="p-4 text-slate-700">복용 약물 목록 확인, 고위험 약물 점검, 약국 연계 상담</td>
-                </tr>
-                <tr className="border-b border-slate-200">
-                  <td className="p-4 font-semibold text-slate-900">Mentation</td>
-                  <td className="p-4 text-slate-700">치매, 우울, 섬망의 예방과 조기 발견 및 관리</td>
-                  <td className="p-4 text-slate-700">Mini-Cog, 간이 인지검사, 우울 선별도구(PHQ 등)</td>
-                </tr>
-                <tr className="bg-slate-50">
-                  <td className="p-4 font-semibold text-slate-900">Mobility</td>
-                  <td className="p-4 text-slate-700">매일 안전하게 움직여 기능을 유지하고 목표 활동을 수행하도록 지원</td>
-                  <td className="p-4 text-slate-700">보행속도, SPPB, TUG, 균형·근력 평가</td>
-                </tr>
+              <tbody className="text-slate-700">
+                <tr className="border-b"> <td className="p-3 font-bold">What Matters</td> <td className="p-3">생활 목표 질문, 활동 목표 설정</td> </tr>
+                <tr className="border-b bg-slate-50"> <td className="p-3 font-bold">Medication</td> <td className="p-3">복용 약물 목록 확인, 고위험 약물 점검</td> </tr>
+                <tr className="border-b"> <td className="p-3 font-bold">Mentation</td> <td className="p-3">Mini-Cog, 우울 선별도구(PHQ)</td> </tr>
+                <tr className="bg-slate-50"> <td className="p-3 font-bold">Mobility</td> <td className="p-3">보행속도, SPPB, TUG 평가</td> </tr>
               </tbody>
             </table>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 8: 운영 방식
+      // 8. OPERATION
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            3. 운영 방식: 현장에서의 적용 원리
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-slate-700 leading-relaxed text-lg">
-              4Ms는 새로운 프로그램을 추가하는 방식이 아니라, <strong className="text-slate-900">기존 돌봄 과정을 재구성</strong>하는 방식으로 적용됩니다.
-            </p>
-            
-            <h3 className="text-2xl font-bold text-slate-800 mt-8 mb-4">핵심 운영 원리</h3>
-            
-            <BulletPoint icon="check-circle">
-              <strong className="text-slate-900">모든 접점에서 동일한 구조 사용</strong> — 
-              병원, 외래, 방문서비스, 복지관 등 모든 환경에서 동일한 질문 구조
-            </BulletPoint>
-            
-            <BulletPoint icon="refresh-cw">
-              <strong className="text-slate-900">평가와 실행의 통합</strong> — 
-              정보 수집으로 끝나는 것이 아니라, 평가 결과를 바탕으로 즉시 개입 계획 수립
-            </BulletPoint>
-            
-            <BulletPoint icon="trending-up">
-              <strong className="text-slate-900">점진적 도입(PDSA 방식)</strong> — 
-              한 명의 대상자부터 적용해 보고, 그 경험을 바탕으로 점차 확대
-            </BulletPoint>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8">3. 운영 방식</h2>
+          <BulletPoint icon="check-circle">모든 접점에서 동일한 구조 사용</BulletPoint>
+          <BulletPoint icon="refresh-cw">평가와 실행의 즉각적인 통합</BulletPoint>
+          <BulletPoint icon="trending-up">점진적 도입(PDSA 방식)</BulletPoint>
+        </SlideLayout>
+      ),
+
+      // 9. CASE EXAMPLE
+      (
+        <SlideLayout>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">평가와 실행 통합 예시</h2>
+          <div className="p-6 bg-blue-50 rounded-xl border-l-4 border-blue-600 space-y-4">
+            <p className="font-bold">1. 이동성 저하 발견 (Mobility)</p>
+            <p className="font-bold">2. "손주와 산책하기" 목표 확인 (What Matters)</p>
+            <p className="font-bold">3. 목표 중심 운동 계획 수립 (Action)</p>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 9: 평가와 실행 예시
+      // 10. COMMUNITY USE 1
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            평가와 실행 통합 예시
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <div className="p-6 bg-gradient-to-r from-teal-50 to-blue-50 rounded-xl border-l-4 border-teal-600">
-              <div className="flex items-start gap-4">
-                <LucideIcon name="arrow-right" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-lg font-semibold text-slate-900 mb-2">이동성 저하 확인</p>
-                  <p className="text-slate-700 mb-3">Mobility 평가에서 보행 속도 감소 발견</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4 mt-4">
-                <LucideIcon name="arrow-right" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-lg font-semibold text-slate-900 mb-2">"손주와 산책하기"가 목표</p>
-                  <p className="text-slate-700 mb-3">What Matters를 통해 어르신의 삶의 목표 확인</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4 mt-4">
-                <LucideIcon name="check" className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-lg font-semibold text-slate-900 mb-2">목표 중심 운동 프로그램 설계</p>
-                  <p className="text-slate-700">"손주와 산책"을 위한 보행 훈련 및 근력 운동 계획 수립</p>
-                </div>
-              </div>
-            </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">4. 지역사회 활용 방안</h2>
+          <p className="text-slate-600 mb-6">선별과 상담의 공통 구조로 활용:</p>
+          <div className="grid grid-cols-2 gap-4 text-center">
+            <div className="p-4 bg-teal-50 rounded-lg font-bold">What Matters</div>
+            <div className="p-4 bg-blue-50 rounded-lg font-bold">Mentation</div>
+            <div className="p-4 bg-purple-50 rounded-lg font-bold">Mobility</div>
+            <div className="p-4 bg-rose-50 rounded-lg font-bold">Medication</div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 10: 지역사회 활용 방안
+      // 11. COMMUNITY USE 2
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            4. 지역사회에서의 활용 방안
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-slate-700 leading-relaxed text-lg">
-              4Ms는 특정 질환이나 진료과가 아닌, <strong className="text-slate-900">기능과 삶의 목표를 중심으로 돌봄을 조직</strong>하기 때문에 지역사회에서 특히 유용합니다.
-            </p>
-            
-            <h3 className="text-2xl font-bold text-slate-800 mt-8 mb-4">1) 선별과 상담의 공통 구조</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-teal-50 rounded-lg">
-                <LucideIcon name="heart" className="w-6 h-6 text-teal-600 mb-2" />
-                <p className="font-semibold text-slate-900">What Matters</p>
-                <p className="text-sm text-slate-700">생활 목표, 사회참여 의지 확인</p>
-              </div>
-              
-              <div className="p-4 bg-blue-50 rounded-lg">
-                <LucideIcon name="brain" className="w-6 h-6 text-blue-600 mb-2" />
-                <p className="font-semibold text-slate-900">Mentation</p>
-                <p className="text-sm text-slate-700">인지·우울 선별</p>
-              </div>
-              
-              <div className="p-4 bg-purple-50 rounded-lg">
-                <LucideIcon name="activity" className="w-6 h-6 text-purple-600 mb-2" />
-                <p className="font-semibold text-slate-900">Mobility</p>
-                <p className="text-sm text-slate-700">신체기능 평가</p>
-              </div>
-              
-              <div className="p-4 bg-rose-50 rounded-lg">
-                <LucideIcon name="pill" className="w-6 h-6 text-rose-600 mb-2" />
-                <p className="font-semibold text-slate-900">Medication</p>
-                <p className="text-sm text-slate-700">복용 약물 확인</p>
-              </div>
-            </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">지역 자원 연계의 허브</h2>
+          <BulletPoint icon="pill">약물 문제 → 지역 약국 연계</BulletPoint>
+          <BulletPoint icon="brain">우울 위험 → 정신건강복지센터 연계</BulletPoint>
+          <BulletPoint icon="activity">이동성 저하 → 운동 프로그램 연결</BulletPoint>
+        </SlideLayout>
+      ),
+
+      // 12. CORE MESSAGE
+      (
+        <SlideLayout className="bg-teal-600">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">핵심 메시지</h2>
+          <div className="text-white space-y-4">
+            <p>• 돌봄을 조직하는 <strong>공통 언어</strong>입니다.</p>
+            <p>• 질병이 아닌 <strong>기능 중심 구조</strong>입니다.</p>
+            <p>• 모든 직종이 공유하는 <strong>질문 체계</strong>입니다.</p>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 11: 지역 자원 연계
+      // 13. REFERENCES
       (
         <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            지역 자원 연계의 허브 역할
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-slate-700 leading-relaxed text-lg mb-6">
-              4Ms 평가를 통해 발견된 문제를 지역 자원과 연결할 수 있습니다:
-            </p>
-            
-            <BulletPoint icon="pill">
-              <strong className="text-slate-900">약물 문제</strong> → 지역 약국 연계
-            </BulletPoint>
-            
-            <BulletPoint icon="brain">
-              <strong className="text-slate-900">우울 위험</strong> → 정신건강복지센터 연계
-            </BulletPoint>
-            
-            <BulletPoint icon="activity">
-              <strong className="text-slate-900">이동성 저하</strong> → 운동 프로그램 연결
-            </BulletPoint>
-            
-            <div className="mt-8 p-6 bg-slate-50 rounded-xl">
-              <p className="text-slate-700 leading-relaxed">
-                <strong className="text-slate-900">보호자와 주민 교육에 활용:</strong> Mentation을 "마음"이나 "기억과 기분"처럼 쉬운 용어로 설명하면, 보호자 교육에도 활용할 수 있습니다.
-              </p>
-            </div>
+          <h2 className="text-xl font-bold text-slate-800 mb-6">참고 문헌</h2>
+          <div className="text-xs text-slate-500 space-y-2">
+            <p>• IHI. Age-Friendly Health Systems Guide, 2020.</p>
+            <p>• Mate K, et al. Evidence for the 4Ms. Journal of Aging and Health, 2021.</p>
+            <p>• Emery-Tiburcio EE, et al. American Journal of Nursing, 2021.</p>
           </div>
         </SlideLayout>
-      ),
-
-      // SLIDE 12: 핵심 메시지
-      (
-        <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            5. 지역사회 실무자에게 주는 핵심 메시지
-          </h2>
-          
-          <div className="space-y-6 max-w-4xl">
-            <div className="p-8 bg-gradient-to-br from-teal-600 to-teal-700 rounded-xl shadow-lg">
-              <BulletPoint icon="layers">
-                <span className="text-white">
-                  4Ms는 새로운 사업이나 장비가 아니라, <strong>돌봄을 조직하는 공통 언어</strong>입니다
-                </span>
-              </BulletPoint>
-              
-              <BulletPoint icon="heart-pulse">
-                <span className="text-white">
-                  질병 중심이 아니라 <strong>기능 중심 구조</strong>입니다
-                </span>
-              </BulletPoint>
-              
-              <BulletPoint icon="users">
-                <span className="text-white">
-                  모든 직종이 공유할 수 있는 <strong>핵심 질문 체계</strong>입니다
-                </span>
-              </BulletPoint>
-              
-              <BulletPoint icon="package">
-                <span className="text-white">
-                  선별, 상담, 운동, 영양, 사회참여 프로그램을 하나로 묶는 <strong>프레임</strong>입니다
-                </span>
-              </BulletPoint>
-            </div>
-            
-            <div className="mt-8 p-6 bg-slate-50 rounded-xl text-center">
-              <p className="text-xl text-slate-800 font-semibold leading-relaxed">
-                이 구조를 활용하면, 지역사회에서도 어르신이<br/>
-                <span className="text-teal-600">"살던 곳에서, 원하는 삶을 유지하는"</span><br/>
-                돌봄 체계를 설계할 수 있습니다.
-              </p>
-            </div>
-          </div>
-        </SlideLayout>
-      ),
-
-      // SLIDE 13: 참고문헌
-      (
-        <SlideLayout>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            참고 문헌
-          </h2>
-          
-          <div className="space-y-4 max-w-4xl">
-            <div className="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
-              <p className="text-slate-700 leading-relaxed">
-                Institute for Healthcare Improvement. Age-Friendly Health Systems: Guide to Using the 4Ms in the Care of Older Adults, 2020.
-              </p>
-            </div>
-            
-            <div className="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
-              <p className="text-slate-700 leading-relaxed">
-                Mate K, et al. Evidence for the 4Ms: Interactions and Outcomes across the Care Continuum. Journal of Aging and Health, 2021.
-              </p>
-            </div>
-            
-            <div className="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
-              <p className="text-slate-700 leading-relaxed">
-                Emery-Tiburcio EE, et al. The 4Ms of an Age-Friendly Health System. American Journal of Nursing, 2021.
-              </p>
-            </div>
-            
-            <div className="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
-              <p className="text-slate-700 leading-relaxed">
-                Welch SA, et al. Hospital 4Ms: Documentation and association with patient characteristics. JAGS, 2025.
-              </p>
-            </div>
-          </div>
-        </SlideLayout>
-      ),
+      )
     ];
 
     useEffect(() => {
       const handleKeyDown = (e) => {
-        const currentSlide = parseInt(window.location.hash.replace('#slide-', '') || '0');
-        
-        if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
-          window.location.hash = `slide-${currentSlide + 1}`;
-          document.getElementById(`slide-${currentSlide + 1}`)?.scrollIntoView({ behavior: 'smooth' });
-        } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
-          window.location.hash = `slide-${currentSlide - 1}`;
-          document.getElementById(`slide-${currentSlide - 1}`)?.scrollIntoView({ behavior: 'smooth' });
-        }
+        const current = parseInt(window.location.hash.replace('#slide-', '') || '0');
+        if (e.key === 'ArrowRight' && current < slides.length - 1) window.location.hash = `slide-${current + 1}`;
+        if (e.key === 'ArrowLeft' && current > 0) window.location.hash = `slide-${current - 1}`;
       };
-      
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }, [slides.length]);
 
-    useEffect(() => {
-      if (window.location.hash) {
-        const targetId = window.location.hash.substring(1);
-        const target = document.getElementById(targetId);
-        if (target) {
-          setTimeout(() => {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 100);
-        }
-      }
-    }, []);
-
     return (
       <div className="w-full">
         {slides.map((slide, idx) => (
-          <SlideFrame key={idx} index={idx} total={slides.length}>
-            {slide}
-          </SlideFrame>
+          <SlideFrame key={idx} index={idx} total={slides.length}>{slide}</SlideFrame>
         ))}
       </div>
     );
@@ -695,37 +270,9 @@
   ReactDOM.render(<App />, document.getElementById('root'));
 </script>
 
-<!-- AndanteFit Footer -->
-<div data-include="../../includes/footer.html"></div> 
-
+<div data-include="../../includes/footer.html"></div>
 <script src="../../js/main.js"></script>
 <script src="../../js/navigation.js"></script>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('navToggle');
-    const menu = document.getElementById('navMenu');
-    
-    if (toggle && menu) {
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('active');
-      });
-      
-      document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-          menu.classList.remove('active');
-        }
-      });
-      
-      menu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          menu.classList.remove('active');
-        });
-      });
-    }
-  });
-</script>
 
 </body>
 </html>

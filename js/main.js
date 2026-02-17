@@ -214,3 +214,26 @@ document.head.appendChild(style);
 
 // Expose utility functions globally
 window.AndanteFit = AndanteFit;
+
+// js/main.js 파일 맨 아래에 추가
+function includeHTML() {
+    const elements = document.querySelectorAll('[data-include]');
+    elements.forEach(el => {
+        const file = el.getAttribute('data-include');
+        if (file) {
+            fetch(file)
+                .then(response => {
+                    if (response.ok) return response.text();
+                    throw new Error('Network response was not ok');
+                })
+                .then(data => {
+                    el.innerHTML = data;
+                    el.removeAttribute('data-include');
+                })
+                .catch(error => console.error('Error loading include:', error));
+        }
+    });
+}
+
+// 기존 DOMContentLoaded 이벤트 내부 혹은 외부에 실행 추가
+document.addEventListener('DOMContentLoaded', includeHTML);

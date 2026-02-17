@@ -31,7 +31,7 @@
   <link rel="canonical" href="https://andantefit.com/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening.html" />
   <meta name="application-name" content="AndanteFit" />
   <meta name="apple-mobile-web-app-title" content="AndanteFit" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="language" content="es" />
@@ -146,35 +146,7 @@
 <body>
 
 <!-- AndanteFit Navigation -->
-<nav class="nav">
-  <div class="nav-container">
-    <a class="nav-logo" href="../index.html">
-      <img alt="AndanteFit - Automated Physical Function Assessment" src="../assets/andantefit-logo.png"/>
-    </a>
-    <ul class="nav-menu" id="navMenu">
-      <li><a class="nav-link" href="../index.html">Inicio</a></li>
-      <li><a class="nav-link" href="../product.html">Producto</a></li>
-      <li><a class="nav-link" href="../validation.html">Validación</a></li>
-      <li><a class="nav-link active" href="../case-studies.html">Casos de Estudio</a></li>
-      <li><a class="nav-link" href="../references.html">Referencias</a></li>
-        <li class="nav-lang-mobile" aria-label="Language">
-          <a href="../../index.html">EN</a>
-          <span class="sep">|</span>
-          <a href="../../ko/index.html">KO</a>
-          <span class="sep">|</span>
-          <a href="../../es/index.html" aria-current="page">ES</a>
-        </li>
-      </ul>
-    <div class="nav-lang" aria-label="Language">
-        <a href="../../index.html">EN</a>
-        <span class="sep">|</span>
-        <a href="../../ko/index.html">KO</a>
-        <span class="sep">|</span>
-        <a href="../index.html" aria-current="page">ES</a>
-      </div>
-    <button aria-label="Abrir menú de navegación" class="nav-toggle" id="navToggle">☰</button>
-  </div>
-</nav>
+<div id="navigation-container"></div>
 
 <div class="appFont" id="root"></div>
 
@@ -637,33 +609,9 @@
 </script>
 
 <!-- AndanteFit Footer -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h4>AndanteFit</h4>
-        <p>Desarrollado y proporcionado por: DYPHI Inc.<br/>
-        Solución de evaluación automatizada de función física para investigación en fragilidad y sarcopenia.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Enlaces Rápidos</h4>
-        <p>
-          <a href="../product.html">Producto</a><br/>
-          <a href="../validation.html">Validación</a><br/>
-          <a href="../case-studies.html">Casos de Estudio</a><br/>
-          <a href="../references.html">Referencias</a>
-        </p>
-      </div>
-      <div class="footer-section">
-        <h4>Contacto</h4>
-        <p>Email: <a href="mailto:[email protected]">[email protected]</a><br/>
-        Oficina Seúl: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br/>
-        Oficina Daejeon: C17, 99 Daehak-ro, Yuseong-gu</p>
-      </div>
-    </div>
-    <div class="footer-bottom">© 2024 DYPHI Inc. Todos los derechos reservados.</div>
-  </div>
-</footer>
+<div data-include="../../includes/footer.html"></div>
+  <script src="../../js/main.js"></script>
+  <script src="../../js/navigation.js"></script>
 
 </body>
 </html>

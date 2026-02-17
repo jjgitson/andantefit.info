@@ -34,37 +34,7 @@
 </head>
 <body>
   <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-container">
- <a href="index.html" class="nav-logo">
-  <img src="assets/andantefit-logo.png" alt="AndanteFit">
-</a>
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="index.html" class="nav-link active">Inicio</a></li>
-        <li><a href="product.html" class="nav-link">Producto</a></li>
-        <li><a href="validation.html" class="nav-link">Validación</a></li>
-        <li><a href="case-studies.html" class="nav-link">Casos de uso</a></li>
-        <li><a href="references.html" class="nav-link">Referencias</a></li>
-        <li class="nav-lang-mobile" aria-label="Language">
-          <a href="../index.html">EN</a>
-          <span class="sep">|</span>
-          <a href="../ko/index.html">KO</a>
-          <span class="sep">|</span>
-          <a href="../es/index.html" aria-current="page">ES</a>
-        </li>
-      </ul>
-      <div class="nav-lang" aria-label="Language">
-        <a href="../index.html">EN</a>
-        <span class="sep">|</span>
-        <a href="../ko/index.html">KO</a>
-        <span class="sep">|</span>
-        <a href="index.html" aria-current="page">ES</a>
-      </div>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-        ☰
-      </button>
-    </div>
-  </nav>
+  <div id="navigation-container"></div>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -396,8 +366,9 @@
     </div>
   </section>
 
- <!-- Footer --> <footer class="footer"> <div class="container"> <div class="footer-content"> <div class="footer-section"> <h4>AndanteFit</h4> <p> Developed and provided by DYPHI Inc.<br> Automated physical performance assessment for frailty and sarcopenia research. </p> </div> <div class="footer-section"> <h4>Quick Links</h4> <p> <a href="product.html">Product</a><br> <a href="validation.html">Validation</a><br> <a href="case-studies.html">Case Studies</a><br> <a href="references.html">References</a> </p> </div> <div class="footer-section"> <h4>Contact</h4> <p> Email: <a href="mailto:snm@dyphi.com">snm@dyphi.com</a><br> Seoul Office: A-509, 25 Beobwon-ro 11-gil, Songpa-gu<br> Daejeon Office: C17, 99 Daehak-ro, Yuseong-gu </p> </div> </div> <div class="footer-bottom"> © 2026 DYPHI Inc. All Rights Reserved. </div> </div> </footer>
+ <!-- Footer --> <div data-include="../includes/footer.html"></div>
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
 
-  <script src="js/main.js"></script>
 </body>
 </html>

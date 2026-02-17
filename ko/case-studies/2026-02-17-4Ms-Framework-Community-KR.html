@@ -206,7 +206,7 @@
 
   function App() {
     const slides = [
-      // SLIDE 1: 커버 이미지
+      // SLIDE 1: COVER
       (
         <div className="w-full min-h-screen relative flex flex-col justify-center items-center overflow-hidden">
           <div 
@@ -228,9 +228,6 @@
             <p className="text-xl sm:text-2xl md:text-3xl text-teal-300 font-semibold mb-4">
               What Matters · Medication · Mentation · Mobility
             </p>
-            <p className="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto">
-              기능 중심 돌봄 구조
-            </p>
             <div className="mt-8 flex items-center justify-center gap-4 text-slate-300 text-sm">
               <LucideIcon name="building-2" className="w-5 h-5" />
               <span>DYPHI Inc.</span>
@@ -241,221 +238,210 @@
         </div>
       ),
 
-      // SLIDE 2: 지역사회 돌봄의 새로운 프레임워크
+      // SLIDE 2: 서론
       (
         <SlideLayout>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
             지역사회 돌봄의 새로운 프레임워크
           </h2>
           
-          <div className="space-y-6 max-w-4xl">
+          <div className="space-y-6">
             <p className="text-lg text-slate-700 leading-relaxed">
-              복잡한 노인 돌봄을 효율적으로 통합할 수 있는 구조가 필요합니다.
+              지역사회에서 어르신들의 건강과 삶의 질을 책임지고 계시는 실무자들에게, 
+              복잡한 노인 돌봄을 단순화하고 효율적으로 통합할 수 있는 구조가 필요합니다.
             </p>
             
-            <BulletPoint icon="layers">
-              4Ms는 병원 모델을 넘어 지역사회에서 즉시 활용 가능한 <strong className="text-teal-600">기능 중심 돌봄 구조</strong>입니다.
-            </BulletPoint>
-            
-            <BulletPoint icon="heart-pulse">
-              질환별 단편적 접근이 아닌 <strong className="text-slate-900">통합적 기능 평가</strong>로 돌봄을 조직합니다.
-            </BulletPoint>
-            
-            <BulletPoint icon="users">
-              모든 돌봄 접점에서 <strong className="text-slate-900">공통 언어</strong>로 작동하는 프레임워크입니다.
-            </BulletPoint>
-          </div>
-
-          <div className="mt-12 p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600">
-            <p className="text-slate-700 leading-relaxed">
-              4Ms는 병원과 지역사회를 연결하는 공통 프레임워크로, 
-              어르신이 살던 곳에서 원하는 삶을 유지할 수 있도록 돕습니다.
+            <p className="text-lg text-slate-700 leading-relaxed">
+              이때 활용할 수 있는 개념이 바로 <strong className="text-teal-600">4Ms 프레임워크</strong>입니다.
             </p>
+            
+            <div className="mt-8 p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600">
+              <p className="text-slate-700 leading-relaxed">
+                4Ms는 병원 중심의 의료 모델에서 출발했지만, 어르신이 생활하는 지역사회에서도 
+                그대로 적용할 수 있도록 설계된 <strong>기능 중심 돌봄 구조</strong>입니다.
+              </p>
+            </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 3: 정의와 배경
+      // SLIDE 3: 1. 정의와 배경 - 역사
       (
         <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            1. 정의와 배경
+            1. 정의와 배경: 4Ms의 역사와 핵심 철학
           </h2>
           
           <div className="space-y-6">
             <p className="text-lg text-slate-700 leading-relaxed">
-              4Ms는 2017년 미국 고령친화 건강 시스템(Age-Friendly Health Systems, AFHS) 운동의 
+              4Ms 프레임워크는 2017년 미국에서 시작된 <strong>고령친화 건강 시스템(Age-Friendly Health Systems, AFHS)</strong> 운동의 
               핵심 개념으로 개발되었습니다.
             </p>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <BulletPoint icon="landmark">
-                <strong className="text-slate-900">John A. Hartford Foundation과 IHI가 주도</strong> — 
-                고령자 돌봄의 표준화를 위한 협력
-              </BulletPoint>
-              
-              <BulletPoint icon="target">
-                <strong className="text-slate-900">질환별 단편적 돌봄의 문제 해결</strong> — 
-                통합적 접근으로 효율성 향상
-              </BulletPoint>
-              
-              <BulletPoint icon="lightbulb">
-                <strong className="text-slate-900">고령자 돌봄의 4대 핵심 요소 정리</strong> — 
-                근거 기반 모델의 통합
-              </BulletPoint>
-              
-              <BulletPoint icon="globe">
-                <strong className="text-slate-900">모든 돌봄 현장에서 공통 적용</strong> — 
-                병원에서 지역사회까지
-              </BulletPoint>
+            <BulletPoint icon="landmark">
+              이 운동은 <strong>John A. Hartford Foundation</strong>과 <strong>Institute for Healthcare Improvement(IHI)</strong>가 
+              중심이 되어 시작되었습니다.
+            </BulletPoint>
+            
+            <div className="mt-8 p-6 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+              <p className="text-slate-700 leading-relaxed">
+                이 운동의 목표는 고령자가 어떤 환경에서든 안전하고 효과적인 돌봄을 받을 수 있도록, 
+                모든 돌봄 현장에서 공통으로 적용할 수 있는 핵심 구조를 만드는 것이었습니다.
+              </p>
             </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 4: 4Ms의 핵심 철학
+      // SLIDE 4: 1. 정의와 배경 - 문제의식
       (
         <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            기존 돌봄의 문제점
+          </h2>
+          
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              기존의 노인 돌봄은 질환별로 단편적으로 이루어지는 경우가 많았고, 
+              그 결과 돌봄이 복잡해지고 비효율적인 문제가 발생했습니다.
+            </p>
+
+            <p className="text-lg text-slate-700 leading-relaxed">
+              이러한 문제를 해결하기 위해 전문가 그룹이 다양한 근거 기반 모델을 검토하여, 
+              고령자 돌봄에서 반드시 확인해야 할 <strong className="text-teal-600">네 가지 핵심 요소</strong>로 정리한 것이 4Ms입니다.
+            </p>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 5: 1. 정의와 배경 - 핵심 철학
+      (
+        <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
             4Ms의 핵심 철학
           </h2>
           
-          <div className="space-y-6 max-w-4xl">
-            <div className="p-6 bg-gradient-to-r from-teal-50 to-blue-50 rounded-xl border-l-4 border-teal-600">
-              <BulletPoint icon="layers">
-                <strong className="text-slate-900">돌봄을 조직하는 프레임워크</strong> — 
-                특정 서비스나 프로그램이 아닌 구조적 접근
-              </BulletPoint>
-            </div>
-
-            <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border-l-4 border-blue-600">
-              <BulletPoint icon="heart-pulse">
-                <strong className="text-slate-900">기능과 삶의 목표 중심 접근</strong> — 
-                질병 중심이 아닌 기능 중심 돌봄
-              </BulletPoint>
-            </div>
-
-            <div className="p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border-l-4 border-purple-600">
-              <BulletPoint icon="globe">
-                <strong className="text-slate-900">모든 돌봄 접점에서 공통 적용</strong> — 
-                병원, 외래, 방문서비스, 복지관, 장기요양기관
-              </BulletPoint>
-            </div>
-          </div>
-
-          <div className="mt-12 p-6 bg-slate-100 rounded-xl">
-            <p className="text-slate-600 text-center italic">
-              "4Ms는 새로운 사업이 아니라, 기존 돌봄 과정을 재구성하는 방식입니다."
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed mb-6">
+              4Ms의 핵심 철학은 다음과 같습니다.
             </p>
+
+            <div className="space-y-4">
+              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-teal-600">
+                <BulletPoint icon="layers">
+                  4Ms는 특정 서비스나 프로그램이 아니라 <strong>돌봄을 조직하는 프레임워크</strong>입니다.
+                </BulletPoint>
+              </div>
+
+              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-blue-600">
+                <BulletPoint icon="heart-pulse">
+                  질병 중심 접근이 아니라 <strong>기능과 삶의 목표 중심 접근</strong>을 지향합니다.
+                </BulletPoint>
+              </div>
+
+              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-purple-600">
+                <BulletPoint icon="globe">
+                  모든 고령자 돌봄 접점에서 <strong>공통으로 적용</strong>됩니다.
+                </BulletPoint>
+              </div>
+            </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 5: 4Ms의 구성 요소
-      (
-        <SlideLayout className="bg-slate-50">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            2. 방법론: 4Ms의 구성 요소
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 bg-white rounded-xl shadow-md border-t-4 border-teal-600">
-              <div className="flex items-center gap-3 mb-4">
-                <LucideIcon name="heart" className="w-8 h-8 text-teal-600" />
-                <h3 className="text-xl font-bold text-slate-800">What Matters</h3>
-              </div>
-              <p className="text-slate-700">무엇이 중요한가</p>
-              <p className="text-sm text-slate-600 mt-2">어르신의 삶의 목표와 돌봄 선호</p>
-            </div>
-
-            <div className="p-6 bg-white rounded-xl shadow-md border-t-4 border-blue-600">
-              <div className="flex items-center gap-3 mb-4">
-                <LucideIcon name="pill" className="w-8 h-8 text-blue-600" />
-                <h3 className="text-xl font-bold text-slate-800">Medication</h3>
-              </div>
-              <p className="text-slate-700">약물</p>
-              <p className="text-sm text-slate-600 mt-2">기능과 인지에 영향을 주는 약물 관리</p>
-            </div>
-
-            <div className="p-6 bg-white rounded-xl shadow-md border-t-4 border-purple-600">
-              <div className="flex items-center gap-3 mb-4">
-                <LucideIcon name="brain" className="w-8 h-8 text-purple-600" />
-                <h3 className="text-xl font-bold text-slate-800">Mentation</h3>
-              </div>
-              <p className="text-slate-700">인지와 정신상태</p>
-              <p className="text-sm text-slate-600 mt-2">치매, 우울, 섬망의 예방과 조기 발견</p>
-            </div>
-
-            <div className="p-6 bg-white rounded-xl shadow-md border-t-4 border-rose-600">
-              <div className="flex items-center gap-3 mb-4">
-                <LucideIcon name="activity" className="w-8 h-8 text-rose-600" />
-                <h3 className="text-xl font-bold text-slate-800">Mobility</h3>
-              </div>
-              <p className="text-slate-700">이동성과 신체기능</p>
-              <p className="text-sm text-slate-600 mt-2">안전한 이동과 기능 유지</p>
-            </div>
-          </div>
-
-          <div className="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-600">
-            <p className="text-slate-700 font-semibold">
-              이 네 요소는 독립적이 아니라 항상 함께 고려되는 하나의 세트입니다.
-            </p>
-          </div>
-        </SlideLayout>
-      ),
-
-      // SLIDE 6: 평가와 실행 구조
+      // SLIDE 6: 2. 방법론 - 4Ms의 구성 요소
       (
         <SlideLayout>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            평가와 실행 구조
+            2. 방법론: 4Ms의 구성 요소와 평가 구조
+          </h2>
+          
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed mb-6">
+              4Ms는 다음 네 가지 핵심 영역으로 구성됩니다.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="p-6 bg-teal-50 rounded-xl">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="heart" className="w-8 h-8 text-teal-600" />
+                  <h3 className="text-xl font-bold text-slate-800">What Matters</h3>
+                </div>
+                <p className="text-slate-700">무엇이 중요한가</p>
+              </div>
+
+              <div className="p-6 bg-blue-50 rounded-xl">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="pill" className="w-8 h-8 text-blue-600" />
+                  <h3 className="text-xl font-bold text-slate-800">Medication</h3>
+                </div>
+                <p className="text-slate-700">약물</p>
+              </div>
+
+              <div className="p-6 bg-purple-50 rounded-xl">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="brain" className="w-8 h-8 text-purple-600" />
+                  <h3 className="text-xl font-bold text-slate-800">Mentation</h3>
+                </div>
+                <p className="text-slate-700">인지와 정신상태</p>
+              </div>
+
+              <div className="p-6 bg-rose-50 rounded-xl">
+                <div className="flex items-center gap-3 mb-3">
+                  <LucideIcon name="activity" className="w-8 h-8 text-rose-600" />
+                  <h3 className="text-xl font-bold text-slate-800">Mobility</h3>
+                </div>
+                <p className="text-slate-700">이동성과 신체기능</p>
+              </div>
+            </div>
+
+            <div className="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-600">
+              <p className="text-slate-700 leading-relaxed">
+                이 네 요소는 각각 독립적으로 적용되는 것이 아니라, 
+                <strong>항상 함께 고려되는 하나의 세트</strong>로 운영되어야 합니다.
+              </p>
+            </div>
+          </div>
+        </SlideLayout>
+      ),
+
+      // SLIDE 7: 2. 방법론 - 평가와 실행 구조
+      (
+        <SlideLayout className="bg-slate-50">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            평가(Assess)와 실행(Act On) 구조
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-6">
               <p className="text-lg text-slate-700 leading-relaxed">
-                4Ms는 평가(Assess)와 실행(Act On)을 동시에 수행하는 구조로 운영됩니다.
+                4Ms는 <strong>평가(Assess)</strong>와 <strong>실행(Act On)</strong>을 
+                동시에 수행하는 구조로 운영됩니다.
               </p>
               
-              <BulletPoint icon="search">
-                <strong className="text-slate-900">평가 (Assess)</strong> — 
-                네 가지 요소에 대한 정보 수집
-              </BulletPoint>
-              
-              <BulletPoint icon="zap">
-                <strong className="text-slate-900">실행 (Act On)</strong> — 
-                평가 결과를 즉시 돌봄 계획에 반영
-              </BulletPoint>
-              
-              <BulletPoint icon="repeat">
-                <strong className="text-slate-900">지속적 개선</strong> — 
-                PDSA 사이클을 통한 점진적 도입
-              </BulletPoint>
+              <div className="p-6 bg-white rounded-xl shadow-md">
+                <p className="text-slate-700 leading-relaxed">
+                  단순히 정보를 수집하는 것이 아니라, 그 결과를 실제 돌봄 계획에 반영하는 것이 핵심입니다.
+                </p>
+              </div>
             </div>
 
             <div className="flex justify-center">
               <img 
                 src="../../assets/case-studies/4Ms_framework.webp" 
                 alt="4Ms 프레임워크 평가와 실행 구조" 
-                className="rounded-xl shadow-lg max-w-md w-full"
+                className="rounded-xl shadow-lg w-full max-w-md"
               />
             </div>
-          </div>
-
-          <div className="mt-12 p-6 bg-blue-50 rounded-xl border-l-4 border-blue-600">
-            <p className="text-slate-700 leading-relaxed">
-              <strong>핵심:</strong> 단순히 정보를 수집하는 것이 아니라, 
-              그 결과를 실제 돌봄 계획에 반영하는 것이 4Ms의 본질입니다.
-            </p>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 7: 지역사회 평가 도구 예시 (표)
+      // SLIDE 8: 2. 방법론 - 평가 도구 표
       (
-        <SlideLayout className="bg-slate-50">
+        <SlideLayout>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            지역사회 평가 도구 예시
+            4Ms 핵심 요소와 지역사회 평가 도구 예시
           </h2>
           
           <div className="overflow-x-auto">
@@ -464,119 +450,105 @@
                 <tr className="bg-gradient-to-r from-teal-600 to-teal-700 text-white">
                   <th className="p-4 text-left font-semibold">4Ms 요소</th>
                   <th className="p-4 text-left font-semibold">정의 및 목표</th>
-                  <th className="p-4 text-left font-semibold">지역사회 평가 방법</th>
+                  <th className="p-4 text-left font-semibold">지역사회에서 활용 가능한 평가 방법</th>
                 </tr>
               </thead>
               <tbody className="text-slate-700">
-                <tr className="border-b border-slate-200 hover:bg-teal-50 transition-colors">
-                  <td className="p-4 font-bold text-teal-700">
-                    <div className="flex items-center gap-2">
-                      <LucideIcon name="heart" className="w-5 h-5" />
-                      What Matters
-                    </div>
-                  </td>
+                <tr className="border-b border-slate-200 hover:bg-teal-50">
+                  <td className="p-4 font-bold text-teal-700">What Matters</td>
                   <td className="p-4">어르신의 삶의 목표와 돌봄 선호를 확인하고, 모든 돌봄을 이에 맞추는 것</td>
                   <td className="p-4">생활 목표 질문, 활동 목표 설정, 사전연명의료 의향 확인</td>
                 </tr>
-                <tr className="border-b border-slate-200 hover:bg-blue-50 transition-colors">
-                  <td className="p-4 font-bold text-blue-700">
-                    <div className="flex items-center gap-2">
-                      <LucideIcon name="pill" className="w-5 h-5" />
-                      Medication
-                    </div>
-                  </td>
+                <tr className="border-b border-slate-200 hover:bg-blue-50">
+                  <td className="p-4 font-bold text-blue-700">Medication</td>
                   <td className="p-4">기능과 인지에 영향을 줄 수 있는 고위험 약물을 피하고 적절한 약물 사용</td>
                   <td className="p-4">복용 약물 목록 확인, 고위험 약물 점검, 약국 연계 상담</td>
                 </tr>
-                <tr className="border-b border-slate-200 hover:bg-purple-50 transition-colors">
-                  <td className="p-4 font-bold text-purple-700">
-                    <div className="flex items-center gap-2">
-                      <LucideIcon name="brain" className="w-5 h-5" />
-                      Mentation
-                    </div>
-                  </td>
+                <tr className="border-b border-slate-200 hover:bg-purple-50">
+                  <td className="p-4 font-bold text-purple-700">Mentation</td>
                   <td className="p-4">치매, 우울, 섬망의 예방과 조기 발견 및 관리</td>
                   <td className="p-4">Mini-Cog, 간이 인지검사, 우울 선별도구(PHQ 등)</td>
                 </tr>
-                <tr className="hover:bg-rose-50 transition-colors">
-                  <td className="p-4 font-bold text-rose-700">
-                    <div className="flex items-center gap-2">
-                      <LucideIcon name="activity" className="w-5 h-5" />
-                      Mobility
-                    </div>
-                  </td>
+                <tr className="hover:bg-rose-50">
+                  <td className="p-4 font-bold text-rose-700">Mobility</td>
                   <td className="p-4">매일 안전하게 움직여 기능을 유지하고 목표 활동을 수행하도록 지원</td>
                   <td className="p-4">보행속도, SPPB, TUG, 균형·근력 평가</td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <div className="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-600">
-            <p className="text-slate-700 leading-relaxed">
-              <strong>실무 팁:</strong> 모든 도구를 사용할 필요는 없습니다. 
-              지역사회 환경에 맞는 간단한 도구부터 시작하세요.
-            </p>
-          </div>
         </SlideLayout>
       ),
 
-      // SLIDE 8: 운영 방식
+      // SLIDE 9: 3. 운영 방식 - 현장 적용 원리
       (
-        <SlideLayout>
+        <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
             3. 운영 방식: 현장에서의 적용 원리
           </h2>
           
           <div className="space-y-6">
-            <p className="text-lg text-slate-700 leading-relaxed mb-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
               4Ms는 새로운 프로그램을 추가하는 방식이 아니라, 
               <strong className="text-teal-600">기존 돌봄 과정을 재구성</strong>하는 방식으로 적용됩니다.
             </p>
 
-            <div className="space-y-4">
-              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-teal-600">
-                <BulletPoint icon="check-circle">
-                  <strong className="text-slate-900">1) 모든 접점에서 동일한 구조 사용</strong> — 
-                  병원, 외래, 방문서비스, 복지관, 장기요양기관 등 모든 환경에서 동일한 질문 구조
-                </BulletPoint>
-              </div>
+            <p className="text-lg text-slate-700 leading-relaxed mb-6">
+              핵심 운영 원리는 다음과 같습니다.
+            </p>
+          </div>
+        </SlideLayout>
+      ),
 
-              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-blue-600">
-                <BulletPoint icon="refresh-cw">
-                  <strong className="text-slate-900">2) 평가와 실행의 통합</strong> — 
-                  정보 수집으로 끝나는 것이 아니라, 평가 결과를 바탕으로 즉시 개입 계획 수립
-                </BulletPoint>
-              </div>
+      // SLIDE 10: 3. 운영 방식 - 1) 모든 접점에서 동일한 구조
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            1) 모든 접점에서 동일한 구조 사용
+          </h2>
+          
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              병원, 외래, 방문서비스, 복지관, 장기요양기관 등 
+              <strong className="text-teal-600">모든 환경에서 동일한 질문 구조</strong>를 사용합니다.
+            </p>
 
-              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-purple-600">
-                <BulletPoint icon="trending-up">
-                  <strong className="text-slate-900">3) 점진적 도입 (PDSA 방식)</strong> — 
-                  한 명의 대상자부터 적용해 보고, 그 경험을 바탕으로 점차 확대
-                </BulletPoint>
-              </div>
+            <div className="grid md:grid-cols-2 gap-4 mt-8">
+              <div className="p-4 bg-teal-50 rounded-lg text-center font-semibold">병원</div>
+              <div className="p-4 bg-blue-50 rounded-lg text-center font-semibold">외래</div>
+              <div className="p-4 bg-purple-50 rounded-lg text-center font-semibold">방문서비스</div>
+              <div className="p-4 bg-rose-50 rounded-lg text-center font-semibold">복지관</div>
+              <div className="p-4 bg-amber-50 rounded-lg text-center font-semibold">장기요양기관</div>
+              <div className="p-4 bg-green-50 rounded-lg text-center font-semibold">보건소</div>
             </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 9: 평가와 실행 통합 예시
+      // SLIDE 11: 3. 운영 방식 - 2) 평가와 실행의 통합
       (
         <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            평가와 실행 통합 예시
+            2) 평가와 실행의 통합
           </h2>
           
-          <div className="max-w-4xl mx-auto">
-            <div className="p-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-lg border-l-4 border-blue-600">
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              정보 수집으로 끝나는 것이 아니라, 
+              평가 결과를 바탕으로 <strong className="text-teal-600">즉시 개입 계획을 수립</strong>합니다.
+            </p>
+
+            <div className="mt-8 p-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-lg border-l-4 border-blue-600">
+              <h3 className="text-xl font-bold text-slate-800 mb-6">예시</h3>
+              
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
                     1
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2">평가: 이동성 저하 발견 (Mobility)</h3>
-                    <p className="text-slate-700">보행속도 측정 결과 0.6 m/s로 저하 확인</p>
+                    <p className="text-lg font-semibold text-slate-800">이동성 저하 확인</p>
+                    <p className="text-slate-600 mt-1">평가 단계: Mobility</p>
                   </div>
                 </div>
 
@@ -589,8 +561,8 @@
                     2
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2">연결: "손주와 산책하기" 목표 확인 (What Matters)</h3>
-                    <p className="text-slate-700">어르신이 가장 중요하게 생각하는 활동 목표 파악</p>
+                    <p className="text-lg font-semibold text-slate-800">"손주와 산책하기"가 목표</p>
+                    <p className="text-slate-600 mt-1">연결 단계: What Matters</p>
                   </div>
                 </div>
 
@@ -603,128 +575,121 @@
                     3
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2">실행: 목표 중심 운동 계획 수립 (Action)</h3>
-                    <p className="text-slate-700">손주와의 산책을 목표로 한 맞춤형 보행 훈련 프로그램 설계</p>
+                    <p className="text-lg font-semibold text-slate-800">해당 목표를 중심으로 운동 프로그램 설계</p>
+                    <p className="text-slate-600 mt-1">실행 단계: Action</p>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </SlideLayout>
+      ),
 
-            <div className="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-600">
-              <p className="text-slate-700 font-semibold">
-                이처럼 평가 결과가 어르신의 삶의 목표와 연결되어 즉시 실행 계획으로 이어집니다.
+      // SLIDE 12: 3. 운영 방식 - 3) 점진적 도입
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            3) 점진적 도입(PDSA 방식)
+          </h2>
+          
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed">
+              한 명의 대상자부터 적용해 보고, 
+              그 경험을 바탕으로 점차 확대하는 방식이 권장됩니다.
+            </p>
+
+            <div className="mt-8 p-6 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+              <p className="text-slate-700 leading-relaxed">
+                이러한 개선 사이클은 실제 4Ms 도입 과정에서 사용되는 방법입니다.
               </p>
             </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 10: 지역사회 활용 방안 1
+      // SLIDE 13: 4. 지역사회 활용 방안
       (
-        <SlideLayout>
+        <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            4. 지역사회 활용 방안
+            4. 지역사회에서의 활용 방안
           </h2>
           
           <div className="space-y-6">
             <p className="text-lg text-slate-700 leading-relaxed">
-              4Ms는 특정 질환이나 진료과가 아닌, <strong className="text-teal-600">기능과 삶의 목표를 중심으로 돌봄을 조직</strong>하기 때문에 
+              4Ms는 특정 질환이나 진료과가 아닌, 
+              <strong className="text-teal-600">기능과 삶의 목표를 중심으로 돌봄을 조직</strong>하기 때문에 
               지역사회에서 특히 유용합니다.
             </p>
+          </div>
+        </SlideLayout>
+      ),
 
-            <h3 className="text-2xl font-bold text-slate-800 mt-8 mb-4">선별과 상담의 공통 구조</h3>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="p-6 bg-teal-50 rounded-xl border-t-4 border-teal-600">
-                <div className="flex items-center gap-3 mb-3">
-                  <LucideIcon name="heart" className="w-6 h-6 text-teal-600" />
-                  <h4 className="font-bold text-slate-800">What Matters</h4>
-                </div>
-                <p className="text-slate-700">생활 목표, 사회참여 의지 확인</p>
+      // SLIDE 14: 4. 지역사회 활용 - 1) 선별과 상담
+      (
+        <SlideLayout>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
+            1) 선별과 상담의 공통 구조
+          </h2>
+          
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed mb-6">
+              지역사회 서비스에서 다음과 같이 적용할 수 있습니다.
+            </p>
+
+            <div className="space-y-4">
+              <div className="p-6 bg-teal-50 rounded-xl border-l-4 border-teal-600">
+                <BulletPoint icon="heart">
+                  <strong>What Matters:</strong> 생활 목표, 사회참여 의지 확인
+                </BulletPoint>
               </div>
 
-              <div className="p-6 bg-purple-50 rounded-xl border-t-4 border-purple-600">
-                <div className="flex items-center gap-3 mb-3">
-                  <LucideIcon name="brain" className="w-6 h-6 text-purple-600" />
-                  <h4 className="font-bold text-slate-800">Mentation</h4>
-                </div>
-                <p className="text-slate-700">인지·우울 선별</p>
+              <div className="p-6 bg-purple-50 rounded-xl border-l-4 border-purple-600">
+                <BulletPoint icon="brain">
+                  <strong>Mentation:</strong> 인지·우울 선별
+                </BulletPoint>
               </div>
 
-              <div className="p-6 bg-rose-50 rounded-xl border-t-4 border-rose-600">
-                <div className="flex items-center gap-3 mb-3">
-                  <LucideIcon name="activity" className="w-6 h-6 text-rose-600" />
-                  <h4 className="font-bold text-slate-800">Mobility</h4>
-                </div>
-                <p className="text-slate-700">신체기능 평가</p>
+              <div className="p-6 bg-rose-50 rounded-xl border-l-4 border-rose-600">
+                <BulletPoint icon="activity">
+                  <strong>Mobility:</strong> 신체기능 평가
+                </BulletPoint>
               </div>
 
-              <div className="p-6 bg-blue-50 rounded-xl border-t-4 border-blue-600">
-                <div className="flex items-center gap-3 mb-3">
-                  <LucideIcon name="pill" className="w-6 h-6 text-blue-600" />
-                  <h4 className="font-bold text-slate-800">Medication</h4>
-                </div>
-                <p className="text-slate-700">복용 약물 확인</p>
+              <div className="p-6 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+                <BulletPoint icon="pill">
+                  <strong>Medication:</strong> 복용 약물 확인
+                </BulletPoint>
               </div>
             </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 11: 지역사회 활용 방안 2 - 지역 자원 연계
+      // SLIDE 15: 4. 지역사회 활용 - 2) 지역 자원 연계
       (
         <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            지역 자원 연계의 허브 역할
+            2) 지역 자원 연계의 허브 역할
           </h2>
           
-          <div className="space-y-6 max-w-4xl">
-            <p className="text-lg text-slate-700 leading-relaxed">
+          <div className="space-y-6">
+            <p className="text-lg text-slate-700 leading-relaxed mb-6">
               4Ms 평가를 통해 발견된 문제를 지역 자원과 연결할 수 있습니다.
             </p>
 
             <div className="space-y-4">
               <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-blue-600">
-                <div className="flex items-start gap-4">
-                  <LucideIcon name="pill" className="w-8 h-8 text-blue-600 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2">약물 문제</h3>
-                    <p className="text-slate-700">→ 지역 약국 연계</p>
-                    <p className="text-sm text-slate-600 mt-1">약물 상담, 복약 지도, 약물 상호작용 점검</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-purple-600">
-                <div className="flex items-start gap-4">
-                  <LucideIcon name="brain" className="w-8 h-8 text-purple-600 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2">우울 위험</h3>
-                    <p className="text-slate-700">→ 정신건강복지센터 연계</p>
-                    <p className="text-sm text-slate-600 mt-1">상담, 치료 연결, 사례 관리</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-rose-600">
-                <div className="flex items-start gap-4">
-                  <LucideIcon name="activity" className="w-8 h-8 text-rose-600 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2">이동성 저하</h3>
-                    <p className="text-slate-700">→ 운동 프로그램 연결</p>
-                    <p className="text-sm text-slate-600 mt-1">낙상 예방 교실, 근력 운동, 보행 훈련</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 bg-white rounded-xl shadow-md border-l-4 border-teal-600">
-                <div className="flex items-start gap-4">
-                  <LucideIcon name="heart" className="w-8 h-8 text-teal-600 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2">사회참여 욕구</h3>
-                    <p className="text-slate-700">→ 복지관 프로그램 연결</p>
-                    <p className="text-sm text-slate-600 mt-1">동아리 활동, 평생교육, 자원봉사</p>
-                  </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-3">예시</h3>
+                <div className="space-y-3">
+                  <BulletPoint icon="pill">
+                    <strong>약물 문제</strong> → 지역 약국 연계
+                  </BulletPoint>
+                  <BulletPoint icon="brain">
+                    <strong>우울 위험</strong> → 정신건강복지센터 연계
+                  </BulletPoint>
+                  <BulletPoint icon="activity">
+                    <strong>이동성 저하</strong> → 운동 프로그램 연결
+                  </BulletPoint>
                 </div>
               </div>
             </div>
@@ -732,21 +697,22 @@
         </SlideLayout>
       ),
 
-      // SLIDE 12: 보호자와 주민 교육
+      // SLIDE 16: 4. 지역사회 활용 - 3) 보호자 교육
       (
         <SlideLayout>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            보호자와 주민 교육에 활용
+            3) 보호자와 주민 교육에 활용
           </h2>
           
-          <div className="space-y-6 max-w-4xl">
+          <div className="space-y-6">
             <p className="text-lg text-slate-700 leading-relaxed">
-              4Ms의 개념을 쉬운 용어로 바꾸면 보호자 교육과 주민 홍보에 효과적입니다.
+              <strong>Mentation</strong>을 "마음"이나 "기억과 기분"처럼 쉬운 용어로 설명하면, 
+              보호자 교육에도 활용할 수 있습니다.
             </p>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-6 mt-8">
               <div className="p-6 bg-gradient-to-br from-teal-50 to-blue-50 rounded-xl shadow-md">
-                <h3 className="text-lg font-bold text-slate-800 mb-3">전문 용어</h3>
+                <h3 className="text-lg font-bold text-slate-800 mb-4">전문 용어</h3>
                 <ul className="space-y-2 text-slate-700">
                   <li>• Mentation</li>
                   <li>• Mobility</li>
@@ -756,7 +722,7 @@
               </div>
 
               <div className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-md">
-                <h3 className="text-lg font-bold text-slate-800 mb-3">쉬운 표현</h3>
+                <h3 className="text-lg font-bold text-slate-800 mb-4">쉬운 표현</h3>
                 <ul className="space-y-2 text-slate-700">
                   <li>• 마음 (기억과 기분)</li>
                   <li>• 움직임 (걷기와 균형)</li>
@@ -765,46 +731,39 @@
                 </ul>
               </div>
             </div>
-
-            <div className="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-600">
-              <p className="text-slate-700 leading-relaxed">
-                <strong>교육 예시:</strong> "어르신의 <strong>마음</strong>과 <strong>움직임</strong>을 확인하고, 
-                <strong>약</strong>을 점검하며, <strong>바라는 삶</strong>을 지원합니다."
-              </p>
-            </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 13: 핵심 메시지
+      // SLIDE 17: 5. 핵심 메시지
       (
         <SlideLayout className="bg-gradient-to-br from-teal-600 to-blue-700">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12 text-center">
-            핵심 메시지
+            5. 지역사회 실무자에게 주는 핵심 메시지
           </h2>
           
           <div className="space-y-6 max-w-4xl mx-auto">
             <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border-l-4 border-white">
               <p className="text-xl text-white leading-relaxed">
-                <strong>돌봄을 조직하는 공통 언어</strong>입니다
+                4Ms는 새로운 사업이나 장비가 아니라, <strong>돌봄을 조직하는 공통 언어</strong>입니다.
               </p>
             </div>
 
             <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border-l-4 border-white">
               <p className="text-xl text-white leading-relaxed">
-                질병이 아닌 <strong>기능 중심 구조</strong>입니다
+                <strong>질병 중심이 아니라 기능 중심 구조</strong>입니다.
               </p>
             </div>
 
             <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border-l-4 border-white">
               <p className="text-xl text-white leading-relaxed">
-                모든 직종이 공유하는 <strong>질문 체계</strong>입니다
+                <strong>모든 직종이 공유할 수 있는 핵심 질문 체계</strong>입니다.
               </p>
             </div>
 
             <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border-l-4 border-white">
               <p className="text-xl text-white leading-relaxed">
-                선별, 상담, 운동, 영양, 사회참여 프로그램을 <strong>하나로 묶는 프레임</strong>입니다
+                선별, 상담, 운동, 영양, 사회참여 프로그램을 <strong>하나로 묶는 프레임</strong>입니다.
               </p>
             </div>
           </div>
@@ -817,15 +776,15 @@
         </SlideLayout>
       ),
 
-      // SLIDE 14: What Matters 질문 목록 (부록)
+      // SLIDE 18: 부록 - What Matters 질문 목록 (표)
       (
         <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-6">
-            부록: What Matters 질문 목록
+            부록. What Matters 질문 목록 (예시)
           </h2>
           
           <p className="text-slate-600 mb-8">
-            고령자 대상 면담에서 바로 사용할 수 있는 쉽고 자연스러운 질문 형태입니다.
+            고령자 대상 면담에서 바로 사용할 수 있도록, 쉽고 자연스러운 질문 형태로 정리한 표입니다.
           </p>
 
           <div className="overflow-x-auto">
@@ -839,124 +798,144 @@
               <tbody className="text-slate-700">
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">꾸준히 공부하기</td>
-                  <td className="p-3">요즘도 신문이나 책을 읽는 것이 즐거우신가요?<br/>도서관에 가거나 독서 모임에 참여해 보고 싶으신가요?</td>
+                  <td className="p-3">
+                    요즘도 신문이나 책을 읽는 것이 즐거우신가요?<br/>
+                    도서관에 가거나 독서 모임에 참여해 보고 싶으신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">여행 자주하기</td>
-                  <td className="p-3">앞으로 가 보고 싶은 여행지가 있으신가요?<br/>가까운 곳이라도 자주 나들이를 다니고 싶으신가요?</td>
+                  <td className="p-3">
+                    앞으로 가 보고 싶은 여행지가 있으신가요?<br/>
+                    가까운 곳이라도 자주 나들이를 다니고 싶으신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">사람들과 자주 대화하기</td>
-                  <td className="p-3">요즘 자주 만나거나 이야기 나누는 분이 있으신가요?<br/>오랫동안 못 본 친구에게 연락해 보고 싶으신가요?</td>
+                  <td className="p-3">
+                    요즘 자주 만나거나 이야기 나누는 분이 있으신가요?<br/>
+                    오랫동안 못 본 친구에게 연락해 보고 싶으신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">자연과 가까이 살기</td>
-                  <td className="p-3">산책이나 등산처럼 자연을 느끼는 활동을 좋아하시나요?<br/>집에서 식물을 기르거나 작은 텃밭을 가꾸고 싶으신가요?</td>
+                  <td className="p-3">
+                    산책이나 등산처럼 자연을 느끼는 활동을 좋아하시나요?<br/>
+                    집에서 식물을 기르거나 작은 텃밭을 가꾸고 싶으신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">일자리 갖기</td>
-                  <td className="p-3">앞으로도 일을 계속하고 싶으신가요?<br/>예전에 하던 일을 다시 해 보고 싶은 마음이 있으신가요?</td>
+                  <td className="p-3">
+                    앞으로도 일을 계속하고 싶으신가요?<br/>
+                    예전에 하던 일을 다시 해 보고 싶은 마음이 있으신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">여가·취미 활동</td>
-                  <td className="p-3">요즘 즐겁게 하고 있는 취미가 있으신가요?<br/>새로 배우고 싶은 취미가 있으신가요?</td>
+                  <td className="p-3">
+                    요즘 즐겁게 하고 있는 취미가 있으신가요?<br/>
+                    새로 배우고 싶은 취미가 있으신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">지인들과 정기적인 만남</td>
-                  <td className="p-3">친구들과 정기적으로 만나고 싶으신가요?<br/>주변 사람들의 일이나 모임에 참여하는 것이 중요하신가요?</td>
+                  <td className="p-3">
+                    친구들과 정기적으로 만나고 싶으신가요?<br/>
+                    주변 사람들의 일이나 모임에 참여하는 것이 중요하신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">가족과 화목하게 지내기</td>
-                  <td className="p-3">가족들과 지금처럼 잘 지내는 것이 중요하신가요?<br/>가족에게 부담을 주지 않고 지내는 것이 중요하신가요?</td>
+                  <td className="p-3">
+                    가족들과 지금처럼 잘 지내는 것이 중요하신가요?<br/>
+                    가족에게 부담을 주지 않고 지내는 것이 중요하신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">봉사활동 하기</td>
-                  <td className="p-3">다른 사람을 돕는 활동을 해 보고 싶으신가요?<br/>종교나 지역 모임을 통해 봉사하는 것이 중요하신가요?</td>
+                  <td className="p-3">
+                    다른 사람을 돕는 활동을 해 보고 싶으신가요?<br/>
+                    종교나 지역 모임을 통해 봉사하는 것이 중요하신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">일상활동 계속 하기</td>
-                  <td className="p-3">지금처럼 혼자서 일상생활을 계속하고 싶으신가요?<br/>대중교통이나 휴대폰을 계속 잘 사용하며 지내고 싶으신가요?</td>
+                  <td className="p-3">
+                    지금처럼 혼자서 일상생활을 계속하고 싶으신가요?<br/>
+                    대중교통이나 휴대폰을 계속 잘 사용하며 지내고 싶으신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">남에게 신세 지지 않기</td>
-                  <td className="p-3">가능한 한 스스로 생활을 유지하는 것이 중요하신가요?</td>
+                  <td className="p-3">
+                    가능한 한 스스로 생활을 유지하는 것이 중요하신가요?
+                  </td>
                 </tr>
                 <tr className="border-b border-slate-200 hover:bg-teal-50">
                   <td className="p-3 font-semibold">사회에 기여하기</td>
-                  <td className="p-3">사회나 지역을 위해 도움이 되는 일을 해 보고 싶으신가요?</td>
+                  <td className="p-3">
+                    사회나 지역을 위해 도움이 되는 일을 해 보고 싶으신가요?
+                  </td>
                 </tr>
                 <tr className="hover:bg-teal-50">
                   <td className="p-3 font-semibold">신체·정신 건강 유지</td>
-                  <td className="p-3">앞으로도 건강하게 지내는 것이 가장 중요하신가요?<br/>치매나 큰 병 없이 지내는 것이 중요하신가요?</td>
+                  <td className="p-3">
+                    앞으로도 건강하게 지내는 것이 가장 중요하신가요?<br/>
+                    치매나 큰 병 없이 지내는 것이 중요하신가요?
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <div className="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-600">
-            <h3 className="font-bold text-slate-800 mb-3">실무 적용 팁</h3>
-            <ul className="space-y-2 text-slate-700">
-              <li>• 처음부터 긴 목록을 다 묻기보다, 3~4개 질문만 선택해 사용하는 것이 좋습니다</li>
-              <li>• "앞으로 어떤 삶을 살고 싶으신가요?"라는 개방형 질문 후, 이 표를 참고해 구체화하면 자연스럽습니다</li>
-              <li>• 답변은 문장 그대로 기록하는 것이 좋습니다 (예: "손주와 공원 산책하기", "혼자서 버스 타고 다니기")</li>
-            </ul>
-          </div>
         </SlideLayout>
       ),
 
-      // SLIDE 15: 예외 질문 (목표가 없는 경우)
+      // SLIDE 19: 부록 - 예외 질문
       (
         <SlideLayout>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
-            목표가 바로 떠오르지 않는 경우
+            예외 질문 (목표가 바로 떠오르지 않는 경우)
           </h2>
           
-          <div className="max-w-4xl">
-            <p className="text-lg text-slate-700 leading-relaxed mb-8">
-              특별한 목표가 없다고 말씀하시는 어르신께는 다음과 같이 질문할 수 있습니다.
-            </p>
-
-            <div className="space-y-4">
-              <div className="p-6 bg-gradient-to-r from-teal-50 to-blue-50 rounded-xl shadow-md border-l-4 border-teal-600">
-                <p className="text-lg text-slate-800 font-semibold mb-2">
-                  "지금 생활을 그대로 유지하는 것이 가장 중요하신가요?"
-                </p>
-                <p className="text-sm text-slate-600">
-                  → 현재 상태 유지를 목표로 설정
-                </p>
-              </div>
-
-              <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl shadow-md border-l-4 border-blue-600">
-                <p className="text-lg text-slate-800 font-semibold mb-2">
-                  "건강을 위해 꾸준히 운동하는 것이 중요하신가요?"
-                </p>
-                <p className="text-sm text-slate-600">
-                  → 건강 유지를 구체적 목표로 전환
-                </p>
-              </div>
-
-              <div className="p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl shadow-md border-l-4 border-purple-600">
-                <p className="text-lg text-slate-800 font-semibold mb-2">
-                  "가족과 잘 지내는 것이 가장 중요하신가요?"
-                </p>
-                <p className="text-sm text-slate-600">
-                  → 관계 유지를 목표로 확인
-                </p>
-              </div>
+          <div className="space-y-6">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
+                <thead>
+                  <tr className="bg-gradient-to-r from-amber-600 to-amber-700 text-white">
+                    <th className="p-4 text-left font-semibold">상황</th>
+                    <th className="p-4 text-left font-semibold">질문 예시</th>
+                  </tr>
+                </thead>
+                <tbody className="text-slate-700">
+                  <tr className="hover:bg-amber-50">
+                    <td className="p-4 font-semibold align-top">특별한 목표가 없다고 말하는 경우</td>
+                    <td className="p-4">
+                      <div className="space-y-3">
+                        <p>지금 생활을 그대로 유지하는 것이 가장 중요하신가요?</p>
+                        <p>건강을 위해 꾸준히 운동하는 것이 중요하신가요?</p>
+                        <p>가족과 잘 지내는 것이 가장 중요하신가요?</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <div className="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-600">
-              <p className="text-slate-700 leading-relaxed">
-                <strong>중요:</strong> 목표가 "없다"는 것도 하나의 응답입니다. 
-                억지로 목표를 만들기보다는, 현재 상태를 유지하거나 악화를 방지하는 것 자체가 
-                의미 있는 목표가 될 수 있습니다.
-              </p>
+              <h3 className="font-bold text-slate-800 mb-3">실무 적용 팁</h3>
+              <ul className="space-y-2 text-slate-700">
+                <li>• 처음부터 긴 목록을 다 묻기보다, 3~4개 질문만 선택해 사용하는 것이 좋습니다.</li>
+                <li>• "앞으로 어떤 삶을 살고 싶으신가요?"라는 개방형 질문 후, 이 표를 참고해 구체화하면 자연스럽습니다.</li>
+                <li>• 답변은 문장 그대로 기록하는 것이 좋습니다.</li>
+                <li className="ml-6 text-sm">예: "손주와 공원 산책하기", "혼자서 버스 타고 다니기"</li>
+              </ul>
             </div>
           </div>
         </SlideLayout>
       ),
 
-      // SLIDE 16: 참고 문헌
+      // SLIDE 20: 참고 문헌
       (
         <SlideLayout className="bg-slate-50">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-8">
@@ -966,28 +945,28 @@
           <div className="space-y-4 text-slate-700">
             <div className="p-4 bg-white rounded-lg shadow-sm">
               <p className="leading-relaxed">
-                <strong>Institute for Healthcare Improvement.</strong> Age-Friendly Health Systems: 
+                • <strong>Institute for Healthcare Improvement.</strong> Age-Friendly Health Systems: 
                 Guide to Using the 4Ms in the Care of Older Adults, 2020.
               </p>
             </div>
 
             <div className="p-4 bg-white rounded-lg shadow-sm">
               <p className="leading-relaxed">
-                <strong>Mate K, et al.</strong> Evidence for the 4Ms: Interactions and Outcomes across 
+                • <strong>Mate K, et al.</strong> Evidence for the 4Ms: Interactions and Outcomes across 
                 the Care Continuum. <em>Journal of Aging and Health</em>, 2021.
               </p>
             </div>
 
             <div className="p-4 bg-white rounded-lg shadow-sm">
               <p className="leading-relaxed">
-                <strong>Emery-Tiburcio EE, et al.</strong> The 4Ms of an Age-Friendly Health System. 
+                • <strong>Emery-Tiburcio EE, et al.</strong> The 4Ms of an Age-Friendly Health System. 
                 <em>American Journal of Nursing</em>, 2021.
               </p>
             </div>
 
             <div className="p-4 bg-white rounded-lg shadow-sm">
               <p className="leading-relaxed">
-                <strong>Welch SA, et al.</strong> Hospital 4Ms: Documentation and association with patient 
+                • <strong>Welch SA, et al.</strong> Hospital 4Ms: Documentation and association with patient 
                 characteristics. <em>Journal of the American Geriatrics Society</em>, 2025.
               </p>
             </div>

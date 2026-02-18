@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>지역사회 노쇠예방프로그램 | AndanteFit</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React (CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel (브라우저에서 JSX 실행) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide (아이콘) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto,
+        "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+    }
+
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+
+    .slideSurface { color: #0f172a; }
+    .slideSurface p { line-height: 1.65; }
+  </style>
+</head>
+
+<body>
+<!-- Navigation -->
+<div id="navigation-container"></div>
+
+<div id="root" class="appFont"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function LucideIcon({ name, className = "" }) {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
+  return <i data-lucide={name} className={className}></i>;
+}
+
+function ImgBox({ src, alt, className = "" }) {
+  const [ok, setOk] = useState(true);
+  return (
+    <div
+      className={
+        "rounded-2xl overflow-hidden flex items-center justify-center relative " +
+        (ok
+          ? "bg-slate-50"
+          : "bg-slate-100 border-2 border-dashed border-slate-300") +
+        " " + className
+      }
+    >
+      {ok ? (
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-full object-contain"
+          onError={() => setOk(false)}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div className="text-slate-400 font-bold text-sm text-center px-4">
+          이미지 준비 중<br/><span className="text-xs font-normal">{src}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const SlideFrame = ({ index, children }) => {
+  const num = String(index + 1).padStart(2, "0");
+  return (
+    <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+      <div className={`relative w-full max-w-[1280px] md:h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+        <div className="w-full md:h-full h-auto overflow-visible">
+          {children}
+        </div>
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
+          <div className="text-[12px] font-bold text-slate-400 tracking-widest">{num}</div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SlideLayout = ({ title, headline, children }) => (
+  <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
+    <header className="mb-5 sm:mb-6">
+      <div className="flex items-center gap-2 mb-1">
+        <div className="w-1.5 h-6 bg-emerald-600 rounded-full"></div>
+        <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
+      </div>
+      <h2 className="text-[22px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
+    </header>
+    <div className="flex-1 md:overflow-hidden overflow-visible">
+      {children}
+    </div>
+  </div>
+);
+
+const flowSteps = [
+  { step: "01", icon: "clipboard-list", title: "사전 신체기능평가",      desc: "AndanteFit으로 SPPB 3개 항목(보행·기립·균형) 측정, 기준 데이터 확보" },
+  { step: "02", icon: "play-circle",   title: "운동 콘텐츠 제공 및 안내", desc: "개인 평가 결과에 따른 맞춤 운동 콘텐츠 배정 및 참여 방법 안내" },
+  { step: "03", icon: "dumbbell",      title: "12주 운동 참여",           desc: "자가(또는 복지관) 환경에서 주 5회, 1회 약 30분 운동 진행" },
+  { step: "04", icon: "bar-chart-2",   title: "사후 신체기능 재평가",      desc: "동일 항목 재측정으로 3개월간 변화 확인 및 결과 공유" },
+];
+
+const exerciseModules = [
+  { icon: "zap",      title: "저항 운동",   desc: "하지·코어 근력 강화",     color: "bg-emerald-50 border-emerald-200 text-emerald-700" },
+  { icon: "triangle", title: "균형 운동",   desc: "낙상 예방·정적 균형 향상", color: "bg-teal-50 border-teal-200 text-teal-700" },
+  { icon: "heart",    title: "유산소 운동", desc: "지구력·심폐 기능 증진",    color: "bg-sky-50 border-sky-200 text-sky-700" },
+  { icon: "move",     title: "유연성 운동", desc: "관절 가동범위·자세 개선",  color: "bg-violet-50 border-violet-200 text-violet-700" },
+];
+
+const App = () => {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
+
+  const slides = [
+
+    /* ── Slide 1: Cover ── */
+    (
+      <div className="w-full md:h-full p-6 sm:p-12 flex flex-col bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          <span className="bg-emerald-600 text-white text-xs font-black px-3 py-1 rounded-full tracking-widest uppercase">
+            노쇠예방 프로그램
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            3개월 운동 + SPPB
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            Community Care
+          </span>
+        </div>
+
+        <div className="flex flex-1 flex-col lg:flex-row gap-8 items-center">
+          {/* Left: text */}
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-10 bg-emerald-600 rounded-full"></div>
+              <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
+                지역사회<br/>노쇠예방프로그램
+              </h1>
+            </div>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 pl-5">
+              신체기능평가(SPPB)에 따른 맞춤 운동을<br/>
+              3개월간 제공하는 지역사회 노쇠예방 프로그램.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4 pl-5">
+              {[
+                { val: "3개월",  label: "프로그램 기간" },
+                { val: "주 5회", label: "운동 빈도" },
+                { val: "SPPB",   label: "전·후 표준 평가" },
+              ].map((s, i) => (
+                <div key={i} className="bg-white/80 border border-emerald-100 rounded-2xl p-4 text-center shadow-sm">
+                  <div className="text-xl sm:text-2xl font-black text-emerald-600 mb-1">{s.val}</div>
+                  <div className="text-[11px] text-slate-500">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: image */}
+          <div className="w-full lg:w-[420px] flex-shrink-0">
+            <ImgBox
+              src="../../images/case-studies/frailty-prevention-cover.webp"
+              alt="노쇠예방프로그램 현장"
+              className="h-64 sm:h-80 lg:h-96 shadow-xl"
+            />
+          </div>
+        </div>
+      </div>
+    ),
+
+    /* ── Slide 2: 프로그램 소개 ── */
+    (
+      <SlideLayout title="프로그램 소개" headline="WHO 기준 표준 신체기능평가에서 맞춤 운동까지 원스톱 제공">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-5">
+            <div className="bg-emerald-50 border-l-4 border-emerald-600 p-5 rounded-r-2xl">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+                WHO를 비롯한 여러 보건기구와 지역사회에서 채택하고 있는
+                표준 신체기능평가(SPPB)를 진행하고,
+                결과에 따른 <strong>개인 맞춤 운동 서비스</strong>를 3개월간 제공합니다.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: "clipboard-check", title: "표준 평가 기반",  desc: "SPPB 디지털화 플랫폼 AndanteFit으로 객관적·재현 가능한 평가" },
+                { icon: "target",          title: "맞춤 개입",       desc: "평가 결과에 따라 개인별로 최적화된 운동 콘텐츠 제공" },
+                { icon: "refresh-cw",      title: "사전·사후 비교",  desc: "3개월 전·후 동일 항목 재평가로 변화를 수치로 확인" },
+                { icon: "award",           title: "참여 지속 관리",  desc: "리워드 시스템과 참여 현황 요약으로 참여율 관리" },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="w-9 h-9 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={item.icon} className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex gap-3 items-start">
+              <LucideIcon name="info" className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-slate-600 leading-relaxed">
+                제공되는 모든 결과는 개인 건강관리를 위한 참고 정보로 활용되며,
+                질병의 진단·치료·예후 판단을 위한 의료행위를 대체하지 않습니다.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[360px] flex-shrink-0">
+            <ImgBox
+              src="../../images/case-studies/frailty-prevention-intro.webp"
+              alt="프로그램 소개 이미지"
+              className="h-64 sm:h-72 lg:h-80 shadow-md"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 3: 프로그램 구성 ── */
+    (
+      <SlideLayout title="프로그램 구성" headline="평가 · 운동 · 참여 관리의 3축 구조로 운영됩니다">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full content-start">
+
+          {/* Block 1: 신체기능평가 */}
+          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                <LucideIcon name="clipboard-list" className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-black text-emerald-800 text-sm">신체기능평가</span>
+            </div>
+            <ul className="space-y-2 text-sm text-emerald-900">
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 font-bold mt-0.5">•</span>
+                SPPB 디지털화 플랫폼 AndanteFit 활용
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 font-bold mt-0.5">•</span>
+                프로그램 시작 시 기본 측정 · 3개월 후 재측정
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 font-bold mt-0.5">•</span>
+                보행 동작 · 5회 일어서기 · 정적균형
+              </li>
+            </ul>
+          </div>
+
+          {/* Block 2: 운동 콘텐츠 */}
+          <div className="bg-teal-50 border border-teal-200 rounded-2xl p-6 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+                <LucideIcon name="dumbbell" className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-black text-teal-800 text-sm">운동 콘텐츠 제공</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {exerciseModules.map((m, i) => (
+                <div key={i} className={`${m.color} border rounded-xl p-3 text-center`}>
+                  <LucideIcon name={m.icon} className="w-4 h-4 mx-auto mb-1" />
+                  <div className="text-xs font-bold">{m.title}</div>
+                  <div className="text-[10px] opacity-75 mt-0.5">{m.desc}</div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-teal-800 leading-relaxed">
+              단계별 콘텐츠 · 주 5회 · 1회 약 30분<br/>
+              지역사회 다수 적용을 통해 효과 검증 완료
+            </p>
+          </div>
+
+          {/* Block 3: 참여 관리 */}
+          <div className="bg-sky-50 border border-sky-200 rounded-2xl p-6 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-sky-600 rounded-lg flex items-center justify-center">
+                <LucideIcon name="bar-chart-2" className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-black text-sky-800 text-sm">참여 관리</span>
+            </div>
+            <ul className="space-y-2 text-sm text-sky-900">
+              <li className="flex items-start gap-2">
+                <span className="text-sky-500 font-bold mt-0.5">•</span>
+                활동 참여에 따른 포인트 또는 소정의 리워드
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sky-500 font-bold mt-0.5">•</span>
+                주간 · 월간 참여 현황 요약 제공
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sky-500 font-bold mt-0.5">•</span>
+                참여율 기반 프로그램 효과 모니터링
+              </li>
+            </ul>
+          </div>
+
+          {/* Bottom: image */}
+          <div className="col-span-1 lg:col-span-3">
+            <ImgBox
+              src="../../images/case-studies/frailty-prevention-program.webp"
+              alt="프로그램 구성 이미지"
+              className="h-44 shadow-sm"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 4: 운영 흐름 ── */
+    (
+      <SlideLayout title="운영 흐름" headline="4단계 사이클로 변화를 측정하고 입증합니다">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+
+          {/* Steps */}
+          <div className="flex-1 space-y-4">
+            {flowSteps.map((s, i) => (
+              <div key={i} className="flex gap-4 items-start">
+                {/* Step number + connector */}
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm flex-shrink-0">
+                    {s.step}
+                  </div>
+                  {i < flowSteps.length - 1 && (
+                    <div className="w-0.5 h-6 bg-emerald-200 mt-1"></div>
+                  )}
+                </div>
+                <div className="flex-1 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-center gap-2 mb-1">
+                    <LucideIcon name={s.icon} className="w-4 h-4 text-emerald-600" />
+                    <span className="font-bold text-slate-900 text-sm">{s.title}</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Side */}
+          <div className="w-full lg:w-[360px] flex-shrink-0 space-y-4">
+            <ImgBox
+              src="../../images/case-studies/frailty-prevention-flow.webp"
+              alt="운영 흐름 이미지"
+              className="h-52 sm:h-64 shadow-md"
+            />
+            <div className="bg-emerald-600 text-white rounded-2xl p-5 text-center">
+              <div className="text-3xl font-black mb-1">12주</div>
+              <div className="text-xs font-bold opacity-80">집중 참여 기간</div>
+              <div className="mt-3 text-xs opacity-80 leading-relaxed">
+                자가 또는 복지관 환경에서<br/>
+                꾸준한 참여를 지원합니다
+              </div>
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 5: 기대 효과 + CTA ── */
+    (
+      <div className="w-full md:h-full bg-slate-900 p-8 sm:p-14 flex flex-col justify-center relative overflow-hidden">
+        {/* BG blobs */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          {/* Left: effects */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-1.5 h-6 bg-emerald-500 rounded-full"></div>
+              <span className="text-sm font-bold text-slate-400 tracking-wider">기대 효과</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">
+              신체기능 변화를 데이터로 증명하고<br/>지역사회 건강증진을 이끕니다
+            </h2>
+
+            <div className="space-y-4">
+              {[
+                { icon: "activity",    title: "신체기능 인식 및 변화 이해",   desc: "지역사회 고령자의 신체기능 수준과 3개월 변화 양상에 대한 이해를 증진합니다." },
+                { icon: "sparkles",    title: "자기 관리 동기 부여",          desc: "고령자가 자신의 신체기능 상태를 인식하고 일상 속 건강관리에 관심을 갖는 계기를 제공합니다." },
+                { icon: "building-2",  title: "기관·조직의 사회적 가치 강화", desc: "노쇠 예방 중심 건강증진에 기여하는 기관·조직의 사회적 가치를 강화합니다." },
+              ].map((e, i) => (
+                <div key={i} className="flex gap-4 items-start">
+                  <div className="w-10 h-10 bg-emerald-500/20 border border-emerald-500/40 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={e.icon} className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-sm mb-1">{e.title}</div>
+                    <p className="text-slate-400 text-xs leading-relaxed">{e.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: CTA */}
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+            <h3 className="text-white font-black text-xl mb-2">도입을 고민 중이신가요?</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">
+              우리 기관에 맞는 운영 방식과 비용이 궁금하시다면<br/>
+              지금 바로 서비스 소개서를 받아보세요.
+            </p>
+            <a
+              href="/ko/index.html#contact"
+              className="block bg-emerald-600 hover:bg-emerald-700 text-white font-black text-center py-3 px-6 rounded-xl transition-colors mb-4 no-underline"
+            >
+              서비스 소개서 및 상담 신청하기 →
+            </a>
+            <p className="text-slate-500 text-xs text-center">
+              또는 이메일 문의:&nbsp;
+              <a href="mailto:snm@dyphi.com" className="text-slate-400 underline">snm@dyphi.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+
+  ];
+
+  return (
+    <div className="w-full min-h-screen bg-slate-200 safePad">
+      {slides.map((slide, i) => (
+        <SlideFrame key={i} index={i}>
+          {slide}
+        </SlideFrame>
+      ))}
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<!-- Footer -->
+<div data-include="../../includes/footer.html"></div>
+<script src="../../js/main.js"></script>
+<script src="../../js/navigation.js"></script>
+
+</body>
+</html>

@@ -741,11 +741,11 @@ a:hover {
 
 .eb-component-img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
   border-radius: calc(var(--border-radius) / 2);
   margin-bottom: calc(var(--spacing-unit) * 2);
-  background-color: var(--color-border);
+  background-color: #f0f4f8;
   display: block;
 }
 

@@ -207,6 +207,133 @@
     </div>
   </section>
 
+  <!-- Evidence Bridge -->
+  <section class="section section-evidence-bridge">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Evidence Map</span>
+        <h2>How Peer-Reviewed Studies Support AndanteFit</h2>
+        <p>
+          A structured summary connecting foundational research to the current AndanteFit system—designed for researchers, clinicians, and AI citation.
+        </p>
+      </div>
+
+      <!-- A. Terminology Bridge -->
+      <div class="validation-context">
+        <p>Early peer-reviewed publications described the system using terms such as multi-sensor-based electronic SPPB (eSPPB), and some titles include legacy wording (e.g., kiosk). These terms refer to the technical lineage that evolved into the current AndanteFit automated SPPB assessment system used in clinical, research, and community settings.</p>
+      </div>
+
+      <!-- B. What Was Validated -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">What Was Validated</h3>
+        <ul class="eb-validated-list">
+          <li>Agreement between sensor-based automated SPPB and conventional manual SPPB administration.</li>
+          <li>Reliability and agreement metrics supporting consistent scoring across settings.</li>
+          <li>Clinical interpretability of component-level digital variables.</li>
+          <li>Operational feasibility, including measurement time and scalable workflow design.</li>
+          <li>Foundations for automated gait-speed capture and instrumented sit-to-stand interpretation.</li>
+        </ul>
+      </div>
+
+      <!-- C. Claim → Evidence Map -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">Claim → Evidence</h3>
+        <div class="eb-map">
+          <div class="eb-map-row eb-map-header">
+            <div class="eb-claim">Claim</div>
+            <div class="eb-evidence">Supporting Evidence</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Manual vs. automated SPPB agreement is high.</div>
+            <div class="eb-evidence"><strong>JAGS 2019</strong> — total score ICC 0.97; kappa 0.79</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Reliability is supported in clinical workflow settings.</div>
+            <div class="eb-evidence"><strong>AGMR 2022</strong> — ICC 0.94; mean difference −0.2</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Community setting validation supports scalability.</div>
+            <div class="eb-evidence"><strong>Eur Geriatr Med 2025</strong> — r 0.922; inter-rater ICC 0.92; test–retest ICC 0.61</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Functional Age provides stronger frailty discrimination than chronological age.</div>
+            <div class="eb-evidence"><strong>CIA 2020</strong> — C-statistic 0.912 vs. 0.637</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Time-efficient variants can preserve screening performance.</div>
+            <div class="eb-evidence"><strong>Sensors 2021</strong> — eQPPB 49.5% less time; C-statistics 0.85 vs. 0.83</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D. Functional Age Deep Dive -->
+      <div class="eb-functional-age">
+        <p class="eb-functional-age-title">Functional Age — Deep Dive (CIA 2020)</p>
+        <p class="eb-formula">FA = 83.61 − 1.98 × balance score − 5.21 × gait speed (m/s) + 0.23 × stand-up time (s)</p>
+        <div class="eb-stats">
+          <div class="eb-stat">
+            <span class="eb-stat-value">0.912</span>
+            <span class="eb-stat-label">Functional Age C-statistic</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">0.637</span>
+            <span class="eb-stat-label">Chronological age C-statistic</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">77.2 yrs</span>
+            <span class="eb-stat-label">Optimal cut-off</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">94.4%</span>
+            <span class="eb-stat-label">Sensitivity</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">80.8%</span>
+            <span class="eb-stat-label">Specificity</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- E. SPPB Component Image Trio -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">SPPB Components Measured by AndanteFit</h3>
+        <div class="grid grid-3">
+          <div class="card">
+            <p class="eb-component-title">Gait Speed</p>
+            <img
+              src="/assets/andantefit-sppb-gait-speed.png"
+              alt="Gait speed component measured by AndanteFit automated SPPB assessment system"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">Standardized measurement of walking speed within the automated SPPB protocol.</p>
+          </div>
+          <div class="card">
+            <p class="eb-component-title">Static Balance</p>
+            <img
+              src="/assets/andantefit-sppb-static-balance.png"
+              alt="Static balance component measured by AndanteFit automated SPPB assessment system"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">Objective capture of balance performance with a guided stance protocol.</p>
+          </div>
+          <div class="card">
+            <p class="eb-component-title">Chair Stand</p>
+            <img
+              src="/assets/andantefit-sppb-chair-stand.png"
+              alt="Five-times sit-to-stand component measured by AndanteFit automated SPPB assessment system"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">Instrumented five-times sit-to-stand to support consistent timing and scoring.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Full Publication List -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">

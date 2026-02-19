@@ -176,6 +176,133 @@
     </div>
   </section>
 
+  <!-- Evidence Bridge -->
+  <section class="section section-evidence-bridge">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Mapa de evidencia</span>
+        <h2>Cómo los estudios revisados por pares respaldan AndanteFit</h2>
+        <p>
+          Resumen estructurado que conecta la investigación fundamental con el sistema actual AndanteFit—diseñado para investigadores, clínicos y citación por IA.
+        </p>
+      </div>
+
+      <!-- A. Puente de terminología -->
+      <div class="validation-context">
+        <p>En las primeras publicaciones revisadas por pares se utilizaron términos como electronic SPPB (eSPPB) basado en múltiples sensores, y algunos títulos incluyen terminología histórica (por ejemplo, kiosk). Estos términos se refieren a la misma línea tecnológica que evolucionó hacia el sistema actual AndanteFit para evaluación automatizada del SPPB en entornos clínicos, de investigación y comunitarios.</p>
+      </div>
+
+      <!-- B. Qué se validó -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">Qué se validó</h3>
+        <ul class="eb-validated-list">
+          <li>Concordancia entre el SPPB automatizado basado en sensores y el SPPB manual convencional.</li>
+          <li>Métricas de fiabilidad y acuerdo que respaldan una puntuación consistente en distintos entornos.</li>
+          <li>Interpretabilidad clínica de variables digitales a nivel de componente.</li>
+          <li>Factibilidad operativa, incluido el tiempo de medición y un flujo de trabajo escalable.</li>
+          <li>Base técnica para capturar velocidad de marcha e interpretar sit-to-stand instrumentado.</li>
+        </ul>
+      </div>
+
+      <!-- C. Mapa de evidencia -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">Afirmación → Evidencia</h3>
+        <div class="eb-map">
+          <div class="eb-map-row eb-map-header">
+            <div class="eb-claim">Afirmación</div>
+            <div class="eb-evidence">Evidencia de respaldo</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Alta concordancia entre SPPB manual y automatizado.</div>
+            <div class="eb-evidence"><strong>JAGS 2019</strong> — ICC total 0.97; kappa 0.79</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">La fiabilidad se respalda en flujos clínicos reales.</div>
+            <div class="eb-evidence"><strong>AGMR 2022</strong> — ICC 0.94; diferencia media −0.2</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Validación comunitaria apoya la escalabilidad.</div>
+            <div class="eb-evidence"><strong>Eur Geriatr Med 2025</strong> — r 0.922; ICC inter-evaluador 0.92; ICC test–retest 0.61</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">La Edad Funcional discrimina fragilidad mejor que la edad cronológica.</div>
+            <div class="eb-evidence"><strong>CIA 2020</strong> — C-statistic 0.912 vs. 0.637</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">Versiones más eficientes pueden mantener el rendimiento de cribado.</div>
+            <div class="eb-evidence"><strong>Sensors 2021</strong> — 49.5% menos tiempo; C-statistics 0.85 vs. 0.83</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D. Profundización: Edad Funcional -->
+      <div class="eb-functional-age">
+        <p class="eb-functional-age-title">Edad Funcional — Profundización (CIA 2020)</p>
+        <p class="eb-formula">EF = 83.61 − 1.98 × puntuación de equilibrio − 5.21 × velocidad de marcha (m/s) + 0.23 × tiempo de levantarse (s)</p>
+        <div class="eb-stats">
+          <div class="eb-stat">
+            <span class="eb-stat-value">0.912</span>
+            <span class="eb-stat-label">C-statistic Edad Funcional</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">0.637</span>
+            <span class="eb-stat-label">C-statistic edad cronológica</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">77.2 años</span>
+            <span class="eb-stat-label">Punto de corte óptimo</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">94.4%</span>
+            <span class="eb-stat-label">Sensibilidad</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">80.8%</span>
+            <span class="eb-stat-label">Especificidad</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- E. Trío de imágenes de componentes SPPB -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">Componentes del SPPB medidos por AndanteFit</h3>
+        <div class="grid grid-3">
+          <div class="card">
+            <p class="eb-component-title">Velocidad de marcha</p>
+            <img
+              src="/assets/andantefit-sppb-gait-speed.png"
+              alt="Componente de velocidad de marcha medido por el sistema automatizado SPPB AndanteFit"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">Medición estandarizada de la velocidad de marcha dentro del protocolo automatizado del SPPB.</p>
+          </div>
+          <div class="card">
+            <p class="eb-component-title">Equilibrio estático</p>
+            <img
+              src="/assets/andantefit-sppb-static-balance.png"
+              alt="Componente de equilibrio estático medido por el sistema automatizado SPPB AndanteFit"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">Registro objetivo del equilibrio con un protocolo guiado de posturas.</p>
+          </div>
+          <div class="card">
+            <p class="eb-component-title">Levantarse de la silla</p>
+            <img
+              src="/assets/andantefit-sppb-chair-stand.png"
+              alt="Componente de levantarse de la silla cinco veces medido por el sistema automatizado SPPB AndanteFit"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">Sit-to-stand cinco veces instrumentado para apoyar consistencia en tiempo y puntuación.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Full Publication List -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">

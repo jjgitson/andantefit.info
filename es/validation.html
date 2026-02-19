@@ -12,7 +12,7 @@
   <meta property="og:title" content="Validation - AndanteFit">
   <meta property="og:description" content="Estudios revisados por pares y evidencia científica que respaldan la evaluación automatizada del SPPB con AndanteFit.">
   <title>Validation - AndanteFit</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" href="/favicon.ico" sizes="any">
 
   <!-- Google Analytics 4 -->
@@ -321,13 +321,13 @@
   </section>
 
   <!-- Footer -->
-  <div data-include="../includes/footer.html"></div>
+  <div data-include="/includes/footer.html"></div>
 
   <script>
     // Load publications from JSON file
     async function loadPublications() {
       try {
-        const response = await fetch('data/publications.json');
+        const response = await fetch('/data/publications.json');
         const data = await response.json();
         const container = document.getElementById('publicationList');
         
@@ -355,8 +355,8 @@
     // Load on page load
     loadPublications();
   </script>
-  <script src="../js/main.js"></script>
-  <script src="../js/navigation.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/navigation.js"></script>
 
 </body>
 </html>

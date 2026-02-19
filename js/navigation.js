@@ -34,15 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
           <li><a href="${rootPath}${isKO ? 'ko/' : isES ? 'es/' : ''}case-studies.html">${labels.cases}</a></li>
           <li><a href="${rootPath}${isKO ? 'ko/' : isES ? 'es/' : ''}references.html">${labels.refs}</a></li>
           <li class="nav-lang-mobile">
-            <a href="/index.html">EN</a> | <a href="/ko/index.html">KO</a> | <a href="/es/index.html">ES</a>
+            <a href="/index.html" data-lang="en">EN</a> | <a href="/ko/index.html" data-lang="ko">KO</a> | <a href="/es/index.html" data-lang="es">ES</a>
           </li>
         </ul>
         <div class="nav-lang">
-          <a href="/index.html">EN</a> | <a href="/ko/index.html">KO</a> | <a href="/es/index.html">ES</a>
+          <a href="/index.html" data-lang="en">EN</a> | <a href="/ko/index.html" data-lang="ko">KO</a> | <a href="/es/index.html" data-lang="es">ES</a>
         </div>
         <button class="nav-toggle" id="navToggle">☰</button>
       </div>
     </nav>`;
+
+    // 언어 선택 클릭 시 lang_preference 저장 (이후 자동 리다이렉트 기준)
+    navContainer.querySelectorAll('[data-lang]').forEach(function(link) {
+        link.addEventListener('click', function() {
+            localStorage.setItem('lang_preference', this.getAttribute('data-lang'));
+        });
+    });
 
     // 모바일 토글 로직 유지
     const toggle = document.getElementById('navToggle');

@@ -64,30 +64,25 @@ function LucideIcon({ name, className = "" }) {
 
 function ImgBox({ src, alt, className = "" }) {
   const [ok, setOk] = useState(true);
-  return (
+  return ok ? (
+    <img
+      src={src}
+      alt={alt}
+      className={"w-full object-cover rounded-2xl " + className}
+      onError={() => setOk(false)}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
     <div
       className={
-        "rounded-2xl overflow-hidden flex items-center justify-center relative " +
-        (ok
-          ? "bg-slate-50"
-          : "bg-slate-100 border-2 border-dashed border-slate-300") +
-        " " + className
+        "rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center " +
+        className
       }
     >
-      {ok ? (
-        <img
-          src={src}
-          alt={alt}
-          className="w-full h-full object-contain"
-          onError={() => setOk(false)}
-          loading="lazy"
-          decoding="async"
-        />
-      ) : (
-        <div className="text-slate-400 font-bold text-sm text-center px-4">
-          이미지 준비 중<br/><span className="text-xs font-normal">{src}</span>
-        </div>
-      )}
+      <div className="text-slate-400 font-bold text-sm text-center px-4">
+        이미지 준비 중<br/><span className="text-xs font-normal">{src}</span>
+      </div>
     </div>
   );
 }

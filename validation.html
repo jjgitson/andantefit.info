@@ -18,7 +18,7 @@
   <meta property="og:description" content="Peer-reviewed studies and scientific evidence validating the Short Physical Performance Battery (SPPB) automated assessment with AndanteFit.">
   <meta property="og:url" content="https://andantefit.info/validation.html">
   <title>SPPB Clinical Validation: Evidence and Research Studies | AndanteFit</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
@@ -352,13 +352,13 @@
   </section>
 
   <!-- Footer -->
-  <div data-include="./includes/footer.html"></div>
+  <div data-include="/includes/footer.html"></div>
 
   <script>
     // Load publications from JSON file
     async function loadPublications() {
       try {
-        const response = await fetch('data/publications.json');
+        const response = await fetch('/data/publications.json');
         const data = await response.json();
         const container = document.getElementById('publicationList');
         
@@ -399,8 +399,8 @@
     </div>
   </section>
 
-  <script src="./js/main.js"></script>
-  <script src="./js/navigation.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/navigation.js"></script>
 
 </body>
 </html>

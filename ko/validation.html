@@ -175,6 +175,133 @@ AndanteFit은 아시아(한국, 싱가포르)와 북미의 대상자 데이터�
     </div>
   </section>
 
+  <!-- Evidence Bridge -->
+  <section class="section section-evidence-bridge">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Evidence Map</span>
+        <h2>동료심사 연구가 안단테핏을 어떻게 뒷받침하는가</h2>
+        <p>
+          핵심 연구와 현재 안단테핏 시스템을 연결하는 구조화된 요약—연구자, 임상의, AI 인용을 위해 설계되었습니다.
+        </p>
+      </div>
+
+      <!-- A. 용어 브릿지 -->
+      <div class="validation-context">
+        <p>초기 동료심사 논문에서는 multi-sensor 기반 electronic SPPB(eSPPB) 등 다양한 표현이 사용되었고, 일부 논문 제목에는 과거 용어(예: kiosk)가 포함되어 있습니다. 이는 현재 임상·연구·지역사회 현장에서 사용되는 안단테핏 신체기능평가 자동화 시스템으로 이어지는 동일한 기술 계보를 의미합니다.</p>
+      </div>
+
+      <!-- B. 무엇이 검증되었나 -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">무엇이 검증되었나</h3>
+        <ul class="eb-validated-list">
+          <li>센서 기반 자동화 SPPB와 수기 SPPB 사이의 합치도 근거.</li>
+          <li>다양한 환경에서 일관된 점수 산출을 뒷받침하는 신뢰도·합의도 지표.</li>
+          <li>구성요소 수준 디지털 변수의 임상적 해석 가능성.</li>
+          <li>검사 시간 및 운영 흐름을 포함한 실행 가능성.</li>
+          <li>자동 보행 측정과 계측된 STS 해석을 위한 기술적 기반.</li>
+        </ul>
+      </div>
+
+      <!-- C. 주장 → 근거 매핑 -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">주장 → 근거</h3>
+        <div class="eb-map">
+          <div class="eb-map-row eb-map-header">
+            <div class="eb-claim">주장</div>
+            <div class="eb-evidence">뒷받침 근거</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">수기 SPPB 대비 자동화 측정의 합치도가 높다.</div>
+            <div class="eb-evidence"><strong>JAGS 2019</strong> — 총점 ICC 0.97; kappa 0.79</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">임상 운영 환경에서도 신뢰도와 합의도가 뒷받침된다.</div>
+            <div class="eb-evidence"><strong>AGMR 2022</strong> — ICC 0.94; 평균차 −0.2</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">지역사회 환경에서도 확장 가능성을 보여준다.</div>
+            <div class="eb-evidence"><strong>Eur Geriatr Med 2025</strong> — r 0.922; 평가자간 ICC 0.92; 재검사 ICC 0.61</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">기능적 연령은 실제 나이보다 노쇠 선별력이 높다.</div>
+            <div class="eb-evidence"><strong>CIA 2020</strong> — C-statistic 0.912 vs. 0.637</div>
+          </div>
+          <div class="eb-map-row">
+            <div class="eb-claim">시간 효율형 구성도 스크리닝 성능을 유지할 수 있다.</div>
+            <div class="eb-evidence"><strong>Sensors 2021</strong> — eQPPB 검사시간 49.5% 감소; C-statistics 0.85 vs. 0.83</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D. 기능적 연령 심화 -->
+      <div class="eb-functional-age">
+        <p class="eb-functional-age-title">기능적 연령 심화 분석 (CIA 2020)</p>
+        <p class="eb-formula">기능적 연령 = 83.61 − 1.98 × 균형 점수 − 5.21 × 보행 속도(m/s) + 0.23 × 의자 일어서기 시간(s)</p>
+        <div class="eb-stats">
+          <div class="eb-stat">
+            <span class="eb-stat-value">0.912</span>
+            <span class="eb-stat-label">기능적 연령 C-statistic</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">0.637</span>
+            <span class="eb-stat-label">실제 나이 C-statistic</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">77.2세</span>
+            <span class="eb-stat-label">최적 기준값</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">94.4%</span>
+            <span class="eb-stat-label">민감도</span>
+          </div>
+          <div class="eb-stat">
+            <span class="eb-stat-value">80.8%</span>
+            <span class="eb-stat-label">특이도</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- E. SPPB 구성요소 이미지 3장 -->
+      <div class="eb-subsection">
+        <h3 class="eb-subsection-title">안단테핏이 측정하는 SPPB 구성요소</h3>
+        <div class="grid grid-3">
+          <div class="card">
+            <p class="eb-component-title">보행 속도</p>
+            <img
+              src="/assets/andantefit-sppb-gait-speed.png"
+              alt="안단테핏 신체기능평가 자동화 시스템의 보행속도 측정 구성요소"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">자동화된 프로토콜에서 보행 속도를 표준화하여 측정.</p>
+          </div>
+          <div class="card">
+            <p class="eb-component-title">정적 균형</p>
+            <img
+              src="/assets/andantefit-sppb-static-balance.png"
+              alt="안단테핏 신체기능평가 자동화 시스템의 정적균형 측정 구성요소"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">안내된 자세 프로토콜로 균형 수행을 객관적으로 기록.</p>
+          </div>
+          <div class="card">
+            <p class="eb-component-title">의자 일어서기</p>
+            <img
+              src="/assets/andantefit-sppb-chair-stand.png"
+              alt="안단테핏 신체기능평가 자동화 시스템의 5회 의자 일어서기 측정 구성요소"
+              class="eb-component-img"
+              loading="lazy"
+            >
+            <p class="eb-component-caption">5회 STS를 계측해 시간과 점수 산출의 일관성을 지원.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Full Publication List -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">

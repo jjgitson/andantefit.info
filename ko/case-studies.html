@@ -68,7 +68,8 @@
   const customTitles = {
     'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad',
     'Checkup-Event-Community-CSR-KR': '신체나이 체크업 이벤트',
-    'Community-Frailty-Prevention-Program-KR': '지역사회 노쇠예방프로그램'
+    'Community-Frailty-Prevention-Program-KR': '지역사회 노쇠예방프로그램',
+    'oncology-sppb-andantefit': '항암 환자에서 신체기능평가(SPPB)가 중요한 이유'
   };
 
   // 언어/폴더별로 캐시 분리
@@ -89,6 +90,32 @@
       title,
       filename,
       fileKey
+    };
+  }
+
+  function parseDir(dirname) {
+    // YYYY-MM-DD-name 형식 우선
+    const match = dirname.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
+    if (match) {
+      const [, year, month, day, fileKey] = match;
+      const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
+      return {
+        date: new Date(Number(year), Number(month) - 1, Number(day)),
+        dateStr: `${year}.${month}.${day}`,
+        title,
+        filename: dirname,
+        fileKey
+      };
+    }
+    // 날짜 없는 폴더 — customTitles에 등록된 경우만 포함
+    const title = customTitles[dirname];
+    if (!title) return null;
+    return {
+      date: new Date(2026, 1, 20),
+      dateStr: '2026.02.20',
+      title,
+      filename: dirname,
+      fileKey: dirname
     };
   }
 
@@ -160,18 +187,21 @@
       const data = await response.json();
       if (!Array.isArray(data)) throw new Error('Respuesta API inválida');
 
-      const htmlFiles = data.filter(function(f) {
-        return f.type === 'file' && f.name.endsWith('.html');
-      });
-
-      const caseStudies = htmlFiles
+      const caseStudies = data
         .map(function(f) {
-          const parsed = parseFilename(f.name);
-          if (!parsed) return null;
-
-          // 폴더 기준 절대경로로 링크 생성 (언어 페이지 위치에 영향 없음)
-          parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
-          return parsed;
+          if (f.type === 'file' && f.name.endsWith('.html')) {
+            const parsed = parseFilename(f.name);
+            if (!parsed) return null;
+            parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
+            return parsed;
+          }
+          if (f.type === 'dir') {
+            const parsed = parseDir(f.name);
+            if (!parsed) return null;
+            parsed.url = '/' + GITHUB_CONFIG.folder + '/' + f.name + '/';
+            return parsed;
+          }
+          return null;
         })
         .filter(Boolean)
         .sort(function(a, b) { return b.date - a.date; });

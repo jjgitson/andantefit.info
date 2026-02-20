@@ -19,13 +19,19 @@
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
   <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
     html, body { height: 100%; }
     body { margin: 0; background: #e2e8f0; }
     #root { min-height: 100%; }
 
     .appFont {
       font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto,
-        "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+        "Apple SD Gothic Neo", Arial, sans-serif;
     }
 
     body { overflow: auto; }
@@ -192,12 +198,12 @@ const SlideFrame = ({ index, children }) => {
   const num = String(index + 1).padStart(2, "0");
   return (
     <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
-      <div className={`relative w-full max-w-[1280px] md:h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+      <div className={`relative w-full max-w-[1280px] min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
         <div className="w-full md:h-full h-auto overflow-visible">
           {children}
         </div>
         <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
-          <div className="text-[12px] font-bold text-slate-400 tracking-widest">{num}</div>
+          <div className="text-[12px] font-bold text-slate-600 tracking-widest">{num}</div>
         </div>
       </div>
     </section>
@@ -207,7 +213,7 @@ const SlideFrame = ({ index, children }) => {
 const SlideLayout = ({ title, headline, children }) => (
   <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
     <header className="mb-5 sm:mb-6">
-      <div className="flex items-center gap-2 mb-1">
+      <div className="flex items-center gap-2 mb-2">
         <div className="w-1.5 h-6 bg-blue-700 rounded-full"></div>
         <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
       </div>
@@ -245,7 +251,7 @@ const App = () => {
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-2 h-10 bg-blue-700 rounded-full"></div>
-              <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
+              <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight">
                 항암 환자에서<br/>신체기능평가(SPPB)가<br/>중요한 이유
               </h1>
             </div>
@@ -304,7 +310,7 @@ const App = () => {
                   </div>
                   <div>
                     <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
-                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -341,7 +347,7 @@ const App = () => {
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4">
-              <p className="text-xs text-blue-900 leading-relaxed">
+              <p className="text-sm text-blue-900 leading-relaxed">
                 <strong>임상적 의미</strong> — SPPB는 단순 기능 점수가 아니라 예후를 예측하는 독립적 지표입니다.
               </p>
             </div>
@@ -400,7 +406,7 @@ const App = () => {
             </div>
 
             <div className="bg-blue-50 border-l-4 border-blue-700 p-4 rounded-r-xl">
-              <p className="text-xs text-blue-900 leading-relaxed">
+              <p className="text-sm text-blue-900 leading-relaxed">
                 <strong>핵심 메시지</strong> — 노쇠 평가는 치료 전 선별뿐 아니라 치료 중 모니터링의 핵심 요소입니다.
               </p>
             </div>
@@ -510,7 +516,7 @@ const App = () => {
 
           <div className="col-span-1 lg:col-span-3 bg-slate-50 border border-slate-200 rounded-2xl p-5 flex gap-3 items-start">
             <LucideIcon name="info" className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               SPPB는 치료 전 선별(screening), 치료 중 모니터링, 생존자 관리 전 단계에 걸쳐 일관된 기능 데이터를 제공합니다.
               반복 측정이 가능한 표준화된 프로세스가 임상 현장에서의 지속적 활용을 위한 핵심 조건입니다.
             </p>
@@ -544,7 +550,7 @@ const App = () => {
                   </div>
                   <div>
                     <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
-                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -590,7 +596,7 @@ const App = () => {
                   </div>
                   <div>
                     <div className="text-white font-bold text-sm mb-1">{e.title}</div>
-                    <p className="text-slate-400 text-xs leading-relaxed">{e.desc}</p>
+                    <p className="text-slate-400 text-sm leading-relaxed">{e.desc}</p>
                   </div>
                 </div>
               ))}
@@ -599,7 +605,7 @@ const App = () => {
 
           <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
             <h3 className="text-white font-black text-xl mb-2">도입을 고민 중이신가요?</h3>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6">
+            <p className="text-slate-300 text-sm leading-relaxed mb-6">
               항암 환자 대상 SPPB 표준화 측정이나<br/>
               연구 코호트 적용에 관심이 있으시다면<br/>
               지금 바로 서비스 소개서를 받아보세요.

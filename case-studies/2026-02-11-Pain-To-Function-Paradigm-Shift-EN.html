@@ -68,12 +68,18 @@
     gtag('config', 'G-0L4ENVHFYP');
   </script>
 <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
     html, body { height: 100%; }
     body { margin: 0; background: #e2e8f0; }
     #root { min-height: 100%; }
     
     .appFont {
-      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, sans-serif;
     }
     
     body { overflow: auto; }
@@ -104,7 +110,7 @@
               {children}
             </div>
             <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
-              <div className="text-[12px] font-bold text-slate-400 tracking-widest">
+              <div className="text-[12px] font-bold text-slate-600 tracking-widest">
                 {num}
               </div>
             </div>
@@ -116,7 +122,7 @@
     const SlideLayout = ({ title, headline, children }) => (
       <div className="w-full h-auto flex flex-col p-6 sm:p-10">
         <header className="mb-5 sm:mb-6">
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-2">
             <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
             <span className="text-sm font-bold text-slate-500 tracking-wider uppercase">{title}</span>
           </div>
@@ -141,7 +147,7 @@
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-600/20 rounded-full blur-[120px] -mr-48 -mt-48"></div>
             
             <div className="relative z-10 max-w-4xl">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
                 Function: The New Vital Sign<br/>
                 <span className="text-teal-600">in Pain Management</span>
               </h1>
@@ -158,7 +164,7 @@
                 <p className="text-sm text-slate-500">
                   For orthopedic, neurosurgical, anesthesiology, and rehabilitation specialists
                 </p>
-                <p className="text-xs text-slate-400 mt-2">Created by: DYPHI Inc.</p>
+                <p className="text-sm text-slate-400 mt-2 leading-relaxed">Created by: DYPHI Inc.</p>
               </div>
             </div>
           </div>
@@ -226,7 +232,7 @@
               </p>
 
               <div className="space-y-4">
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
                       <LucideIcon name="repeat" className="w-5 h-5 text-red-600" />
@@ -240,7 +246,7 @@
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
                       <LucideIcon name="target" className="w-5 h-5 text-teal-600" />
@@ -254,7 +260,7 @@
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
                       <LucideIcon name="globe" className="w-5 h-5 text-blue-600" />
@@ -317,28 +323,28 @@
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                 <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
                   <LucideIcon name="clipboard-check" className="w-5 h-5 text-teal-600" />
                   How to use functional outcomes in pain practice
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <p className="text-xs font-bold text-slate-600 mb-2">1) Set a baseline</p>
+                    <p className="text-sm font-bold text-slate-600 mb-2 leading-relaxed">1) Set a baseline</p>
                     <p className="text-sm text-slate-700 leading-relaxed">
                       Record function before the procedure (gait speed, chair stand, balance). A baseline makes follow-up interpretation objective.
                     </p>
                   </div>
 
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <p className="text-xs font-bold text-slate-600 mb-2">2) Check meaningful change</p>
+                    <p className="text-sm font-bold text-slate-600 mb-2 leading-relaxed">2) Check meaningful change</p>
                     <p className="text-sm text-slate-700 leading-relaxed">
                       Focus on direction and size of change (improved / unchanged / declined), not a single score at one visit.
                     </p>
                   </div>
 
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <p className="text-xs font-bold text-slate-600 mb-2">3) Explain discordance</p>
+                    <p className="text-sm font-bold text-slate-600 mb-2 leading-relaxed">3) Explain discordance</p>
                     <p className="text-sm text-slate-700 leading-relaxed">
                       If pain remains but function improves, it supports continuing the current plan with safe activity and exercise guidance rather than escalating procedures.
                     </p>
@@ -387,7 +393,7 @@
                   </p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                   <h3 className="font-bold text-slate-900 mb-4">Treatment Response Monitoring</h3>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -442,7 +448,7 @@
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
                       <LucideIcon name="users" className="w-5 h-5 text-red-600" />
@@ -454,7 +460,7 @@
                   </p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
                       <LucideIcon name="alert-triangle" className="w-5 h-5 text-orange-600" />
@@ -466,7 +472,7 @@
                   </p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
                       <LucideIcon name="shield-check" className="w-5 h-5 text-teal-600" />
@@ -502,7 +508,7 @@
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-2xl border-2 border-teal-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border-2 border-teal-200 shadow-sm">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mb-4">
                       <LucideIcon name="gauge" className="w-8 h-8 text-teal-600" />
@@ -511,13 +517,13 @@
                     <p className="text-sm text-slate-700 leading-relaxed mb-2">
                       Assesses proprioception and stability of spine/joints
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-sm text-slate-500 leading-relaxed">
                       (Side-by-side, semi-tandem, tandem stance)
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border-2 border-teal-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border-2 border-teal-200 shadow-sm">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mb-4">
                       <LucideIcon name="footprints" className="w-8 h-8 text-teal-600" />
@@ -529,7 +535,7 @@
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border-2 border-teal-200 shadow-sm">
+                <div className="bg-white p-5 rounded-2xl border-2 border-teal-200 shadow-sm">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mb-4">
                       <LucideIcon name="armchair" className="w-8 h-8 text-teal-600" />
@@ -538,7 +544,7 @@
                     <p className="text-sm text-slate-700 leading-relaxed mb-2">
                       Measures lower extremity strength and power
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-sm text-slate-500 leading-relaxed">
                       (Time to complete 5 chair stands)
                     </p>
                   </div>
@@ -660,9 +666,9 @@
               </div>
 
               <div className="mt-12 pt-8 border-t border-white/20">
-                <p className="text-slate-300 text-xs leading-relaxed mb-3">This material is provided for informational purposes for medical professionals. Diagnosis and treatment decisions for individual patients should be based on the clinical judgment of healthcare providers and patient conditions.</p>
+                <p className="text-slate-300 text-sm leading-relaxed mb-3">This material is provided for informational purposes for medical professionals. Diagnosis and treatment decisions for individual patients should be based on the clinical judgment of healthcare providers and patient conditions.</p>
                 <p className="text-white text-sm font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
-                <p className="text-slate-400 text-xs">Automated physical function assessment for clinical practice</p>
+                <p className="text-slate-400 text-sm leading-relaxed">Automated physical function assessment for clinical practice</p>
               </div>
             </div>
           </div>

@@ -515,6 +515,85 @@ const App = () => {
       </div>
     ),
 
+    /* ── Slide 9: References ── */
+    (
+      <SlideLayout title="References" headline="참고문헌">
+        <div className="h-full overflow-y-auto">
+          <ol className="space-y-3 text-xs text-slate-600 leading-relaxed list-none">
+            {[
+              {
+                text: "Ferrara, M. C., et al. (2024). Effects of an individualised exercise program in hospitalised older adults with cancer: A randomised clinical trial. ",
+                journal: "Journal of Nutrition, Health & Aging.",
+                doi: "https://doi.org/10.1016/j.jnha.2024.100424",
+                doiLabel: "https://doi.org/10.1016/j.jnha.2024.100424",
+              },
+              {
+                text: "Goede, V. (2023). Frailty and cancer: Current perspectives on assessment and monitoring. ",
+                journal: "Clinical Interventions in Aging, 18,",
+                tail: " 505–521.",
+                doi: "https://doi.org/10.2147/CIA.S365494",
+                doiLabel: "https://doi.org/10.2147/CIA.S365494",
+              },
+              {
+                text: "Guralnik, J. M., et al. (1994). A short physical performance battery assessing lower extremity function. ",
+                journal: "Journal of Gerontology, 49,",
+                tail: " M85–M94.",
+              },
+              {
+                text: "Lee, S., et al. (2024). Association of preoperative sarcopenia with long-term prognosis in bladder cancer. ",
+                journal: "Journal of Cancer Research and Clinical Oncology, 150,",
+                tail: " 173.",
+                doi: "https://doi.org/10.1007/s00432-024-05705-6",
+                doiLabel: "https://doi.org/10.1007/s00432-024-05705-6",
+              },
+              {
+                text: "Loh, K. P., et al. (2024). Adequate assessment yields appropriate care: The role of geriatric assessment in older adults with cancer. ",
+                journal: "ESMO Open.",
+                doi: "https://doi.org/10.1016/j.esmoop.2024.103657",
+                doiLabel: "https://doi.org/10.1016/j.esmoop.2024.103657",
+              },
+              {
+                text: "National Cancer Institute. (2024). Geriatric assessment for the practicing clinician: The why, what, and how. ",
+                journal: "CA: A Cancer Journal for Clinicians, 74,",
+                tail: " 496–518.",
+                doi: "https://doi.org/10.3322/caac.21864",
+                doiLabel: "https://doi.org/10.3322/caac.21864",
+              },
+              {
+                text: "Retrospective analysis of the association between sarcopenia and fall risk in older breast cancer patients using real world data (TriNetX). (2025). ",
+                journal: "Cancer Medicine.",
+              },
+              {
+                text: "Werts-Pelter, S. J., et al. (2026). Associations of obesity with function and patient-reported outcomes among advanced cancer patients. ",
+                journal: "Cancers, 18,",
+                tail: " 6.",
+              },
+              {
+                text: "Eastern Cooperative Oncology Group–ACRIN. (n.d.). ECOG performance status. ",
+                doi: "https://ecog-acrin.org/resources/ecog-performance-status/",
+                doiLabel: "https://ecog-acrin.org/resources/ecog-performance-status/",
+              },
+              {
+                text: "International Society of Geriatric Oncology (SIOG). (n.d.). Geriatric assessment in older patients with cancer.",
+              },
+            ].map((ref, i) => (
+              <li key={i} className="flex gap-3 bg-white border border-slate-100 rounded-xl p-3 shadow-sm">
+                <span className="font-black text-slate-300 text-sm w-5 flex-shrink-0 pt-px">{i + 1}</span>
+                <span>
+                  {ref.text}
+                  {ref.journal && <em>{ref.journal}</em>}
+                  {ref.tail && ref.tail}
+                  {ref.doi && (
+                    <>{" "}<a href={ref.doi} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline break-all">{ref.doiLabel}</a></>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </SlideLayout>
+    ),
+
   ];
 
   return (

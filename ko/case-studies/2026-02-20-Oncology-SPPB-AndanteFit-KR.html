@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-  <title>항암 환자에서 신체기능평가(SPPB)가 중요한 이유 | 케이스 스터디</title>
+  <title>항암 환자에서 신체기능평가(SPPB)가 중요한 이유 | AndanteFit</title>
   <meta name="description" content="항암 치료에서 신체 기능(특히 SPPB)이 치료 독성, 합병증, 예후와 어떻게 연결되는지 요약하고, 표준화된 측정이 임상과 연구에서 왜 필요한지 정리합니다."/>
+  <link rel="stylesheet" href="../css/style.css">
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
@@ -16,192 +16,525 @@
     gtag('config', 'G-0L4ENVHFYP');
   </script>
 
-  <link href="../../wiki.css" rel="stylesheet"/>
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <link rel="canonical" href="https://andantefit.info/ko/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-KR.html"/>
-  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-KR.html"/>
+  <!-- React (CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel (브라우저에서 JSX 실행) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide (아이콘) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto,
+        "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+    }
+
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+
+    .slideSurface { color: #0f172a; }
+    .slideSurface p { line-height: 1.65; }
+  </style>
 </head>
 
 <body>
-  <div class="wikiWrap">
+<!-- Navigation -->
+<div id="navigation-container"></div>
 
-    <header class="wikiHeader">
-      <div class="wikiBrand">
-        <a href="../../index.html" class="wikiBrandTitle">NOFRAILTY</a>
-        <span class="wikiBrandSub">노쇠 예방 위키</span>
-      </div>
-    </header>
+<div id="root" class="appFont"></div>
 
-    <!-- ── SLIDE 1: 왜 항암 환자에서 '기능'이 중요한가 ── -->
-    <section class="heroSection">
-      <h1 class="wikiH1">항암 환자에서 신체기능평가(SPPB)가 중요한 이유</h1>
-      <div class="wikiDesc">
-        항암 치료 성과는 종양 특성뿐 아니라 환자의 기능적 여력(functional reserve)에 영향을 받습니다.
-        이 페이지는 SPPB가 예후와 어떻게 연결되는지, 그리고 임상/연구 현장에서 표준화된 측정이 왜 중요한지 정리합니다.
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function LucideIcon({ name, className = "" }) {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
+  return <i data-lucide={name} className={className}></i>;
+}
+
+function ImgBox({ src, alt, className = "" }) {
+  const [ok, setOk] = useState(true);
+  return ok ? (
+    <img
+      src={src}
+      alt={alt}
+      className={"w-full object-cover rounded-2xl " + className}
+      onError={() => setOk(false)}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <div
+      className={
+        "rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center " +
+        className
+      }
+    >
+      <div className="text-slate-400 font-bold text-sm text-center px-4">
+        이미지 준비 중<br/><span className="text-xs font-normal">{src}</span>
       </div>
-      <div class="wikiDesc" style="margin-top:10px; opacity:0.85;">
-        2026-02-20 · 항암 치료 · 신체기능 · SPPB
+    </div>
+  );
+}
+
+const SlideFrame = ({ index, children }) => {
+  const num = String(index + 1).padStart(2, "0");
+  return (
+    <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+      <div className={`relative w-full max-w-[1280px] md:h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+        <div className="w-full md:h-full h-auto overflow-visible">
+          {children}
+        </div>
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
+          <div className="text-[12px] font-bold text-slate-400 tracking-widest">{num}</div>
+        </div>
       </div>
     </section>
+  );
+};
 
-    <div class="sectionTitle">왜 항암 환자에서 '기능'이 중요한가</div>
-    <div class="noteBox">
-      암 치료 성과는 종양 특성뿐 아니라 환자의 신체 기능에 크게 영향을 받습니다.
-      근감소증과 노쇠는 치료 독성, 합병증, 입원, 생존율과 밀접하게 연관됩니다.<br/><br/>
-      연령이나 ECOG performance status만으로는 치료 독성과 예후를 충분히 설명하기 어렵습니다.<br/><br/>
-      <strong>핵심 메시지</strong> — 항암 치료의 성공은 종양 반응뿐 아니라 환자의 functional reserve에 달려 있습니다.
+const SlideLayout = ({ title, headline, children }) => (
+  <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
+    <header className="mb-5 sm:mb-6">
+      <div className="flex items-center gap-2 mb-1">
+        <div className="w-1.5 h-6 bg-blue-700 rounded-full"></div>
+        <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
+      </div>
+      <h2 className="text-[22px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
+    </header>
+    <div className="flex-1 md:overflow-hidden overflow-visible">
+      {children}
     </div>
+  </div>
+);
 
-    <!-- ── SLIDE 2: SPPB Score and Mortality Risk ── -->
-    <div class="sectionTitle">Higher SPPB scores are associated with lower mortality risk</div>
-    <div class="contentWrap">
-      <p>
-        다변량 보정 모델에서 SPPB 점수가 높을수록 사망 위험은 유의하게 감소합니다.
-      </p>
-      <ul>
-        <li>SPPB 10–12점: 약 50% 낮은 사망 위험</li>
-        <li>SPPB 7–9점: 약 43% 낮은 사망 위험</li>
-        <li>SPPB 1점 증가당: 약 12% 사망 위험 감소</li>
-        <li>보행 속도 ≥ 0.6 m/s: 약 34% 사망 위험 감소</li>
-      </ul>
+const App = () => {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
 
-      <figure class="wikiFigure is-context">
-        <img src="../assets/sppb-score-and-mortality-risk.png"
-             alt="SPPB 점수가 높을수록 사망 위험이 낮다는 연관성을 요약한 인포그래픽"
-             loading="lazy" decoding="async">
-        <figcaption>SPPB 점수와 사망 위험의 연관(다변량 보정 모델 요약).</figcaption>
-      </figure>
+  const slides = [
 
-      <p style="margin-top:20px;">
-        <strong>임상적 의미</strong> — SPPB는 단순 기능 점수가 아니라 예후를 예측하는 독립적 지표입니다.
-      </p>
+    /* ── Slide 1: Cover ── */
+    (
+      <div className="w-full md:h-full p-6 sm:p-12 flex flex-col bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="flex flex-wrap gap-2 mb-6">
+          <span className="bg-blue-700 text-white text-xs font-black px-3 py-1 rounded-full tracking-widest uppercase">
+            항암 치료 · 신체기능
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            SPPB
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            근감소증 · 노쇠
+          </span>
+        </div>
+
+        <div className="flex flex-1 flex-col lg:flex-row gap-8 items-center">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-10 bg-blue-700 rounded-full"></div>
+              <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
+                항암 환자에서<br/>신체기능평가(SPPB)가<br/>중요한 이유
+              </h1>
+            </div>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 pl-5">
+              항암 치료 성과는 종양 특성뿐 아니라<br/>
+              환자의 기능적 여력(functional reserve)에 영향을 받습니다.
+            </p>
+
+            <div className="grid grid-cols-3 gap-4 pl-5">
+              {[
+                { val: "50%↓", label: "SPPB 고점수군 사망 위험 감소" },
+                { val: "12%↓", label: "SPPB 1점 증가당 사망 위험" },
+                { val: "SPPB", label: "독립적 예후 예측 지표" },
+              ].map((s, i) => (
+                <div key={i} className="bg-white/80 border border-blue-100 rounded-2xl p-4 text-center shadow-sm">
+                  <div className="text-xl sm:text-2xl font-black text-blue-700 mb-1">{s.val}</div>
+                  <div className="text-[11px] text-slate-500">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[400px] flex-shrink-0">
+            <ImgBox
+              src="../assets/sppb-score-and-mortality-risk.png"
+              alt="SPPB 점수가 높을수록 사망 위험이 낮다는 연관성을 요약한 인포그래픽"
+              className="h-64 sm:h-80 lg:h-96 shadow-xl object-contain"
+            />
+          </div>
+        </div>
+      </div>
+    ),
+
+    /* ── Slide 2: 왜 기능이 중요한가 ── */
+    (
+      <SlideLayout title="임상적 배경" headline="왜 항암 환자에서 '기능'이 중요한가">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-5">
+            <div className="bg-blue-50 border-l-4 border-blue-700 p-5 rounded-r-2xl">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+                암 치료 성과는 종양 특성뿐 아니라 <strong>환자의 신체 기능</strong>에 크게 영향을 받습니다.
+                근감소증과 노쇠는 치료 독성, 합병증, 입원, 생존율과 밀접하게 연관됩니다.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: "alert-triangle", title: "ECOG만으로 부족",     desc: "연령이나 ECOG performance status만으로는 치료 독성과 예후를 충분히 설명하기 어렵습니다." },
+                { icon: "trending-down",  title: "근감소증 위험",       desc: "항암 치료 중 근육 소실이 가속되어 기능 저하와 취약성 증가로 이어질 수 있습니다." },
+                { icon: "activity",       title: "독성·합병증 연관",    desc: "신체 기능 저하는 치료 독성 증가, 입원율 상승, 치료 중단 위험과 직결됩니다." },
+                { icon: "target",         title: "Functional Reserve", desc: "항암 치료의 성공은 종양 반응뿐 아니라 환자의 functional reserve에 달려 있습니다." },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={item.icon} className="w-4 h-4 text-blue-700" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 3: SPPB & Mortality Risk ── */
+    (
+      <SlideLayout title="근거 데이터" headline="Higher SPPB scores are associated with lower mortality risk">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-4">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              다변량 보정 모델에서 SPPB 점수가 높을수록 사망 위험은 유의하게 감소합니다.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                { label: "SPPB 10–12점",        val: "약 50% 낮은 사망 위험", color: "bg-blue-700" },
+                { label: "SPPB 7–9점",          val: "약 43% 낮은 사망 위험", color: "bg-blue-500" },
+                { label: "SPPB 1점 증가당",      val: "약 12% 사망 위험 감소", color: "bg-indigo-500" },
+                { label: "보행 속도 ≥ 0.6 m/s", val: "약 34% 낮은 사망 위험", color: "bg-indigo-400" },
+              ].map((d, i) => (
+                <div key={i} className="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className={`w-2 h-10 ${d.color} rounded-full flex-shrink-0`}></div>
+                  <div className="flex-1">
+                    <div className="text-xs text-slate-500 mb-0.5">{d.label}</div>
+                    <div className="font-black text-slate-900 text-sm">{d.val}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+              <p className="text-xs text-blue-900 leading-relaxed">
+                <strong>임상적 의미</strong> — SPPB는 단순 기능 점수가 아니라 예후를 예측하는 독립적 지표입니다.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[400px] flex-shrink-0">
+            <ImgBox
+              src="../assets/sppb-score-and-mortality-risk.png"
+              alt="SPPB 점수가 높을수록 사망 위험이 낮다는 연관성을 요약한 인포그래픽"
+              className="h-64 sm:h-80 shadow-md object-contain"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 4: Aging-Cancer-Muscle Loss Cycle ── */
+    (
+      <SlideLayout title="병태생리" headline="Aging, Cancer, and Treatment: The Path to Functional Decline">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="w-full lg:w-[440px] flex-shrink-0">
+            <ImgBox
+              src="../assets/aging-cancer-muscle-loss-cycle.png"
+              alt="노화와 암 진단 및 치료가 기능 예비력 감소와 취약성 증가로 이어질 수 있음을 보여주는 개념도"
+              className="h-64 sm:h-80 shadow-md object-contain"
+            />
+          </div>
+
+          <div className="flex-1 space-y-4">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              노화와 동반 질환은 이미 기능 예비력을 감소시킵니다. 여기에 암 진단과 항암 치료가 더해지면
+              근육 소실과 기능 저하가 급격히 진행될 수 있습니다.
+            </p>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              {["Aging", "Cancer", "Treatment", "Muscle loss", "Functional decline", "Vulnerability"].map((s, i, arr) => (
+                <React.Fragment key={i}>
+                  <span className={`text-xs font-bold px-3 py-1.5 rounded-full border ${i < 3 ? "bg-blue-50 border-blue-200 text-blue-800" : "bg-red-50 border-red-200 text-red-700"}`}>{s}</span>
+                  {i < arr.length - 1 && <LucideIcon name="arrow-right" className="w-3 h-3 text-slate-400" />}
+                </React.Fragment>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { icon: "x-circle",      label: "치료 중단" },
+                { icon: "zap-off",       label: "독성 증가" },
+                { icon: "alert-circle",  label: "낙상 위험 증가" },
+                { icon: "trending-down", label: "입원 및 사망 위험 증가" },
+              ].map((r, i) => (
+                <div key={i} className="flex items-center gap-2 bg-red-50 border border-red-100 rounded-xl p-3">
+                  <LucideIcon name={r.icon} className="w-4 h-4 text-red-500 flex-shrink-0" />
+                  <span className="text-xs font-bold text-red-800">{r.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-700 p-4 rounded-r-xl">
+              <p className="text-xs text-blue-900 leading-relaxed">
+                <strong>핵심 메시지</strong> — 노쇠 평가는 치료 전 선별뿐 아니라 치료 중 모니터링의 핵심 요소입니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 5: SPPB Components ── */
+    (
+      <SlideLayout title="평가 도구" headline="Short Physical Performance Battery (SPPB)">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-4">
+            <p className="text-slate-600 text-sm leading-relaxed">
+              SPPB는 3가지 객관적 수행 기반 평가로 신체 기능을 0–12점으로 정량화합니다.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                { num: "01", icon: "shield",    title: "Balance test",                   desc: "정적 균형 능력 평가",              color: "bg-blue-700" },
+                { num: "02", icon: "footprints", title: "Gait speed test (4m walk)",     desc: "이동 능력 및 전신 활력 평가",       color: "bg-indigo-600" },
+                { num: "03", icon: "dumbbell",   title: "Chair stand test (5 reps)",     desc: "하지 근력과 근지구력 평가",         color: "bg-violet-600" },
+              ].map((c, i) => (
+                <div key={i} className="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className={`w-10 h-10 ${c.color} text-white rounded-xl flex items-center justify-center font-black text-sm flex-shrink-0`}>{c.num}</div>
+                  <div className="flex-1">
+                    <div className="font-bold text-slate-900 text-sm">{c.title}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{c.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { icon: "check-circle", label: "재현성 높은 객관적 점수" },
+                { icon: "bar-chart-2",  label: "치료 독성 및 생존과 연관" },
+                { icon: "refresh-cw",   label: "중재 효과 모니터링 가능" },
+                { icon: "users",        label: "노인의학적 평가(GA) 핵심" },
+              ].map((b, i) => (
+                <div key={i} className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                  <LucideIcon name={b.icon} className="w-4 h-4 text-blue-700 flex-shrink-0" />
+                  <span className="text-xs font-bold text-blue-900">{b.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[440px] flex-shrink-0">
+            <ImgBox
+              src="../assets/sppb-components-balance-gait-chair-stand.png"
+              alt="SPPB 구성 요소인 균형, 4미터 보행 속도, 5회 의자 일어나기를 설명하는 그림"
+              className="h-64 sm:h-80 shadow-md object-contain"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 6: Clinical Application ── */
+    (
+      <SlideLayout title="임상 적용" headline="Clinical Application in Oncology">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full content-start">
+          {[
+            {
+              phase: "치료 전",
+              icon: "search",
+              color: "bg-blue-700",
+              bg: "bg-blue-50 border-blue-200",
+              text: "text-blue-800",
+              items: ["기능 저하 고위험군 선별", "용량 조정 및 지원 전략 수립", "운동·영양 중재 계획"],
+            },
+            {
+              phase: "치료 중",
+              icon: "activity",
+              color: "bg-indigo-600",
+              bg: "bg-indigo-50 border-indigo-200",
+              text: "text-indigo-800",
+              items: ["기능 변화 반복 추적", "독성 위험 조기 탐지", "중재 연결 및 모니터링"],
+            },
+            {
+              phase: "생존자 관리",
+              icon: "heart",
+              color: "bg-violet-600",
+              bg: "bg-violet-50 border-violet-200",
+              text: "text-violet-800",
+              items: ["낙상 위험 평가", "운동·영양 프로그램 연계", "장기 기능 지원"],
+            },
+          ].map((s, i) => (
+            <div key={i} className={`${s.bg} border rounded-2xl p-6 flex flex-col gap-4`}>
+              <div className="flex items-center gap-2">
+                <div className={`w-8 h-8 ${s.color} rounded-lg flex items-center justify-center`}>
+                  <LucideIcon name={s.icon} className="w-4 h-4 text-white" />
+                </div>
+                <span className={`font-black ${s.text} text-sm`}>{s.phase}</span>
+              </div>
+              <ul className="space-y-2">
+                {s.items.map((item, j) => (
+                  <li key={j} className={`flex items-start gap-2 text-sm ${s.text}`}>
+                    <span className="font-bold mt-0.5">•</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="col-span-1 lg:col-span-3 bg-slate-50 border border-slate-200 rounded-2xl p-5 flex gap-3 items-start">
+            <LucideIcon name="info" className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-slate-600 leading-relaxed">
+              SPPB는 치료 전 선별(screening), 치료 중 모니터링, 생존자 관리 전 단계에 걸쳐 일관된 기능 데이터를 제공합니다.
+              반복 측정이 가능한 표준화된 프로세스가 임상 현장에서의 지속적 활용을 위한 핵심 조건입니다.
+            </p>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 7: From Assessment to Implementation ── */
+    (
+      <SlideLayout title="AndanteFit 솔루션" headline="From Assessment to Implementation">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-5">
+            <div className="bg-blue-50 border-l-4 border-blue-700 p-5 rounded-r-2xl">
+              <p className="text-slate-700 text-base leading-relaxed">
+                SPPB는 강력한 도구이지만 현장에서 <strong>일관되고 표준화된 측정</strong>이 필요합니다.
+                AndanteFit은 신체기능평가(SPPB)를 자동화하여 임상 및 연구 환경에서 표준화된 기능 데이터를 제공합니다.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: "sliders",      title: "검사자 간 편차 최소화",           desc: "자동화된 측정 프로토콜로 측정자 의존성을 줄입니다." },
+                { icon: "clock",        title: "시간 효율성 향상",                desc: "표준화된 프로세스로 임상 워크플로우에 통합 가능합니다." },
+                { icon: "users",        title: "대규모 스크리닝 가능",             desc: "다수 항암 환자의 일괄 선별 및 추적 관찰에 최적화됩니다." },
+                { icon: "globe",        title: "다기관 연구 적합",                desc: "연구 코호트 및 다기관 연구 환경에서 일관된 데이터 확보를 지원합니다." },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={item.icon} className="w-4 h-4 text-blue-700" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[380px] flex-shrink-0">
+            <ImgBox
+              src="../assets/sppb-components-balance-gait-chair-stand.png"
+              alt="SPPB 구성 요소 그림"
+              className="h-56 sm:h-64 shadow-md object-contain"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 8: Conclusion + CTA ── */
+    (
+      <div className="w-full md:h-full bg-slate-900 p-8 sm:p-14 flex flex-col justify-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
+              <span className="text-sm font-bold text-slate-400 tracking-wider">Conclusion</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">
+              종양 중심에서<br/>기능 중심 정밀 치료로
+            </h2>
+
+            <div className="space-y-4">
+              {[
+                { icon: "trending-up",   title: "예후 예측",    desc: "근감소증과 노쇠 평가는 항암 환자의 예후 예측과 독성 감소의 핵심 요소입니다." },
+                { icon: "bar-chart-2",   title: "SPPB 중심",   desc: "SPPB는 객관적 기능 지표로서 치료 전·중·후 전 단계에서 활용 가능합니다." },
+                { icon: "cpu",           title: "AndanteFit",  desc: "임상 현장에서 표준화된 SPPB 측정을 실현 가능하게 만드는 솔루션입니다." },
+              ].map((e, i) => (
+                <div key={i} className="flex gap-4 items-start">
+                  <div className="w-10 h-10 bg-blue-500/20 border border-blue-500/40 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={e.icon} className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-sm mb-1">{e.title}</div>
+                    <p className="text-slate-400 text-xs leading-relaxed">{e.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+            <h3 className="text-white font-black text-xl mb-2">도입을 고민 중이신가요?</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">
+              항암 환자 대상 SPPB 표준화 측정이나<br/>
+              연구 코호트 적용에 관심이 있으시다면<br/>
+              지금 바로 서비스 소개서를 받아보세요.
+            </p>
+            <a
+              href="mailto:snm@dyphi.com"
+              className="block bg-orange-500 hover:bg-orange-600 text-white font-black text-center py-3 px-6 rounded-xl transition-colors no-underline"
+            >
+              서비스 소개서 및 상담 신청하기 →
+            </a>
+          </div>
+        </div>
+      </div>
+    ),
+
+  ];
+
+  return (
+    <div className="w-full min-h-screen bg-slate-200 safePad">
+      {slides.map((slide, i) => (
+        <SlideFrame key={i} index={i}>
+          {slide}
+        </SlideFrame>
+      ))}
     </div>
+  );
+};
 
-    <!-- ── SLIDE 3: Aging, Cancer, Muscle Loss Cycle ── -->
-    <div class="sectionTitle">Aging, Cancer, and Treatment: The Path to Functional Decline</div>
-    <div class="contentWrap">
-      <p>
-        노화와 동반 질환은 이미 기능 예비력을 감소시킵니다. 여기에 암 진단과 항암 치료가 더해지면
-        근육 소실과 기능 저하가 급격히 진행될 수 있습니다.
-      </p>
-      <p>
-        Aging + Cancer + Treatment → Muscle loss → Functional decline → Increased vulnerability
-      </p>
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
 
-      <figure class="wikiFigure is-context">
-        <img src="../assets/aging-cancer-muscle-loss-cycle.png"
-             alt="노화와 암 진단 및 치료가 기능 예비력 감소와 취약성 증가로 이어질 수 있으며 노쇠 평가와 모니터링이 관리 목표를 지원한다는 개념도"
-             loading="lazy" decoding="async">
-        <figcaption>기능 예비력에서 취약성으로 이동하는 과정과, 노쇠 평가·모니터링의 역할.</figcaption>
-      </figure>
+<!-- Footer -->
+<div data-include="../../includes/footer.html"></div>
+<script src="../../js/main.js"></script>
+<script src="../../js/navigation.js"></script>
 
-      <p style="margin-top:20px;">이 과정에서 다음이 나타날 수 있습니다.</p>
-      <ul>
-        <li>치료 중단</li>
-        <li>독성 증가</li>
-        <li>낙상 위험 증가</li>
-        <li>입원 및 사망 위험 증가</li>
-      </ul>
-      <p>
-        <strong>핵심 메시지</strong> — 노쇠 평가는 치료 전 선별뿐 아니라 치료 중 모니터링의 핵심 요소입니다.
-      </p>
-    </div>
-
-    <!-- ── SLIDE 4: What Should Be Measured? ── -->
-    <div class="sectionTitle">What Should Be Measured?</div>
-    <div class="contentWrap">
-      <p>
-        근감소증 및 노쇠 평가는 다음 세 가지 축으로 구성됩니다.
-      </p>
-      <ul>
-        <li>Muscle mass</li>
-        <li>Muscle strength</li>
-        <li>Physical performance</li>
-      </ul>
-      <p>
-        이 중 physical performance는 실제 임상 사건과 가장 직접적으로 연결되는 영역입니다.
-      </p>
-    </div>
-
-    <!-- ── SLIDE 5: SPPB Components ── -->
-    <div class="sectionTitle">Short Physical Performance Battery (SPPB)</div>
-    <div class="contentWrap">
-      <p>
-        SPPB는 3가지 객관적 기능 평가로 구성됩니다.
-      </p>
-      <ol>
-        <li><strong>Balance test</strong> — 정적 균형 능력 평가</li>
-        <li><strong>Gait speed test (4m walk)</strong> — 이동 능력 및 전신 활력 평가</li>
-        <li><strong>Chair stand test (5 repetitions)</strong> — 하지 근력과 근지구력 평가</li>
-      </ol>
-      <p>총점 0–12점으로 기능을 정량화합니다.</p>
-
-      <figure class="wikiFigure is-context">
-        <img src="../assets/sppb-components-balance-gait-chair-stand.png"
-             alt="SPPB 구성 요소(균형, 4미터 보행 속도, 5회 의자 일어나기)를 설명하는 그림"
-             loading="lazy" decoding="async">
-        <figcaption>SPPB의 3가지 구성 요소: 균형, 보행 속도(4m), 의자 일어나기(5회).</figcaption>
-      </figure>
-
-      <p style="margin-top:20px;"><strong>임상적 장점</strong></p>
-      <ul>
-        <li>재현성 높은 객관적 점수</li>
-        <li>치료 독성 및 생존과 연관</li>
-        <li>중재 효과 모니터링 가능</li>
-        <li>노인의학적 평가(GA)의 핵심 영역</li>
-      </ul>
-    </div>
-
-    <!-- ── SLIDE 6: Clinical Application in Oncology ── -->
-    <div class="sectionTitle">Clinical Application in Oncology</div>
-    <div class="contentWrap">
-      <h2>항암 치료 전</h2>
-      <p>기능 저하 고위험군 선별 → 용량 조정 및 중재 전략 수립</p>
-
-      <h2>항암 치료 중</h2>
-      <p>기능 변화 추적 → 독성 위험 조기 탐지</p>
-
-      <h2>생존자 관리 단계</h2>
-      <p>낙상 위험 평가 → 운동·영양 프로그램 연계</p>
-    </div>
-
-    <!-- ── SLIDE 7: From Assessment to Implementation ── -->
-    <div class="sectionTitle">From Assessment to Implementation</div>
-    <div class="contentWrap">
-      <p>
-        SPPB는 강력한 도구이지만 현장에서 일관되고 표준화된 측정이 필요합니다.
-      </p>
-      <p>
-        AndanteFit은 신체기능평가(SPPB)를 자동화하여 임상 및 연구 환경에서 표준화된 기능 데이터를 제공합니다.
-      </p>
-      <ul>
-        <li>검사자 간 편차 최소화</li>
-        <li>시간 효율성 향상</li>
-        <li>대규모 항암 환자 스크리닝 가능</li>
-        <li>연구 코호트 및 다기관 연구에 적합</li>
-      </ul>
-    </div>
-
-    <!-- ── SLIDE 8: Conclusion ── -->
-    <div class="sectionTitle">Conclusion</div>
-    <div class="noteBox">
-      암 치료는 종양 중심 치료에서 기능 중심 정밀 치료로 이동하고 있습니다.<br/><br/>
-      근감소증과 노쇠 평가는 항암 환자의 예후 예측, 독성 감소, 그리고 생존자 관리의 핵심 요소입니다.<br/><br/>
-      SPPB는 그 중심에 있는 객관적 기능 지표입니다.<br/><br/>
-      AndanteFit은 이를 임상 현장에서 실현 가능하게 만드는 솔루션입니다.
-    </div>
-
-    <div class="sectionTitle">참고문헌</div>
-    <div class="wikiRef">
-      본 페이지는 관련 메타분석·평가 체계 문서·항암 환자 근감소증 및 낙상 위험 자료를 바탕으로 작성되었습니다.
-      (사이트 정책에 맞는 서지 형식으로 정리하여 추가하세요.)
-    </div>
-
-    <footer class="wikiFooter">
-      <div>문의: info@nofrailty.org</div>
-      <div style="margin-top:8px; opacity:0.7;">© 2026 NOFRAILTY. All rights reserved.</div>
-    </footer>
-
-  </div><!-- /.wikiWrap -->
 </body>
 </html>

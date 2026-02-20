@@ -191,9 +191,6 @@ const App = () => {
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>SPPB 구성요소와 임상 적용 시나리오</li>
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>표준화 측정의 필요성과 AndanteFit 적용</li>
               </ul>
-              <div className="mt-4 text-xs text-slate-500">
-                이미지와 근거는 아래 슬라이드에서 순서대로 제시됩니다.
-              </div>
             </div>
           </div>
         </div>
@@ -231,11 +228,6 @@ const App = () => {
               ))}
             </div>
 
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
-              <p className="text-xs text-slate-600 leading-relaxed">
-                이 페이지는 기능 평가의 대표 도구인 SPPB를 중심으로, 예후 연관성과 임상 적용(선별·모니터링·생존자 관리)을 정리합니다.
-              </p>
-            </div>
           </div>
         </div>
       </SlideLayout>
@@ -244,13 +236,8 @@ const App = () => {
     /* ── Slide 3: SPPB & Mortality Risk ── */
     (
       <SlideLayout title="근거 데이터" headline="Higher SPPB scores are associated with lower mortality risk">
-        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-center">
           <div className="flex-1 space-y-4">
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              다변량 보정 모델에서 SPPB 점수가 높을수록 사망 위험은 유의하게 감소합니다.
-              (아래 수치는 그림에 표시된 요약값과 동일합니다.)
-            </p>
-
             <div className="space-y-3">
               {[
                 { label: "SPPB 10–12점",        val: "약 50% 낮은 사망 위험", color: "bg-blue-700" },
@@ -275,11 +262,11 @@ const App = () => {
             </div>
           </div>
 
-          <div className="w-full lg:w-[420px] flex-shrink-0">
+          <div className="w-full md:w-[340px] lg:w-[420px] flex-shrink-0">
             <ImgBox
               src="../assets/sppb-score-and-mortality-risk.png"
               alt="SPPB 점수가 높을수록 사망 위험이 낮다는 연관성을 요약한 인포그래픽"
-              className="h-64 sm:h-80 shadow-md object-contain"
+              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-md object-contain"
             />
           </div>
         </div>
@@ -289,21 +276,16 @@ const App = () => {
     /* ── Slide 4: Aging-Cancer-Muscle Loss Cycle ── */
     (
       <SlideLayout title="병태생리" headline="Aging, Cancer, and Treatment: The Path to Functional Decline">
-        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
-          <div className="w-full lg:w-[460px] flex-shrink-0">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-center">
+          <div className="w-full md:w-[360px] lg:w-[460px] flex-shrink-0">
             <ImgBox
               src="../assets/aging-cancer-muscle-loss-cycle.png"
               alt="노화와 암 진단 및 치료가 기능 예비력 감소와 취약성 증가로 이어질 수 있음을 보여주는 개념도"
-              className="h-64 sm:h-80 shadow-md object-contain"
+              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-md object-contain"
             />
           </div>
 
           <div className="flex-1 space-y-4">
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              노화와 동반 질환은 시간이 지날수록 기능 예비력을 감소시킬 수 있습니다.
-              암 진단과 항암 치료가 더해지면 근육 소실과 기능 저하가 가속되며, 취약성이 증가할 수 있습니다.
-            </p>
-
             <div className="flex items-center gap-2 flex-wrap">
               {["Aging", "Cancer", "Treatment", "Muscle loss", "Functional decline", "Vulnerability"].map((s, i, arr) => (
                 <React.Fragment key={i}>
@@ -340,13 +322,8 @@ const App = () => {
     /* ── Slide 5: SPPB Components ── */
     (
       <SlideLayout title="평가 도구" headline="Short Physical Performance Battery (SPPB)">
-        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-center">
           <div className="flex-1 space-y-4">
-            <p className="text-slate-600 text-sm leading-relaxed">
-              SPPB는 3가지 수행 기반 평가로 신체 기능을 0–12점으로 정량화합니다.
-              단순하면서도 반복 측정이 가능해, 변화 추적과 중재 효과 평가에 활용됩니다.
-            </p>
-
             <div className="space-y-3">
               {[
                 { num: "01", icon: "shield",     title: "Balance test",               desc: "정적 균형 능력 평가",          color: "bg-blue-700" },
@@ -378,11 +355,11 @@ const App = () => {
             </div>
           </div>
 
-          <div className="w-full lg:w-[460px] flex-shrink-0">
+          <div className="w-full md:w-[360px] lg:w-[460px] flex-shrink-0">
             <ImgBox
               src="../assets/sppb-components-balance-gait-chair-stand.png"
               alt="SPPB 구성 요소인 균형, 4미터 보행 속도, 5회 의자 일어나기를 설명하는 그림"
-              className="h-64 sm:h-80 shadow-md object-contain"
+              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-md object-contain"
             />
           </div>
         </div>
@@ -479,11 +456,6 @@ const App = () => {
               ))}
             </div>
 
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
-              <p className="text-xs text-slate-600 leading-relaxed">
-                적용 예: 항암 치료 전 기능 스크리닝, 치료 중 기능 변화 추적, 생존자 낙상 위험 관리 연계.
-              </p>
-            </div>
           </div>
 
           <div className="w-full lg:w-[380px] flex-shrink-0">
@@ -494,9 +466,6 @@ const App = () => {
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>반복 측정 데이터의 일관성</li>
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>임상·연구 모두에 동일 프로토콜 적용</li>
               </ul>
-              <div className="mt-4 text-xs text-slate-500">
-                (본 슬라이드는 개념 설명용이며, 이미지는 중복 삽입하지 않습니다.)
-              </div>
             </div>
           </div>
         </div>
@@ -509,14 +478,14 @@ const App = () => {
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="relative z-10 max-w-2xl">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
               <span className="text-sm font-bold text-slate-400 tracking-wider">Conclusion</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">
-              종양 중심에서<br/>기능 중심 정밀 치료로
+              항암에 있어 기능 중심으로의 관점 전환
             </h2>
 
             <div className="space-y-4">
@@ -538,20 +507,6 @@ const App = () => {
             </div>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-            <h3 className="text-white font-black text-xl mb-2">도입을 고민 중이신가요?</h3>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              항암 환자 대상 SPPB 표준화 측정이나<br/>
-              연구 코호트 적용에 관심이 있으시다면<br/>
-              소개 자료와 적용 시나리오를 공유드릴 수 있습니다.
-            </p>
-            <a
-              href="mailto:info@nofrailty.org"
-              className="block bg-orange-500 hover:bg-orange-600 text-white font-black text-center py-3 px-6 rounded-xl transition-colors no-underline"
-            >
-              자료 요청 및 상담 문의 →
-            </a>
-          </div>
         </div>
       </div>
     ),
@@ -560,7 +515,7 @@ const App = () => {
     (
       <SlideLayout title="References" headline="참고문헌">
         <div className="h-full overflow-y-auto">
-          <ol className="space-y-3 text-xs text-slate-600 leading-relaxed list-none">
+          <ol className="space-y-1.5 text-xs text-slate-600 leading-snug list-none">
             {[
               {
                 text: "Ferrara, M. C., et al. (2024). Effects of an individualised exercise program in hospitalised older adults with cancer: A randomised clinical trial. ",
@@ -618,8 +573,8 @@ const App = () => {
                 text: "International Society of Geriatric Oncology (SIOG). (n.d.). Geriatric assessment in older patients with cancer.",
               },
             ].map((ref, i) => (
-              <li key={i} className="flex gap-3 bg-white border border-slate-100 rounded-xl p-3 shadow-sm">
-                <span className="font-black text-slate-300 text-sm w-5 flex-shrink-0 pt-px">{i + 1}</span>
+              <li key={i} className="flex gap-2">
+                <span className="font-black text-slate-400 text-xs w-4 flex-shrink-0 pt-px">{i + 1}.</span>
                 <span>
                   {ref.text}
                   {ref.journal && <em>{ref.journal}</em>}

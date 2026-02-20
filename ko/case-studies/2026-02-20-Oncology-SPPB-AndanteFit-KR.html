@@ -63,13 +63,16 @@ function LucideIcon({ name, className = "" }) {
   return <i data-lucide={name} className={className}></i>;
 }
 
-function ImgBox({ src, alt, className = "" }) {
+function ImgBox({ src, alt, className = "", fit = "cover" }) {
   const [ok, setOk] = useState(true);
+  const baseClass = fit === "contain"
+    ? "max-w-full object-contain rounded-2xl "
+    : "w-full object-cover rounded-2xl ";
   return ok ? (
     <img
       src={src}
       alt={alt}
-      className={"w-full object-cover rounded-2xl " + className}
+      className={baseClass + className}
       onError={() => setOk(false)}
       loading="lazy"
       decoding="async"
@@ -236,8 +239,8 @@ const App = () => {
     /* ── Slide 3: SPPB & Mortality Risk ── */
     (
       <SlideLayout title="근거 데이터" headline="Higher SPPB scores are associated with lower mortality risk">
-        <div className="flex flex-col md:flex-row gap-6 h-full items-center">
-          <div className="flex-1 space-y-4">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-stretch">
+          <div className="flex-1 min-h-0 space-y-4 flex flex-col justify-center">
             <div className="space-y-3">
               {[
                 { label: "SPPB 10–12점",        val: "약 50% 낮은 사망 위험", color: "bg-blue-700" },
@@ -262,11 +265,12 @@ const App = () => {
             </div>
           </div>
 
-          <div className="w-full md:w-[340px] lg:w-[420px] flex-shrink-0">
+          <div className="w-full md:flex-1 md:min-h-0 flex items-center justify-center bg-slate-50 rounded-3xl p-4">
             <ImgBox
               src="../assets/sppb-score-and-mortality-risk.png"
               alt="SPPB 점수가 높을수록 사망 위험이 낮다는 연관성을 요약한 인포그래픽"
-              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-md object-contain"
+              fit="contain"
+              className="h-56 sm:h-64 md:h-auto md:max-h-[440px] md:max-w-full shadow-sm"
             />
           </div>
         </div>
@@ -277,11 +281,12 @@ const App = () => {
     (
       <SlideLayout title="병태생리" headline="Aging, Cancer, and Treatment: The Path to Functional Decline">
         <div className="flex flex-col md:flex-row gap-6 h-full items-center">
-          <div className="w-full md:w-[360px] lg:w-[460px] flex-shrink-0">
+          <div className="w-full md:w-[360px] lg:w-[460px] flex-shrink-0 flex items-center justify-center bg-slate-50 rounded-3xl p-3">
             <ImgBox
               src="../assets/aging-cancer-muscle-loss-cycle.png"
               alt="노화와 암 진단 및 치료가 기능 예비력 감소와 취약성 증가로 이어질 수 있음을 보여주는 개념도"
-              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-md object-contain"
+              fit="contain"
+              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-sm"
             />
           </div>
 
@@ -322,8 +327,8 @@ const App = () => {
     /* ── Slide 5: SPPB Components ── */
     (
       <SlideLayout title="평가 도구" headline="Short Physical Performance Battery (SPPB)">
-        <div className="flex flex-col md:flex-row gap-6 h-full items-center">
-          <div className="flex-1 space-y-4">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-stretch">
+          <div className="flex-1 min-h-0 space-y-4 flex flex-col justify-center">
             <div className="space-y-3">
               {[
                 { num: "01", icon: "shield",     title: "Balance test",               desc: "정적 균형 능력 평가",          color: "bg-blue-700" },
@@ -355,11 +360,12 @@ const App = () => {
             </div>
           </div>
 
-          <div className="w-full md:w-[360px] lg:w-[460px] flex-shrink-0">
+          <div className="w-full md:flex-1 md:min-h-0 flex items-center justify-center bg-slate-50 rounded-3xl p-4">
             <ImgBox
               src="../assets/sppb-components-balance-gait-chair-stand.png"
               alt="SPPB 구성 요소인 균형, 4미터 보행 속도, 5회 의자 일어나기를 설명하는 그림"
-              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-md object-contain"
+              fit="contain"
+              className="h-56 sm:h-64 md:h-auto md:max-h-[460px] md:max-w-full shadow-sm"
             />
           </div>
         </div>

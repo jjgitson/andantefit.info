@@ -31,12 +31,18 @@
   </script>
 
   <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
     html, body { height: 100%; }
     body { margin: 0; background: #e2e8f0; }
     #root { min-height: 100%; }
     
     .appFont {
-      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, sans-serif;
     }
     
     body { overflow: auto; }
@@ -60,12 +66,12 @@
       const num = String(index + 1).padStart(2, "0");
       return (
         <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
-          <div className={`relative w-full max-w-[1280px] md:h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+          <div className={`relative w-full max-w-[1280px] min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
             <div className="w-full md:h-full h-auto overflow-visible">
               {children}
             </div>
             <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
-              <div className="text-[12px] font-bold text-slate-400 tracking-widest">
+              <div className="text-[12px] font-bold text-slate-600 tracking-widest">
                 {num}
               </div>
             </div>
@@ -77,7 +83,7 @@
     const SlideLayout = ({ title, headline, children }) => (
       <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
         <header className="mb-5 sm:mb-6">
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-2">
             <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
             <span className="text-sm font-bold text-slate-500 tracking-wider uppercase">{title}</span>
           </div>
@@ -103,7 +109,7 @@
             
             <div className="relative z-10 max-w-4xl">
               <p className="text-sm uppercase tracking-wider text-teal-600 font-bold mb-4">STRATEGIC PROPOSAL</p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
                 Seamless Integrated Care <span className="text-teal-600">for Older Adults</span>
               </h1>
               <p className="text-lg sm:text-xl text-slate-600 mb-12 leading-relaxed">
@@ -150,7 +156,7 @@
                 <div className="flex justify-center">
                   <div className="bg-red-100 px-6 py-3 rounded-full border-2 border-red-300">
                     <p className="text-sm font-bold text-red-700 uppercase tracking-wide">Disconnect</p>
-                    <p className="text-xs text-red-600 text-center">Operational Complexity Gap</p>
+                    <p className="text-sm text-red-600 text-center leading-relaxed">Operational Complexity Gap</p>
                   </div>
                 </div>
 
@@ -271,7 +277,7 @@
                 <p className="text-sm text-slate-700 text-center">
                   The gap lies not in the concept, but in the feasibility of large-scale execution.
                 </p>
-                <p className="text-xs text-slate-500 text-right mt-2">Sim et al., BMC Geriatrics, 2025</p>
+                <p className="text-sm text-slate-500 text-right mt-2 leading-relaxed">Sim et al., BMC Geriatrics, 2025</p>
               </div>
             </div>
           </SlideLayout>
@@ -331,7 +337,7 @@
                 Therefore, the strategic entry point is not a new program, but a common operational language.
               </p>
 
-              <p className="text-slate-400 text-sm mt-8">
+              <p className="text-slate-300 text-sm mt-8">
                 Informed by field implementation experience of ICOPE-aligned models<br/>
                 <span className="text-xs">(Sim et al., BMC Geriatrics, 2025)</span>
               </p>
@@ -375,7 +381,7 @@
                 Physical function provides a practical, objective reference point that can be deployed at scale in community and primary care settings.
               </p>
 
-              <p className="text-xs text-slate-400 text-right">Vellas et al., 2023</p>
+              <p className="text-sm text-slate-400 text-right leading-relaxed">Vellas et al., 2023</p>
             </div>
           </SlideLayout>
         ),
@@ -532,7 +538,7 @@
               <div className="flex items-center justify-center gap-8">
                 <div className="bg-slate-900 p-8 rounded-2xl text-center shadow-lg">
                   <h3 className="text-white font-bold mb-2">AndanteFit Assessment</h3>
-                  <p className="text-slate-400 text-sm">Objective Data Input</p>
+                  <p className="text-slate-300 text-sm">Objective Data Input</p>
                 </div>
 
                 <LucideIcon name="arrow-right" className="w-8 h-8 text-slate-400" />
@@ -544,7 +550,7 @@
                       <LucideIcon name="check-circle-2" className="w-5 h-5 text-green-600" />
                     </div>
                     <p className="text-sm font-semibold text-green-900">Community Action</p>
-                    <p className="text-xs text-green-700">(Prevention / Exercise)</p>
+                    <p className="text-sm text-green-700 leading-relaxed">(Prevention / Exercise)</p>
                   </div>
 
                   <div className="bg-red-50 p-6 rounded-2xl border-2 border-red-300">
@@ -553,12 +559,12 @@
                       <LucideIcon name="alert-circle" className="w-5 h-5 text-red-600" />
                     </div>
                     <p className="text-sm font-semibold text-red-900">Clinical Referral</p>
-                    <p className="text-xs text-red-700">(Step 2 Assessment)</p>
+                    <p className="text-sm text-red-700 leading-relaxed">(Step 2 Assessment)</p>
                   </div>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-400 text-right mt-8">World Health Organization. (2019).</p>
+              <p className="text-sm text-slate-400 text-right mt-8 leading-relaxed">World Health Organization. (2019).</p>
             </div>
           </SlideLayout>
         ),
@@ -868,7 +874,7 @@
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-600/20 rounded-full blur-[120px] -mr-48 -mt-48"></div>
             
             <div className="relative z-10 max-w-3xl">
-              <h1 className="text-4xl sm:text-5xl font-black text-slate-900 mb-8">Thank you</h1>
+              <h1 className="text-4xl sm:text-5xl font-black text-slate-900 mb-8 tracking-tight">Thank you</h1>
               
               <div className="space-y-4 text-base sm:text-lg text-slate-700 leading-relaxed mb-12">
                 <p>             

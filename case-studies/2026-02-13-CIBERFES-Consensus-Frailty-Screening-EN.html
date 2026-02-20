@@ -104,12 +104,18 @@
   </script>
   
   <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
     html, body { height: 100%; }
     body { margin: 0; background: #e2e8f0; }
     #root { min-height: 100%; }
     
     .appFont {
-      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, sans-serif;
     }
     
     body { overflow: auto; }
@@ -229,7 +235,7 @@
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/70"></div>
           
           <div className="relative z-10 text-center px-6 max-w-5xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
               CIBERFES Consensus<br/>on Frailty
             </h1>
             <p className="text-xl sm:text-2xl md:text-3xl text-teal-300 font-semibold mb-4">
@@ -344,7 +350,7 @@
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mt-12 text-left">
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+              <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/20">
                 <div className="flex items-start gap-3 mb-3">
                   <LucideIcon name="zap" className="w-7 h-7 text-teal-200 flex-shrink-0" />
                   <h3 className="text-white font-bold text-lg">Quick and Simple Assessment</h3>
@@ -354,7 +360,7 @@
                 </p>
               </div>
 
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+              <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/20">
                 <div className="flex items-start gap-3 mb-3">
                   <LucideIcon name="ruler" className="w-7 h-7 text-teal-200 flex-shrink-0" />
                   <h3 className="text-white font-bold text-lg">Sensitive and Standardized Method</h3>
@@ -364,7 +370,7 @@
                 </p>
               </div>
 
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+              <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/20">
                 <div className="flex items-start gap-3 mb-3">
                   <LucideIcon name="check-circle-2" className="w-7 h-7 text-teal-200 flex-shrink-0" />
                   <h3 className="text-white font-bold text-lg">Aligned with European Recommendations</h3>
@@ -374,7 +380,7 @@
                 </p>
               </div>
 
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+              <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/20">
                 <div className="flex items-start gap-3 mb-3">
                   <LucideIcon name="puzzle" className="w-7 h-7 text-teal-200 flex-shrink-0" />
                   <h3 className="text-white font-bold text-lg">Complementary Tools</h3>
@@ -523,7 +529,7 @@
                 Standardized functional screening is the first step<br/>in frailty prevention
               </p>
               
-              <div className="mt-8 text-slate-400 text-sm leading-relaxed space-y-2">
+              <div className="mt-8 text-slate-300 text-sm leading-relaxed space-y-2">
                 <p>
                   This material is provided for informational purposes for medical professionals. 
                   Diagnosis and treatment decisions for individual patients should be based 
@@ -533,7 +539,7 @@
               
               <div className="mt-8">
                 <p className="text-white text-base font-semibold mb-1">AndanteFit by DYPHI Inc.</p>
-                <p className="text-slate-400 text-sm">Automated physical function assessment for clinical practice</p>
+                <p className="text-slate-300 text-sm">Automated physical function assessment for clinical practice</p>
               </div>
             </div>
           </div>

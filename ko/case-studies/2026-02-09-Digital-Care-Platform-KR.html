@@ -20,6 +20,12 @@
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
   <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
     
     html, body { height: 100%; }
     body { margin: 0; background: #e2e8f0; }
@@ -27,7 +33,7 @@
 
     /* 폰트: 로컬에 Pretendard가 있으면 사용 */
     .appFont {
-      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Apple SD Gothic Neo", Arial, sans-serif;
     }
 
     /* 스크롤 가능하게 */
@@ -182,14 +188,14 @@ const App = () => {
     const num = String(index + 1).padStart(2, "0");
     return (
       <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
-        <div className={`relative w-full max-w-[1280px] md:h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+        <div className={`relative w-full max-w-[1280px] min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
           {/* 모바일에서는 내용이 많을 수 있어 세로 스크롤을 허용 */}
           <div className="w-full md:h-full h-auto overflow-visible">
             {children}
           </div>
 
           <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
-            <div className="text-[12px] font-bold text-slate-400 tracking-widest">
+            <div className="text-[12px] font-bold text-slate-600 tracking-widest">
               {num}
             </div>
           </div>
@@ -201,7 +207,7 @@ const App = () => {
   const SlideLayout = ({ title, headline, children }) => (
     <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
       <header className="mb-5 sm:mb-6">
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2 mb-2">
           <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
           <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
         </div>
@@ -220,7 +226,7 @@ const App = () => {
     (
       <div className="w-full md:h-full p-5 sm:p-10 flex flex-col">
         <header className="mb-6 flex flex-col gap-1">
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-3">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
             <div className="w-2 h-8 bg-teal-600 rounded-full"></div>
             디지털 복지관 중심 예방적 건강관리 플랫폼 구축 방향
           </h1>
@@ -368,7 +374,7 @@ const App = () => {
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center justify-start">
             <LucideIcon name="info" className="w-8 h-8 text-red-500 mx-auto mb-4" />
             <h4 className="font-bold text-slate-900 text-base mb-2">장비의 분절</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               각각의 측정 장비가 따로 움직이며, 데이터가 통합되지 않습니다.
             </p>
           </div>
@@ -376,7 +382,7 @@ const App = () => {
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center justify-start">
             <LucideIcon name="activity" className="w-8 h-8 text-red-500 mx-auto mb-4" />
             <h4 className="font-bold text-slate-900 text-base mb-2">일회성 측정</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               단순 측정 결과만 남고, 시간에 따른 변화 추적이 어렵습니다.
             </p>
           </div>
@@ -384,7 +390,7 @@ const App = () => {
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center justify-start">
             <LucideIcon name="target" className="w-8 h-8 text-red-500 mx-auto mb-4" />
             <h4 className="font-bold text-slate-900 text-base mb-2">성과 도출 한계</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               정책 성과를 입증할 근거가 부족하여 사업 확산이 어렵습니다.
             </p>
           </div>
@@ -717,7 +723,7 @@ const App = () => {
                   {item.icon}
                 </div>
                 <div className="text-xl text-white">{item.title}</div>
-                <p className="text-slate-400 text-sm">{item.text}</p>
+                <p className="text-slate-300 text-sm">{item.text}</p>
               </div>
             ))}
           </div>

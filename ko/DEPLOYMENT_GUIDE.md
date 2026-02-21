@@ -1,3 +1,92 @@
+────────────────────
+AndanteFit Case Study 개발 지시 (EN 기본 /ko /es 구조 반영)
+────────────────────
+
+작업 목적
+
+AndanteFit 케이스 스터디 KO 페이지 1개 제작
+
+결과물은 최종 HTML 파일 1개만 출력
+
+작업 방식
+
+캔버스 코드를 베이스로 사용한다.
+
+정보 블록 구성과 카드 디자인 패턴은 유지한다.
+
+기능 구현에 필요한 구조 변경은 허용 범위 내에서 수행한다.
+
+아래 고정 규칙을 적용해 최종 HTML 1개를 출력한다.
+
+항상 지켜야 할 고정 규칙
+
+사이트 언어 구조는 EN이 기본(root), KO는 /ko/, ES는 /es/를 유지한다.
+
+Pretendard만 사용 (다른 폰트 import 금지)
+
+고정 height 금지 (h-[...] / md:h-[...] 사용 금지 → min-h 사용)
+
+본문: text-sm leading-relaxed
+
+캡션/메타: text-xs
+
+헤드라인: tracking-tight
+
+다크 배경 본문은 text-slate-300 사용 (본문에 text-slate-400 사용 금지)
+
+header/footer include 수정 금지
+
+지도 및 공통 JS 기능에 영향 주지 말 것
+
+SEO 기본 규칙
+
+canonical은 KO 페이지 자기 URL로 설정한다.
+
+hreflang은 en/ko/es/x-default를 포함한다.
+
+x-default는 EN(root) URL로 설정한다.
+
+EN/ES 대응 페이지 URL이 아직 없으면 hreflang en/es/x-default는 생략하고 ko만 둔다.
+
+내부 링크 1개 이상 포함(의미 있는 앵커 텍스트 사용)
+
+예: “SPPB 측정 방법을 자세히 보기” → /ko/what-is-sppb.html (사이트 실제 경로에 맞춤)
+
+중간 설명 없이 최종 HTML 코드만 출력
+
+이번 작업의 허용 범위
+
+section id 추가
+
+nav/앵커 수정
+
+불필요한 JS 제거
+
+class 치환
+
+chart-container height → min-height 변경
+
+meta 태그(title/description/canonical/hreflang) 수정 및 추가
+
+비허용 범위
+
+header/footer include 변경
+
+지도 기능 수정
+
+카드/디자인 패턴의 전면 재설계
+
+언어 폴더 구조 변경(EN root, /ko/, /es/ 변경 금지)
+
+출력 형식
+
+최종 HTML 코드 1개만 출력
+
+설명 문장, 단계 설명 금지
+
+────────────────────
+
+
 # 🚀 AndanteFit Website - Deployment Guide
 
 ## Quick Start (5 minutes)

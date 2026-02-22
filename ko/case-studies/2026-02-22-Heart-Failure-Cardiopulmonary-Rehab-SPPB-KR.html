@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>심부전·심폐재활에서의 SPPB 활용 | AndanteFit 케이스 스터디</title>
+  <meta name="description" content="심부전 환자에서 SPPB로 재입원 위험을 예측하고, 심폐재활 효과를 정량적으로 모니터링하는 임상 가이드. 기능 중심 재활 성과 관리 전략 포함. AndanteFit 케이스 스터디.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="DYPHI Inc.">
+  <meta name="language" content="ko">
+  <meta name="theme-color" content="#0d9488">
+  <meta name="keywords" content="SPPB, 신체기능평가, 심부전, 심폐재활, 심장재활, 기능평가, AndanteFit, 재입원, 운동내성">
+
+  <!-- Canonical & hreflang -->
+  <link rel="canonical" href="https://andantefit.info/ko/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html">
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="심부전·심폐재활에서의 SPPB 활용 | AndanteFit 케이스 스터디">
+  <meta property="og:description" content="심부전 SPPB 7점 미만 시 재입원 위험 2배↑. 심폐재활 중 기능 모니터링 임상 가이드.">
+  <meta property="og:url" content="https://andantefit.info/ko/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html">
+  <meta property="og:image" content="../../assets/andantefit-logo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="심부전·심폐재활에서의 SPPB 활용 | AndanteFit">
+  <meta name="twitter:description" content="SPPB 7점 미만 → 재입원 위험 2배. 심부전·심폐재활 기능 모니터링 임상 가이드.">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <!-- AndanteFit Base Stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --af-primary:   #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent:    #18BFBF;
+    }
+
+    body {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+        "Segoe UI", Roboto, "Apple SD Gothic Neo", Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+
+    /* chart: min-height only — fixed height 금지 */
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 260px;
+    }
+    @media (min-width: 768px) {
+      .chart-wrap { min-height: 300px; }
+    }
+
+    .card-base {
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.04);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--af-secondary);
+    }
+
+    /* teal accent left border */
+    .border-accent { border-left: 3px solid var(--af-secondary); }
+
+    /* stage card */
+    .stage-card {
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  </style>
+</head>
+
+<body>
+  <!-- Site Navigation -->
+  <div id="navigation-container"></div>
+
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <header class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="text-xs font-semibold text-teal-600 bg-teal-50 border border-teal-100 px-3 py-1 rounded-full">케이스 스터디</span>
+        <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">심장내과 / 심폐재활</span>
+        <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">2026-02-22</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+        심부전 진료 및 심폐재활에서<br class="hidden sm:block">
+        신체기능평가(SPPB)의 활용
+      </h1>
+      <p class="text-lg leading-relaxed text-slate-500 max-w-2xl mb-8">
+        재입원 위험 예측부터 재활 성과 정량화까지 —
+        이 케이스 스터디는 심부전 환자에서 SPPB가 단순한 운동 지표를 넘어
+        임상 의사결정과 심폐재활 효과 측정의 핵심 도구로 어떻게 활용되는지를 보여줍니다.
+      </p>
+
+      <!-- Key Stat Chips -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="card-base p-4 border-l-4 border-rose-400">
+          <div class="text-2xl font-bold text-rose-600 tracking-tight">2배↑</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">SPPB 7점 미만 시<br>재입원 위험 상승</div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-teal-500">
+          <div class="text-2xl font-bold text-teal-600 tracking-tight">+1.5점</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">심폐재활 완료 후<br>SPPB 평균 개선폭</div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-amber-400">
+          <div class="text-2xl font-bold text-amber-600 tracking-tight">40%</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">심부전 입원 환자 중<br>저기능군(SPPB&lt;7) 비율</div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-slate-400">
+          <div class="text-2xl font-bold text-slate-600 tracking-tight">0.5점</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">임상적 유의 기준<br>(MCID)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── MAIN ──────────────────────────────────────────── -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+    <!-- ── Executive Summary ──────────────────────────────── -->
+    <section id="summary">
+      <div class="card-base border-accent p-6 sm:p-8">
+        <p class="section-label mb-3">Executive Summary</p>
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-4">기능 평가 중심의 심부전 관리</h2>
+        <p class="text-base leading-relaxed text-slate-700 mb-6">
+          심부전은 전 세계적으로 가장 흔한 입원 원인 중 하나입니다. 치료 후에도 재입원율이 높고
+          환자의 일상적 기능 저하가 두드러지지만, 기존 임상 평가는 주로
+          <strong class="text-rose-700">박출률(EF)과 증상 중증도(NYHA 분류)</strong>에 집중되어 있습니다.
+          <strong>SPPB(Short Physical Performance Battery)</strong>는 심부전 환자의
+          실제 기능 수행 능력을 평가하고, 재입원·사망 위험을 독립적으로 예측하며,
+          심폐재활 효과를 정량적으로 측정하는 임상적 가치를 가집니다.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-slate-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">기존 진료 초점</p>
+            <ul class="text-base leading-relaxed text-slate-600 space-y-1">
+              <li>박출률(EF) 기반 중증도 분류</li>
+              <li>NYHA 증상 분류 (I~IV)</li>
+              <li>BNP/NT-proBNP 수치 관리</li>
+            </ul>
+          </div>
+          <div class="bg-teal-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-600 uppercase tracking-wider mb-2">전략적 전환 방향 →</p>
+            <ul class="text-sm leading-relaxed text-teal-800 space-y-1">
+              <li><strong>신체 기능(Function)</strong> 정량 평가</li>
+              <li><strong>재입원 위험</strong> 조기 식별</li>
+              <li><strong>재활 성과</strong> 객관적 모니터링</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 1: 도입 필요성 ─────────────────────────── -->
+    <section id="section-1">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        왜 심부전 진료에서 신체 기능을 함께 보아야 하는가
+      </h2>
+
+      <div class="space-y-4">
+        <!-- 1.1 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-sm">1.1</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">운동 불내성과 기능 저하의 악순환</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-2">
+              심부전 환자는 심박출량 감소로 인해 <strong>근육 혈류 공급이 제한</strong>되고,
+              이는 운동 불내성 → 활동 감소 → 근위축(Sarcopenia) → 기능 저하의 악순환을 초래합니다.
+            </p>
+            <div class="bg-slate-50 rounded px-4 py-3 text-sm leading-relaxed text-slate-500">
+              <strong class="text-slate-700">SPPB의 역할:</strong>
+              이 악순환이 실제 보행 속도, 균형, 의자 일어서기 능력에 미치는 영향을
+              표준화된 방법으로 측정합니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.2 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">1.2</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">NYHA 분류의 한계</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-2">
+              NYHA 기능 분류는 주관적 보고에 의존하여 측정자 간 변동성이 큽니다.
+              같은 NYHA III 환자도 실제 보행 능력은 크게 차이날 수 있습니다.
+            </p>
+            <div class="bg-slate-50 rounded px-4 py-3 text-sm leading-relaxed text-slate-500">
+              <strong class="text-slate-700">SPPB의 보완:</strong>
+              객관적·표준화된 신체 수행 평가로 NYHA 분류와 독립적인 예후 정보를 제공합니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.3 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">1.3</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">독립적 예후 예측 지표</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-3">
+              SPPB 점수는 BNP, EF, NYHA 분류와 독립적으로 심부전 환자의
+              재입원, 사망, 삶의 질 저하를 예측합니다.
+              기존 임상 지표가 놓치는 <strong>'기능적 취약성'</strong>을 정량화합니다.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">재입원 독립 예측</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">전체 사망률 예측</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">삶의 질 연관 지표</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">재활 반응 예측</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 2: 근거 데이터 ──────────────────────────── -->
+    <section id="section-2">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        심부전 환자에서의 근거 중심 데이터
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Readmission Risk -->
+        <div class="card-base p-6 flex flex-col gap-5">
+          <div>
+            <h3 class="text-base font-bold text-slate-700 tracking-tight mb-3 pb-2 border-b border-slate-100">
+              2.1 &nbsp;SPPB와 재입원 위험도
+            </h3>
+            <div class="flex items-end gap-3 mb-4">
+              <span class="text-5xl font-bold text-rose-600 tracking-tight leading-none">40%</span>
+              <span class="text-base leading-relaxed text-slate-600 pb-1">입원 환자 중<br>저기능군 (SPPB &lt;7)</span>
+            </div>
+            <p class="text-base leading-relaxed text-slate-600 mb-4">
+              심부전으로 입원한 환자의 약 40%는 SPPB 7점 미만의 저기능 상태로,
+              퇴원 후 30일 내 재입원 위험이 고기능군 대비 약 2배 높습니다.
+            </p>
+            <div class="bg-slate-50 rounded-lg px-4 py-3 border-l-4 border-rose-400">
+              <p class="text-sm font-semibold text-slate-700 mb-1">재원 기간과의 상관관계</p>
+              <p class="text-base leading-relaxed text-slate-600">
+                SPPB 점수가 낮을수록 평균 재원 기간이 길어지며,
+                퇴원 후 시설 입소(요양원 등) 가능성이 높아집니다.
+              </p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 text-right">Reference: Pulignano et al., Eur J Heart Fail.</p>
+        </div>
+
+        <!-- SPPB Score Chart -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-700 tracking-tight mb-1 pb-2 border-b border-slate-100">
+            2.2 &nbsp;SPPB 점수별 1년 재입원율
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            SPPB 점수가 낮을수록 1년 내 재입원율이 급격히 상승합니다.
+            &nbsp;*다기관 코호트 연구 기반 시각화
+          </p>
+          <div class="chart-wrap">
+            <canvas id="readmissionChart"></canvas>
+          </div>
+          <div class="mt-4 bg-rose-50 border border-rose-100 rounded-lg px-4 py-3">
+            <p class="text-base leading-relaxed text-rose-700">
+              <strong>임상적 경고:</strong> SPPB 7점 미만 환자군은
+              고기능군(10점 이상) 대비 1년 재입원율이 약
+              <strong>2배 이상</strong> 높습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 3: 심폐재활과 SPPB ──────────────────── -->
+    <section id="section-3">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        심폐재활에서 SPPB 모니터링의 중요성
+      </h2>
+
+      <!-- Summary table -->
+      <div class="card-base overflow-hidden mb-6">
+        <table class="w-full text-base">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide w-1/4">구분</th>
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">주요 내용</th>
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide w-1/3">비고</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr>
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">재활 전 평가</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                SPPB 기저치 측정으로 <strong>기능적 취약성</strong> 사전 확인 및 재활 목표 설정
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">고위험군 조기 식별 가능</td>
+            </tr>
+            <tr class="bg-teal-50/40">
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">재활 효과 측정</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                심폐재활 완료 후 <strong>SPPB 평균 1.5점 개선</strong>
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">MCID(0.5점) 3배 초과</td>
+            </tr>
+            <tr>
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">재활 강도 조정</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                SPPB 점수에 따라 <strong>운동 처방 강도</strong>를 개인화하여 낙상 위험 최소화
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">저점수군 → 저강도 시작</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Two info cards -->
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="card-base p-5 border-l-4 border-rose-400">
+          <h3 class="text-base font-bold text-rose-700 tracking-tight mb-2">SPPB 미측정 시 위험</h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span>
+              기능적 취약 환자에게 과부하 운동 처방 → 낙상·부정맥 위험
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span>
+              재활 효과를 주관적 증상만으로 평가 → 객관적 성과 입증 어려움
+            </li>
+          </ul>
+        </div>
+        <div class="card-base p-5 border-l-4 border-teal-400">
+          <h3 class="text-base font-bold text-teal-700 tracking-tight mb-2">SPPB 기반 재활 관리</h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 flex-shrink-0"></span>
+              기능별 맞춤 운동 처방으로 안전하고 효과적인 재활 진행
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 flex-shrink-0"></span>
+              재활 성과를 SPPB 점수로 정량화 → 보험 청구 및 의료진 간 소통 강화
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 4: 기능 단계 분류 ────────────────────────── -->
+    <section id="section-4">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-2">
+        심부전 환자의 기능 단계 분류
+      </h2>
+      <p class="text-base leading-relaxed text-slate-500 mb-6">
+        SPPB 점수 기반 — 재활 전략 차별화를 위한 실용적 분류 체계
+      </p>
+
+      <div class="card-base p-6 sm:p-8">
+        <!-- Flow -->
+        <div class="flex flex-col items-center gap-0 mb-8">
+          <div class="w-full max-w-sm bg-slate-100 border border-slate-200 rounded-xl px-5 py-4 text-center">
+            <p class="text-sm font-semibold text-slate-700">심부전 환자 (Heart Failure)</p>
+            <p class="text-xs text-slate-500 mt-0.5">EF 감소형(HFrEF) / 보존형(HFpEF) 모두 해당</p>
+          </div>
+          <div class="flex flex-col items-center py-2 gap-0.5">
+            <div class="w-px h-6 bg-slate-300"></div>
+            <p class="text-xs text-slate-400">SPPB 평가 (보행 속도 + 균형 + 의자 일어서기)</p>
+            <div class="w-px h-6 bg-slate-300"></div>
+          </div>
+          <div class="w-full max-w-2xl grid grid-cols-3 gap-3">
+            <div class="stage-card bg-green-50 border border-green-200">
+              <span class="text-xs font-bold text-green-600 uppercase tracking-wider">고기능군</span>
+              <p class="text-lg font-bold text-slate-700">10–12점</p>
+              <p class="text-xs text-slate-500 leading-relaxed">표준 강도 재활<br>6개월마다 재평가</p>
+              <span class="text-xs bg-white text-green-700 border border-green-200 px-2 py-0.5 rounded-full mt-1">예후 양호</span>
+            </div>
+            <div class="stage-card bg-amber-50 border border-amber-200">
+              <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">중기능군</span>
+              <p class="text-lg font-bold text-slate-700">7–9점</p>
+              <p class="text-xs text-slate-500 leading-relaxed">중강도 재활<br>3개월마다 재평가</p>
+              <span class="text-xs bg-white text-amber-600 border border-amber-200 px-2 py-0.5 rounded-full mt-1">주의 관찰</span>
+            </div>
+            <div class="stage-card bg-rose-50 border border-rose-200 relative overflow-hidden">
+              <span class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] px-2 py-0.5 font-bold rounded-bl">고위험</span>
+              <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">저기능군</span>
+              <p class="text-lg font-bold text-slate-700">&lt; 7점</p>
+              <p class="text-xs text-slate-500 leading-relaxed">저강도 시작<br>매월 재평가</p>
+              <span class="text-xs bg-white text-rose-600 border border-rose-200 px-2 py-0.5 rounded-full mt-1 font-bold">재입원 위험↑</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key points -->
+        <div class="grid sm:grid-cols-2 gap-4 border-t border-slate-100 pt-6">
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">저기능군(SPPB &lt;7) 관리 원칙</p>
+            <p class="text-base leading-relaxed text-slate-600">
+              저강도 유산소 운동(RPE 10~12)과 하지 근력 강화 운동을 병행합니다.
+              낙상 예방 교육과 함께 매월 SPPB를 재평가하여 진행 상황을 모니터링합니다.
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">HFpEF 특별 고려사항</p>
+            <p class="text-base leading-relaxed text-slate-600">
+              보존형 심부전(HFpEF) 환자는 EF 수치가 정상이어도 SPPB가 낮을 수 있습니다.
+              <strong>기능 평가 없이 EF만으로 재활 강도를 결정하는 것은 부적절합니다.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Clinical Implications (dark) ───────────────────── -->
+    <section id="clinical-implications">
+      <div class="rounded-xl bg-slate-900 p-6 sm:p-8">
+        <p class="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">Clinical Implications</p>
+        <h2 class="text-lg font-bold text-white tracking-tight mb-5">핵심 임상 적용 포인트</h2>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9312; 입원 시 SPPB 초기 측정</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              심부전으로 입원한 모든 환자에서 SPPB 기저치를 측정하면,
+              재입원 고위험군을 조기에 식별하여 퇴원 전 집중 재활 계획을 수립할 수 있습니다.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9313; 외래 추적관찰 시 정기 평가</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              외래 방문 시 SPPB를 정기적으로 측정하면 기능 저하를 재입원 이전에
+              조기 발견하고 예방적 중재를 시행할 수 있습니다.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9314; 심폐재활 성과 보고에 SPPB 포함</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              6MWT, VO₂ peak와 함께 SPPB를 재활 성과 지표로 보고하면
+              기능 개선의 다차원적 근거를 제공하고 보험 청구 요건 충족에 도움이 됩니다.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9315; 퇴원 계획 및 시설 연계 판단</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              SPPB 7점 미만 환자는 퇴원 후 자택 복귀의 안전성을 재평가하고,
+              필요시 재활의학과 연계 또는 외래 기반 심폐재활 프로그램을 연결합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Internal link -->
+        <div class="border-t border-slate-700 pt-5">
+          <p class="text-xs text-slate-400 mb-2">관련 케이스 스터디</p>
+          <a href="2026-02-21-Endocrinology-SPPB-Strategy-KR.html"
+             class="inline-flex items-center gap-2 text-sm text-teal-400 hover:text-teal-300 font-medium underline underline-offset-4">
+            내분비내과 SPPB 전략 — 당뇨·비만·GLP-1 치료 기능 모니터링 보기 &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Appendix ────────────────────────────────────────── -->
+    <section id="appendix">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <!-- Reference Sites -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-4">
+            AndanteFit 협력 심장내과·재활의학과
+          </h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              서울대학교병원 / 분당서울대학교병원 심장내과
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              연세대학교 세브란스병원 심폐재활센터
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              가톨릭대학교 서울성모병원 재활의학과
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              고려대학교 안암병원 / 아주대학교병원 심장재활팀
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              전국 심폐재활 프로그램 운영 기관
+            </li>
+          </ul>
+        </div>
+
+        <!-- Bibliography -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-4">주요 참고문헌</h3>
+          <ol class="text-xs leading-relaxed text-slate-500 space-y-2 list-none">
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">1.</span>
+              Pulignano G, et al. Eur J Heart Fail. SPPB as predictor of outcomes in heart failure patients.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">2.</span>
+              Volpato S, et al. J Am Geriatr Soc. Physical performance measures and mortality in older adults with HF.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">3.</span>
+              Kitzman DW, et al. JAMA. Exercise training in HFpEF: functional outcomes.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">4.</span>
+              HF-ACTION Trial. Circulation. Effects of exercise training on outcomes in patients with HF.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">5.</span>
+              RehabMeasures Database. MCID for SPPB in older adults (0.5 points).
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">6.</span>
+              ESC Guidelines 2021. Diagnosis and treatment of acute and chronic heart failure.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">7.</span>
+              대한심장학회. 심장재활 임상진료지침, 2023.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <div data-include="../../includes/footer.html"></div>
+
+  <!-- Chart.js: Readmission Risk -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var ctx = document.getElementById('readmissionChart');
+      if (!ctx) return;
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [
+            '고기능군\n(SPPB ≥10)',
+            '중기능군\n(SPPB 7–9)',
+            '저기능군\n(SPPB <7)'
+          ],
+          datasets: [{
+            label: '1년 재입원율 (%)',
+            data: [28, 42, 58],
+            backgroundColor: ['#94a3b8', '#fbbf24', '#f43f5e'],
+            borderRadius: 6,
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (c) {
+                  return '재입원율: ' + c.raw + '%';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 80,
+              title: { display: true, text: '1년 재입원율 (%)' },
+              grid: { color: '#f1f5f9' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 11 } }
+            }
+          }
+        }
+      });
+    });
+  </script>
+
+  <!-- Site Scripts -->
+  <script src="../../js/main.js"></script>
+  <script src="../../js/navigation.js"></script>
+</body>
+</html>

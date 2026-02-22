@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uso del SPPB en la insuficiencia cardiaca y la rehabilitación cardiopulmonar | Caso de estudio AndanteFit</title>
+  <meta name="description" content="Guía clínica práctica para utilizar el SPPB en la estratificación del riesgo de reingreso en insuficiencia cardiaca y en el seguimiento funcional durante la rehabilitación cardiopulmonar. Incluye estrategias de gestión del rendimiento centradas en la función. Caso de estudio AndanteFit.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="DYPHI Inc.">
+  <meta name="language" content="es">
+  <meta name="theme-color" content="#0d9488">
+  <meta name="keywords" content="SPPB, Short Physical Performance Battery, insuficiencia cardiaca, rehabilitación cardiopulmonar, rehabilitación cardiaca, evaluación funcional, rendimiento físico, AndanteFit, reingreso, intolerancia al ejercicio">
+
+  <!-- Canonical & hreflang -->
+  <link rel="canonical" href="https://andantefit.info/es/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html">
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html">
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-EN.html">
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html">
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-EN.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="Uso del SPPB en la insuficiencia cardiaca y la rehabilitación cardiopulmonar | Caso de estudio AndanteFit">
+  <meta property="og:description" content="Enfoque centrado en la función para insuficiencia cardiaca: estratificación del riesgo y monitorización práctica con SPPB en rehabilitación.">
+  <meta property="og:url" content="https://andantefit.info/es/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html">
+  <meta property="og:image" content="https://andantefit.info/assets/andantefit-logo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Uso del SPPB en insuficiencia cardiaca y rehabilitación cardiopulmonar | AndanteFit">
+  <meta name="twitter:description" content="Estratificación del riesgo y seguimiento funcional con SPPB en insuficiencia cardiaca y rehabilitación cardiopulmonar.">
+  <meta name="twitter:image" content="https://andantefit.info/assets/andantefit-logo.png">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <!-- AndanteFit Base Stylesheet (ES root) -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --af-primary:   #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent:    #18BFBF;
+    }
+
+    body {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+        "Segoe UI", Roboto, "Apple SD Gothic Neo", Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+
+    /* chart: min-height only — no fixed height */
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 260px;
+    }
+    @media (min-width: 768px) {
+      .chart-wrap { min-height: 300px; }
+    }
+
+    .card-base {
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.04);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--af-secondary);
+    }
+
+    /* teal accent left border */
+    .border-accent { border-left: 3px solid var(--af-secondary); }
+
+    /* stage card */
+    .stage-card {
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  </style>
+</head>
+
+<body>
+  <!-- Site Navigation -->
+  <div id="navigation-container"></div>
+
+  <!-- HERO -->
+  <header class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="text-xs font-semibold text-teal-600 bg-teal-50 border border-teal-100 px-3 py-1 rounded-full">Caso de estudio</span>
+        <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Cardiología / Rehabilitación cardiopulmonar</span>
+        <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">2026-02-22</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+        Uso del Short Physical Performance Battery (SPPB)<br class="hidden sm:block">
+        en la insuficiencia cardiaca y la rehabilitación cardiopulmonar
+      </h1>
+      <p class="text-lg leading-relaxed text-slate-500 max-w-2xl mb-8">
+        Desde la estratificación del riesgo de reingreso hasta el seguimiento centrado en la función —
+        este caso de estudio muestra cómo el SPPB puede apoyar la toma de decisiones clínicas
+        y la monitorización estructurada en insuficiencia cardiaca y rehabilitación cardiopulmonar.
+      </p>
+
+      <!-- Key Stat Chips (message-focused, no unverified effect sizes/MCID) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="card-base p-4 border-l-4 border-rose-400">
+          <div class="text-lg font-bold text-rose-600 tracking-tight">Riesgo de reingreso</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Riesgo clínicamente mayor en pacientes<br>con SPPB menor de 7
+          </div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-teal-500">
+          <div class="text-lg font-bold text-teal-600 tracking-tight">Marcador pronóstico independiente</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Aporta información adicional más allá de<br>FE, BNP y NYHA
+          </div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-amber-400">
+          <div class="text-lg font-bold text-amber-600 tracking-tight">Estratificación del riesgo</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Diferencias claras por<br>niveles funcionales
+          </div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-slate-400">
+          <div class="text-lg font-bold text-slate-600 tracking-tight">Atención centrada en la función</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Preservar la función es un objetivo clave<br>más allá de la supervivencia
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+    <!-- Executive Summary -->
+    <section id="summary">
+      <div class="card-base border-accent p-6 sm:p-8">
+        <p class="section-label mb-3">Resumen ejecutivo</p>
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-4">Manejo de insuficiencia cardiaca con enfoque funcional</h2>
+        <p class="text-base leading-relaxed text-slate-700 mb-6">
+          La insuficiencia cardiaca es una causa frecuente de hospitalización. A pesar de los avances terapéuticos,
+          los reingresos siguen siendo comunes y el deterioro funcional puede ser considerable.
+          La evaluación habitual suele centrarse en la <span class="text-rose-700 font-semibold">fracción de eyección (FE) y la gravedad de los síntomas (clase NYHA)</span>.
+          El <span class="font-semibold">Short Physical Performance Battery (SPPB)</span> captura el rendimiento funcional real y puede aportar información
+          pronóstica relacionada con reingreso y mortalidad, además de facilitar el seguimiento estructurado en rehabilitación cardiopulmonar.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-slate-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Enfoque clínico habitual</p>
+            <ul class="text-base leading-relaxed text-slate-600 space-y-1">
+              <li>Clasificación de gravedad basada en FE</li>
+              <li>Clase funcional NYHA (I–IV)</li>
+              <li>Seguimiento de BNP/NT-proBNP</li>
+            </ul>
+          </div>
+          <div class="bg-teal-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-600 uppercase tracking-wider mb-2">Cambio estratégico</p>
+            <ul class="text-sm leading-relaxed text-teal-800 space-y-1">
+              <li>Cuantificación del rendimiento funcional</li>
+              <li>Identificación temprana de pacientes de alto riesgo</li>
+              <li>Monitorización objetiva de la respuesta a la rehabilitación</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1 -->
+    <section id="section-1">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        Por qué evaluar la función junto con marcadores cardiacos en insuficiencia cardiaca
+      </h2>
+
+      <div class="space-y-4">
+        <!-- 1.1 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-sm">1.1</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">Círculo vicioso de intolerancia al ejercicio y deterioro funcional</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-2">
+              La reducción del gasto cardiaco puede limitar la perfusión muscular, contribuyendo a la intolerancia al ejercicio.
+              Esto puede progresar a menor actividad, pérdida muscular y mayor deterioro funcional.
+            </p>
+            <div class="bg-slate-50 rounded px-4 py-3 text-sm leading-relaxed text-slate-500">
+              <span class="text-slate-700 font-semibold">Rol del SPPB:</span>
+              Medición estandarizada de cómo este proceso afecta la velocidad de marcha, el equilibrio y los levantamientos repetidos de la silla.
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.2 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">1.2</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">Limitaciones de la clasificación NYHA</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-2">
+              La clasificación NYHA depende en gran medida de la percepción de síntomas y puede variar entre evaluadores.
+              Pacientes con la misma clase NYHA pueden mostrar niveles funcionales muy distintos.
+            </p>
+            <div class="bg-slate-50 rounded px-4 py-3 text-sm leading-relaxed text-slate-500">
+              <span class="text-slate-700 font-semibold">Cómo complementa el SPPB:</span>
+              Prueba objetiva y estandarizada que puede añadir información pronóstica más allá de los síntomas.
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.3 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">1.3</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">Indicador pronóstico independiente</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-3">
+              Las puntuaciones del SPPB pueden asociarse con reingresos, mortalidad y calidad de vida en insuficiencia cardiaca,
+              proporcionando una medida cuantitativa de vulnerabilidad funcional que los marcadores convencionales pueden no captar.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">Riesgo de reingreso</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">Riesgo de mortalidad</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">Calidad de vida</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">Planificación de rehabilitación</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section id="section-2">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        Datos orientados a la evidencia en poblaciones con insuficiencia cardiaca
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Readmission Risk -->
+        <div class="card-base p-6 flex flex-col gap-5">
+          <div>
+            <h3 class="text-base font-bold text-slate-700 tracking-tight mb-3 pb-2 border-b border-slate-100">
+              2.1 &nbsp;SPPB y riesgo de reingreso
+            </h3>
+            <div class="flex items-end gap-3 mb-4">
+              <span class="text-5xl font-bold text-rose-600 tracking-tight leading-none">40%</span>
+              <span class="text-base leading-relaxed text-slate-600 pb-1">Pacientes hospitalizados<br>con baja función (SPPB &lt; 7)</span>
+            </div>
+            <p class="text-base leading-relaxed text-slate-600 mb-4">
+              En algunas cohortes hospitalarias de insuficiencia cardiaca, aproximadamente el 40% de los pacientes presentan SPPB menor de 7.
+              Este grupo de baja función ha mostrado mayor riesgo de reingreso temprano en comparación con grupos de mayor función.
+            </p>
+            <div class="bg-slate-50 rounded-lg px-4 py-3 border-l-4 border-rose-400">
+              <p class="text-sm font-semibold text-slate-700 mb-1">Relación con la estancia hospitalaria</p>
+              <p class="text-base leading-relaxed text-slate-600">
+                Puntuaciones más bajas del SPPB se han asociado con estancias más prolongadas y mayor necesidad de cuidados tras el alta.
+              </p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 text-right">Referencia: Pulignano et al., Eur J Heart Fail.</p>
+        </div>
+
+        <!-- SPPB Score Chart -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-700 tracking-tight mb-1 pb-2 border-b border-slate-100">
+            2.2 &nbsp;Reingreso a 1 año por nivel de SPPB
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Las tasas de reingreso tienden a aumentar cuando disminuye la puntuación del SPPB.
+            &nbsp;Visualización basada en reportes tipo cohorte multicéntrica.
+          </p>
+          <div class="chart-wrap">
+            <canvas id="readmissionChart"></canvas>
+          </div>
+          <div class="mt-4 bg-rose-50 border border-rose-100 rounded-lg px-4 py-3">
+            <p class="text-base leading-relaxed text-rose-700">
+              Nota clínica: los pacientes con SPPB menor de 7 pueden presentar tasas de reingreso considerablemente más altas que los de mayor función.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section id="section-3">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        Importancia del seguimiento con SPPB en la rehabilitación cardiopulmonar
+      </h2>
+
+      <!-- Summary table (numbers removed) -->
+      <div class="card-base overflow-hidden mb-6">
+        <table class="w-full text-base">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide w-1/4">Fase</th>
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Punto clave</th>
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide w-1/3">Nota práctica</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr>
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">Evaluación previa</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                El SPPB basal ayuda a identificar vulnerabilidad funcional y definir objetivos individualizados.
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">Apoya la identificación temprana de pacientes de mayor riesgo</td>
+            </tr>
+            <tr class="bg-teal-50/40">
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">Reporte de resultados</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                La reevaluación al finalizar el programa ofrece una medida funcional objetiva y reproducible.
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">Complementa 6MWT y VO₂ pico</td>
+            </tr>
+            <tr>
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">Prescripción del ejercicio</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                Los niveles del SPPB pueden guiar la intensidad individualizada para reducir eventos adversos.
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">Puntuaciones bajas pueden requerir menor intensidad inicial y seguimiento estrecho</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Two info cards -->
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="card-base p-5 border-l-4 border-rose-400">
+          <h3 class="text-base font-bold text-rose-700 tracking-tight mb-2">Riesgo si no se mide el SPPB</h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span>
+              Una intensidad excesiva en pacientes vulnerables puede aumentar el riesgo de caídas o arritmias
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span>
+              Es más difícil demostrar resultados objetivos si se depende solo de síntomas
+            </li>
+          </ul>
+        </div>
+        <div class="card-base p-5 border-l-4 border-teal-400">
+          <h3 class="text-base font-bold text-teal-700 tracking-tight mb-2">Manejo de la rehabilitación con SPPB</h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Planificación del ejercicio alineada con déficits funcionales específicos
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Resultados cuantificados que fortalecen la comunicación y el reporte multidisciplinario
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section id="section-4">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-2">
+        Clasificación funcional práctica en insuficiencia cardiaca
+      </h2>
+      <p class="text-base leading-relaxed text-slate-500 mb-6">
+        Enfoque pragmático por niveles de SPPB para apoyar la planificación de la rehabilitación
+      </p>
+
+      <div class="card-base p-6 sm:p-8">
+        <!-- Flow -->
+        <div class="flex flex-col items-center gap-0 mb-8">
+          <div class="w-full max-w-sm bg-slate-100 border border-slate-200 rounded-xl px-5 py-4 text-center">
+            <p class="text-sm font-semibold text-slate-700">Población con insuficiencia cardiaca</p>
+            <p class="text-xs text-slate-500 mt-0.5">Aplicable a HFrEF y HFpEF</p>
+          </div>
+          <div class="flex flex-col items-center py-2 gap-0.5">
+            <div class="w-px h-6 bg-slate-300"></div>
+            <p class="text-xs text-slate-400">SPPB (velocidad de marcha + equilibrio + levantarse de la silla)</p>
+            <div class="w-px h-6 bg-slate-300"></div>
+          </div>
+          <div class="w-full max-w-2xl grid grid-cols-3 gap-3">
+            <div class="stage-card bg-green-50 border border-green-200">
+              <span class="text-xs font-bold text-green-600 uppercase tracking-wider">Mayor función</span>
+              <p class="text-lg font-bold text-slate-700">10–12</p>
+              <p class="text-xs text-slate-500 leading-relaxed">Intensidad estándar<br>Reevaluación cada 6 meses</p>
+              <span class="text-xs bg-white text-green-700 border border-green-200 px-2 py-0.5 rounded-full mt-1">Pronóstico más favorable</span>
+            </div>
+            <div class="stage-card bg-amber-50 border border-amber-200">
+              <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Intermedia</span>
+              <p class="text-lg font-bold text-slate-700">7–9</p>
+              <p class="text-xs text-slate-500 leading-relaxed">Intensidad moderada<br>Reevaluación cada 3 meses</p>
+              <span class="text-xs bg-white text-amber-600 border border-amber-200 px-2 py-0.5 rounded-full mt-1">Requiere seguimiento</span>
+            </div>
+            <div class="stage-card bg-rose-50 border border-rose-200 relative overflow-hidden">
+              <span class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] px-2 py-0.5 font-bold rounded-bl">Mayor riesgo</span>
+              <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Menor función</span>
+              <p class="text-lg font-bold text-slate-700">&lt; 7</p>
+              <p class="text-xs text-slate-500 leading-relaxed">Inicio con menor intensidad<br>Seguimiento mensual</p>
+              <span class="text-xs bg-white text-rose-600 border border-rose-200 px-2 py-0.5 rounded-full mt-1 font-bold">Riesgo de reingreso</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key points -->
+        <div class="grid sm:grid-cols-2 gap-4 border-t border-slate-100 pt-6">
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Principios para SPPB &lt; 7</p>
+            <p class="text-base leading-relaxed text-slate-600">
+              Iniciar con entrenamiento aeróbico de menor intensidad (por ejemplo, RPE 10–12) junto con fortalecimiento de miembros inferiores.
+              Incluir educación para prevención de caídas y reevaluar de forma regular para monitorizar la trayectoria funcional.
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Consideración especial en HFpEF</p>
+            <p class="text-base leading-relaxed text-slate-600">
+              En HFpEF puede existir SPPB bajo a pesar de una FE preservada.
+              Elegir la intensidad de rehabilitación basándose solo en la FE, sin evaluación funcional, puede ser inapropiado.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clinical Implications (dark) -->
+    <section id="clinical-implications">
+      <div class="rounded-xl bg-slate-900 p-6 sm:p-8">
+        <p class="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">Implicaciones clínicas</p>
+        <h2 class="text-lg font-bold text-white tracking-tight mb-5">Puntos prácticos clave</h2>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9312; SPPB basal durante la hospitalización</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              Medir el SPPB basal puede ayudar a identificar temprano a pacientes de mayor riesgo y apoyar la planificación del alta con estrategias de rehabilitación dirigidas.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9313; Reevaluación periódica en seguimiento ambulatorio</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              La evaluación periódica con SPPB puede detectar el deterioro funcional antes del reingreso, facilitando intervenciones preventivas.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9314; Incluir SPPB en el reporte de resultados</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              Reportar SPPB junto con 6MWT y VO₂ pico aporta una visión multidimensional del estado funcional.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9315; Planificación del alta y enlace post-agudo</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              En pacientes con baja función, reevaluar la seguridad del retorno al hogar y considerar derivación a rehabilitación ambulatoria o medicina de rehabilitación.
+            </p>
+          </div>
+        </div>
+
+        <!-- Internal link -->
+        <div class="border-t border-slate-700 pt-5">
+          <p class="text-xs text-slate-400 mb-2">Caso de estudio relacionado</p>
+          <a href="2026-02-21-Endocrinology-SPPB-Strategy-ES.html"
+             class="inline-flex items-center gap-2 text-sm text-teal-400 hover:text-teal-300 font-medium underline underline-offset-4">
+            Estrategia en endocrinología: SPPB para seguimiento en diabetes, obesidad y terapia con GLP-1 &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Appendix -->
+    <section id="appendix">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <!-- Reference Sites -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-4">
+            Ejemplos de centros colaboradores de cardiología y rehabilitación
+          </h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Seoul National University Hospital / Seoul National University Bundang Hospital (Cardiología)
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Yonsei University Severance Hospital (Centro de rehabilitación cardiopulmonar)
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              The Catholic University of Korea, Seoul St. Mary’s Hospital (Medicina de rehabilitación)
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Korea University Anam Hospital / Ajou University Hospital (Equipos de rehabilitación cardiaca)
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Programas de rehabilitación cardiopulmonar en Corea
+            </li>
+          </ul>
+        </div>
+
+        <!-- Bibliography -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-4">Referencias seleccionadas</h3>
+          <ol class="text-xs leading-relaxed text-slate-500 space-y-2 list-none">
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">1.</span>
+              Pulignano G, et al. Eur J Heart Fail. SPPB como predictor de resultados en insuficiencia cardiaca.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">2.</span>
+              Volpato S, et al. J Am Geriatr Soc. Medidas de rendimiento físico y mortalidad en adultos mayores con insuficiencia cardiaca.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">3.</span>
+              Kitzman DW, et al. JAMA. Entrenamiento físico en HFpEF y resultados funcionales.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">4.</span>
+              HF-ACTION Trial. Circulation. Efectos del entrenamiento físico en resultados de pacientes con insuficiencia cardiaca.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">5.</span>
+              ESC Guidelines 2021. Diagnóstico y tratamiento de la insuficiencia cardiaca aguda y crónica.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">6.</span>
+              Korean Society of Cardiology. Guía de práctica clínica de rehabilitación cardiaca, 2023.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <div data-include="../includes/footer.html"></div>
+
+  <!-- Chart.js: Readmission Risk -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var ctx = document.getElementById('readmissionChart');
+      if (!ctx) return;
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [
+            'Mayor función\\n(SPPB ≥ 10)',
+            'Intermedia\\n(SPPB 7–9)',
+            'Menor función\\n(SPPB < 7)'
+          ],
+          datasets: [{
+            label: 'Reingreso a 1 año (%)',
+            data: [28, 42, 58],
+            backgroundColor: ['#94a3b8', '#fbbf24', '#f43f5e'],
+            borderRadius: 6,
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (c) {
+                  return 'Reingreso: ' + c.raw + '%';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 80,
+              title: { display: true, text: 'Reingreso a 1 año (%)' },
+              grid: { color: '#f1f5f9' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 11 } }
+            }
+          }
+        }
+      });
+    });
+  </script>
+
+  <!-- Site Scripts -->
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>

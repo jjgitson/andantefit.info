@@ -136,69 +136,350 @@
     </div>
   </section>
   
-  <!-- 3-Minute Assessment Process -->
-  <section class="section process-section">
+  <!-- Sección de estandarización por hardware y resultado clínico -->
+  <section class="section stdinsight-section">
     <div class="container">
-      <div class="section-header center">
-        <span class="section-label">Flujo de trabajo continuo</span>
-        <h2 class="section-title">Evaluación estandarizada en menos de 3 minutos</h2>
-        <p class="section-subtitle">
-          AndanteFit optimiza la evaluación del rendimiento físico mediante un proceso totalmente automatizado, 
-          desde la calibración de sensores hasta el informe clínico.
-        </p>
-      </div>
+      <div class="stdinsight-layout">
 
-      <div class="process-steps">
-        <div class="process-card">
-          <div class="process-icon-wrapper">
-            <i class="fas fa-person-standing process-icon"></i>
-            <span class="step-number">01</span>
-          </div>
-          <h3 class="process-step-title">Equilibrio de pie</h3>
-          <p class="process-step-desc">
-            Registra automáticamente los tiempos de las posiciones paralelo, semitándem y tándem 
-            sin intervención manual.
-          </p>
+        <!-- Izquierda 45%: Imagen del dispositivo -->
+        <div class="stdinsight-device-col">
+          <img
+            src="assets/as-is.webp"
+            alt="Configuración integrada de hardware AndanteFit para SPPB: equilibrio, marcha y levantarse de la silla en un único sistema"
+            class="stdinsight-device-img"
+          >
         </div>
 
-        <div class="process-card">
-          <div class="process-icon-wrapper">
-            <i class="fas fa-gauge-high process-icon"></i>
-            <span class="step-number">02</span>
-          </div>
-          <h3 class="process-step-title">Velocidad de la marcha</h3>
-          <p class="process-step-desc">
-            La tecnología LiDAR captura la velocidad de marcha de 3m/4m con precisión milimétrica, 
-            eliminando errores humanos de cronometraje.
+        <!-- Derecha 55%: Texto + viñetas + vista previa del informe -->
+        <div class="stdinsight-content-col">
+          <span class="section-label">Entorno estandarizado</span>
+          <h2 class="stdinsight-headline">De la estandarización por hardware al resultado clínico en 3 minutos</h2>
+          <p class="stdinsight-subtext">
+            AndanteFit estandariza todo el flujo del SPPB mediante un único sistema de hardware.
+            La medición, puntuación y clasificación del riesgo de fragilidad se completan en menos de tres minutos.
           </p>
+
+          <ul class="stdinsight-bullets">
+            <li>
+              <i class="fas fa-check-circle" aria-hidden="true"></i>
+              Un solo montaje para equilibrio, marcha y levantarse
+            </li>
+            <li>
+              <i class="fas fa-check-circle" aria-hidden="true"></i>
+              Detección y cronometraje automáticos
+            </li>
+            <li>
+              <i class="fas fa-check-circle" aria-hidden="true"></i>
+              Informe inmediato con clasificación de fragilidad
+            </li>
+          </ul>
+
+          <div class="stdinsight-report-wrap">
+            <p class="stdinsight-report-caption">Informe clínico completo</p>
+            <button
+              class="stdinsight-report-btn"
+              id="stdinsightReportBtn"
+              aria-label="Haga clic para ampliar el informe clínico SPPB completo"
+            >
+              <img
+                src="assets/andatefit-sample-report.png"
+                alt="Vista previa del informe clínico AndanteFit SPPB — haga clic para ver el informe completo"
+                class="stdinsight-report-thumb"
+              >
+              <span class="stdinsight-report-overlay" aria-hidden="true">
+                <i class="fas fa-expand-alt"></i> Ver informe completo
+              </span>
+            </button>
+          </div>
         </div>
 
-        <div class="process-card">
-          <div class="process-icon-wrapper">
-            <i class="fas fa-chair process-icon"></i>
-            <span class="step-number">03</span>
-          </div>
-          <h3 class="process-step-title">Levantarse de la silla</h3>
-          <p class="process-step-desc">
-            El seguimiento en tiempo real registra cinco ciclos de levantarse y sentarse, 
-            asegurando el cumplimiento estricto del protocolo.
-          </p>
-        </div>
-
-        <div class="process-card">
-          <div class="process-icon-wrapper">
-            <i class="fas fa-file-medical process-icon"></i>
-            <span class="step-number">04</span>
-          </div>
-          <h3 class="process-step-title">Informe clínico</h3>
-          <p class="process-step-desc">
-            Genera instantáneamente un informe SPPB estandarizado con guías de intervención 
-            y análisis longitudinal de datos.
-          </p>
-        </div>
       </div>
     </div>
   </section>
+
+  <!-- Modal del informe (ES) -->
+  <div
+    class="stdinsight-modal"
+    id="stdinsightModal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Informe clínico SPPB completo"
+    hidden
+  >
+    <div class="stdinsight-modal-dim" id="stdinsightModalDim"></div>
+    <div class="stdinsight-modal-box">
+      <button class="stdinsight-modal-close" id="stdinsightModalClose" aria-label="Cerrar vista previa del informe">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+      <img
+        src="assets/andatefit-sample-report.png"
+        alt="Informe clínico AndanteFit SPPB completo con puntuación automatizada y clasificación de fragilidad"
+        class="stdinsight-modal-img"
+      >
+    </div>
+  </div>
+
+  <style>
+    /* ── Sección de estandarización & resultado clínico ── */
+    .stdinsight-section {
+      background-color: #f8f9fa;
+    }
+
+    .stdinsight-layout {
+      display: grid;
+      grid-template-columns: 45% 55%;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .stdinsight-device-col {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .stdinsight-device-img {
+      max-height: 460px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .stdinsight-content-col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .stdinsight-headline {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #0F4C81;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .stdinsight-subtext {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #555;
+      margin: 0;
+    }
+
+    .stdinsight-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stdinsight-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9375rem;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .stdinsight-bullets .fa-check-circle {
+      color: #1F6FB2;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .stdinsight-report-wrap {
+      margin-top: 4px;
+    }
+
+    .stdinsight-report-caption {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin: 0 0 8px;
+    }
+
+    .stdinsight-report-btn {
+      position: relative;
+      background: none;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0;
+      cursor: pointer;
+      overflow: hidden;
+      display: inline-block;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .stdinsight-report-btn:hover,
+    .stdinsight-report-btn:focus-visible {
+      border-color: #1F6FB2;
+      box-shadow: 0 4px 16px rgba(15, 76, 129, 0.14);
+      outline: none;
+    }
+
+    .stdinsight-report-thumb {
+      max-height: 320px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .stdinsight-report-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 76, 129, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .stdinsight-report-btn:hover .stdinsight-report-overlay,
+    .stdinsight-report-btn:focus-visible .stdinsight-report-overlay {
+      background: rgba(15, 76, 129, 0.55);
+    }
+
+    /* Modal */
+    .stdinsight-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stdinsight-modal[hidden] {
+      display: none;
+    }
+
+    .stdinsight-modal-dim {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+    }
+
+    .stdinsight-modal-box {
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      max-width: 90vw;
+      max-height: 85vh;
+      overflow: auto;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+    }
+
+    .stdinsight-modal-close {
+      background: #f3f4f6;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .stdinsight-modal-close:hover {
+      background: #e5e7eb;
+    }
+
+    .stdinsight-modal-img {
+      max-width: calc(90vw - 32px);
+      max-height: calc(85vh - 80px);
+      object-fit: contain;
+      border-radius: 4px;
+      display: block;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .stdinsight-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .stdinsight-device-img {
+        max-height: 320px;
+        margin: 0 auto;
+      }
+
+      .stdinsight-headline {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stdinsight-headline {
+        font-size: 1.25rem;
+      }
+
+      .stdinsight-subtext {
+        font-size: 0.9375rem;
+      }
+
+      .stdinsight-report-thumb {
+        max-height: 240px;
+      }
+    }
+  </style>
+
+  <script>
+  (function () {
+    var modal = document.getElementById('stdinsightModal');
+    var openBtn = document.getElementById('stdinsightReportBtn');
+    var closeBtn = document.getElementById('stdinsightModalClose');
+    var dim = document.getElementById('stdinsightModalDim');
+
+    function openModal() {
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      openBtn.focus();
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (dim) dim.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal && !modal.hidden) {
+        closeModal();
+      }
+    });
+  })();
+  </script>
 
   <!-- System Overview -->
   <section class="section" style="background-color: var(--color-white);">

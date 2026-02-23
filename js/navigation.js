@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 언어별 메뉴 라벨
     const labels = isKO ?
-        { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '참고문헌' } :
+        { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
         isES ?
         { home: 'Inicio', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
         { home: 'Home', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };

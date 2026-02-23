@@ -45,24 +45,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const langPrefix = isKO ? 'ko/' : isES ? 'es/' : '';
 
+    // 내비게이션 링크 배열 (데스크톱 메뉴 + 모바일 오버레이 공유)
+    const navItems = [
+        { href: rootPath + langPrefix + 'index.html',        label: labels.home },
+        { href: rootPath + langPrefix + 'product.html',      label: labels.product },
+        { href: rootPath + langPrefix + 'validation.html',   label: labels.validation },
+        { href: rootPath + langPrefix + 'case-studies.html', label: labels.cases },
+        { href: rootPath + langPrefix + 'references.html',   label: labels.refs },
+    ];
+
+    const navLinksHtml = navItems.map(function(item) {
+        return '<li><a href="' + item.href + '">' + item.label + '</a></li>';
+    }).join('');
+
+    const closeLabel  = isKO ? '메뉴 닫기'      : isES ? 'Cerrar menú'       : 'Close menu';
+    const panelLabel  = isKO ? '모바일 내비게이션' : isES ? 'Navegación móvil'  : 'Mobile navigation';
+
     navContainer.innerHTML = `
     <nav class="nav">
       <div class="nav-container">
         <a href="${rootPath}${langPrefix}index.html" class="nav-logo">
           <img src="${rootPath}assets/andantefit-logo.png" alt="AndanteFit">
         </a>
-        <ul class="nav-menu" id="navMenu">
-          <li><a href="${rootPath}${langPrefix}index.html">${labels.home}</a></li>
-          <li><a href="${rootPath}${langPrefix}product.html">${labels.product}</a></li>
-          <li><a href="${rootPath}${langPrefix}validation.html">${labels.validation}</a></li>
-          <li><a href="${rootPath}${langPrefix}case-studies.html">${labels.cases}</a></li>
-          <li><a href="${rootPath}${langPrefix}references.html">${labels.refs}</a></li>
-          <li class="nav-lang-mobile">${langHtml}</li>
-        </ul>
+        <!-- Desktop: always-visible nav links and lang switcher -->
+        <ul class="nav-menu" id="navMenu">${navLinksHtml}</ul>
         <div class="nav-lang">${langHtml}</div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+        <!-- Mobile: hamburger toggle -->
+        <button class="nav-toggle" id="navToggle"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="navOverlay">&#9776;</button>
       </div>
-    </nav>`;
+    </nav>
+
+    <!-- Mobile overlay panel (fixed, outside nav bar flow) -->
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+      <div class="nav-overlay-dim" id="navOverlayDim"></div>
+      <nav class="nav-overlay-panel" aria-label="${panelLabel}">
+        <button class="nav-overlay-close" id="navOverlayClose"
+                aria-label="${closeLabel}">&#x2715;</button>
+        <ul class="nav-overlay-links">${navLinksHtml}</ul>
+        <div class="nav-overlay-lang">${langHtml}</div>
+      </nav>
+    </div>`;
 
     // 언어 선택 클릭 시 lang_preference 저장 (자동 리다이렉트 기준)
     navContainer.querySelectorAll('[data-lang]').forEach(function(link) {
@@ -71,21 +96,42 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 모바일 토글 — active 클래스 + aria-expanded 동기화
-    const toggle = document.getElementById('navToggle');
-    const menu = document.getElementById('navMenu');
-    if (toggle && menu) {
-        toggle.addEventListener('click', function() {
-            const isOpen = menu.classList.toggle('active');
-            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
+    // 오버레이 열기 / 닫기
+    const toggle  = document.getElementById('navToggle');
+    const overlay = document.getElementById('navOverlay');
+    const dim     = document.getElementById('navOverlayDim');
+    const closeBtn = document.getElementById('navOverlayClose');
 
-        // 메뉴 외부 클릭 시 닫기
-        document.addEventListener('click', function(e) {
-            if (!navContainer.contains(e.target) && menu.classList.contains('active')) {
-                menu.classList.remove('active');
-                toggle.setAttribute('aria-expanded', 'false');
-            }
+    function openMenu() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    if (toggle)   toggle.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (dim)      dim.addEventListener('click', closeMenu);
+
+    // 오버레이 내 링크(nav + 언어) 클릭 시 즉시 닫기
+    if (overlay) {
+        overlay.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', closeMenu);
         });
     }
+
+    // Escape 키로 닫기
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) {
+            closeMenu();
+            if (toggle) toggle.focus();
+        }
+    });
 });

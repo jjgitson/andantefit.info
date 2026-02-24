@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const lastSegment = segments[segments.length - 1] || 'index.html';
     const currentPage = KNOWN_PAGES.indexOf(lastSegment) !== -1 ? lastSegment : 'index.html';
 
+    // Case-study detail page detection & suffix map
+    const CASE_STUDY_SUFFIX = /-(EN|KR|ES|JP)\.html$/;
+    const isCaseStudyDetail = path.includes('/case-studies/') && CASE_STUDY_SUFFIX.test(lastSegment);
+    const SUFFIX_MAP = { en: '-EN.html', ko: '-KR.html', es: '-ES.html', jp: '-JP.html' };
+
     // 언어별 메뉴 라벨
    const labels = isKO ?
     { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
@@ -34,7 +39,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 언어 링크 생성 — 현재 페이지 경로 기반, 현재 언어에 aria-current 부여
     function langLink(lang, label) {
-        const href = lang === 'en' ? '/' + currentPage : '/' + lang + '/' + currentPage;
+        let href;
+        if (isCaseStudyDetail) {
+            const slug = lastSegment.replace(CASE_STUDY_SUFFIX, '');
+            const targetFile = slug + SUFFIX_MAP[lang];
+            href = lang === 'en' ? '/case-studies/' + targetFile : '/' + lang + '/case-studies/' + targetFile;
+        } else {
+            href = lang === 'en' ? '/' + currentPage : '/' + lang + '/' + currentPage;
+        }
         const isCurrent = lang === activeLang;
         return '<a href="' + href + '" data-lang="' + lang + '"' +
                (isCurrent ? ' aria-current="page"' : '') + '>' + label + '</a>';
@@ -95,10 +107,24 @@ document.addEventListener('DOMContentLoaded', function() {
       </nav>
     </div>`;
 
-    // 언어 선택 클릭 시 lang_preference 저장 (자동 리다이렉트 기준)
+    // 언어 선택 클릭 시 lang_preference 저장; 케이스 스터디 상세 페이지는 대상 파일 존재 확인 후 이동
     navContainer.querySelectorAll('[data-lang]').forEach(function(link) {
-        link.addEventListener('click', function() {
-            localStorage.setItem('lang_preference', this.getAttribute('data-lang'));
+        link.addEventListener('click', function(e) {
+            const lang = this.getAttribute('data-lang');
+            localStorage.setItem('lang_preference', lang);
+            if (isCaseStudyDetail) {
+                e.preventDefault();
+                const targetHref = this.getAttribute('href');
+                fetch(targetHref, { method: 'HEAD' })
+                    .then(function(resp) {
+                        window.location.href = resp.ok
+                            ? targetHref
+                            : (lang === 'en' ? '/case-studies.html' : '/' + lang + '/case-studies.html');
+                    })
+                    .catch(function() {
+                        window.location.href = lang === 'en' ? '/case-studies.html' : '/' + lang + '/case-studies.html';
+                    });
+            }
         });
     });
 

@@ -23,10 +23,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const lastSegment = segments[segments.length - 1] || 'index.html';
     const currentPage = KNOWN_PAGES.indexOf(lastSegment) !== -1 ? lastSegment : 'index.html';
 
-    // Case-study detail page detection & suffix map
+    // Case-study detail page detection
     const CASE_STUDY_SUFFIX = /-(EN|KR|ES|JP)\.html$/;
     const isCaseStudyDetail = path.includes('/case-studies/') && CASE_STUDY_SUFFIX.test(lastSegment);
-    const SUFFIX_MAP = { en: '-EN.html', ko: '-KR.html', es: '-ES.html', jp: '-JP.html' };
+
+    // Static availability map: slug → { lang: actual-filename }
+    // Absent lang key = no translation exists → fall back to /<lang>/case-studies.html
+    // ES note: 4 legacy files have no -ES suffix; encoded as actual filenames below.
+    const CASE_STUDY_MAP = {
+        '2026-01-20-Common-Operational-Language-Strategy': {
+            en: '2026-01-20-Common-Operational-Language-Strategy-EN.html',
+            ko: '2026-01-20-Common-Operational-Language-Strategy-KR.html',
+            es: '2026-01-20-Common-Operational-Language-Strategy.html',
+            jp: '2026-01-20-Common-Operational-Language-Strategy-JP.html'
+        },
+        '2026-02-07-SPPB-Occupational-Health': {
+            en: '2026-02-07-SPPB-Occupational-Health-EN.html',
+            ko: '2026-02-07-SPPB-Occupational-Health-KR.html',
+            es: '2026-02-07-SPPB-Occupational-Health.html',
+            jp: '2026-02-07-SPPB-Occupational-Health-JP.html'
+        },
+        '2026-02-08-PRO-SPPB-Linking-Study': {
+            ko: '2026-02-08-PRO-SPPB-Linking-Study-KR.html'
+        },
+        '2026-02-09-Digital-Care-Platform': {
+            ko: '2026-02-09-Digital-Care-Platform-KR.html'
+        },
+        '2026-02-11-Pain-To-Function-Paradigm-Shift': {
+            en: '2026-02-11-Pain-To-Function-Paradigm-Shift-EN.html',
+            ko: '2026-02-11-Pain-To-Function-Paradigm-Shift-KR.html',
+            es: '2026-02-11-Pain-To-Function-Paradigm-Shift.html',
+            jp: '2026-02-11-Pain-To-Function-Paradigm-Shift-JP.html'
+        },
+        '2026-02-13-CIBERFES-Consensus-Frailty-Screening': {
+            en: '2026-02-13-CIBERFES-Consensus-Frailty-Screening-EN.html',
+            ko: '2026-02-13-CIBERFES-Consensus-Frailty-Screening-KR.html',
+            es: '2026-02-13-CIBERFES-Consensus-Frailty-Screening.html',
+            jp: '2026-02-13-CIBERFES-Consensus-Frailty-Screening-JP.html'
+        },
+        '2026-02-16-SPPB-Utilization-Spain': {
+            es: '2026-02-16-SPPB-Utilization-Spain-ES.html'
+        },
+        '2026-02-18-Checkup-Event-Community-CSR': {
+            ko: '2026-02-18-Checkup-Event-Community-CSR-KR.html'
+        },
+        '2026-02-18-Community-Frailty-Prevention-Program': {
+            ko: '2026-02-18-Community-Frailty-Prevention-Program-KR.html'
+        },
+        '2026-02-20-Oncology-SPPB-AndanteFit': {
+            ko: '2026-02-20-Oncology-SPPB-AndanteFit-KR.html'
+        },
+        '2026-02-21-Endocrinology-SPPB-Strategy': {
+            ko: '2026-02-21-Endocrinology-SPPB-Strategy-KR.html'
+        },
+        '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB': {
+            en: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-EN.html',
+            ko: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html',
+            es: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html',
+            jp: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html'
+        }
+    };
 
     // 언어별 메뉴 라벨
    const labels = isKO ?
@@ -42,8 +98,13 @@ document.addEventListener('DOMContentLoaded', function() {
         let href;
         if (isCaseStudyDetail) {
             const slug = lastSegment.replace(CASE_STUDY_SUFFIX, '');
-            const targetFile = slug + SUFFIX_MAP[lang];
-            href = lang === 'en' ? '/case-studies/' + targetFile : '/' + lang + '/case-studies/' + targetFile;
+            const entry = CASE_STUDY_MAP[slug];
+            const file  = entry && entry[lang];
+            if (file) {
+                href = lang === 'en' ? '/case-studies/' + file : '/' + lang + '/case-studies/' + file;
+            } else {
+                href = lang === 'en' ? '/case-studies.html' : '/' + lang + '/case-studies.html';
+            }
         } else {
             href = lang === 'en' ? '/' + currentPage : '/' + lang + '/' + currentPage;
         }
@@ -107,24 +168,10 @@ document.addEventListener('DOMContentLoaded', function() {
       </nav>
     </div>`;
 
-    // 언어 선택 클릭 시 lang_preference 저장; 케이스 스터디 상세 페이지는 대상 파일 존재 확인 후 이동
+    // 언어 선택 클릭 시 lang_preference 저장 (href는 CASE_STUDY_MAP 기반으로 이미 결정됨)
     navContainer.querySelectorAll('[data-lang]').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            const lang = this.getAttribute('data-lang');
-            localStorage.setItem('lang_preference', lang);
-            if (isCaseStudyDetail) {
-                e.preventDefault();
-                const targetHref = this.getAttribute('href');
-                fetch(targetHref, { method: 'HEAD' })
-                    .then(function(resp) {
-                        window.location.href = resp.ok
-                            ? targetHref
-                            : (lang === 'en' ? '/case-studies.html' : '/' + lang + '/case-studies.html');
-                    })
-                    .catch(function() {
-                        window.location.href = lang === 'en' ? '/case-studies.html' : '/' + lang + '/case-studies.html';
-                    });
-            }
+        link.addEventListener('click', function() {
+            localStorage.setItem('lang_preference', this.getAttribute('data-lang'));
         });
     });
 

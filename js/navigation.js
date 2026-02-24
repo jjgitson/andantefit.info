@@ -23,9 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const lastSegment = segments[segments.length - 1] || 'index.html';
     const currentPage = KNOWN_PAGES.indexOf(lastSegment) !== -1 ? lastSegment : 'index.html';
 
-    // Case-study detail page detection
+    // Case-study detail page detection (isCaseStudyDetail computed after CASE_STUDY_MAP below)
     const CASE_STUDY_SUFFIX = /-(EN|KR|ES|JP)\.html$/;
-    const isCaseStudyDetail = path.includes('/case-studies/') && CASE_STUDY_SUFFIX.test(lastSegment);
 
     // Static availability map: slug → { lang: actual-filename }
     // Absent lang key = no translation exists → fall back to /<lang>/case-studies.html
@@ -84,6 +83,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // slug 추출: 접미사(-EN/-KR/-ES/-JP) 있으면 제거; ES 무접미사 파일도 지원
+    const _csBase = lastSegment.endsWith('.html') ? lastSegment.slice(0, -5) : lastSegment;
+    const caseStudySlug = CASE_STUDY_SUFFIX.test(lastSegment)
+        ? _csBase.replace(/-(EN|KR|ES|JP)$/, '')
+        : _csBase;
+    // Map-keyed detection: covers both suffixed and ES no-suffix detail pages
+    const isCaseStudyDetail = path.includes('/case-studies/') && !!CASE_STUDY_MAP[caseStudySlug];
+
     // 언어별 메뉴 라벨
    const labels = isKO ?
     { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
@@ -97,8 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function langLink(lang, label) {
         let href;
         if (isCaseStudyDetail) {
-            const slug = lastSegment.replace(CASE_STUDY_SUFFIX, '');
-            const entry = CASE_STUDY_MAP[slug];
+            const entry = CASE_STUDY_MAP[caseStudySlug];
             const file  = entry && entry[lang];
             if (file) {
                 href = lang === 'en' ? '/case-studies/' + file : '/' + lang + '/case-studies/' + file;

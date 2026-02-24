@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AndanteFit 글로벌 고객, 파트너, 국내 도입 기관 레퍼런스">
+  <meta name="keywords" content="AndanteFit, SPPB, 신체기능평가, 노쇠, 근감소증, 레퍼런스, 고객사, 파트너, 도입기관, 보행속도, 의자에서 일어나기, 균형">
+  <meta name="author" content="DYPHI Inc.">
+  <title>References - AndanteFit</title>
+  <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+
+  <style>
+    /* UI consistency + readability */
+    .region-header {
+      border-bottom: 2px solid var(--color-deep-blue);
+      padding-bottom: 12px;
+      margin-bottom: 32px;
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .region-header h3 {
+      margin-bottom: 0;
+      color: var(--color-deep-blue);
+      font-size: 1.5rem;
+    }
+
+    /* Cards: avoid relying on bold tags */
+    .card-title {
+      font-weight: 650;
+      color: var(--color-text-primary);
+      font-size: 1rem;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .count-badge {
+      background: var(--color-deep-blue);
+      color: white;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      margin-left: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* South Korea section (SVG-free, scalable to 80+ sites) */
+    .korea-sites {
+      display: grid;
+      grid-template-columns: 1fr 1.7fr;
+      gap: 28px;
+      background: white;
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      margin-top: 20px;
+      align-items: start;
+    }
+
+    .korea-panel {
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 18px;
+      background: #ffffff;
+    }
+
+    .korea-metric {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.95rem;
+    }
+    .korea-metric:last-child { border-bottom: none; }
+    .korea-metric .label { color: var(--color-text-secondary); }
+    .korea-metric .value { color: var(--color-text-primary); font-weight: 650; }
+
+    .korea-controls {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .korea-search {
+      width: 100%;
+      padding: 12px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .korea-search:focus {
+      border-color: var(--color-deep-blue);
+      box-shadow: 0 0 0 4px rgba(0,0,0,0.04);
+    }
+
+    .korea-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .korea-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: #fff;
+      color: var(--color-text-primary);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    }
+    .korea-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+      border-color: rgba(0,0,0,0.18);
+    }
+
+    .korea-list {
+      height: 620px;
+      overflow: auto;
+      padding: 8px 10px;
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      background: #ffffff;
+    }
+
+    .region-accordion {
+      border-bottom: 1px solid var(--color-border);
+      padding: 8px 0;
+    }
+    .region-accordion:last-child { border-bottom: none; }
+
+    .region-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 8px;
+      border-radius: 12px;
+      transition: background 0.15s;
+    }
+    .region-accordion[open] .region-summary {
+      background: #f8fafc;
+    }
+
+    .region-name {
+      color: var(--color-text-primary);
+      font-weight: 650;
+      font-size: 0.98rem;
+    }
+    .region-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.05);
+      color: var(--color-text-primary);
+      font-size: 0.85rem;
+      font-weight: 650;
+    }
+
+    .hospital-ul {
+      margin: 8px 0 14px 0;
+      padding-left: 16px;
+    }
+    .hospital-item {
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.08);
+      color: var(--color-text-primary);
+      font-size: 0.9375rem;
+    }
+    .hospital-item:last-child { border-bottom: none; }
+
+    .korea-hint {
+      margin-top: 10px;
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 992px) {
+      .korea-sites { grid-template-columns: 1fr; }
+      .korea-list { height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">글로벌 네트워크</span>
+      <h1 class="hero-headline">AndanteFit은 5개 대륙에서 활용되고 있습니다</h1>
+      <p class="hero-subtitle">
+        전 세계 주요 병원, 연구기관 그리고 지역사회에서 표준화된 신체기능 평가 도구로 활용되고 있습니다.
+      </p>
+    </div>
+  </section>
+
+
+  <div class="container">
+
+    <div class="region-section">
+      <div class="region-header"><h3>Europe & North America</h3></div>
+      <div class="grid grid-3">
+        <div class="card"><div class="card-title">🇺🇸 NSPG Concierge Medicine</div><p class="card-description">USA</p></div>
+        <div class="card"><div class="card-title">🇨🇦 Montreal General Hospital</div><p class="card-description">Canada</p></div>
+        <div class="card"><div class="card-title">🇨🇦 Alberta Health Service</div><p class="card-description">Canada</p></div>
+
+        <div class="card"><div class="card-title">🇮🇹 AOU Policlinico Universitario di Messina</div><p class="card-description">Italy</p></div>
+
+        <div class="card"><div class="card-title">🇪🇸 emeis</div><p class="card-description">Spain</p></div>
+        <div class="card"><div class="card-title">🇪🇸 Hospital Clínico San Carlos</div><p class="card-description">Spain</p></div>
+        <div class="card"><div class="card-title">🇪🇸 Hospital Clínic de Barcelona</div><p class="card-description">Spain</p></div>
+        <div class="card"><div class="card-title">🇪🇸 Hospital Universitario Ramón y Cajal</div><p class="card-description">Spain</p></div>
+
+        <div class="card"><div class="card-title">🇵🇹 Centro Hospitalar de Vila Nova de Gaia</div><p class="card-description">Portugal</p></div>
+      </div>
+    </div>
+
+    <div class="region-section">
+      <div class="region-header"><h3>Asia Pacific</h3></div>
+      <div class="grid grid-3">
+        <div class="card"><div class="card-title">🇦🇺 Southern Fleurieu Family Practice</div><p class="card-description">Australia</p></div>
+        <div class="card"><div class="card-title">🇦🇺 Eastern Health</div><p class="card-description">Australia</p></div>
+        <div class="card"><div class="card-title">🇯🇵 St. Luke's International Hospital (聖路加国際病院)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Sagae City Family Clinic (寒河江市ファミリークリニック)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Juntendo University, Cardiovascular Medicine (順天堂大学 循環器内科)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Hanyang Pacific University, Dept. of Physical Education (漢陽太平洋大学 体育学科)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Nagoya University, Geriatrics (名古屋大学 老年内科)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Senri Rehabilitation Hospital (千里リハビリテーション病院)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Kobe City Medical Center General Hospital (神戸市立医療センター中央市民病院)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Kanazawa University, Cardiovascular Medicine (金沢大学 循環器内科)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Japanese Association of Cardiac Rehabilitation (心臓リハビリテーション学会)</div><p class="card-description">Japan</p></div>
+        <div class="card"><div class="card-title">🇯🇵 Shimada Living Partners Co., Ltd. (シマダリビングパートナーズ株式会社)</div><p class="card-description">Japan</p></div>
+
+        <div class="card"><div class="card-title">🇸🇬 NUHS / Tan Tock Seng Hospital</div><p class="card-description">Singapore</p></div>
+
+        <div class="card"><div class="card-title">🇲🇾 NCI (National Cancer Institute)</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 UPM (Universiti Putra Malaysia, Faculty of Medicine and Health Sciences)</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 UPM(Department of Dietetics, Faculty of Medicine &amp; Health Sciences ׀ Hospital Pengajar UPM)</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 UKM(Universiti Kebangsaan Malaysia)</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 UTAR(Universiti Tunku Abdul Rahman)</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 Pantai Hospital</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 Bigtree</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 UM(Department of Medicine Faculty of Medicine University of Malaya)</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 USZA(Universiti Sultan Zainal Abidin)</div><p class="card-description">Malaysia</p></div>
+        <div class="card"><div class="card-title">🇲🇾 Cheras Rehabilitation Hospital (HRC)</div><p class="card-description">Malaysia</p></div>
+
+        <div class="card"><div class="card-title">🇹🇭 Chiang Mai Hospital - Family Medicine</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Vajira Hospital -  Emergency Medicine</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Siriraj Hospital - Rehabilitation</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Chulalongkorn - Centre for Health and Well-being Promotion for Older People</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Chair of Long-term Care Nurses Society</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Chulalongkorn - Comprehensive Geriatric Center</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Ramathibodi Hospital- Mahidol UnCenter for Health Promotion and Well-Being</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Siriraj Hospital - Geriatrics</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Ramathibodi Hospital - Gerontological Nurse Practitioner Program Chair (Special Course)</div><p class="card-description">Thailand</p></div>
+        <div class="card"><div class="card-title">🇹🇭 Mahidol University</div><p class="card-description">Thailand</p></div>
+      </div>
+    </div>
+
+    <div class="region-section">
+      <div class="region-header"><h3>South America</h3></div>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-title">🇧🇷 Universidade Federal de Sergipe</div>
+          <p class="card-description">Brazil</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="region-section">
+      <div class="region-header">
+        <h3>South Korea 🇰🇷</h3>
+        <span class="count-badge">80+ Installed</span>
+      </div>
+      <p class="mb-4" style="color: var(--color-text-secondary);">
+        To keep the page readable while still listing every site, domestic references are grouped by region with a searchable index.
+      </p>
+
+      <div class="korea-sites">
+        <div class="korea-panel">
+          <div class="korea-metric">
+            <div class="label">Sites listed on this page</div>
+            <div class="value">71</div>
+          </div>
+          <div class="korea-metric">
+            <div class="label">Grouping</div>
+            <div class="value">By region</div>
+          </div>
+          <div class="korea-metric">
+            <div class="label">How to browse</div>
+            <div class="value">Search + expand</div>
+          </div>
+
+          <div class="korea-controls">
+            <input id="koreaSearch" class="korea-search" type="search" placeholder="Search a hospital / clinic / public health center…" aria-label="Search Korean sites">
+            <div class="korea-actions">
+              <button class="korea-btn" type="button" id="expandAllBtn">Expand all</button>
+              <button class="korea-btn" type="button" id="collapseAllBtn">Collapse all</button>
+              <button class="korea-btn" type="button" id="clearSearchBtn">Clear</button>
+            </div>
+            <div class="korea-hint" id="koreaHint">
+              Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.
+            </div>
+          </div>
+        </div>
+
+        <div class="korea-list" id="koreaList">
+          <details class="region-accordion" open data-region="서울">
+            <summary class="region-summary">
+              <span class="region-name">서울</span>
+              <span class="region-count">23</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="가톨릭대학교 은평성모병원">가톨릭대학교 은평성모병원</li>
+              <li class="hospital-item" data-name="강남베드로병원">강남베드로병원</li>
+              <li class="hospital-item" data-name="강남세브란스병원">강남세브란스병원</li>
+              <li class="hospital-item" data-name="강북삼성병원">강북삼성병원</li>
+              <li class="hospital-item" data-name="고려대학교구로병원">고려대학교구로병원</li>
+              <li class="hospital-item" data-name="고려대학교안암병원">고려대학교안암병원</li>
+              <li class="hospital-item" data-name="국립암센터">국립암센터</li>
+              <li class="hospital-item" data-name="국민건강보험공단">국민건강보험공단</li>
+              <li class="hospital-item" data-name="서울대학교병원">서울대학교병원</li>
+              <li class="hospital-item" data-name="서울성모병원">서울성모병원</li>
+              <li class="hospital-item" data-name="서울의료원">서울의료원</li>
+              <li class="hospital-item" data-name="서울특별시 보라매병원">서울특별시 보라매병원</li>
+              <li class="hospital-item" data-name="서울아산병원">서울아산병원</li>
+              <li class="hospital-item" data-name="삼성서울병원">삼성서울병원</li>
+              <li class="hospital-item" data-name="세브란스병원">세브란스병원</li>
+              <li class="hospital-item" data-name="중앙보훈병원">중앙보훈병원</li>
+              <li class="hospital-item" data-name="이화여자대학교목동병원">이화여자대학교목동병원</li>
+              <li class="hospital-item" data-name="한국건강관리협회">한국건강관리협회</li>
+              <li class="hospital-item" data-name="가톨릭대학교 부천성모병원">가톨릭대학교 부천성모병원</li>
+              <li class="hospital-item" data-name="가톨릭대학교 성빈센트병원">가톨릭대학교 성빈센트병원</li>
+              <li class="hospital-item" data-name="중앙대학교병원">중앙대학교병원</li>
+              <li class="hospital-item" data-name="파크사이드재활병원">파크사이드재활병원</li>
+              <li class="hospital-item" data-name="희연재활병원">희연재활병원</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" open data-region="경기">
+            <summary class="region-summary">
+              <span class="region-name">경기</span>
+              <span class="region-count">18</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="가톨릭대학교 의정부성모병원">가톨릭대학교 의정부성모병원</li>
+              <li class="hospital-item" data-name="고려대학교안산병원">고려대학교안산병원</li>
+              <li class="hospital-item" data-name="분당서울대학교병원">분당서울대학교병원</li>
+              <li class="hospital-item" data-name="분당차병원">분당차병원</li>
+              <li class="hospital-item" data-name="용인세브란스병원">용인세브란스병원</li>
+              <li class="hospital-item" data-name="인제대학교일산백병원">인제대학교일산백병원</li>
+              <li class="hospital-item" data-name="중앙대학교광명병원">중앙대학교광명병원</li>
+              <li class="hospital-item" data-name="한림대학교성심병원">한림대학교성심병원</li>
+              <li class="hospital-item" data-name="한림대학교동탄성심병원">한림대학교동탄성심병원</li>
+              <li class="hospital-item" data-name="한양대학교구리병원">한양대학교구리병원</li>
+              <li class="hospital-item" data-name="과천시보건소">과천시보건소</li>
+              <li class="hospital-item" data-name="하남시보건소">하남시보건소</li>
+              <li class="hospital-item" data-name="광동병원">광동병원</li>
+              <li class="hospital-item" data-name="대정요양병원">대정요양병원</li>
+              <li class="hospital-item" data-name="부평세림병원">부평세림병원</li>
+              <li class="hospital-item" data-name="삼성노블카운티 의료센터">삼성노블카운티 의료센터</li>
+              <li class="hospital-item" data-name="순천향대학교부속부천병원">순천향대학교부속부천병원</li>
+              <li class="hospital-item" data-name="한양대학교병원">한양대학교병원</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="인천">
+            <summary class="region-summary">
+              <span class="region-name">인천</span>
+              <span class="region-count">7</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="인하대학교병원">인하대학교병원</li>
+              <li class="hospital-item" data-name="부평더편한정형외과의원">부평더편한정형외과의원</li>
+              <li class="hospital-item" data-name="인천계양구보건소">인천계양구보건소</li>
+              <li class="hospital-item" data-name="인천광역시 광역치매센터">인천광역시 광역치매센터</li>
+              <li class="hospital-item" data-name="인천로뎀요양병원">인천로뎀요양병원</li>
+              <li class="hospital-item" data-name="강남베드로병원 인천지점">강남베드로병원 인천지점</li>
+              <li class="hospital-item" data-name="한국건강관리협회 인천지부">한국건강관리협회 인천지부</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="강원">
+            <summary class="region-summary">
+              <span class="region-name">강원</span>
+              <span class="region-count">3</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="강원대학교병원">강원대학교병원</li>
+              <li class="hospital-item" data-name="원주세브란스기독병원">원주세브란스기독병원</li>
+              <li class="hospital-item" data-name="평창군보건의료원">평창군보건의료원</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="충남">
+            <summary class="region-summary">
+              <span class="region-name">충남</span>
+              <span class="region-count">3</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="홍성군보건소">홍성군보건소</li>
+              <li class="hospital-item" data-name="충청남도 홍성의료원">충청남도 홍성의료원</li>
+              <li class="hospital-item" data-name="순천향대학교천안병원">순천향대학교천안병원</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="대전">
+            <summary class="region-summary">
+              <span class="region-name">대전</span>
+              <span class="region-count">2</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="대전성모병원">대전성모병원</li>
+              <li class="hospital-item" data-name="대전엔도내과">대전엔도내과</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="대구">
+            <summary class="region-summary">
+              <span class="region-name">대구</span>
+              <span class="region-count">6</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="경북대학교병원">경북대학교병원</li>
+              <li class="hospital-item" data-name="칠곡경북대학교병원">칠곡경북대학교병원</li>
+              <li class="hospital-item" data-name="대구가톨릭대학교병원">대구가톨릭대학교병원</li>
+              <li class="hospital-item" data-name="대구계명대동산병원">대구계명대동산병원</li>
+              <li class="hospital-item" data-name="영남대학교병원">영남대학교병원</li>
+              <li class="hospital-item" data-name="대구의료원">대구의료원</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="부산">
+            <summary class="region-summary">
+              <span class="region-name">부산</span>
+              <span class="region-count">4</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="부산대학교병원">부산대학교병원</li>
+              <li class="hospital-item" data-name="양산부산대학교병원">양산부산대학교병원</li>
+              <li class="hospital-item" data-name="부산힘내라병원">부산힘내라병원</li>
+              <li class="hospital-item" data-name="인제대학교해운대백병원">인제대학교해운대백병원</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="경남">
+            <summary class="region-summary">
+              <span class="region-name">경남</span>
+              <span class="region-count">3</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="경상대학교병원">경상대학교병원</li>
+              <li class="hospital-item" data-name="부산대학교병원 (경남 연계)">부산대학교병원 (경남 연계)</li>
+              <li class="hospital-item" data-name="희연재활병원 (경남)">희연재활병원 (경남)</li>
+            </ul>
+          </details>
+
+          <details class="region-accordion" data-region="전남">
+            <summary class="region-summary">
+              <span class="region-name">전남</span>
+              <span class="region-count">2</span>
+            </summary>
+            <ul class="hospital-ul">
+              <li class="hospital-item" data-name="전남대학교병원">전남대학교병원</li>
+              <li class="hospital-item" data-name="화순전남대학교병원">화순전남대학교병원</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+ <div data-include="./includes/footer.html"></div>
+
+
+  <script>
+    (function() {
+      const searchEl = document.getElementById('koreaSearch');
+      const listEl = document.getElementById('koreaList');
+      const expandBtn = document.getElementById('expandAllBtn');
+      const collapseBtn = document.getElementById('collapseAllBtn');
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const hintEl = document.getElementById('koreaHint');
+
+      if (!searchEl || !listEl) return;
+
+      const regionAccordions = Array.from(listEl.querySelectorAll('.region-accordion'));
+
+      function setAll(open) {
+        regionAccordions.forEach(d => d.open = open);
+      }
+
+      function normalize(s) {
+        return (s || '').toString().trim().toLowerCase();
+      }
+
+      function applyFilter() {
+        const q = normalize(searchEl.value);
+        let totalMatches = 0;
+
+        regionAccordions.forEach(d => {
+          const items = Array.from(d.querySelectorAll('.hospital-item'));
+          let regionMatches = 0;
+
+          items.forEach(li => {
+            const name = normalize(li.getAttribute('data-name') || li.textContent);
+            const hit = !q || name.includes(q);
+            li.style.display = hit ? '' : 'none';
+            if (hit) regionMatches += 1;
+          });
+
+          d.style.display = (regionMatches > 0) ? '' : 'none';
+
+          if (q) d.open = regionMatches > 0;
+
+          totalMatches += regionMatches;
+        });
+
+        if (!q) {
+          hintEl.textContent = 'Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.';
+        } else {
+          hintEl.textContent = totalMatches === 0
+            ? 'No matches found. Try a shorter keyword.'
+            : totalMatches + ' site(s) matched.';
+        }
+      }
+
+      expandBtn && expandBtn.addEventListener('click', () => setAll(true));
+      collapseBtn && collapseBtn.addEventListener('click', () => setAll(false));
+      clearBtn && clearBtn.addEventListener('click', () => {
+        searchEl.value = '';
+        applyFilter();
+      });
+      searchEl.addEventListener('input', applyFilter);
+
+      applyFilter();
+    })();
+  </script>
+  <script src="./js/main.js"></script>
+  <script src="./js/navigation.js"></script>
+
+</body>
+</html>

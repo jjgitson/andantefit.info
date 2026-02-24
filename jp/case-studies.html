@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Studies - AndanteFit</title>
+  <meta name="description" content="AndanteFit 케이스 스터디: 임상 및 연구 현장에서의 실제 적용 사례와 리포트">
+  <meta name="keywords" content="AndanteFit, 케이스 스터디, 사례 연구, 임상 적용, 연구 리포트, SPPB, 신체기능평가, 노쇠, 근감소증">
+  <meta name="author" content="DYPHI Inc.">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Case Studies - AndanteFit">
+  <meta property="og:description" content="AndanteFit 케이스 스터디: 임상 및 연구 현장에서의 실제 적용 사례와 리포트">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Case Studies - AndanteFit">
+  <meta name="twitter:description" content="AndanteFit 케이스 스터디: 임상 및 연구 현장에서의 실제 적용 사례와 리포트">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+  <style>
+    .report-list { max-width: 900px; margin: 0 auto; border-top: 2px solid var(--color-deep-blue); }
+    .report-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--color-soft-gray); transition: background-color 0.2s; }
+    .report-item:hover { background-color: #fcfcfc; }
+    .report-date { width: 130px; font-size: 0.9rem; color: var(--color-text-muted); flex-shrink: 0; }
+    .report-main { flex-grow: 1; padding: 0 20px; }
+    .report-title { font-size: 1.1rem; font-weight: 600; color: var(--color-deep-blue); margin: 0; display: flex; align-items: center; gap: 10px; }
+    .lang-badge { font-size: 0.7rem; background-color: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px; font-weight: 700; border: 1px solid #e2e8f0; }
+    .btn-small { padding: 8px 16px; font-size: 0.85rem; border-radius: 6px; white-space: nowrap; }
+    @media (max-width: 768px) { .report-item { flex-direction: column; align-items: flex-start; } .report-date { margin-bottom: 8px; } .report-main { padding: 0 0 15px 0; } }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0L4ENVHFYP');</script>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">연구 리포트</span>
+      <h1 class="hero-headline">Case Studies</h1>
+      <p class="hero-subtitle">임상 및 연구 현장에서의 AndanteFit 실제 적용 사례를 정리했습니다.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div id="caseStudiesContainer" class="report-list">
+        <p style="text-align: center; color: var(--color-text-muted); padding: 40px;">리포트를 불러오는 중입니다...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Standard Footer -->
+  <div data-include="./includes/footer.html"></div>
+
+
+<script>
+(function() {
+  'use strict';
+
+  const GITHUB_CONFIG = {
+    owner: 'jjgitson',
+    repo: 'andantefit.info',
+    folder: 'jp/case-studies',
+    branch: 'main'
+  };
+
+  const customTitles = {
+    'Common-Operational-Language-Strategy-EN': '戦略提案：高齢者のためのシームレスな統合ケア',
+    'SPPB-Occupational-Health-EN': '産業保健におけるSPPBの活用',
+    'Pain-To-Function-Paradigm-Shift-EN': '疼痛から機能へ：パラダイムシフト',
+    'CIBERFES-Consensus-Frailty-Screening-EN': 'CIBERFESコンセンサス：フレイルのスクリーニング標準化',
+    'Heart-Failure-Cardiopulmonary-Rehab-SPPB-EN': '心不全と心肺リハビリにおけるSPPB'
+  };
+
+  // 언어/폴더별로 캐시 분리
+  const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
+  const CACHE_TIME_KEY = CACHE_KEY + '_time';
+  const CACHE_DURATION = 60 * 60 * 1000;
+
+  function parseFilename(filename) {
+    const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
+    if (!match) return null;
+
+    const [, year, month, day, fileKey] = match;
+    const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
+
+    return {
+      date: new Date(Number(year), Number(month) - 1, Number(day)),
+      dateStr: `${year}.${month}.${day}`,
+      title,
+      filename,
+      fileKey
+    };
+  }
+
+function renderCaseStudies(container, caseStudies) {
+    const html = caseStudies.map(function(study) {
+      return `
+        <div class="report-item">
+          <div class="report-date">${study.dateStr}</div>
+          <div class="report-main">
+            <h3 class="report-title">
+              <a href="${study.url}" class="title-link">${study.title}</a>
+            </h3>
+          </div>
+          <div class="report-link">
+            <a href="${study.url}" class="btn btn-primary btn-small">보고서 보기 →</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+    container.innerHTML = html;
+  }
+
+  function showError(container, message) {
+    container.innerHTML = `
+      <div style="color:#dc2626; padding:20px; background:#fee2e2; border-radius:8px;">
+        <div style="font-weight:700;">보고서를 불러오는 중 오류 발생</div>
+        <div style="margin-top:6px;">${message}</div>
+        <div style="margin-top:8px; font-size:12px;">Por favor, inténtelo de nuevo más tarde.</div>
+      </div>
+    `;
+  }
+
+  function showCacheWarning(container) {
+    container.insertAdjacentHTML('afterbegin',
+      `<div style="background:#fef3c7; padding:12px; border-radius:8px; margin-bottom:20px; border-left:4px solid #f59e0b;">
+        Mostrando datos en caché.
+      </div>`
+    );
+  }
+
+  async function loadCaseStudies() {
+    const container = document.getElementById('caseStudiesContainer');
+    if (!container) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const forceNoCache = params.get('nocache') === '1';
+
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      const cacheTime = localStorage.getItem(CACHE_TIME_KEY);
+
+      if (!forceNoCache && cached && cacheTime && (Date.now() - Number(cacheTime)) < CACHE_DURATION) {
+        renderCaseStudies(container, JSON.parse(cached));
+        return;
+      }
+
+      const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${encodeURIComponent(GITHUB_CONFIG.branch)}`;
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        if (cached) {
+          renderCaseStudies(container, JSON.parse(cached));
+          showCacheWarning(container);
+          return;
+        }
+        throw new Error('Solicitud API falló: ' + response.status);
+      }
+
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error('Respuesta API inválida');
+
+      const htmlFiles = data.filter(function(f) {
+        return f.type === 'file' && f.name.endsWith('.html');
+      });
+
+      const caseStudies = htmlFiles
+        .map(function(f) {
+          const parsed = parseFilename(f.name);
+          if (!parsed) return null;
+          parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
+          return parsed;
+        })
+        .filter(Boolean)
+        .sort(function(a, b) { return b.date - a.date; });
+
+      localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
+      localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+
+      renderCaseStudies(container, caseStudies);
+
+    } catch (error) {
+      console.error(error);
+      showError(container, error.message || String(error));
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadCaseStudies);
+  } else {
+    loadCaseStudies();
+  }
+})();
+</script>
+  <script src="./js/main.js"></script>
+  <script src="./js/navigation.js"></script>
+
+</body>
+</html>

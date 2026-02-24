@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const isKO = path.includes('/ko/');
     const isES = path.includes('/es/');
     const isJP = path.includes('/jp/');
-    const isJP = path.includes('/jp/');
+
     const activeLang = isKO ? 'ko' : isES ? 'es' : isJP ? 'jp' : 'en';
 
     // 폴더 깊이에 따른 루트 경로 계산

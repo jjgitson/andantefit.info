@@ -5,13 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const path = window.location.pathname;
     const isKO = path.includes('/ko/');
     const isES = path.includes('/es/');
-    const activeLang = isKO ? 'ko' : isES ? 'es' : 'en';
+    const isJP = path.includes('/jp/');
+    const isJP = path.includes('/jp/');
+    const activeLang = isKO ? 'ko' : isES ? 'es' : isJP ? 'jp' : 'en';
 
     // 폴더 깊이에 따른 루트 경로 계산
     let rootPath = './';
     if (path.includes('case-studies/')) {
         rootPath = '../../';
-    } else if (isKO || isES) {
+    } else if (isKO || isES || isJP) {
         rootPath = '../';
     }
 
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 언어별 메뉴 라벨
     const labels = isKO ?
-        { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
+        { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '참고문헌' } :
         isES ?
         { home: 'Inicio', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
         { home: 'Home', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
@@ -41,9 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
         ' <span class="sep">|</span> ' +
         langLink('ko', 'KO') +
         ' <span class="sep">|</span> ' +
-        langLink('es', 'ES');
+        langLink('es', 'ES') +
+        ' <span class="sep">|</span> ' +
+        langLink('jp', 'JP');
 
-    const langPrefix = isKO ? 'ko/' : isES ? 'es/' : '';
+    const langPrefix = isKO ? 'ko/' : isES ? 'es/' : isJP ? 'jp/' : '';
 
     // 내비게이션 링크 배열 (데스크톱 메뉴 + 모바일 오버레이 공유)
     const navItems = [

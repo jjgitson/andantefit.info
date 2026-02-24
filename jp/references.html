@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AndanteFit 글로벌 고객, 파트너, 국내 도입 기관 레퍼런스">
-  <meta name="keywords" content="AndanteFit, SPPB, 신체기능평가, 노쇠, 근감소증, 레퍼런스, 고객사, 파트너, 도입기관, 보행속도, 의자에서 일어나기, 균형">
+  <meta name="description" content="AndanteFitのグローバル顧客・パートナー・導入機関のリファレンス">
+  <meta name="keywords" content="AndanteFit, SPPB, 身体機能評価, フレイル, サルコペニア, リファレンス, 顧客, パートナー, 導入機関, 歩行速度, 椅子立ち上がり, バランス">
   <meta name="author" content="DYPHI Inc.">
   <title>References - AndanteFit</title>
   <link rel="canonical" href="https://andantefit.info/jp/references.html" />
@@ -217,10 +217,10 @@
 
   <section class="hero">
     <div class="container hero-content">
-      <span class="section-label">글로벌 네트워크</span>
-      <h1 class="hero-headline">AndanteFit은 5개 대륙에서 활용되고 있습니다</h1>
+      <span class="section-label">グローバルネットワーク</span>
+      <h1 class="hero-headline">AndanteFitは5大陸で活用されています</h1>
       <p class="hero-subtitle">
-        전 세계 주요 병원, 연구기관 그리고 지역사회에서 표준화된 신체기능 평가 도구로 활용되고 있습니다.
+        世界の主要な病院・研究機関・地域社会において標準化された身体機能評価ツールとして活用されています。
       </p>
     </div>
   </section>
@@ -301,36 +301,36 @@
     <div class="region-section">
       <div class="region-header">
         <h3>South Korea 🇰🇷</h3>
-        <span class="count-badge">80+ Installed</span>
+        <span class="count-badge">80+施設導入</span>
       </div>
       <p class="mb-4" style="color: var(--color-text-secondary);">
-        To keep the page readable while still listing every site, domestic references are grouped by region with a searchable index.
+        ページの可読性を保ちながら全施設を掲載するため、国内リファレンスは地域別にグループ化され、検索機能付きインデックスで提供しています。
       </p>
 
       <div class="korea-sites">
         <div class="korea-panel">
           <div class="korea-metric">
-            <div class="label">Sites listed on this page</div>
+            <div class="label">掲載施設数</div>
             <div class="value">71</div>
           </div>
           <div class="korea-metric">
-            <div class="label">Grouping</div>
-            <div class="value">By region</div>
+            <div class="label">グループ化</div>
+            <div class="value">地域別</div>
           </div>
           <div class="korea-metric">
-            <div class="label">How to browse</div>
-            <div class="value">Search + expand</div>
+            <div class="label">閲覧方法</div>
+            <div class="value">検索＋展開</div>
           </div>
 
           <div class="korea-controls">
-            <input id="koreaSearch" class="korea-search" type="search" placeholder="Search a hospital / clinic / public health center…" aria-label="Search Korean sites">
+            <input id="koreaSearch" class="korea-search" type="search" placeholder="病院・クリニック・保健所を検索…" aria-label="韓国施設を検索">
             <div class="korea-actions">
-              <button class="korea-btn" type="button" id="expandAllBtn">Expand all</button>
-              <button class="korea-btn" type="button" id="collapseAllBtn">Collapse all</button>
-              <button class="korea-btn" type="button" id="clearSearchBtn">Clear</button>
+              <button class="korea-btn" type="button" id="expandAllBtn">すべて展開</button>
+              <button class="korea-btn" type="button" id="collapseAllBtn">すべて折りたたむ</button>
+              <button class="korea-btn" type="button" id="clearSearchBtn">クリア</button>
             </div>
             <div class="korea-hint" id="koreaHint">
-              Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.
+              ヒント：キーワードを入力してください（例：서울、보건소、대학교병원）。結果はリアルタイムで更新されます。
             </div>
           </div>
         </div>
@@ -549,11 +549,11 @@
         });
 
         if (!q) {
-          hintEl.textContent = 'Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.';
+          hintEl.textContent = 'ヒント：キーワードを入力してください（例：서울、보건소、대학교병원）。結果はリアルタイムで更新されます。';
         } else {
           hintEl.textContent = totalMatches === 0
-            ? 'No matches found. Try a shorter keyword.'
-            : totalMatches + ' site(s) matched.';
+            ? '一致する結果が見つかりません。より短いキーワードでお試しください。'
+            : totalMatches + '件が一致しました。';
         }
       }
 

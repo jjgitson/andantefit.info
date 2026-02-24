@@ -24,11 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentPage = KNOWN_PAGES.indexOf(lastSegment) !== -1 ? lastSegment : 'index.html';
 
     // 언어별 메뉴 라벨
-    const labels = isKO ?
-        { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '참고문헌' } :
-        isES ?
-        { home: 'Inicio', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
-        { home: 'Home', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
+   const labels = isKO ?
+    { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
+    isES ?
+    { home: 'Inicio', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
+    isJP ?
+    { home: 'ホーム', product: '製品', validation: '検証', cases: 'ケーススタディ', refs: '導入事例' } :
+    { home: 'Home', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
 
     // 언어 링크 생성 — 현재 페이지 경로 기반, 현재 언어에 aria-current 부여
     function langLink(lang, label) {

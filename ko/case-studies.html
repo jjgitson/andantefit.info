@@ -71,15 +71,23 @@
     branch: 'main'
   };
 
+  // Korean site: show KR and EN files
+  const ALLOWED_LANGS = ['KR', 'EN'];
+
   const customTitles = {
-    'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad',
-    'Checkup-Event-Community-CSR-KR': '신체나이 체크업 이벤트',
-    'Community-Frailty-Prevention-Program-KR': '지역사회 노쇠예방프로그램',
-    'Oncology-SPPB-AndanteFit-KR': '항암 환자에서 신체기능평가(SPPB)가 중요한 이유',
-    'Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR': '심부전·심폐재활에서의 SPPB 활용'
+    'Checkup-Event-Community-CSR': '신체나이 체크업 이벤트',
+    'Community-Frailty-Prevention-Program': '지역사회 노쇠예방프로그램',
+    'Oncology-SPPB-AndanteFit': '항암 환자에서 신체기능평가(SPPB)가 중요한 이유',
+    'Heart-Failure-Cardiopulmonary-Rehab-SPPB': '심부전·심폐재활에서의 SPPB 활용',
+    'CIBERFES-Consensus-Frailty-Screening': 'CIBERFES 컨센서스: 노쇠 스크리닝 표준화',
+    'PRO-SPPB-Linking-Study': 'PRO-SPPB 연계 연구',
+    'Digital-Care-Platform': '디지털 케어 플랫폼',
+    'Endocrinology-SPPB-Strategy': '내분비 클리닉 SPPB 도입 전략',
+    'Common-Operational-Language-Strategy': '통합 노인 케어를 위한 공통 운영 언어 전략',
+    'SPPB-Occupational-Health': '산업보건 현장에서의 SPPB 활용',
+    'Pain-To-Function-Paradigm-Shift': '통증 중심에서 기능 중심으로: 패러다임 전환'
   };
 
-  // 언어/폴더별로 캐시 분리
   const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
   const CACHE_TIME_KEY = CACHE_KEY + '_time';
   const CACHE_DURATION = 60 * 60 * 1000;
@@ -89,25 +97,30 @@
     if (!match) return null;
 
     const [, year, month, day, fileKey] = match;
-    const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
+    const langMatch = fileKey.match(/-(EN|KR|ES|JP)$/);
+    const lang = langMatch ? langMatch[1] : null;
+    const titleKey = lang ? fileKey.slice(0, -('-' + lang).length) : fileKey;
+    const title = customTitles[titleKey] || titleKey.replace(/-/g, ' ');
 
     return {
       date: new Date(Number(year), Number(month) - 1, Number(day)),
       dateStr: `${year}.${month}.${day}`,
       title,
+      lang,
       filename,
       fileKey
     };
   }
 
-function renderCaseStudies(container, caseStudies) {
+  function renderCaseStudies(container, caseStudies) {
     const html = caseStudies.map(function(study) {
+      const badge = study.lang === 'EN' ? `<span class="lang-badge">EN</span>` : '';
       return `
         <div class="report-item">
           <div class="report-date">${study.dateStr}</div>
           <div class="report-main">
             <h3 class="report-title">
-              <a href="${study.url}" class="title-link">${study.title}</a>
+              <a href="${study.url}" class="title-link">${study.title}</a>${badge}
             </h3>
           </div>
           <div class="report-link">
@@ -124,7 +137,7 @@ function renderCaseStudies(container, caseStudies) {
       <div style="color:#dc2626; padding:20px; background:#fee2e2; border-radius:8px;">
         <div style="font-weight:700;">보고서를 불러오는 중 오류 발생</div>
         <div style="margin-top:6px;">${message}</div>
-        <div style="margin-top:8px; font-size:12px;">Por favor, inténtelo de nuevo más tarde.</div>
+        <div style="margin-top:8px; font-size:12px;">잠시 후 다시 시도해 주세요.</div>
       </div>
     `;
   }
@@ -132,7 +145,7 @@ function renderCaseStudies(container, caseStudies) {
   function showCacheWarning(container) {
     container.insertAdjacentHTML('afterbegin',
       `<div style="background:#fef3c7; padding:12px; border-radius:8px; margin-bottom:20px; border-left:4px solid #f59e0b;">
-        Mostrando datos en caché.
+        캐시된 데이터를 표시하고 있습니다.
       </div>`
     );
   }
@@ -162,11 +175,11 @@ function renderCaseStudies(container, caseStudies) {
           showCacheWarning(container);
           return;
         }
-        throw new Error('Solicitud API falló: ' + response.status);
+        throw new Error('API 요청 실패: ' + response.status);
       }
 
       const data = await response.json();
-      if (!Array.isArray(data)) throw new Error('Respuesta API inválida');
+      if (!Array.isArray(data)) throw new Error('잘못된 API 응답');
 
       const htmlFiles = data.filter(function(f) {
         return f.type === 'file' && f.name.endsWith('.html');
@@ -176,6 +189,7 @@ function renderCaseStudies(container, caseStudies) {
         .map(function(f) {
           const parsed = parseFilename(f.name);
           if (!parsed) return null;
+          if (ALLOWED_LANGS.length && !ALLOWED_LANGS.includes(parsed.lang)) return null;
           parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
           return parsed;
         })

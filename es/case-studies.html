@@ -71,11 +71,18 @@
     branch: 'main'
   };
 
+  // Spanish site: show ES files and EN files (null = no lang suffix = EN legacy files)
+  const ALLOWED_LANGS = ['ES', 'EN', null];
+
   const customTitles = {
-    'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad'
+    'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad',
+    'SPPB-Utilization-Spain': 'Utilización del SPPB en España',
+    'Heart-Failure-Cardiopulmonary-Rehab-SPPB': 'SPPB en Insuficiencia Cardíaca y Rehabilitación Cardiopulmonar',
+    'Common-Operational-Language-Strategy': 'Propuesta estratégica: Atención integrada para adultos mayores',
+    'SPPB-Occupational-Health': 'SPPB en Salud Laboral',
+    'Pain-To-Function-Paradigm-Shift': 'Del dolor a la función: cambio de paradigma'
   };
 
-  // 언어/폴더별로 캐시 분리
   const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
   const CACHE_TIME_KEY = CACHE_KEY + '_time';
   const CACHE_DURATION = 60 * 60 * 1000;
@@ -85,12 +92,16 @@
     if (!match) return null;
 
     const [, year, month, day, fileKey] = match;
-    const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
+    const langMatch = fileKey.match(/-(EN|KR|ES|JP)$/);
+    const lang = langMatch ? langMatch[1] : null;
+    const titleKey = lang ? fileKey.slice(0, -('-' + lang).length) : fileKey;
+    const title = customTitles[titleKey] || titleKey.replace(/-/g, ' ');
 
     return {
       date: new Date(Number(year), Number(month) - 1, Number(day)),
       dateStr: `${year}.${month}.${day}`,
       title,
+      lang,
       filename,
       fileKey
     };
@@ -98,12 +109,13 @@
 
   function renderCaseStudies(container, caseStudies) {
     const html = caseStudies.map(function(study) {
+      const badge = (study.lang === 'EN' || study.lang === null) ? `<span class="lang-badge">EN</span>` : '';
       return `
         <div class="report-item">
           <div class="report-date">${study.dateStr}</div>
           <div class="report-main">
             <h3 class="report-title">
-              <a href="${study.url}" class="title-link">${study.title}</a>
+              <a href="${study.url}" class="title-link">${study.title}</a>${badge}
             </h3>
           </div>
           <div class="report-link">
@@ -172,8 +184,7 @@
         .map(function(f) {
           const parsed = parseFilename(f.name);
           if (!parsed) return null;
-
-          // 폴더 기준 절대경로로 링크 생성 (언어 페이지 위치에 영향 없음)
+          if (!ALLOWED_LANGS.includes(parsed.lang)) return null;
           parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
           return parsed;
         })

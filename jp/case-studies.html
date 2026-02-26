@@ -71,15 +71,17 @@
     branch: 'main'
   };
 
+  // Japanese site: show JP and EN files
+  const ALLOWED_LANGS = ['JP', 'EN'];
+
   const customTitles = {
-    'Common-Operational-Language-Strategy-EN': '戦略提案：高齢者のためのシームレスな統合ケア',
-    'SPPB-Occupational-Health-EN': '産業保健におけるSPPBの活用',
-    'Pain-To-Function-Paradigm-Shift-EN': '疼痛から機能へ：パラダイムシフト',
-    'CIBERFES-Consensus-Frailty-Screening-EN': 'CIBERFESコンセンサス：フレイルのスクリーニング標準化',
-    'Heart-Failure-Cardiopulmonary-Rehab-SPPB-EN': '心不全と心肺リハビリにおけるSPPB'
+    'Common-Operational-Language-Strategy': '戦略提案：高齢者のためのシームレスな統合ケア',
+    'SPPB-Occupational-Health': '産業保健におけるSPPBの活用',
+    'Pain-To-Function-Paradigm-Shift': '疼痛から機能へ：パラダイムシフト',
+    'CIBERFES-Consensus-Frailty-Screening': 'CIBERFESコンセンサス：フレイルのスクリーニング標準化',
+    'Heart-Failure-Cardiopulmonary-Rehab-SPPB': '心不全と心肺リハビリにおけるSPPB'
   };
 
-  // 언어/폴더별로 캐시 분리
   const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
   const CACHE_TIME_KEY = CACHE_KEY + '_time';
   const CACHE_DURATION = 60 * 60 * 1000;
@@ -89,25 +91,30 @@
     if (!match) return null;
 
     const [, year, month, day, fileKey] = match;
-    const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
+    const langMatch = fileKey.match(/-(EN|KR|ES|JP)$/);
+    const lang = langMatch ? langMatch[1] : null;
+    const titleKey = lang ? fileKey.slice(0, -('-' + lang).length) : fileKey;
+    const title = customTitles[titleKey] || titleKey.replace(/-/g, ' ');
 
     return {
       date: new Date(Number(year), Number(month) - 1, Number(day)),
       dateStr: `${year}.${month}.${day}`,
       title,
+      lang,
       filename,
       fileKey
     };
   }
 
-function renderCaseStudies(container, caseStudies) {
+  function renderCaseStudies(container, caseStudies) {
     const html = caseStudies.map(function(study) {
+      const badge = study.lang === 'EN' ? `<span class="lang-badge">EN</span>` : '';
       return `
         <div class="report-item">
           <div class="report-date">${study.dateStr}</div>
           <div class="report-main">
             <h3 class="report-title">
-              <a href="${study.url}" class="title-link">${study.title}</a>
+              <a href="${study.url}" class="title-link">${study.title}</a>${badge}
             </h3>
           </div>
           <div class="report-link">
@@ -176,6 +183,7 @@ function renderCaseStudies(container, caseStudies) {
         .map(function(f) {
           const parsed = parseFilename(f.name);
           if (!parsed) return null;
+          if (ALLOWED_LANGS.length && !ALLOWED_LANGS.includes(parsed.lang)) return null;
           parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
           return parsed;
         })

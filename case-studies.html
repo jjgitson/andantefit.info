@@ -85,11 +85,13 @@
     branch: 'main'
   };
 
+  // English site: show only EN files
+  const ALLOWED_LANGS = ['EN'];
+
   const customTitles = {
-    'CIBERFES-Consensus-Frailty-Screening': 'Consenso CIBERFES: Cribado de Fragilidad'
+    'CIBERFES-Consensus-Frailty-Screening': 'CIBERFES Consensus: Frailty Screening Standardization'
   };
 
-  // 언어/폴더별로 캐시 분리
   const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
   const CACHE_TIME_KEY = CACHE_KEY + '_time';
   const CACHE_DURATION = 60 * 60 * 1000;
@@ -99,12 +101,16 @@
     if (!match) return null;
 
     const [, year, month, day, fileKey] = match;
-    const title = customTitles[fileKey] || fileKey.replace(/-/g, ' ');
+    const langMatch = fileKey.match(/-(EN|KR|ES|JP)$/);
+    const lang = langMatch ? langMatch[1] : null;
+    const titleKey = lang ? fileKey.slice(0, -('-' + lang).length) : fileKey;
+    const title = customTitles[titleKey] || titleKey.replace(/-/g, ' ');
 
     return {
       date: new Date(Number(year), Number(month) - 1, Number(day)),
       dateStr: `${year}.${month}.${day}`,
       title,
+      lang,
       filename,
       fileKey
     };
@@ -121,7 +127,7 @@
             </h3>
           </div>
           <div class="report-link">
-            <a href="${study.url}" class="btn btn-primary btn-small">Ver Informe →</a>
+            <a href="${study.url}" class="btn btn-primary btn-small">Read Report →</a>
           </div>
         </div>
       `;
@@ -132,9 +138,9 @@
   function showError(container, message) {
     container.innerHTML = `
       <div style="color:#dc2626; padding:20px; background:#fee2e2; border-radius:8px;">
-        <div style="font-weight:700;">Error al cargar los informes</div>
+        <div style="font-weight:700;">Failed to load reports</div>
         <div style="margin-top:6px;">${message}</div>
-        <div style="margin-top:8px; font-size:12px;">Por favor, inténtelo de nuevo más tarde.</div>
+        <div style="margin-top:8px; font-size:12px;">Please try again later.</div>
       </div>
     `;
   }
@@ -142,7 +148,7 @@
   function showCacheWarning(container) {
     container.insertAdjacentHTML('afterbegin',
       `<div style="background:#fef3c7; padding:12px; border-radius:8px; margin-bottom:20px; border-left:4px solid #f59e0b;">
-        Mostrando datos en caché.
+        Showing cached data.
       </div>`
     );
   }
@@ -172,11 +178,11 @@
           showCacheWarning(container);
           return;
         }
-        throw new Error('Solicitud API falló: ' + response.status);
+        throw new Error('API request failed: ' + response.status);
       }
 
       const data = await response.json();
-      if (!Array.isArray(data)) throw new Error('Respuesta API inválida');
+      if (!Array.isArray(data)) throw new Error('Invalid API response');
 
       const htmlFiles = data.filter(function(f) {
         return f.type === 'file' && f.name.endsWith('.html');
@@ -186,8 +192,7 @@
         .map(function(f) {
           const parsed = parseFilename(f.name);
           if (!parsed) return null;
-
-          // 폴더 기준 절대경로로 링크 생성 (언어 페이지 위치에 영향 없음)
+          if (ALLOWED_LANGS.length && !ALLOWED_LANGS.includes(parsed.lang)) return null;
           parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
           return parsed;
         })

@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Community Frailty Prevention Program | AndanteFit</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React (CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel (JSX in browser) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide (icons) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto,
+        "Apple SD Gothic Neo", Arial, sans-serif;
+    }
+
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+
+    .slideSurface { color: #0f172a; }
+    .slideSurface p { line-height: 1.65; }
+  </style>
+</head>
+
+<body>
+<!-- Navigation -->
+<div id="navigation-container"></div>
+
+<div id="root" class="appFont"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function LucideIcon({ name, className = "" }) {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
+  return <i data-lucide={name} className={className}></i>;
+}
+
+function ImgBox({ src, alt, className = "" }) {
+  const [ok, setOk] = useState(true);
+  return ok ? (
+    <img
+      src={src}
+      alt={alt}
+      className={"w-full object-cover rounded-2xl " + className}
+      onError={() => setOk(false)}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <div
+      className={
+        "rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center " +
+        className
+      }
+    >
+      <div className="text-slate-400 font-bold text-sm text-center px-4">
+        Image coming soon<br/><span className="text-xs font-normal">{src}</span>
+      </div>
+    </div>
+  );
+}
+
+const SlideFrame = ({ index, children }) => {
+  const num = String(index + 1).padStart(2, "0");
+  return (
+    <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+      <div className={`relative w-full max-w-[1280px] min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+        <div className="w-full md:h-full h-auto overflow-visible">
+          {children}
+        </div>
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
+          <div className="text-[12px] font-bold text-slate-600 tracking-widest">{num}</div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SlideLayout = ({ title, headline, children }) => (
+  <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
+    <header className="mb-5 sm:mb-6">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-1.5 h-6 bg-emerald-600 rounded-full"></div>
+        <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
+      </div>
+      <h2 className="text-[22px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
+    </header>
+    <div className="flex-1 md:overflow-hidden overflow-visible">
+      {children}
+    </div>
+  </div>
+);
+
+const flowSteps = [
+  { step: "01", icon: "clipboard-list", title: "Pre-Program Physical Function Assessment", desc: "Measure all 3 SPPB components (gait, sit-to-stand, balance) via AndanteFit to establish baseline data" },
+  { step: "02", icon: "play-circle",   title: "Exercise Content Assignment & Orientation", desc: "Assign individualized exercise content based on assessment results and guide participants on how to participate" },
+  { step: "03", icon: "dumbbell",      title: "12-Week Exercise Participation",           desc: "Participants exercise 5 days per week, approximately 30 minutes per session, at home or at the welfare center" },
+  { step: "04", icon: "bar-chart-2",   title: "Post-Program Physical Function Re-Assessment", desc: "Re-measure the same components to confirm changes over 3 months and share results with participants" },
+];
+
+const exerciseModules = [
+  { icon: "zap",      title: "Resistance Training",   desc: "Lower limb and core strength",     color: "bg-emerald-50 border-emerald-200 text-emerald-700" },
+  { icon: "triangle", title: "Balance Training",      desc: "Fall prevention and static balance", color: "bg-teal-50 border-teal-200 text-teal-700" },
+  { icon: "heart",    title: "Aerobic Exercise",      desc: "Endurance and cardiorespiratory fitness", color: "bg-sky-50 border-sky-200 text-sky-700" },
+  { icon: "move",     title: "Flexibility Training",  desc: "Joint range of motion and posture",  color: "bg-violet-50 border-violet-200 text-violet-700" },
+];
+
+const App = () => {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
+
+  const slides = [
+
+    /* ── Slide 1: Cover ── */
+    (
+      <div className="w-full md:h-full p-6 sm:p-12 flex flex-col bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          <span className="bg-emerald-600 text-white text-xs font-black px-3 py-1 rounded-full tracking-widest uppercase">
+            Frailty Prevention Program
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            3-Month Exercise + SPPB
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            Community Care
+          </span>
+        </div>
+
+        <div className="flex flex-1 flex-col lg:flex-row gap-8 items-center">
+          {/* Left: text */}
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-10 bg-emerald-600 rounded-full"></div>
+              <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight">
+                Community<br/>Frailty Prevention Program
+              </h1>
+            </div>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 pl-5">
+              A community-based frailty prevention program delivering<br/>
+              tailored exercise for 3 months, guided by SPPB assessment results.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4 pl-5">
+              {[
+                { val: "3 Months",  label: "Program duration" },
+                { val: "5x / Week", label: "Exercise frequency" },
+                { val: "SPPB",      label: "Pre & post standard assessment" },
+              ].map((s, i) => (
+                <div key={i} className="bg-white/80 border border-emerald-100 rounded-2xl p-4 text-center shadow-sm">
+                  <div className="text-xl sm:text-2xl font-black text-emerald-600 mb-1">{s.val}</div>
+                  <div className="text-[11px] text-slate-500">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: image */}
+          <div className="w-full lg:w-[420px] flex-shrink-0">
+            <ImgBox
+              src="../assets/case-studies/frailty-prevention-cover.webp"
+              alt="Frailty prevention program in progress"
+              className="h-64 sm:h-80 lg:h-96 shadow-xl"
+            />
+          </div>
+        </div>
+      </div>
+    ),
+
+    /* ── Slide 2: Program Introduction ── */
+    (
+      <SlideLayout title="Program Introduction" headline="A one-stop solution from WHO-standard physical function assessment to personalized exercise">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-5">
+            <div className="bg-emerald-50 border-l-4 border-emerald-600 p-5 rounded-r-2xl">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+                We conduct the standardized physical function assessment (SPPB) adopted by
+                WHO and numerous health organizations and communities,
+                then deliver <strong>personalized exercise services</strong> over 3 months based on each participant's results.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: "clipboard-check", title: "Standard Assessment-Based",  desc: "Objective, reproducible assessment via AndanteFit, a digital SPPB platform" },
+                { icon: "target",          title: "Personalized Intervention",   desc: "Exercise content optimized for each individual based on their assessment results" },
+                { icon: "refresh-cw",      title: "Pre & Post Comparison",       desc: "Re-assess the same measures after 3 months to track changes with concrete data" },
+                { icon: "award",           title: "Sustained Engagement Management", desc: "Reward system and participation summaries to maintain adherence rates" },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="w-9 h-9 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={item.icon} className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
+                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex gap-3 items-start">
+              <LucideIcon name="info" className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-slate-600 leading-relaxed">
+                All results provided are intended as reference information for personal health management
+                and do not substitute medical practice for the diagnosis, treatment, or prognosis of any disease.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[360px] flex-shrink-0">
+            <ImgBox
+              src="../assets/case-studies/frailty-prevention-intro.webp"
+              alt="Program introduction image"
+              className="h-64 sm:h-72 lg:h-80 shadow-md"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 3: Program Structure ── */
+    (
+      <SlideLayout title="Program Structure" headline="A three-pillar framework of assessment, exercise, and engagement management">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full content-start">
+
+          {/* Block 1: Physical Function Assessment */}
+          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                <LucideIcon name="clipboard-list" className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-black text-emerald-800 text-sm">Physical Function Assessment</span>
+            </div>
+            <ul className="space-y-2 text-sm text-emerald-900">
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 font-bold mt-0.5">•</span>
+                Conducted via AndanteFit, a digital SPPB platform
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 font-bold mt-0.5">•</span>
+                Baseline assessment at program start · Re-assessment after 3 months
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-emerald-500 font-bold mt-0.5">•</span>
+                Gait speed · 5-times sit-to-stand · Static balance
+              </li>
+            </ul>
+          </div>
+
+          {/* Block 2: Exercise Content */}
+          <div className="bg-teal-50 border border-teal-200 rounded-2xl p-6 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+                <LucideIcon name="dumbbell" className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-black text-teal-800 text-sm">Exercise Content</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {exerciseModules.map((m, i) => (
+                <div key={i} className={`${m.color} border rounded-xl p-3 text-center`}>
+                  <LucideIcon name={m.icon} className="w-4 h-4 mx-auto mb-1" />
+                  <div className="text-xs font-bold">{m.title}</div>
+                  <div className="text-[10px] opacity-75 mt-0.5">{m.desc}</div>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-teal-800 leading-relaxed">
+              Progressive content · 5 days/week · ~30 minutes/session<br/>
+              Effectiveness validated through widespread community implementation
+            </p>
+          </div>
+
+          {/* Block 3: Engagement Management */}
+          <div className="bg-sky-50 border border-sky-200 rounded-2xl p-6 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-sky-600 rounded-lg flex items-center justify-center">
+                <LucideIcon name="bar-chart-2" className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-black text-sky-800 text-sm">Engagement Management</span>
+            </div>
+            <ul className="space-y-2 text-sm text-sky-900">
+              <li className="flex items-start gap-2">
+                <span className="text-sky-500 font-bold mt-0.5">•</span>
+                Points or small rewards for activity participation
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sky-500 font-bold mt-0.5">•</span>
+                Weekly and monthly participation summaries provided
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sky-500 font-bold mt-0.5">•</span>
+                Program effectiveness monitoring based on adherence rates
+              </li>
+            </ul>
+          </div>
+
+          {/* Bottom: image */}
+          <div className="col-span-1 lg:col-span-3">
+            <ImgBox
+              src="../assets/case-studies/frailty-prevention-program.webp"
+              alt="Program structure image"
+              className="h-44 shadow-sm"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 4: Operational Flow ── */
+    (
+      <SlideLayout title="Operational Flow" headline="A 4-stage cycle to measure and demonstrate change">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+
+          {/* Steps */}
+          <div className="flex-1 space-y-4">
+            {flowSteps.map((s, i) => (
+              <div key={i} className="flex gap-4 items-start">
+                {/* Step number + connector */}
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm flex-shrink-0">
+                    {s.step}
+                  </div>
+                  {i < flowSteps.length - 1 && (
+                    <div className="w-0.5 h-6 bg-emerald-200 mt-1"></div>
+                  )}
+                </div>
+                <div className="flex-1 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-center gap-2 mb-2">
+                    <LucideIcon name={s.icon} className="w-4 h-4 text-emerald-600" />
+                    <span className="font-bold text-slate-900 text-sm">{s.title}</span>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Side */}
+          <div className="w-full lg:w-[360px] flex-shrink-0 space-y-4">
+            <ImgBox
+              src="../assets/case-studies/frailty-prevention-flow.webp"
+              alt="Operational flow image"
+              className="h-52 sm:h-64 shadow-md"
+            />
+            <div className="bg-emerald-600 text-white rounded-2xl p-5 text-center">
+              <div className="text-3xl font-black mb-1">12 Weeks</div>
+              <div className="text-xs font-bold opacity-80">Intensive Participation Period</div>
+              <div className="mt-3 text-xs opacity-80 leading-relaxed">
+                Supporting consistent participation<br/>
+                at home or at the welfare center
+              </div>
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 5: Expected Outcomes + CTA ── */
+    (
+      <div className="w-full md:h-full bg-slate-900 p-8 sm:p-14 flex flex-col justify-center relative overflow-hidden">
+        {/* BG blobs */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          {/* Left: effects */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-1.5 h-6 bg-emerald-500 rounded-full"></div>
+              <span className="text-sm font-bold text-slate-400 tracking-wider">Expected Outcomes</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">
+              Demonstrating physical function change through data<br/>and driving community health promotion
+            </h2>
+
+            <div className="space-y-4">
+              {[
+                { icon: "activity",    title: "Understanding Physical Function and Change",   desc: "Enhances understanding of physical function levels and 3-month changes among community-dwelling older adults." },
+                { icon: "sparkles",    title: "Motivation for Self-Management",               desc: "Provides an opportunity for older adults to recognize their physical function status and develop interest in everyday health management." },
+                { icon: "building-2",  title: "Strengthened Social Value of Organizations",  desc: "Reinforces the social value of organizations contributing to frailty-prevention-focused health promotion." },
+              ].map((e, i) => (
+                <div key={i} className="flex gap-4 items-start">
+                  <div className="w-10 h-10 bg-emerald-500/20 border border-emerald-500/40 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={e.icon} className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-sm mb-1">{e.title}</div>
+                    <p className="text-slate-400 text-sm leading-relaxed">{e.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+  {/* Right: CTA */}
+<div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+  <h3 className="text-white font-black text-xl mb-2">Considering adopting this program?</h3>
+  <p className="text-slate-300 text-sm leading-relaxed mb-6">
+    If you'd like to learn more about how it would work for your organization and the associated costs,<br/>
+    request our service overview today.
+  </p>
+  <a
+    href="mailto:snm@dyphi.com"
+    className="block bg-orange-500 hover:bg-orange-600 text-white font-black text-center py-3 px-6 rounded-xl transition-colors no-underline"
+  >
+    Request Service Overview &amp; Consultation →
+  </a>
+</div>
+        </div>
+      </div>
+    ),
+
+  ];
+
+  return (
+    <div className="w-full min-h-screen bg-slate-200 safePad">
+      {slides.map((slide, i) => (
+        <SlideFrame key={i} index={i}>
+          {slide}
+        </SlideFrame>
+      ))}
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<!-- Footer -->
+<div data-include="../includes/footer.html"></div>
+<script src="../js/main.js"></script>
+<script src="../js/navigation.js"></script>
+
+</body>
+</html>

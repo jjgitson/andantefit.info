@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPPB Strategy in Endocrinology | AndanteFit Case Study</title>
+  <meta name="description" content="A clinical guide to predicting mortality risk in diabetes and obesity patients with SPPB in endocrinology, and monitoring functional changes during GLP-1 therapy. Includes sarcopenic obesity staging (ESPEN/EASO 2022). AndanteFit case study.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="DYPHI Inc.">
+  <meta name="language" content="en">
+  <meta name="theme-color" content="#0d9488">
+  <meta name="keywords" content="SPPB, physical function assessment, endocrinology, diabetes, obesity, GLP-1, sarcopenic obesity, AndanteFit">
+
+  <!-- Canonical & hreflang -->
+  <link rel="canonical" href="https://andantefit.info/ko/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-KR.html">
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-KR.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="SPPB Strategy in Endocrinology | AndanteFit Case Study">
+  <meta property="og:description" content="SPPB below 5 in diabetes/obesity patients: 3x higher mortality risk. Clinical guide to functional monitoring during GLP-1 therapy.">
+  <meta property="og:url" content="https://andantefit.info/ko/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-KR.html">
+  <meta property="og:image" content="../assets/andantefit-logo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SPPB Strategy in Endocrinology | AndanteFit">
+  <meta name="twitter:description" content="SPPB below 5 → 3x mortality risk. Clinical guide to functional monitoring in diabetes, obesity, and GLP-1 therapy.">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <!-- AndanteFit Base Stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --af-primary:   #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent:    #18BFBF;
+    }
+
+    body {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+        "Segoe UI", Roboto, "Apple SD Gothic Neo", Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+
+    /* chart: min-height only — no fixed height */
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 260px;
+    }
+    @media (min-width: 768px) {
+      .chart-wrap { min-height: 300px; }
+    }
+
+    .card-base {
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.04);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--af-secondary);
+    }
+
+    /* teal accent left border */
+    .border-accent { border-left: 3px solid var(--af-secondary); }
+
+    /* stage card */
+    .stage-card {
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  </style>
+</head>
+
+<body>
+  <!-- Site Navigation -->
+  <div id="navigation-container"></div>
+
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <header class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="text-xs font-semibold text-teal-600 bg-teal-50 border border-teal-100 px-3 py-1 rounded-full">Case Study</span>
+        <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Endocrinology</span>
+        <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">2026-02-21</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+        Using Physical Function Assessment (SPPB)<br class="hidden sm:block">
+        in Endocrinology Practice
+      </h1>
+      <p class="text-lg leading-relaxed text-slate-500 max-w-2xl mb-8">
+        Clinical significance and implementation guide for patients with diabetes, obesity, and GLP-1 therapy —
+        This case study shows how using SPPB in endocrinology can help predict mortality risk in diabetic patients
+        and monitor functional outcomes during GLP-1 therapy.
+      </p>
+
+      <!-- Key Stat Chips -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="card-base p-4 border-l-4 border-teal-500">
+          <div class="text-2xl font-bold text-teal-600 tracking-tight">21%</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">Rate of functional limitation<br>in long-term T1D survivors (SPPB &lt;10)</div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-rose-400">
+          <div class="text-2xl font-bold text-rose-600 tracking-tight">3x&uarr;</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">Increased mortality risk<br>when SPPB is below 5</div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-amber-400">
+          <div class="text-2xl font-bold text-amber-600 tracking-tight">0.7 pts</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">Average SPPB improvement<br>with 5–6% gradual weight loss</div>
+        </div>
+        <div class="card-base p-4 border-l-4 border-slate-400">
+          <div class="text-2xl font-bold text-slate-600 tracking-tight">0.5 pts</div>
+          <div class="text-xs text-slate-500 mt-1 leading-relaxed">Threshold for clinical<br>significance (MCID)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── MAIN ──────────────────────────────────────────── -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+    <!-- ── Executive Summary ──────────────────────────────── -->
+    <section id="summary">
+      <div class="card-base border-accent p-6 sm:p-8">
+        <p class="section-label mb-3">Executive Summary</p>
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-4">A Paradigm Shift in Clinical Practice</h2>
+        <p class="text-base leading-relaxed text-slate-700 mb-6">
+          Recent endocrine disease treatment is expanding its goals beyond simple numerical management (Glucose, BMI) to
+          <strong class="text-teal-700">qualitative improvement of body composition</strong> and
+          <strong class="text-teal-700">preservation of physical function</strong>.
+          <strong>SPPB (Short Physical Performance Battery)</strong> is emerging as a key indicator
+          for predicting patient prognosis and evaluating treatment quality amid this shift.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-slate-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Traditional Clinical Focus</p>
+            <ul class="text-base leading-relaxed text-slate-600 space-y-1">
+              <li>Blood glucose (HbA1c) management</li>
+              <li>BMI-based weight reduction</li>
+            </ul>
+          </div>
+          <div class="bg-teal-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-600 uppercase tracking-wider mb-2">Strategic Shift Direction &rarr;</p>
+            <ul class="text-sm leading-relaxed text-teal-800 space-y-1">
+              <li><strong>Muscle Quality</strong> assessment</li>
+              <li><strong>Physical Function</strong> preservation and improvement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 1: Need for Integration ─────────────────────────── -->
+    <section id="section-1">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        Why Physical Function Should Be Assessed Alongside Endocrine Care
+      </h2>
+
+      <div class="space-y-4">
+        <!-- 1.1 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-sm">1.1</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">Decline in Muscle Quality</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-2">
+              Diabetes and obesity can cause <strong>intramuscular fat infiltration (myosteatosis)</strong> and impaired mitochondrial function.
+            </p>
+            <div class="bg-slate-50 rounded px-4 py-3 text-sm leading-relaxed text-slate-500">
+              <strong class="text-slate-700">Impact:</strong>
+              Even with the same muscle mass, reduced quality leads to significantly lower actual physical performance.
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.2 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">1.2</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">Limitations of BMI and Body Composition Imbalance</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-2">
+              BMI is inaccurate for predicting physical function in older patients.
+              The <strong>fat-free mass to fat mass (FFM/FM) ratio</strong> is a more meaningful indicator.
+            </p>
+            <div class="bg-slate-50 rounded px-4 py-3 text-sm leading-relaxed text-slate-500">
+              <strong class="text-slate-700">Role of SPPB:</strong>
+              Assesses whether body composition imbalances manifest as functional limitations in daily life, such as difficulties with walking and chair rising.
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.3 -->
+        <div class="card-base p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">1.3</div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 tracking-tight mb-1">An Independent Prognostic Indicator</h3>
+            <p class="text-base leading-relaxed text-slate-600 mb-3">
+              The SPPB score is not merely a measure of exercise capacity.
+              It is a meaningful indicator independently associated with mortality, hospitalization, and cardiovascular events in chronic disease patients.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">Independent mortality predictor</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">Hospitalization risk predictor</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">Independent cardiovascular event indicator</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 2: Evidence Data ──────────────────────────── -->
+    <section id="section-2">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        Evidence-Based Data in Diabetic Patients
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- T1D -->
+        <div class="card-base p-6 flex flex-col gap-5">
+          <div>
+            <h3 class="text-base font-bold text-slate-700 tracking-tight mb-3 pb-2 border-b border-slate-100">
+              2.1 &nbsp;Type 1 Diabetes — EDIC Study
+            </h3>
+            <div class="flex items-end gap-3 mb-4">
+              <span class="text-5xl font-bold text-teal-600 tracking-tight leading-none">21%</span>
+              <span class="text-base leading-relaxed text-slate-600 pb-1">of patients<br>with functional limitation (SPPB &lt;10)</span>
+            </div>
+            <p class="text-base leading-relaxed text-slate-600 mb-4">
+              1 in 5 long-term survivors with a mean age of approximately 60 years shows functional decline with SPPB below 10.
+            </p>
+            <div class="bg-slate-50 rounded-lg px-4 py-3 border-l-4 border-teal-400">
+              <p class="text-sm font-semibold text-slate-700 mb-1">Correlation with HbA1c</p>
+              <p class="text-base leading-relaxed text-slate-600">
+                Higher HbA1c (poor glycemic control) is linearly associated with lower SPPB scores.
+              </p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 text-right">Reference: DCCT/EDIC Research Group. Diabetes Care.</p>
+        </div>
+
+        <!-- T2D Chart -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-700 tracking-tight mb-1 pb-2 border-b border-slate-100">
+            2.2 &nbsp;Type 2 Diabetes — SPPB Score and Mortality Risk
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Lower SPPB scores are associated with a sharp increase in mortality risk.
+            &nbsp;*Visualization based on Italian cohort study
+          </p>
+          <div class="chart-wrap">
+            <canvas id="mortalityChart"></canvas>
+          </div>
+          <div class="mt-4 bg-rose-50 border border-rose-100 rounded-lg px-4 py-3">
+            <p class="text-base leading-relaxed text-rose-700">
+              <strong>Warning:</strong> Patients with SPPB ≤5 have been reported to have approximately
+              <strong>3 times higher</strong> mortality risk compared to the high-function group (≥10 points).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 3: Weight Loss Monitoring ──────────────────── -->
+    <section id="section-3">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        The Importance of Functional Monitoring During Weight Loss Treatment
+      </h2>
+
+      <!-- Summary table -->
+      <div class="card-base overflow-hidden mb-6">
+        <table class="w-full text-base">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide w-1/4">Category</th>
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Key Points</th>
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide w-1/3">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr>
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">Quality of Weight Loss</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                Diet restriction alone may cause <strong>lean mass loss</strong> and reduced lower-extremity strength
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">SPPB improves when combined with exercise and protein</td>
+            </tr>
+            <tr class="bg-teal-50/40">
+              <td class="px-5 py-4 font-semibold text-slate-700 align-top">Clinical Significance</td>
+              <td class="px-5 py-4 leading-relaxed text-slate-600 align-top">
+                Gradual weight loss of 5–6% leads to <strong>average SPPB improvement of 0.7 points</strong>
+              </td>
+              <td class="px-5 py-4 text-slate-500 align-top leading-relaxed">Improvement threshold is ≥0.5 points (MCID)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Two info cards -->
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="card-base p-5 border-l-4 border-rose-400">
+          <h3 class="text-base font-bold text-rose-700 tracking-tight mb-2">Diet Restriction Alone</h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span>
+              A significant portion of weight lost comes from muscle (lean mass)
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span>
+              Reduced lower-extremity strength; SPPB may plateau or decline
+            </li>
+          </ul>
+        </div>
+        <div class="card-base p-5 border-l-4 border-teal-400">
+          <h3 class="text-base font-bold text-teal-700 tracking-tight mb-2">Exercise + Protein Supplementation</h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Fat-predominant weight loss maximally preserves muscle mass
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Expected improvement in SPPB score (achievable MCID ≥0.5 points)
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section 4: GLP-1 ────────────────────────────────── -->
+    <section id="section-4">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+        The Necessity of Functional Assessment with GLP-1 Therapy
+      </h2>
+
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="card-base p-5">
+          <div class="w-9 h-9 rounded-lg bg-rose-100 flex items-center justify-center text-rose-600 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-2">Risk of Lean Mass Loss</h3>
+          <p class="text-base leading-relaxed text-slate-600">
+            With GLP-1 receptor agonists such as semaglutide, a significant portion of the weight lost
+            may come from lean mass.
+            <strong class="text-rose-600">Caution required in older patients.</strong>
+          </p>
+        </div>
+
+        <div class="card-base p-5">
+          <div class="w-9 h-9 rounded-lg bg-teal-100 flex items-center justify-center text-teal-600 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-2">Expanding Treatment Goals</h3>
+          <p class="text-base leading-relaxed text-slate-600">
+            The medical community proposes expanding the standard for obesity treatment from <strong>'weight loss'</strong> to
+            <strong class="text-teal-700">'maintaining and improving function'</strong>.
+          </p>
+        </div>
+
+        <div class="card-base p-5">
+          <div class="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-2">Ongoing Research</h3>
+          <p class="text-base leading-relaxed text-slate-600">
+            NCT05786521: A clinical trial is underway tracking
+            <strong>SPPB score changes</strong> as a primary variable when combining GLP-1 therapy with lifestyle interventions.
+          </p>
+        </div>
+      </div>
+
+      <!-- MCID highlight -->
+      <div class="mt-4 card-base bg-teal-600 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div class="flex-shrink-0">
+          <span class="text-3xl font-bold text-white tracking-tight">MCID</span>
+          <span class="block text-teal-200 text-xs font-semibold mt-0.5">Minimal Clinically Important Difference</span>
+        </div>
+        <div class="w-px h-10 bg-teal-500 hidden sm:block flex-shrink-0"></div>
+        <p class="text-base leading-relaxed text-teal-50">
+          A change of <strong class="text-white">0.5 points or more</strong> in SPPB score must be observed
+          to be considered a clinically meaningful improvement in function.
+          It is recommended to set this threshold as a treatment goal when combining GLP-1 therapy.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Section 5: Sarcopenic Obesity Staging ──────────────────── -->
+    <section id="section-5">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-2">
+        Staging of Sarcopenic Obesity
+      </h2>
+      <p class="text-base leading-relaxed text-slate-500 mb-6">
+        2022 ESPEN/EASO Consensus — Function-centered classification system
+      </p>
+
+      <div class="card-base p-6 sm:p-8">
+        <!-- Flow -->
+        <div class="flex flex-col items-center gap-0 mb-8">
+          <div class="w-full max-w-sm bg-slate-100 border border-slate-200 rounded-xl px-5 py-4 text-center">
+            <p class="text-sm font-semibold text-slate-700">Obese Patient (Obesity)</p>
+            <p class="text-xs text-slate-500 mt-0.5">Meets BMI or waist circumference criteria</p>
+          </div>
+          <div class="flex flex-col items-center py-2 gap-0.5">
+            <div class="w-px h-6 bg-slate-300"></div>
+            <p class="text-xs text-slate-400">Muscle mass and function assessment (including SPPB)</p>
+            <div class="w-px h-6 bg-slate-300"></div>
+          </div>
+          <div class="w-full max-w-sm grid grid-cols-2 gap-4">
+            <div class="stage-card bg-green-50 border border-green-200">
+              <span class="text-xs font-bold text-green-600 uppercase tracking-wider">Stage I</span>
+              <p class="text-sm font-semibold text-slate-700">Body composition change <strong class="text-green-700">Yes</strong></p>
+              <p class="text-sm font-semibold text-slate-700">Functional decline <strong class="text-green-700">No</strong></p>
+              <span class="text-xs bg-white text-green-700 border border-green-200 px-2 py-0.5 rounded-full mt-1">SPPB within normal range</span>
+            </div>
+            <div class="stage-card bg-rose-50 border border-rose-200 relative overflow-hidden">
+              <span class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] px-2 py-0.5 font-bold rounded-bl">Caution</span>
+              <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Stage II</span>
+              <p class="text-sm font-semibold text-slate-700">Body composition change <strong class="text-rose-600">Yes</strong></p>
+              <p class="text-sm font-semibold text-slate-700">Functional decline <strong class="text-rose-600">Yes</strong></p>
+              <span class="text-xs bg-white text-rose-600 border border-rose-200 px-2 py-0.5 rounded-full mt-1 font-bold">Reduced SPPB score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key points -->
+        <div class="grid sm:grid-cols-2 gap-4 border-t border-slate-100 pt-6">
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Stage II Classification Criteria</p>
+            <p class="text-base leading-relaxed text-slate-600">
+              Obese patients with concurrent functional decline are classified into a separate, more severe stage.
+              SPPB is included as an essential assessment tool for stage classification.
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Stage II Treatment Principles</p>
+            <p class="text-base leading-relaxed text-slate-600">
+              Resistance exercise prescription and enhanced protein intake are essential.
+              A shift from simple weight loss goals to <strong>functional improvement goals</strong> is required.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Clinical Implications (GEO) ───────────────────── -->
+    <section id="clinical-implications">
+      <div class="rounded-xl bg-slate-900 p-6 sm:p-8">
+        <p class="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">Clinical Implications</p>
+        <h2 class="text-lg font-bold text-white tracking-tight mb-5">Key Clinical Application Points</h2>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9312; Introducing Routine SPPB Measurement</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              Regularly performing SPPB for diabetes and obesity patients in endocrinology outpatient settings
+              can proactively identify those at risk of functional decline before numerical indicators worsen.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9313; Concurrent Functional Monitoring During GLP-1 Therapy</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              Measure SPPB baseline before initiating GLP-1 therapy, and track changes of 0.5 points (MCID) or more
+              during treatment to quantitatively evaluate treatment response.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9314; Sarcopenic Obesity Stage Classification</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              Differentiate obese patients into Stage I (function preserved) and Stage II (functional decline present)
+              to tailor treatment intensity and exercise prescription accordingly.
+            </p>
+          </div>
+          <div class="bg-slate-800 rounded-lg p-4">
+            <p class="text-xs font-semibold text-teal-400 mb-2">&#9315; Function First, Before Body Composition</p>
+            <p class="text-base leading-relaxed text-slate-300">
+              Even when BMI or muscle mass values are within the normal range, a low SPPB score
+              should be regarded as a qualitative decline in muscle quality, and function-centered treatment goals should be established.
+            </p>
+          </div>
+        </div>
+
+        <!-- Internal link -->
+        <div class="border-t border-slate-700 pt-5">
+          <p class="text-xs text-slate-400 mb-2">Related Case Study</p>
+          <a href="2026-02-07-SPPB-Occupational-Health-EN.html"
+             class="inline-flex items-center gap-2 text-sm text-teal-400 hover:text-teal-300 font-medium underline underline-offset-4">
+            SPPB in Occupational Health Screening — Early Detection of Functional Risk Strategy &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Appendix ────────────────────────────────────────── -->
+    <section id="appendix">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <!-- Reference Sites -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-4">
+            AndanteFit – Selected Reference Institutions
+          </h3>
+          <ul class="text-base leading-relaxed text-slate-600 space-y-1.5">
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Korea University Ansan Hospital / Anam Hospital
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Yonsei University Severance Hospital / Yongin Severance Hospital
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Catholic University of Korea Seoul St. Mary's Hospital / Bucheon St. Mary's Hospital
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Seoul National University Bundang Hospital / Inha University Hospital / Ajou University Medical Center
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Chungnam National University Hospital / Hwasun Chonnam National University Hospital
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0"></span>
+              Daejeon Endo Internal Medicine Clinic and specialty clinics nationwide
+            </li>
+          </ul>
+        </div>
+
+        <!-- Bibliography -->
+        <div class="card-base p-6">
+          <h3 class="text-base font-bold text-slate-800 tracking-tight mb-4">Key References</h3>
+          <ol class="text-xs leading-relaxed text-slate-500 space-y-2 list-none">
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">1.</span>
+              RehabMeasures Database. MCID for SPPB in older adults.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">2.</span>
+              Diabetes &amp; Metabolism Journal, 2023. Muscle quality and type 2 diabetes.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">3.</span>
+              Frontiers in Endocrinology, 2023/2025. Myosteatosis/Body composition and functional outcomes.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">4.</span>
+              DCCT/EDIC Research Group. Diabetes Care. Functional limitations in T1D.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">5.</span>
+              ESPEN/EASO Consensus Statement, 2022. Sarcopenic obesity staging.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">6.</span>
+              Vaduganathan et al. Ann Intern Med, 2025. Expanding GLP-1 use.
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-slate-400 flex-shrink-0">7.</span>
+              MOVE UP Study, GLP-1 meta-analysis, ClinicalTrials.gov (NCT05786521).
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <div data-include="../includes/footer.html"></div>
+
+  <!-- Chart.js: Mortality Risk -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var ctx = document.getElementById('mortalityChart');
+      if (!ctx) return;
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [
+            'High-function\n(SPPB \u226510)',
+            'Moderate function\n(SPPB 6\u20139)',
+            'Low-function\n(SPPB \u22645)'
+          ],
+          datasets: [{
+            label: 'Mortality Hazard Ratio (HR)',
+            data: [1.0, 1.8, 3.2],
+            backgroundColor: ['#94a3b8', '#fbbf24', '#f43f5e'],
+            borderRadius: 6,
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (c) {
+                  return 'Hazard Ratio: ' + c.raw + 'x';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 4,
+              title: { display: true, text: 'Mortality Hazard Ratio (HR)' },
+              grid: { color: '#f1f5f9' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 11 } }
+            }
+          }
+        }
+      });
+    });
+  </script>
+
+  <!-- Site Scripts -->
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>

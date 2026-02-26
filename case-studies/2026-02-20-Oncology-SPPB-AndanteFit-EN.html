@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Why Physical Function Assessment (SPPB) Matters in Oncology Patients | AndanteFit</title>
+  <meta name="description" content="A summary of how physical function (particularly SPPB) relates to treatment toxicity, complications, and prognosis in oncology, and why standardized measurement is needed in clinical practice and research."/>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React (CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel (run JSX in browser) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide (icons) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto,
+        "Apple SD Gothic Neo", Arial, sans-serif;
+    }
+
+    body { overflow: auto; }
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+
+    .slideSurface { color: #0f172a; }
+    .slideSurface p { line-height: 1.65; }
+  </style>
+</head>
+
+<body>
+<!-- Navigation -->
+<div id="navigation-container"></div>
+
+<div id="root" class="appFont"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function LucideIcon({ name, className = "" }) {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
+  return <i data-lucide={name} className={className}></i>;
+}
+
+function ImgBox({ src, alt, className = "", fit = "cover" }) {
+  const [ok, setOk] = useState(true);
+  const baseClass = fit === "contain"
+    ? "max-w-full object-contain rounded-2xl "
+    : "w-full object-cover rounded-2xl ";
+  return ok ? (
+    <img
+      src={src}
+      alt={alt}
+      className={baseClass + className}
+      onError={() => setOk(false)}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <div
+      className={
+        "rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center " +
+        className
+      }
+    >
+      <div className="text-slate-400 font-bold text-sm text-center px-4">
+        Image loading<br/><span className="text-xs font-normal">{src}</span>
+      </div>
+    </div>
+  );
+}
+
+const SlideFrame = ({ index, children }) => {
+  const num = String(index + 1).padStart(2, "0");
+  return (
+    <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+      <div className={`relative w-full max-w-[1280px] min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+        <div className="w-full md:h-full h-auto overflow-visible">
+          {children}
+        </div>
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
+          <div className="text-[12px] font-bold text-slate-600 tracking-widest">{num}</div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SlideLayout = ({ title, headline, children }) => (
+  <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
+    <header className="mb-5 sm:mb-6">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-1.5 h-6 bg-blue-700 rounded-full"></div>
+        <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
+      </div>
+      <h2 className="text-[22px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
+    </header>
+    <div className="flex-1 md:overflow-hidden overflow-visible">
+      {children}
+    </div>
+  </div>
+);
+
+const App = () => {
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+  });
+
+  const slides = [
+
+    /* ── Slide 1: Cover ── */
+    (
+      <div className="w-full md:h-full p-6 sm:p-12 flex flex-col bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="flex flex-wrap gap-2 mb-6">
+          <span className="bg-blue-700 text-white text-xs font-black px-3 py-1 rounded-full tracking-widest uppercase">
+            Oncology · Physical Function
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            SPPB
+          </span>
+          <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+            Sarcopenia · Frailty
+          </span>
+        </div>
+
+        <div className="flex flex-1 flex-col lg:flex-row gap-8 items-center">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-10 bg-blue-700 rounded-full"></div>
+              <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight">
+                Why Physical Function Assessment (SPPB)<br/>Matters in<br/>Oncology Patients
+              </h1>
+            </div>
+
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 pl-5">
+              Cancer treatment outcomes are influenced not only by tumor characteristics but also by the patient's functional reserve.<br/>
+              SPPB quantifies function through balance, gait, and lower-extremity muscle performance, and can inform clinical decision-making before, during, and after treatment.
+            </p>
+
+            <div className="grid grid-cols-3 gap-4 pl-5">
+              {[
+                { val: "Screening", label: "Identifying high-risk patients before treatment" },
+                { val: "Monitoring", label: "Tracking functional changes during treatment" },
+                { val: "Survivorship", label: "Managing falls and function in survivors" },
+              ].map((s, i) => (
+                <div key={i} className="bg-white/80 border border-blue-100 rounded-2xl p-4 text-center shadow-sm">
+                  <div className="text-base sm:text-lg font-black text-blue-700 mb-1">{s.val}</div>
+                  <div className="text-[11px] text-slate-500">{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 pl-5">
+              <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm">
+                <LucideIcon name="info" className="w-4 h-4 text-blue-700" />
+                <span className="text-xs text-slate-600">
+                  Key message: Function is a signal linked to prognosis and treatment tolerance, independent of tumor response.
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="w-full lg:w-[420px] flex-shrink-0">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                <div className="text-sm font-black text-slate-900">Topics Covered on This Page</div>
+              </div>
+              <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Association between SPPB scores and mortality risk (summary data)</li>
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Pathways by which aging, cancer, and treatment accelerate functional decline</li>
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>SPPB components and clinical application scenarios</li>
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>The need for standardized measurement and AndanteFit application</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+
+    /* ── Slide 2: Why Does Function Matter? ── */
+    (
+      <SlideLayout title="Clinical Background" headline="Why Does 'Function' Matter in Oncology Patients?">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-5">
+            <div className="bg-blue-50 border-l-4 border-blue-700 p-5 rounded-r-2xl">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+                Cancer treatment outcomes are significantly influenced by the patient's physical function,
+                not just tumor characteristics.
+                Sarcopenia and frailty are associated with treatment toxicity, complications, hospitalization, and survival.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: "alert-triangle", title: "Limitations of ECOG Alone", desc: "Age and ECOG performance status alone are insufficient to fully explain treatment toxicity and prognosis." },
+                { icon: "trending-down",  title: "Accelerated Muscle Loss",   desc: "Cancer and its treatment can accelerate loss of muscle mass and function, increasing functional vulnerability." },
+                { icon: "activity",       title: "Linked to Clinical Events",   desc: "Functional decline can be associated with treatment discontinuation risk, increased toxicity, hospitalization, and falls." },
+                { icon: "target",         title: "Functional Reserve",desc: "Treatment tolerance and resilience may depend on functional reserve." },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={item.icon} className="w-4 h-4 text-blue-700" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
+                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 3: SPPB & Mortality Risk ── */
+    (
+      <SlideLayout title="Evidence Data" headline="Higher SPPB scores are associated with lower mortality risk">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-stretch">
+          <div className="flex-1 min-h-0 space-y-4 flex flex-col justify-center">
+            <div className="space-y-3">
+              {[
+                { label: "SPPB 10–12 points",        val: "~50% lower mortality risk", color: "bg-blue-700" },
+                { label: "SPPB 7–9 points",          val: "~43% lower mortality risk", color: "bg-blue-500" },
+                { label: "Per 1-point increase in SPPB",      val: "~12% reduction in mortality risk", color: "bg-indigo-500" },
+                { label: "Gait speed ≥ 0.6 m/s", val: "~34% lower mortality risk", color: "bg-indigo-400" },
+              ].map((d, i) => (
+                <div key={i} className="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className={`w-2 h-10 ${d.color} rounded-full flex-shrink-0`}></div>
+                  <div className="flex-1">
+                    <div className="text-xs text-slate-500 mb-0.5">{d.label}</div>
+                    <div className="font-black text-slate-900 text-sm">{d.val}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+              <p className="text-sm text-blue-900 leading-relaxed">
+                Clinical Significance — SPPB can serve as an independent prognostic indicator, not merely a functional score.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full md:flex-1 md:min-h-0 flex items-center justify-center bg-slate-50 rounded-3xl p-4">
+            <ImgBox
+              src="../assets/sppb-score-and-mortality-risk.png"
+              alt="Infographic summarizing the association between higher SPPB scores and lower mortality risk"
+              fit="contain"
+              className="h-56 sm:h-64 md:h-auto md:max-h-[440px] md:max-w-full shadow-sm"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 4: Aging-Cancer-Muscle Loss Cycle ── */
+    (
+      <SlideLayout title="Pathophysiology" headline="Aging, Cancer, and Treatment: The Path to Functional Decline">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-center">
+          <div className="w-full md:w-[360px] lg:w-[460px] flex-shrink-0 flex items-center justify-center bg-slate-50 rounded-3xl p-3">
+            <ImgBox
+              src="../assets/aging-cancer-muscle-loss-cycle.png"
+              alt="Conceptual diagram showing how aging, cancer diagnosis, and treatment can lead to decreased functional reserve and increased vulnerability"
+              fit="contain"
+              className="h-52 sm:h-64 md:h-72 lg:h-80 shadow-sm"
+            />
+          </div>
+
+          <div className="flex-1 space-y-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              {["Aging", "Cancer", "Treatment", "Muscle loss", "Functional decline", "Vulnerability"].map((s, i, arr) => (
+                <React.Fragment key={i}>
+                  <span className={`text-xs font-bold px-3 py-1.5 rounded-full border ${i < 3 ? "bg-blue-50 border-blue-200 text-blue-800" : "bg-red-50 border-red-200 text-red-700"}`}>{s}</span>
+                  {i < arr.length - 1 && <LucideIcon name="arrow-right" className="w-3 h-3 text-slate-400" />}
+                </React.Fragment>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { icon: "x-circle",      label: "Risk of Treatment Discontinuation" },
+                { icon: "zap-off",       label: "Potential for Increased Toxicity" },
+                { icon: "alert-circle",  label: "Increased Fall Risk" },
+                { icon: "trending-down", label: "Hospitalization and Worse Prognosis" },
+              ].map((r, i) => (
+                <div key={i} className="flex items-center gap-2 bg-red-50 border border-red-100 rounded-xl p-3">
+                  <LucideIcon name={r.icon} className="w-4 h-4 text-red-500 flex-shrink-0" />
+                  <span className="text-xs font-bold text-red-800">{r.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-700 p-4 rounded-r-xl">
+              <p className="text-sm text-blue-900 leading-relaxed">
+                Key Message — Frailty assessment is a core element not only for pre-treatment screening but also for monitoring during treatment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 5: SPPB Components ── */
+    (
+      <SlideLayout title="Assessment Tool" headline="Short Physical Performance Battery (SPPB)">
+        <div className="flex flex-col md:flex-row gap-6 h-full items-stretch">
+          <div className="flex-1 min-h-0 space-y-4 flex flex-col justify-center">
+            <div className="space-y-3">
+              {[
+                { num: "01", icon: "shield",     title: "Balance test",               desc: "Assessment of static balance ability",          color: "bg-blue-700" },
+                { num: "02", icon: "footprints", title: "Gait speed test (4m walk)",  desc: "Assessment of mobility and overall vitality",   color: "bg-indigo-600" },
+                { num: "03", icon: "dumbbell",   title: "Chair stand test (5 reps)",  desc: "Assessment of lower-extremity strength and endurance",     color: "bg-violet-600" },
+              ].map((c, i) => (
+                <div key={i} className="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className={`w-10 h-10 ${c.color} text-white rounded-xl flex items-center justify-center font-black text-sm flex-shrink-0`}>{c.num}</div>
+                  <div className="flex-1">
+                    <div className="font-bold text-slate-900 text-sm">{c.title}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{c.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { icon: "check-circle", label: "Objective score with high reproducibility" },
+                { icon: "bar-chart-2",  label: "Associated with prognosis and treatment tolerance" },
+                { icon: "refresh-cw",   label: "Monitoring intervention effects" },
+                { icon: "users",        label: "Core component of geriatric assessment (GA)" },
+              ].map((b, i) => (
+                <div key={i} className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                  <LucideIcon name={b.icon} className="w-4 h-4 text-blue-700 flex-shrink-0" />
+                  <span className="text-xs font-bold text-blue-900">{b.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full md:flex-1 md:min-h-0 flex items-center justify-center bg-slate-50 rounded-3xl p-4">
+            <ImgBox
+              src="../assets/sppb-components-balance-gait-chair-stand.png"
+              alt="Illustration of the SPPB components: balance, 4-meter gait speed, and 5-repetition chair stand"
+              fit="contain"
+              className="h-56 sm:h-64 md:h-auto md:max-h-[460px] md:max-w-full shadow-sm"
+            />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 6: Clinical Application ── */
+    (
+      <SlideLayout title="Clinical Application" headline="Clinical Application in Oncology">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full content-start">
+          {[
+            {
+              phase: "Pre-Treatment",
+              icon: "search",
+              color: "bg-blue-700",
+              bg: "bg-blue-50 border-blue-200",
+              text: "text-blue-800",
+              items: ["Screening high-risk patients for functional decline", "Establishing treatment intensity and support strategies", "Planning exercise and nutrition interventions"],
+            },
+            {
+              phase: "During Treatment",
+              icon: "activity",
+              color: "bg-indigo-600",
+              bg: "bg-indigo-50 border-indigo-200",
+              text: "text-indigo-800",
+              items: ["Repeated tracking of functional changes", "Early detection of decline signals", "Connecting and monitoring interventions"],
+            },
+            {
+              phase: "Survivorship Care",
+              icon: "heart",
+              color: "bg-violet-600",
+              bg: "bg-violet-50 border-violet-200",
+              text: "text-violet-800",
+              items: ["Fall risk assessment", "Linking to exercise and nutrition programs", "Long-term functional support"],
+            },
+          ].map((s, i) => (
+            <div key={i} className={`${s.bg} border rounded-2xl p-6 flex flex-col gap-4`}>
+              <div className="flex items-center gap-2">
+                <div className={`w-8 h-8 ${s.color} rounded-lg flex items-center justify-center`}>
+                  <LucideIcon name={s.icon} className="w-4 h-4 text-white" />
+                </div>
+                <span className={`font-black ${s.text} text-sm`}>{s.phase}</span>
+              </div>
+              <ul className="space-y-2">
+                {s.items.map((item, j) => (
+                  <li key={j} className={`flex items-start gap-2 text-sm ${s.text}`}>
+                    <span className="font-bold mt-0.5">•</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="col-span-1 lg:col-span-3 bg-slate-50 border border-slate-200 rounded-2xl p-5 flex gap-3 items-start">
+            <LucideIcon name="info" className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-slate-600 leading-relaxed">
+              SPPB provides consistent functional data across all phases — pre-treatment screening, treatment monitoring, and survivorship care.
+              Standardized processes and workflow integration are critical for repeated measurement.
+            </p>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 7: From Assessment to Implementation ── */
+    (
+      <SlideLayout title="AndanteFit Solution" headline="From Assessment to Implementation">
+        <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
+          <div className="flex-1 space-y-5">
+            <div className="bg-blue-50 border-l-4 border-blue-700 p-5 rounded-r-2xl">
+              <p className="text-slate-700 text-base leading-relaxed">
+                SPPB is a powerful tool, but consistent and standardized measurement is required for sustained clinical use.
+                AndanteFit automates physical function assessment (SPPB) to make it operationally viable, supporting the acquisition of standardized functional data in both clinical and research settings.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: "sliders", title: "Minimizing Inter-Rater Variability", desc: "Automated measurement workflows reduce dependence on individual assessors." },
+                { icon: "clock",   title: "Improved Time Efficiency",      desc: "Standardized processes make it easy to integrate into clinical workflows." },
+                { icon: "users",   title: "Large-Scale Screening",        desc: "Applicable for screening and follow-up of large numbers of oncology patients." },
+                { icon: "globe",   title: "Research Setting Application",         desc: "Facilitates consistent data collection in cohort and multi-center studies." },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={item.icon} className="w-4 h-4 text-blue-700" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm mb-0.5">{item.title}</div>
+                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+
+          <div className="w-full lg:w-[380px] flex-shrink-0">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+              <div className="text-sm font-black text-slate-900 mb-2">Operational Highlights</div>
+              <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Reduced burden of assessor training</li>
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Consistency across repeated measurement data</li>
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Same protocol applied to both clinical and research settings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    /* ── Slide 8: Conclusion + CTA ── */
+    (
+      <div className="w-full md:h-full bg-slate-900 p-8 sm:p-14 flex flex-col justify-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-2xl">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
+              <span className="text-sm font-bold text-slate-400 tracking-wider">Conclusion</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">
+              A Shift Toward Function-Centered Oncology Care
+            </h2>
+
+            <div className="space-y-4">
+              {[
+                { icon: "trending-up", title: "Prognostic Prediction",   desc: "Assessment of sarcopenia and frailty can be a key factor in predicting prognosis and managing toxicity in oncology patients." },
+                { icon: "bar-chart-2", title: "SPPB Utilization",   desc: "SPPB is an objective functional indicator that can be measured repeatedly across all phases — before, during, and after treatment." },
+                { icon: "cpu",         title: "AndanteFit", desc: "A solution that enables standardized SPPB measurement to be operationalized in clinical settings." },
+              ].map((e, i) => (
+                <div key={i} className="flex gap-4 items-start">
+                  <div className="w-10 h-10 bg-blue-500/20 border border-blue-500/40 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <LucideIcon name={e.icon} className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-sm mb-1">{e.title}</div>
+                    <p className="text-slate-400 text-sm leading-relaxed">{e.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    ),
+
+    /* ── Slide 9: References ── */
+    (
+      <SlideLayout title="References" headline="References">
+        <div className="h-full overflow-y-auto">
+          <ol className="space-y-1.5 text-xs text-slate-600 leading-snug list-none">
+            {[
+              {
+                text: "Ferrara, M. C., et al. (2024). Effects of an individualised exercise program in hospitalised older adults with cancer: A randomised clinical trial. ",
+                journal: "Journal of Nutrition, Health & Aging.",
+                doi: "https://doi.org/10.1016/j.jnha.2024.100424",
+                doiLabel: "https://doi.org/10.1016/j.jnha.2024.100424",
+              },
+              {
+                text: "Goede, V. (2023). Frailty and cancer: Current perspectives on assessment and monitoring. ",
+                journal: "Clinical Interventions in Aging, 18,",
+                tail: " 505–521.",
+                doi: "https://doi.org/10.2147/CIA.S365494",
+                doiLabel: "https://doi.org/10.2147/CIA.S365494",
+              },
+              {
+                text: "Guralnik, J. M., et al. (1994). A short physical performance battery assessing lower extremity function. ",
+                journal: "Journal of Gerontology, 49,",
+                tail: " M85–M94.",
+              },
+              {
+                text: "Lee, S., et al. (2024). Association of preoperative sarcopenia with long-term prognosis in bladder cancer. ",
+                journal: "Journal of Cancer Research and Clinical Oncology, 150,",
+                tail: " 173.",
+                doi: "https://doi.org/10.1007/s00432-024-05705-6",
+                doiLabel: "https://doi.org/10.1007/s00432-024-05705-6",
+              },
+              {
+                text: "Loh, K. P., et al. (2024). Adequate assessment yields appropriate care: The role of geriatric assessment in older adults with cancer. ",
+                journal: "ESMO Open.",
+                doi: "https://doi.org/10.1016/j.esmoop.2024.103657",
+                doiLabel: "https://doi.org/10.1016/j.esmoop.2024.103657",
+              },
+              {
+                text: "National Cancer Institute. (2024). Geriatric assessment for the practicing clinician: The why, what, and how. ",
+                journal: "CA: A Cancer Journal for Clinicians, 74,",
+                tail: " 496–518.",
+                doi: "https://doi.org/10.3322/caac.21864",
+                doiLabel: "https://doi.org/10.3322/caac.21864",
+              },
+              {
+                text: "Retrospective analysis of the association between sarcopenia and fall risk in older breast cancer patients using real world data (TriNetX). (2025). ",
+                journal: "Cancer Medicine.",
+              },
+              {
+                text: "Werts-Pelter, S. J., et al. (2026). Associations of obesity with function and patient-reported outcomes among advanced cancer patients. ",
+                journal: "Cancers, 18,",
+                tail: " 6.",
+              },
+              {
+                text: "Eastern Cooperative Oncology Group–ACRIN. (n.d.). ECOG performance status. ",
+                doi: "https://ecog-acrin.org/resources/ecog-performance-status/",
+                doiLabel: "https://ecog-acrin.org/resources/ecog-performance-status/",
+              },
+              {
+                text: "International Society of Geriatric Oncology (SIOG). (n.d.). Geriatric assessment in older patients with cancer.",
+              },
+            ].map((ref, i) => (
+              <li key={i} className="flex gap-2">
+                <span className="font-black text-slate-400 text-xs w-4 flex-shrink-0 pt-px">{i + 1}.</span>
+                <span>
+                  {ref.text}
+                  {ref.journal && <em>{ref.journal}</em>}
+                  {ref.tail && ref.tail}
+                  {ref.doi && (
+                    <>{" "}<a href={ref.doi} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline break-all">{ref.doiLabel}</a></>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </SlideLayout>
+    ),
+
+  ];
+
+  return (
+    <div className="w-full min-h-screen bg-slate-200 safePad">
+      {slides.map((slide, i) => (
+        <SlideFrame key={i} index={i}>
+          {slide}
+        </SlideFrame>
+      ))}
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<!-- Footer -->
+<div data-include="../includes/footer.html"></div>
+<script src="../js/main.js"></script>
+<script src="../js/navigation.js"></script>
+
+</body>
+</html>

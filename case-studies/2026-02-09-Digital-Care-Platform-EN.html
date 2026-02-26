@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Building a Digital Community Center-Based Preventive Health Management Platform | AndanteFit</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React (CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel (run JSX in browser) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide (icons: used without bundler) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --af-primary: #0F4C81;
+      --af-secondary: #0d9488;
+      --af-accent: #18BFBF;
+    }
+
+
+    html, body { height: 100%; }
+    body { margin: 0; background: #e2e8f0; }
+    #root { min-height: 100%; }
+
+    /* Font: use Pretendard if available locally */
+    .appFont {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, "Apple SD Gothic Neo", Arial, sans-serif;
+    }
+
+    /* Allow scrolling */
+    body { overflow: auto; }
+
+    /* iOS safe-area */
+    .safePad { padding-bottom: env(safe-area-inset-bottom); }
+  </style>
+
+  <style>
+    /* Readability polish (non-structural): applies to slides except the first one. */
+    .slideSurface { color: #0f172a; }
+    .slideSurface p { line-height: 1.65; }
+    .slideSurface .lead { line-height: 1.65; }
+    .slideSurface .infoCard { box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06); }
+    .slideSurface .infoCard:hover { box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10); }
+    .slideSurface .cardTitle { letter-spacing: -0.01em; }
+    .slideSurface .cardDesc { color: rgba(51, 65, 85, 0.95); }
+    .slideSurface .pill { box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06); }
+    .slideSurface .legendDot { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8); }
+    .slideSurface .imgFrame { box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10); }
+    /* Ensure fixed deck area stays crisp under header */
+    .safePad { padding-top: 0; }
+  </style>
+
+</head>
+
+<body>
+<!-- Navigation -->
+<div id="navigation-container"></div>
+
+<div id="root" class="appFont"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useMemo } = React;
+
+function LucideIcon({ name, className = "" }) {
+  return <i data-lucide={name} className={className}></i>;
+}
+
+function ImgBox({ src, alt, className = "" }) {
+  const [ok, setOk] = useState(true);
+
+  // Path conversion: ./img/ → ../assets/
+  const safeSrc = src.startsWith('./img/')
+    ? src.replace('./img/', '../assets/')
+    : src;
+
+  return (
+    <div
+      className={
+        "rounded-2xl overflow-hidden flex items-center justify-center relative " +
+        (ok
+          ? "bg-transparent"
+          : "bg-slate-100 border-2 border-dashed border-slate-300") +
+        " " +
+        className
+      }
+    >
+      {ok ? (
+        <img
+          src={safeSrc}
+          alt={alt}
+          className="w-full h-full object-contain"
+          onError={() => setOk(false)}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div className="text-slate-400 font-bold text-sm text-center px-4">
+          Image file not found.<br />
+          {safeSrc}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+const App = () => {
+  const [activeGroup, setActiveGroup] = useState(null);
+
+  // Render icons on mount and state change
+  useEffect(() => {
+    if (window.lucide && window.lucide.createIcons) {
+      window.lucide.createIcons();
+    }
+  });
+
+  const axisPoints = useMemo(() => ([
+    { id: 1, label: "① Standardized Assessment", icon: <LucideIcon name="check-circle-2" className="w-4 h-4" />, color: "text-slate-600", description: "Understand status using a common benchmark" },
+    { id: 2, label: "② Individual Change", icon: <LucideIcon name="zap" className="w-4 h-4" />, color: "text-blue-600", description: "Confirm objective change" },
+    { id: 3, label: "③ Shared Outcomes", icon: <LucideIcon name="target" className="w-4 h-4" />, color: "text-emerald-600", description: "Demonstrate outcomes with data" }
+  ]), []);
+
+  const layers = useMemo(() => ([
+    {
+      id: 1, role: "Individual (Client)", message: "Helps the individual understand why they are receiving services and makes the changes from those services visible in daily life",
+      icon: <LucideIcon name="user" className="w-5 h-5 text-orange-600" />,
+      colors: { bg: "bg-orange-50", border: "border-orange-200", text: "text-orange-900", accent: "text-orange-600" },
+      mappings: [
+        { id: 1, text: "Easy understanding of my status", meaning: "Empathy with assessment criteria" },
+        { id: 2, text: "Perceived physical change", meaning: "Motivation building" },
+        { id: 3, text: "ADL improvement", meaning: "Change in daily life" }
+      ]
+    },
+    {
+      id: 2, role: "Frontline Practitioner", message: "Enables practitioners to decide on interventions (tailored services) and explain their outcomes",
+      icon: <LucideIcon name="clipboard-check" className="w-5 h-5 text-emerald-600" />,
+      colors: { bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-900", accent: "text-emerald-600" },
+      mappings: [
+        { id: 1, text: "Common assessment criteria", meaning: "Consistent decision standard" },
+        { id: 2, text: "Intervention direction decision", meaning: "Optimal intervention selection" },
+        { id: 3, text: "Evidence-based outcome reporting", meaning: "Increased practitioner efficacy" }
+      ]
+    },
+    {
+      id: 3, role: "Operations & Management", message: "Accumulates changes over time and manages operational outcomes at a glance",
+      icon: <LucideIcon name="bar-chart-3" className="w-5 h-5 text-cyan-600" />,
+      colors: { bg: "bg-cyan-50", border: "border-cyan-200", text: "text-cyan-900", accent: "text-cyan-600" },
+      mappings: [
+        { id: 1, text: "Standardized classification system", meaning: "Increased management efficiency" },
+        { id: 2, text: "Cumulative data management", meaning: "Accumulated trend tracking" },
+        { id: 3, text: "Visualization of operational outcomes", meaning: "Real-time performance monitoring" }
+      ]
+    },
+    {
+      id: 4, role: "Policy Decision-Making", message: "Enables comparison and explanation of outcomes to support the next decision",
+      icon: <LucideIcon name="gavel" className="w-5 h-5 text-blue-600" />,
+      colors: { bg: "bg-blue-50", border: "border-blue-200", text: "text-blue-900", accent: "text-blue-600" },
+      mappings: [
+        { id: 1, text: "Comparable indicators", meaning: "Objective comparison" },
+        { id: 2, text: "Data-driven change", meaning: "Proof of effectiveness" },
+        { id: 3, text: "Evidence for policy decisions", meaning: "Effective resource allocation" }
+      ]
+    },
+    {
+      id: 5, role: "Expansion & Validation", message: "Enables various age-tech and AI technologies to be validated and scaled on a common standard",
+      icon: <LucideIcon name="network" className="w-5 h-5 text-indigo-600" />,
+      colors: { bg: "bg-indigo-50", border: "border-indigo-200", text: "text-indigo-900", accent: "text-indigo-600" },
+      mappings: [
+        { id: 1, text: "Common outcome standard", meaning: "Evolution into open ecosystem" },
+        { id: 2, text: "Real-world evidence data", meaning: "Industry ecosystem integration" },
+        { id: 3, text: "Scalable model", meaning: "Business model expansion" }
+      ]
+    }
+  ]), []);
+
+  const getMarkerChar = (id) => ["", "①", "②", "③"][id];
+
+  const SlideFrame = ({ index, total, children }) => {
+    const num = String(index + 1).padStart(2, "0");
+    return (
+      <section className="w-full flex justify-center px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+        <div className={`relative w-full max-w-[1280px] min-h-[720px] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.15)] overflow-hidden border border-white/30 ${index === 0 ? "" : "slideSurface"}`}>
+          {/* Allow vertical scroll on mobile for content-heavy slides */}
+          <div className="w-full md:h-full h-auto overflow-visible">
+            {children}
+          </div>
+
+          <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none">
+            <div className="text-[12px] font-bold text-slate-600 tracking-widest">
+              {num}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const SlideLayout = ({ title, headline, children }) => (
+    <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
+      <header className="mb-5 sm:mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
+          <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
+        </div>
+        <h2 className="text-[24px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
+      </header>
+
+      <div className="flex-1 md:overflow-hidden overflow-visible">
+        {children}
+      </div>
+    </div>
+  );
+
+  const slides = [
+
+    // Slide 1: Cover
+    (
+      <div className="w-full md:h-full p-5 sm:p-10 flex flex-col">
+        <header className="mb-6 flex flex-col gap-1">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
+            <div className="w-2 h-8 bg-teal-600 rounded-full"></div>
+            Building a Digital Community Center-Based Preventive Health Management Platform
+          </h1>
+          <p className="text-base sm:text-lg font-bold text-slate-500 pl-5">
+            An individual's change flows through to frontline decisions and policy outcomes.
+          </p>
+        </header>
+
+        <div className="flex flex-1 gap-6 sm:gap-8 flex-col lg:flex-row">
+          <div className="flex-grow flex flex-col gap-2 h-full justify-between">
+            {layers.map((l) => (
+              <div
+                key={l.id}
+                className={`flex-1 rounded-2xl border-2 ${l.colors.bg} ${l.colors.border} p-4 sm:p-6 flex items-center transition-all ${
+                  activeGroup !== null && !l.mappings.some((m) => m.id === activeGroup)
+                    ? "opacity-30"
+                    : ""
+                }`}
+              >
+                <div className="w-[100px] sm:w-[120px] border-r border-slate-200 mr-4 sm:mr-6">
+                  <div className="p-1.5 bg-white rounded-lg mb-1 inline-block">
+                    {l.icon}
+                  </div>
+                  <h3 className={`text-xs font-black ${l.colors.text}`}>
+                    {l.role}
+                  </h3>
+                </div>
+
+                <div className="flex-grow">
+                  <p className={`text-[11px] sm:text-[13px] font-black ${l.colors.text} mb-2`}>
+                    "{l.message}"
+                  </p>
+
+                  <div className="flex gap-2 flex-wrap">
+                    {l.mappings.map((m) => (
+                      <div
+                        key={m.id}
+                        className={`px-2 py-1 rounded border text-[10px] bg-white/60 transition-all ${
+                          activeGroup === m.id
+                            ? "border-teal-500 shadow-sm"
+                            : ""
+                        }`}
+                      >
+                        {getMarkerChar(m.id)} {activeGroup === m.id ? m.meaning : m.text}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="w-full lg:w-64 bg-slate-900 rounded-[2rem] p-6 flex flex-col justify-center items-center shadow-2xl shrink-0">
+            <div className="bg-teal-600 text-white text-[9px] px-3 py-1 rounded-full mb-6 font-black uppercase tracking-widest">
+              Shared Outcome Axis
+            </div>
+
+            {axisPoints.map((p) => (
+              <button
+                key={p.id}
+                onMouseEnter={() => setActiveGroup(p.id)}
+                onMouseLeave={() => setActiveGroup(null)}
+                className={`text-center mb-6 transition-all ${
+                  activeGroup !== null && activeGroup !== p.id
+                    ? "opacity-30 grayscale"
+                    : ""
+                }`}
+              >
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2 ${
+                    activeGroup === p.id ? "bg-white" : "bg-slate-800"
+                  }`}
+                >
+                  <div className={activeGroup === p.id ? p.color : "text-slate-500"}>
+                    {p.icon}
+                  </div>
+                </div>
+                <div className="text-[10px] text-white font-black">{p.label}</div>
+                <div className="text-[9px] text-slate-400 mt-1">{p.description}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+
+// Slide 2: Introduction
+(
+  <SlideLayout
+    title="Introduction"
+    headline="Building a Digital Community Center-Based Preventive Health Management Platform"
+  >
+    <div className="h-full flex flex-col justify-center px-4 sm:px-12">
+
+      {/* Problem statement */}
+      <div className="mb-10">
+        <p className="text-lg sm:text-xl text-slate-700 leading-relaxed">
+          Smart senior centers and digital community centers being pursued by many local governments have seen impressive technology deployments, yet
+          <span className="block mt-2 text-slate-500">
+            they have not adequately answered the question of how the lives of older adults within community-integrated care have actually improved.
+          </span>
+        </p>
+      </div>
+
+      {/* Current limitations */}
+      <div className="mb-10">
+        <p className="text-lg sm:text-xl text-slate-700 leading-relaxed">
+          Current infrastructure remains at the level of <span className="font-bold text-slate-900">one-time measurement</span>,
+          <span className="block mt-2 text-slate-500">
+            with the limitation that collected data rarely leads to actual interventions or case management.
+          </span>
+        </p>
+      </div>
+
+      {/* Core solution - emphasized */}
+      <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-8 sm:p-10 rounded-3xl border-2 border-teal-200 shadow-lg">
+        <div className="flex items-start gap-4">
+          <div className="w-2 h-12 bg-teal-600 rounded-full flex-shrink-0"></div>
+          <div>
+            <p className="text-base sm:text-lg text-teal-700 font-semibold mb-3">
+              The Solution
+            </p>
+            <p className="text-xl sm:text-2xl font-black text-slate-900 leading-tight mb-4">
+              Establish <span className="text-teal-600">Physical Function</span> as a
+              <span className="text-teal-600"> Common Language</span>
+            </p>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+              Centering on standard indicators such as SPPB,<br/>
+              we propose a virtuous cycle of <span className="font-bold text-slate-900">Measure → Analyze → Intervene → Re-evaluate</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </SlideLayout>
+),
+    // Slide 3: Background and Problem
+    (
+      <SlideLayout
+        title="Background & Problem"
+        headline="Existing digital systems in older adult facilities struggle to connect to measurable outcomes"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center justify-start">
+            <LucideIcon name="info" className="w-8 h-8 text-red-500 mx-auto mb-4" />
+            <h4 className="font-bold text-slate-900 text-base mb-2">Fragmented Devices</h4>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Individual measurement devices operate in silos, with data that is never integrated.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center justify-start">
+            <LucideIcon name="activity" className="w-8 h-8 text-red-500 mx-auto mb-4" />
+            <h4 className="font-bold text-slate-900 text-base mb-2">One-Time Measurement</h4>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Only a snapshot measurement result remains, making it difficult to track change over time.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center justify-start">
+            <LucideIcon name="target" className="w-8 h-8 text-red-500 mx-auto mb-4" />
+            <h4 className="font-bold text-slate-900 text-base mb-2">Limited Outcome Generation</h4>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Insufficient evidence to demonstrate policy outcomes makes it difficult to scale the program.
+            </p>
+          </div>
+
+          <div className="col-span-1 md:col-span-3 h-48 sm:h-64 bg-slate-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-slate-200">
+            <ImgBox src="./img/as-is.webp" alt="As-is" className="w-full h-full" />
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    // Slide 4: Direction and Structure
+    (
+      <SlideLayout
+        title="Direction & Structure"
+        headline="Function-centered change management aligns with the WHO's direction"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
+          <ImgBox
+            src="./img/intrinic-capacity.webp"
+            alt="WHO Intrinsic Capacity"
+            className="h-60 sm:h-80"
+          />
+
+          <div className="space-y-4">
+            <div className="p-5 bg-emerald-50 rounded-xl border border-emerald-100 font-bold text-emerald-900 text-sm sm:text-base">
+              Intrinsic Capacity-Based Management
+            </div>
+
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Regardless of disease status, we need to transition to a model that tracks an individual's physical and cognitive function along a time axis.
+            </p>
+
+            <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+              <div className="text-xs text-slate-500 mb-2">WHO ICOPE Core Principles</div>
+              <ul className="text-sm text-slate-700 space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span>Functional Ability-Centered Assessment</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span>Longitudinal Tracking</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span>Preventive Intervention</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    // Slide 5: Standardized Assessment
+    (
+      <SlideLayout
+        title="① Standardized Assessment"
+        headline="AndanteFit acquires consistent functional assessment data"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 h-full items-center">
+          <ImgBox
+            src="./img/andantefit.svg"
+            alt="AndanteFit Device"
+            className="col-span-1 md:col-span-5 h-60 sm:h-80"
+          />
+
+          <div className="col-span-1 md:col-span-7 space-y-4">
+            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+              <h4 className="font-bold mb-3 text-slate-900 text-base">Fully Automated SPPB Engine</h4>
+              <ul className="text-xs sm:text-sm space-y-2 text-slate-600">
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600 font-bold">•</span>
+                  <span><strong>Eliminating rater error:</strong> High reliability</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600 font-bold">•</span>
+                  <span><strong>Rapid assessment in under 3 minutes:</strong> Efficiency</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600 font-bold">•</span>
+                  <span><strong>Protocol anyone can perform:</strong> Accessibility</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { icon: "activity", label: "Gait Speed", value: "4m walk" },
+                { icon: "zap", label: "Lower Limb Strength", value: "5x chair stand" },
+                { icon: "triangle", label: "Balance", value: "3-level balance" }
+              ].map((item, idx) => (
+                <div key={idx} className="bg-white p-4 rounded-xl border border-slate-200 text-center">
+                  <LucideIcon name={item.icon} className="w-6 h-6 text-teal-600 mx-auto mb-2" />
+                  <div className="text-xs font-bold text-slate-900">{item.label}</div>
+                  <div className="text-[10px] text-slate-500 mt-1">{item.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    // Slide 6: Individual Change
+    (
+      <SlideLayout
+        title="② Individual Change"
+        headline="Tailored interventions produce meaningful change"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
+          <div className="space-y-4">
+            <p className="text-base sm:text-lg font-bold text-slate-900">
+              Exercise and Nutrition Strategies by Functional Level
+            </p>
+
+            <ImgBox
+              src="./img/status-change.png"
+              alt="Status Change"
+              className="h-48 sm:h-60"
+            />
+
+            <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+              <div className="text-xs text-slate-500 mb-2">Intervention Principles</div>
+              <ul className="text-sm text-slate-700 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600">→</span>
+                  <span>Frailty: Combined exercise + nutrition</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600">→</span>
+                  <span>Pre-frailty: Endurance exercise</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-teal-600">→</span>
+                  <span>Healthy: High-intensity exercise</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-6 sm:p-8 rounded-3xl border border-blue-100 shadow-inner">
+            <h4 className="text-blue-900 font-black mb-4 text-base sm:text-lg">
+              Individual Health Trajectory Visualization
+            </h4>
+            <p className="text-sm text-blue-800 leading-relaxed mb-4">
+              Accumulated longitudinal data goes beyond simple numbers — it becomes a powerful motivator demonstrating that an older adult's rate of aging is being slowed.
+            </p>
+
+            <div className="bg-white/70 rounded-xl p-4 border border-blue-200">
+              <div className="text-xs text-blue-700 font-bold mb-2">Benefits</div>
+              <ul className="text-xs text-blue-900 space-y-1">
+                <li>✓ Visual feedback sustains engagement motivation</li>
+                <li>✓ Share outcomes with family members</li>
+                <li>✓ Improved service continuity</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    // Slide 7: Shared Outcomes
+    (
+      <SlideLayout
+        title="③ Shared Outcomes"
+        headline="Change data demonstrates policy-level cost savings"
+      >
+        <div className="flex flex-col gap-6 h-full">
+          <ImgBox
+            src="./img/healthcare-cost.png"
+            alt="Healthcare Cost Reduction"
+            className="flex-1 h-64 sm:h-96"
+          />
+
+          <div className="p-4 bg-slate-900 rounded-xl text-white text-xs sm:text-sm text-center font-bold">
+            Frailty intervention shown to reduce medical and long-term care costs by approximately KRW 10 million per person (based on ASPRA study evidence)
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { label: "Healthcare Cost Reduction", value: "~40%" },
+              { label: "Delayed Care Transition", value: "+2 yrs" },
+              { label: "ADL Maintenance Rate", value: "+30%" }
+            ].map((item, idx) => (
+              <div key={idx} className="bg-white p-4 rounded-xl border border-slate-200 text-center">
+                <div className="text-2xl font-black text-teal-600 mb-1">{item.value}</div>
+                <div className="text-xs text-slate-600">{item.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    // Slide 8: Summary
+    (
+      <SlideLayout
+        title="Summary"
+        headline="Standardized Assessment – Individual Change – Shared Outcomes: individual change connects to policy outcomes"
+      >
+        <div className="h-full grid grid-cols-12 gap-10 items-stretch">
+          {/* Left: 3-step axis (core structure) */}
+          <div className="col-span-5 bg-slate-900 text-white rounded-3xl p-10 shadow-2xl relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 right-0 w-44 h-44 bg-white/5 rounded-full -mr-24 -mt-24"></div>
+
+            <div className="text-[10px] tracking-widest text-slate-300 mb-6">
+              Shared Outcome Structure
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center border border-white/10">
+                  <LucideIcon name="check-circle-2" className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <div className="text-white">① Standardized Assessment</div>
+                  <div className="text-slate-300 text-sm">Understand status using a common benchmark</div>
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <LucideIcon name="arrow-down" className="w-6 h-6 text-slate-500" />
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center border border-white/10">
+                  <LucideIcon name="zap" className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div>
+                  <div className="text-white">② Individual Change</div>
+                  <div className="text-slate-300 text-sm">Generate change through tailored intervention</div>
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <LucideIcon name="arrow-down" className="w-6 h-6 text-slate-500" />
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center border border-white/10">
+                  <LucideIcon name="target" className="w-5 h-5 text-indigo-300" />
+                </div>
+                <div>
+                  <div className="text-white">③ Shared Outcomes</div>
+                  <div className="text-slate-300 text-sm">Explain with data and scale</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-auto pt-8"></div>
+          </div>
+
+          {/* Right: Stakeholder-specific benefits */}
+          <div className="col-span-7 grid grid-cols-2 gap-6 content-stretch">
+            {[
+              {
+                icon: "user",
+                title: "Individual (Client)",
+                text: "Change becomes visible in daily life, and participation motivation is maintained."
+              },
+              {
+                icon: "clipboard-check",
+                title: "Frontline Practitioner",
+                text: "Can decide on interventions and explain their outcomes."
+              },
+              {
+                icon: "bar-chart-3",
+                title: "Operations & Management",
+                text: "Manages cumulative data and visualizes operational outcomes."
+              },
+              {
+                icon: "gavel",
+                title: "Policy Decision-Making",
+                text: "Explains outcomes with comparable indicators and enables the next decision."
+              }
+            ].map((c, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-3xl border border-slate-200 shadow-lg p-8 flex flex-col justify-between min-h-[175px]"
+              >
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center">
+                      <LucideIcon name={c.icon} className="w-5 h-5 text-slate-700" />
+                    </div>
+                    <div className="text-slate-900 text-lg">{c.title}</div>
+                  </div>
+
+                  <p className="text-[15px] text-slate-600 leading-relaxed">
+                    {c.text}
+                  </p>
+                </div>
+
+                <div className="mt-6 h-px bg-slate-100"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </SlideLayout>
+    ),
+
+    // Slide 9: Closing
+    (
+      <div className="w-full md:h-full bg-slate-900 p-8 sm:p-16 flex flex-col justify-center items-center text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -mr-40 -mt-40"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[100px] -ml-40 -mb-40"></div>
+
+        <div className="relative z-10 space-y-12">
+          <header className="space-y-4">
+            <h2 className="text-3xl sm:text-5xl text-white tracking-tighter leading-tight">
+              The digital community center is the hub of prevention<br/>
+              where change accumulates for every stakeholder.
+            </h2>
+
+            <p className="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
+              Measure change through a common language (physical function assessment), <br/>and let the field and policy interpret outcomes and expand program structure on the same standard.
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 max-w-4xl mx-auto">
+            {[
+              { icon: <LucideIcon name="check-circle-2" className="w-10 h-10 text-blue-400" />, title: "Standardized Assessment", text: "Understand status using a common benchmark" },
+              { icon: <LucideIcon name="zap" className="w-10 h-10 text-emerald-400" />, title: "Individual Change", text: "Generate change through tailored intervention" },
+              { icon: <LucideIcon name="target" className="w-10 h-10 text-indigo-300" />, title: "Shared Outcomes", text: "Explain with data and scale" }
+            ].map((item, idx) => (
+              <div key={idx} className="flex flex-col items-center gap-4">
+                <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center border border-white/10 shadow-inner">
+                  {item.icon}
+                </div>
+                <div className="text-xl text-white">{item.title}</div>
+                <p className="text-slate-300 text-sm">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  ];
+
+  return (
+    <div className="w-full min-h-screen bg-slate-200 safePad">
+      {slides.map((slide, i) => (
+        <SlideFrame key={i} index={i} total={slides.length}>
+          {slide}
+        </SlideFrame>
+      ))}
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<!-- Footer -->
+<div data-include="../includes/footer.html"></div>
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
+
+</body>
+</html>

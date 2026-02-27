@@ -9,12 +9,13 @@
 (function () {
   'use strict';
 
-  var SUPPORTED_LANGS = ['en', 'ko', 'es'];
-  var KNOWN_PAGES = ['index.html', 'product.html', 'case-studies.html', 'validation.html', 'references.html'];
   var path = window.location.pathname;
 
-  // /ko/ 또는 /es/ 경로에 이미 있으면 아무것도 하지 않음
-  if (/^\/(ko|es)(\/|$)/.test(path)) return;
+  // 홈페이지에서만 실행 — 콘텐츠 페이지(product, validation, references, case-studies 등)에서는 리다이렉트 없음
+  if (path !== '/' && path !== '/index.html') return;
+
+  var SUPPORTED_LANGS = ['en', 'ko', 'es'];
+  var KNOWN_PAGES = ['index.html', 'product.html', 'case-studies.html', 'validation.html', 'references.html'];
 
   // ── 1. localStorage 저장된 설정 확인 ─────────────────────────────
   var saved = localStorage.getItem('lang_preference');

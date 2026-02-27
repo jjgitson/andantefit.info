@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Japanese Main Pages -->
+  <url>
+    <loc>https://andantefit.info/jp/product.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/validation.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/references.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+  <!-- Japanese Case Studies -->
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-01-20-Common-Operational-Language-Strategy-JP.html</loc>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-07-SPPB-Occupational-Health-JP.html</loc>
+    <lastmod>2026-02-07</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-11-Pain-To-Function-Paradigm-Shift-JP.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-JP.html</loc>
+    <lastmod>2026-02-13</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+</urlset>

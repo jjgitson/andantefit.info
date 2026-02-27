@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Korean Main Pages -->
+  <url>
+    <loc>https://andantefit.info/ko/product.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/validation.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/references.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+  <!-- Korean Case Studies -->
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-08-PRO-SPPB-Linking-Study-KR.html</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-09-Digital-Care-Platform-KR.html</loc>
+    <lastmod>2026-02-09</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-KR.html</loc>
+    <lastmod>2026-02-13</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-18-Checkup-Event-Community-CSR-KR.html</loc>
+    <lastmod>2026-02-18</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-18-Community-Frailty-Prevention-Program-KR.html</loc>
+    <lastmod>2026-02-18</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-KR.html</loc>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-KR.html</loc>
+    <lastmod>2026-02-21</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+</urlset>

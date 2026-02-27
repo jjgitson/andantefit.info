@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ===== English (root) - Main Pages ===== -->
   <url>
     <loc>https://andantefit.info/</loc>
-    <lastmod>2026-02-11</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/es/</loc>
-    <lastmod>2026-02-11</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/ko/</loc>
     <lastmod>2026-02-11</lastmod>
   </url>
   <url>
@@ -24,4 +18,187 @@
     <loc>https://andantefit.info/references.html</loc>
     <lastmod>2026-02-11</lastmod>
   </url>
+  <url>
+    <loc>https://andantefit.info/case-studies.html</loc>
+    <lastmod>2026-02-21</lastmod>
+  </url>
+
+  <!-- ===== English (root) - Case Studies ===== -->
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-01-20-Common-Operational-Language-Strategy-EN.html</loc>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-07-SPPB-Occupational-Health-EN.html</loc>
+    <lastmod>2026-02-07</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-08-PRO-SPPB-Linking-Study-EN.html</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-09-Digital-Care-Platform-EN.html</loc>
+    <lastmod>2026-02-09</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-11-Pain-To-Function-Paradigm-Shift-EN.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-EN.html</loc>
+    <lastmod>2026-02-13</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-16-SPPB-Utilization-Spain-EN.html</loc>
+    <lastmod>2026-02-16</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-18-Checkup-Event-Community-CSR-EN.html</loc>
+    <lastmod>2026-02-18</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-18-Community-Frailty-Prevention-Program-EN.html</loc>
+    <lastmod>2026-02-18</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-EN.html</loc>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-EN.html</loc>
+    <lastmod>2026-02-21</lastmod>
+  </url>
+
+  <!-- ===== Spanish (/es/) - Main Pages ===== -->
+  <url>
+    <loc>https://andantefit.info/es/</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/product.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/validation.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/references.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+  <!-- ===== Spanish (/es/) - Case Studies ===== -->
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-02-16-SPPB-Utilization-Spain-ES.html</loc>
+    <lastmod>2026-02-16</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+  <!-- ===== Korean (/ko/) - Main Pages ===== -->
+  <url>
+    <loc>https://andantefit.info/ko/</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/product.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/validation.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/references.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+  <!-- ===== Korean (/ko/) - Case Studies ===== -->
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-08-PRO-SPPB-Linking-Study-KR.html</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-09-Digital-Care-Platform-KR.html</loc>
+    <lastmod>2026-02-09</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-KR.html</loc>
+    <lastmod>2026-02-13</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-18-Checkup-Event-Community-CSR-KR.html</loc>
+    <lastmod>2026-02-18</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-18-Community-Frailty-Prevention-Program-KR.html</loc>
+    <lastmod>2026-02-18</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-KR.html</loc>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-KR.html</loc>
+    <lastmod>2026-02-21</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/ko/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+  <!-- ===== Japanese (/jp/) - Main Pages ===== -->
+  <url>
+    <loc>https://andantefit.info/jp/</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/product.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/validation.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/references.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
+  <!-- ===== Japanese (/jp/) - Case Studies ===== -->
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-01-20-Common-Operational-Language-Strategy-JP.html</loc>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-07-SPPB-Occupational-Health-JP.html</loc>
+    <lastmod>2026-02-07</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-11-Pain-To-Function-Paradigm-Shift-JP.html</loc>
+    <lastmod>2026-02-11</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-JP.html</loc>
+    <lastmod>2026-02-13</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html</loc>
+    <lastmod>2026-02-22</lastmod>
+  </url>
+
 </urlset>

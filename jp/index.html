@@ -193,6 +193,20 @@
         </div>
 
       </div>
+
+      <!-- 予後リスク根拠パネル -->
+      <div class="stdinsight-prognosis-row">
+        <img
+          src="assets/sppb-prognostic-risk-en.png"
+          alt="SPPBスコアと高齢者の死亡率・転倒リスクの予測データ"
+          class="stdinsight-prognosis-img"
+        >
+        <p class="stdinsight-prognosis-caption">
+          SPPBスコアは地域在住高齢者の5年死亡率、転倒リスク、入院リスクを独立して予測します。
+          スコア6点以下は、すべての臨床アウトカムにおいて著しく高いリスクと関連しています。
+        </p>
+      </div>
+
     </div>
   </section>
 
@@ -447,6 +461,33 @@
         max-height: 240px;
       }
     }
+
+    .stdinsight-prognosis-row {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stdinsight-prognosis-img {
+      max-height: 280px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      flex: 0 1 auto;
+    }
+
+    .stdinsight-prognosis-caption {
+      font-size: 0.9375rem;
+      color: #555;
+      line-height: 1.8;
+      flex: 1 1 300px;
+      margin: 0;
+    }
   </style>
 
   <script>
@@ -516,116 +557,65 @@
 
 <!-- Clinical Applications -->
 <section class="section">
-<div class="container">
-  <div class="section-header">
-    <span class="section-label">適用分野</span>
-    <h2>多様な臨床領域と地域社会での活用</h2>
-    <p>
-      SPPBベースの身体機能評価は、高齢者の健康に関わるさまざまな疾患・状況において
-      国際ガイドラインや研究で活用されています。
-    </p>
-  </div>
-
-  <div class="grid grid-3">
-    <div class="card">
-      <h4 class="card-title">サルコペニア診断</h4>
-      <p class="card-description">
-        欧州・米国・アジアのサルコペニアガイドラインで使用され、
-        治療介入研究の主要評価指標として活用されます。
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">適用分野</span>
+      <h2>多様な臨床領域と地域社会での活用</h2>
+      <p>
+        SPPBベースの身体機能評価は、高齢者の健康に関わるさまざまな疾患・状況において
+        国際ガイドラインや研究で活用されています。
       </p>
     </div>
 
-    <div class="card">
-      <h4 class="card-title">フレイルスクリーニング</h4>
-      <p class="card-description">
-        地域社会における機能低下スクリーニングのための
-        WHO ICOPEガイドラインに身体機能評価ツールとして含まれます。
-      </p>
+    <div class="grid grid-3">
+      <div class="card">
+        <h4 class="card-title">サルコペニア &amp; フレイル</h4>
+        <p class="card-description">
+          EWGSOP2、FNIH サルコペニアプロジェクト、AWGS 2019 ガイドラインの標準的な身体機能指標として、
+          サルコペニアの薬物・運動介入試験の主要アウトカムとして活用されます。
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title">WHO ICOPE</h4>
+        <p class="card-description">
+          地域在住高齢者の統合ケアを目的としたWHO ICOPEフレームワークにおいて、
+          移動能力スクリーニングツールとして含まれます。
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title">腫瘍学（包括的老年評価）</h4>
+        <p class="card-description">
+          ESMO/SIOG（2021）およびASCOガイドラインにおいて、高齢がん患者の
+          包括的老年評価（CGA）および抗がん剤毒性リスク層別化に推奨されます。
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title">心臓リハビリテーション</h4>
+        <p class="card-description">
+          JCS/JACRガイドラインにて、心臓リハビリプログラムにおける
+          下肢機能および移動能力の評価として含まれます。
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title">変性疾患モニタリング</h4>
+        <p class="card-description">
+          硬膜外ステロイド注射（ESI）後の機能回復を客観的に追跡し、
+          慢性筋骨格系・脊椎疾患患者の機能変化モニタリングに活用されます。
+        </p>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title">大規模コホート研究</h4>
+        <p class="card-description">
+          NHANES、KLHAS、NHS、SPRINTなどの大規模研究において、
+          複数国の高齢者集団における機能軌跡と健康アウトカムの追跡に使用されます。
+        </p>
+      </div>
     </div>
-
-    <div class="card">
-      <h4 class="card-title">がんリハビリテーション</h4>
-      <p class="card-description">
-        高齢がん患者の包括的老年評価（CGA）において
-        主要な身体機能指標として推奨されます（ASCO、SIOGなど）。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">心臓リハビリテーション</h4>
-      <p class="card-description">
-        心臓リハビリの過程で下肢機能と移動能力の評価のために
-        臨床ガイドラインに含まれます（日本、欧州など）。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">臨床試験・介入研究</h4>
-      <p class="card-description">
-        健康機能食品の筋力・機能改善介入研究において
-        参加者スクリーニングと結果評価指標として活用されます。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">集団ベース研究</h4>
-      <p class="card-description">
-        米国・韓国・欧州など複数の国の
-        大規模健康調査とコホート研究で使用されます。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">疼痛治療モニタリング</h4>
-      <p class="card-description">
-        脊椎疼痛処置後の機能回復の程度を
-        客観的に追跡するための指標として活用されます。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">慢性疾患の機能管理</h4>
-      <p class="card-description">
-        心不全・慢性腎不全・COPD・糖尿病など
-        慢性疾患患者の機能変化を追跡する指標として活用されます。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">神経系疾患リハビリ</h4>
-      <p class="card-description">
-        脳卒中・パーキンソン病・認知症など
-        神経系疾患患者の移動能力と下肢機能評価に使用されます。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">転倒リスク管理</h4>
-      <p class="card-description">
-        療養病院や長期療養施設において
-        転倒リスクスクリーニングと機能維持プログラム評価に活用されます。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">術前後の機能評価</h4>
-      <p class="card-description">
-        高齢手術患者のリスク評価と
-        術後回復過程のモニタリングに活用されます。
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">高齢ドライバーの機能評価</h4>
-      <p class="card-description">
-        高齢ドライバーの移動能力と下肢機能を評価し、
-        運転適性判断と安全プログラムに活用されます。
-      </p>
-    </div>
-
-  </div>
-</div>
-
 
     <div class="mt-4" style="text-align: center;">
       <a href="validation.html" class="btn btn-secondary">AndanteFit 論文を見る →</a>
@@ -699,6 +689,39 @@
       }
     }
   </style>
+
+  <!-- 関連リンク -->
+  <section class="section related-links" style="background-color: var(--color-soft-gray, #f8f9fa); padding: 48px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 24px; font-size: 1.5rem;">関連する身体機能評価リソース</h2>
+      <ul style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 16px;">
+        <li><a href="/jp/sppb.html">SPPBについて</a></li>
+        <li><a href="/jp/sppb-test.html">SPPB検査プロトコル</a></li>
+        <li><a href="/jp/validation.html">SPPB臨床検証論文</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 参考文献 -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa); padding: 32px 0;">
+    <div class="container">
+      <details>
+        <summary style="font-size: 1rem; font-weight: 600; color: var(--color-deep-blue); cursor: pointer; padding: 8px 0;">参考文献</summary>
+        <ol style="margin-top: 16px; padding-left: 20px; line-height: 2; font-size: 0.875rem; color: var(--color-text-secondary);">
+          <li>Guralnik JM, Simonsick EM, Ferrucci L, et al. A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission. <em>J Gerontol.</em> 1994;49(2):M85–M94.</li>
+          <li>Guralnik JM, Ferrucci L, Pieper CF, et al. Lower extremity function and subsequent disability: consistency across studies, predictive models, and value of gait speed alone compared with the short physical performance battery. <em>J Gerontol A Biol Sci Med Sci.</em> 2000;55(4):M221–M231.</li>
+          <li>Pavasini R, Guralnik J, Brown JC, et al. Short Physical Performance Battery and all-cause mortality: systematic review and meta-analysis. <em>BMC Med.</em> 2016;14:215.</li>
+          <li>Perera S, Mody SH, Woodman RC, Studenski SA. Meaningful change and responsiveness in common physical performance measures in older adults. <em>J Am Geriatr Soc.</em> 2006;54(5):743–749.</li>
+          <li>Volpato S, Cavalieri M, Sioulis F, et al. Predictive value of the Short Physical Performance Battery following hospitalization in older patients. <em>J Gerontol A Biol Sci Med Sci.</em> 2011;66(1):89–96.</li>
+          <li>Kwon S, Perera S, Pahor M, et al. What is a meaningful change in physical performance? Findings from a clinical trial in older adults (the LIFE-P study). <em>J Nutr Health Aging.</em> 2009;13(6):538–544.</li>
+          <li>Studenski S, Perera S, Patel K, et al. Gait speed and survival in older adults. <em>JAMA.</em> 2011;305(1):50–58.</li>
+          <li>Buracchio TI, Dodge HH, Howieson D, Wasserman D, Kaye J. The trajectory of gait speed preceding mild cognitive impairment. <em>Arch Neurol.</em> 2010;67(8):980–986.</li>
+          <li>Welch C, Hassan-Smith ZK, Greig CA, Lord JM, Jackson TA. Acute sarcopenia secondary to hospitalisation — an emerging condition affecting medical inpatients. <em>Gerontology.</em> 2018;64(2):158–166.</li>
+          <li>Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci.</em> 2001;56(3):M146–M156. [Women's Health and Aging Study]</li>
+        </ol>
+      </details>
+    </div>
+  </section>
 
   <!-- Footer -->
   <div data-include="/includes/footer.html"></div>

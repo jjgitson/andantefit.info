@@ -108,38 +108,35 @@
       </div>
 
       <div class="grid grid-3">
-        <a href="./sppb-test.html#gait-speed" style="display:block; text-decoration:none; color:inherit;">
-          <div class="card">
-            <div class="card-icon">🚶</div>
-            <h3 class="card-title">Gait Speed Test</h3>
-            <p class="card-description">
-              4-meter walking test measuring functional mobility. AndanteFit supports both static and
-              dynamic start conditions with continuous LiDAR-based velocity tracking.
-            </p>
-          </div>
-        </a>
+        <div class="card">
+          <div class="card-icon">🚶</div>
+          <h3 class="card-title">Gait Speed Test</h3>
+          <p class="card-description">
+            4-meter walking test measuring functional mobility. AndanteFit supports both static and
+            dynamic start conditions with continuous LiDAR-based velocity tracking.
+          </p>
+          <a href="./sppb-test.html#gait-speed" style="display:inline-block; margin-top:12px; font-size:0.875rem; font-weight:600; color:var(--color-deep-blue);">Learn more →</a>
+        </div>
 
-        <a href="./sppb-test.html#chair-stand" style="display:block; text-decoration:none; color:inherit;">
-          <div class="card">
-            <div class="card-icon">🪑</div>
-            <h3 class="card-title">Chair Stand Test</h3>
-            <p class="card-description">
-              Five repetitions of sit-to-stand movements assessing lower limb strength. Automated detection
-              eliminates observer timing variability.
-            </p>
-          </div>
-        </a>
+        <div class="card">
+          <div class="card-icon">🪑</div>
+          <h3 class="card-title">Chair Stand Test</h3>
+          <p class="card-description">
+            Five repetitions of sit-to-stand movements assessing lower limb strength. Automated detection
+            eliminates observer timing variability.
+          </p>
+          <a href="./sppb-test.html#chair-stand" style="display:inline-block; margin-top:12px; font-size:0.875rem; font-weight:600; color:var(--color-deep-blue);">Learn more →</a>
+        </div>
 
-        <a href="./sppb-test.html#balance" style="display:block; text-decoration:none; color:inherit;">
-          <div class="card">
-            <div class="card-icon">⚖️</div>
-            <h3 class="card-title">Balance Test</h3>
-            <p class="card-description">
-              Progressive standing balance positions (side-by-side, semi-tandem, tandem). Precise posture
-              monitoring ensures protocol compliance.
-            </p>
-          </div>
-        </a>
+        <div class="card">
+          <div class="card-icon">⚖️</div>
+          <h3 class="card-title">Balance Test</h3>
+          <p class="card-description">
+            Progressive standing balance positions (side-by-side, semi-tandem, tandem). Precise posture
+            monitoring ensures protocol compliance.
+          </p>
+          <a href="./sppb-test.html#balance" style="display:inline-block; margin-top:12px; font-size:0.875rem; font-weight:600; color:var(--color-deep-blue);">Learn more →</a>
+        </div>
       </div>
     </div>
   </section>
@@ -203,6 +200,20 @@
         </div>
 
       </div>
+
+      <!-- Prognostic Risk Evidence Panel -->
+      <div class="stdinsight-prognosis-row">
+        <img
+          src="assets/sppb-prognostic-risk-en.png"
+          alt="SPPB score and prognostic risk for mortality and falls in older adults"
+          class="stdinsight-prognosis-img"
+        >
+        <p class="stdinsight-prognosis-caption">
+          SPPB scores independently predict 5-year mortality, fall risk, and hospital admission in community-dwelling older adults.
+          Scores ≤6 are associated with substantially elevated risk across all clinical outcomes.
+        </p>
+      </div>
+
     </div>
   </section>
 
@@ -457,6 +468,33 @@
         max-height: 240px;
       }
     }
+
+    .stdinsight-prognosis-row {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stdinsight-prognosis-img {
+      max-height: 280px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      flex: 0 1 auto;
+    }
+
+    .stdinsight-prognosis-caption {
+      font-size: 0.9375rem;
+      color: #555;
+      line-height: 1.8;
+      flex: 1 1 300px;
+      margin: 0;
+    }
   </style>
 
   <script>
@@ -494,121 +532,99 @@
 
   <!-- System Overview -->
   <section class="section" style="background-color: var(--color-white);">
- <div class="container">
-  <div class="section-header">
-    <span class="section-label">Clinical Applications</span>
-    <h2>Used across clinical settings and community programs</h2>
-    <p>
-      SPPB-based physical performance assessment is used in a wide range of
-      conditions and settings related to older adult health, supported by
-      international guidelines and research.
-    </p>
-  </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">System Overview</span>
+        <h2>Product Configuration and Supported Tests</h2>
+      </div>
 
-  <div class="grid grid-3">
-    <div class="card">
-      <h4 class="card-title">Sarcopenia diagnosis</h4>
-      <p class="card-description">
-        Used in sarcopenia guidelines across Europe, the U.S., and Asia,
-        and applied as a key outcome measure in intervention studies.
-      </p>
+      <div class="grid grid-2">
+        <div>
+          <h3>Hardware</h3>
+          <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+            <li><strong>Gait speed measurement:</strong> LiDAR sensor–based precision distance and velocity measurement</li>
+            <li><strong>Chair-stand measurement:</strong> Motion tracking–based automated repetition detection</li>
+            <li><strong>Static balance measurement:</strong> Sensor-based static balance evaluation</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Software</h3>
+          <ul style="line-height: 1.9; color: var(--color-text-secondary);">
+            <li><strong>Mobile app:</strong> Test guidance and session management</li>
+            <li><strong>Web management platform:</strong> Result review, history tracking, and data export</li>
+            <li><strong>Automated report:</strong> SPPB-specific clinical report generation and export</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-4" style="text-align: center;">
+        <a href="product.html" class="btn btn-primary">System Details →</a>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h4 class="card-title">Frailty screening</h4>
-      <p class="card-description">
-        Included as a physical performance assessment tool
-        in the WHO ICOPE guidelines for community screening.
-      </p>
-    </div>
+  <!-- Clinical Applications -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Clinical Applications</span>
+        <h2>Used across clinical settings and community programs</h2>
+        <p>
+          SPPB-based physical performance assessment is supported by international
+          guidelines across a wide range of conditions and settings related to older adult health.
+        </p>
+      </div>
 
-    <div class="card">
-      <h4 class="card-title">Cancer rehabilitation</h4>
-      <p class="card-description">
-        Recommended as a key physical performance measure
-        in comprehensive geriatric assessment (CGA) for older cancer patients
-        (AOS, SIOG, etc.).
-      </p>
-    </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <h4 class="card-title">Sarcopenia &amp; Frailty</h4>
+          <p class="card-description">
+            Standard physical function measure in EWGSOP2, FNIH Sarcopenia Project, and AWGS 2019 guidelines.
+            Primary outcome in sarcopenia drug and exercise intervention trials.
+          </p>
+        </div>
 
-    <div class="card">
-      <h4 class="card-title">Cardiac rehabilitation</h4>
-      <p class="card-description">
-        Included in clinical guidelines to assess lower-limb function
-        and mobility during cardiac rehabilitation
-        (Japan, Europe, etc.).
-      </p>
-    </div>
+        <div class="card">
+          <h4 class="card-title">WHO ICOPE</h4>
+          <p class="card-description">
+            Included for locomotor capacity screening in the WHO ICOPE framework for integrated care
+            of older people in community settings worldwide.
+          </p>
+        </div>
 
-    <div class="card">
-      <h4 class="card-title">Clinical trials</h4>
-      <p class="card-description">
-        Used for participant screening and outcome evaluation
-        in intervention studies on strength and functional improvement.
-      </p>
-    </div>
+        <div class="card">
+          <h4 class="card-title">Oncology (CGA)</h4>
+          <p class="card-description">
+            Recommended by ESMO/SIOG (2021) and ASCO guidelines as part of comprehensive geriatric
+            assessment and toxicity risk stratification for older cancer patients.
+          </p>
+        </div>
 
-    <div class="card">
-      <h4 class="card-title">Population-based studies</h4>
-      <p class="card-description">
-        Used in large-scale health surveys and cohort studies
-        in the U.S., Korea, Europe, and other regions.
-      </p>
-    </div>
+        <div class="card">
+          <h4 class="card-title">Cardiac Rehabilitation</h4>
+          <p class="card-description">
+            Included in JCS/JACR guidelines for lower-limb functional assessment and mobility
+            evaluation during cardiac rehabilitation programs.
+          </p>
+        </div>
 
-    <!-- Additional cards -->
+        <div class="card">
+          <h4 class="card-title">Degenerative Disease Monitoring</h4>
+          <p class="card-description">
+            Applied to objectively track functional recovery following epidural steroid injections (ESI)
+            and in patients with chronic musculoskeletal and spinal conditions.
+          </p>
+        </div>
 
-    <div class="card">
-      <h4 class="card-title">Pain treatment monitoring</h4>
-      <p class="card-description">
-        Used to objectively track functional recovery
-        after spine-related pain interventions.
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">Chronic disease management</h4>
-      <p class="card-description">
-        Applied to monitor functional changes in patients
-        with heart failure, chronic kidney disease, COPD, diabetes, and more.
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">Neurological rehabilitation</h4>
-      <p class="card-description">
-        Used to assess mobility and lower-limb function
-        in patients with stroke, Parkinson’s disease, dementia, and related conditions.
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">Fall risk management</h4>
-      <p class="card-description">
-        Used in rehabilitation and long-term care settings
-        for fall risk screening and functional maintenance programs.
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">Pre- and postoperative assessment</h4>
-      <p class="card-description">
-        Used to evaluate surgical risk before procedures
-        and to monitor recovery after surgery in older patients.
-      </p>
-    </div>
-
-    <div class="card">
-      <h4 class="card-title">Older driver assessment</h4>
-      <p class="card-description">
-        Used to evaluate mobility and lower-limb function
-        for driving fitness and safety programs in older adults.
-      </p>
-    </div>
-
-  </div>
-</div>
-
+        <div class="card">
+          <h4 class="card-title">Large-Scale Cohorts</h4>
+          <p class="card-description">
+            Used in NHANES, KLHAS, NHS, and SPRINT to track functional trajectories and health outcomes
+            across aging populations in multiple countries.
+          </p>
+        </div>
+      </div>
 
       <div class="mt-4" style="text-align: center;">
         <a href="validation.html" class="btn btn-secondary">View Full Evidence →</a>
@@ -693,6 +709,27 @@
         <li><a href="/case-studies.html">Physical Performance Case Studies</a></li>
         <li><a href="/references.html">SPPB References and Partners</a></li>
       </ul>
+    </div>
+  </section>
+
+  <!-- Academic References -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa); padding: 32px 0;">
+    <div class="container">
+      <details>
+        <summary style="font-size: 1rem; font-weight: 600; color: var(--color-deep-blue); cursor: pointer; padding: 8px 0;">Academic References</summary>
+        <ol style="margin-top: 16px; padding-left: 20px; line-height: 2; font-size: 0.875rem; color: var(--color-text-secondary);">
+          <li>Guralnik JM, Simonsick EM, Ferrucci L, et al. A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission. <em>J Gerontol.</em> 1994;49(2):M85–M94.</li>
+          <li>Guralnik JM, Ferrucci L, Pieper CF, et al. Lower extremity function and subsequent disability: consistency across studies, predictive models, and value of gait speed alone compared with the short physical performance battery. <em>J Gerontol A Biol Sci Med Sci.</em> 2000;55(4):M221–M231.</li>
+          <li>Pavasini R, Guralnik J, Brown JC, et al. Short Physical Performance Battery and all-cause mortality: systematic review and meta-analysis. <em>BMC Med.</em> 2016;14:215.</li>
+          <li>Perera S, Mody SH, Woodman RC, Studenski SA. Meaningful change and responsiveness in common physical performance measures in older adults. <em>J Am Geriatr Soc.</em> 2006;54(5):743–749.</li>
+          <li>Volpato S, Cavalieri M, Sioulis F, et al. Predictive value of the Short Physical Performance Battery following hospitalization in older patients. <em>J Gerontol A Biol Sci Med Sci.</em> 2011;66(1):89–96.</li>
+          <li>Kwon S, Perera S, Pahor M, et al. What is a meaningful change in physical performance? Findings from a clinical trial in older adults (the LIFE-P study). <em>J Nutr Health Aging.</em> 2009;13(6):538–544.</li>
+          <li>Studenski S, Perera S, Patel K, et al. Gait speed and survival in older adults. <em>JAMA.</em> 2011;305(1):50–58.</li>
+          <li>Buracchio TI, Dodge HH, Howieson D, Wasserman D, Kaye J. The trajectory of gait speed preceding mild cognitive impairment. <em>Arch Neurol.</em> 2010;67(8):980–986.</li>
+          <li>Welch C, Hassan-Smith ZK, Greig CA, Lord JM, Jackson TA. Acute sarcopenia secondary to hospitalisation — an emerging condition affecting medical inpatients. <em>Gerontology.</em> 2018;64(2):158–166.</li>
+          <li>Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci.</em> 2001;56(3):M146–M156. [Women's Health and Aging Study]</li>
+        </ol>
+      </details>
     </div>
   </section>
 

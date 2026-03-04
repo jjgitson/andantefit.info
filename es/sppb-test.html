@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Protocolo de la prueba SPPB: guía paso a paso para administrar la prueba de velocidad de la marcha, cinco levantamientos de silla y prueba de equilibrio, con criterios de puntuación.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/es/sppb-test.html" />
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/sppb-test.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/sppb-test.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/sppb-test.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/sppb-test.html" />
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/sppb-test.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="Protocolo de la Prueba SPPB: Administración y Puntuación | AndanteFit">
+  <meta property="og:description" content="Guía de administración del SPPB paso a paso con criterios de puntuación para cada subprueba.">
+  <meta property="og:url" content="https://andantefit.info/es/sppb-test.html">
+  <title>Protocolo de la Prueba SPPB: Administración y Puntuación | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <style>
+    .test-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.8; }
+    .test-section { scroll-margin-top: 88px; }
+    .test-section + .test-section { border-top: 1px solid var(--color-border); }
+    .test-inner { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    @media (max-width: 900px) { .test-inner { grid-template-columns: 1fr; } }
+    .test-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-deep-blue); color: #fff; font-size: 1.125rem; font-weight: 800; flex-shrink: 0; }
+    .test-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .test-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--color-text-primary); margin: 0; }
+    .test-steps { list-style: none; padding: 0; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .test-steps li { display: flex; gap: 12px; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(15,76,129,0.10); color: var(--color-deep-blue); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .score-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; }
+    .score-card-header { background: var(--color-deep-blue); color: #fff; padding: 12px 16px; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+    .score-card table { width: 100%; border-collapse: collapse; }
+    .score-card td { padding: 10px 16px; font-size: 0.875rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: top; }
+    .score-card tr:last-child td { border-bottom: none; }
+    .score-card tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+    .score-pts { font-weight: 700; color: var(--color-text-primary); white-space: nowrap; }
+    .callout { background: rgba(15,76,129,0.05); border-left: 4px solid var(--color-deep-blue); border-radius: var(--border-radius); padding: 16px 20px; margin: 20px 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .callout strong { color: var(--color-text-primary); }
+    .test-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .test-nav a { display: inline-block; padding: 8px 18px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; transition: all 0.2s; }
+    .test-nav a:hover { border-color: var(--color-deep-blue); color: var(--color-deep-blue); background: rgba(15,76,129,0.05); }
+    .total-score-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .total-score-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .total-score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
+    .total-score-table tbody tr:last-child td { border-bottom: none; }
+    .total-score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+  </style>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Administración de la prueba</span>
+      <h1 class="hero-headline">Protocolo de la Prueba SPPB</h1>
+      <p class="test-lead">
+        Guía de administración paso a paso de la Short Physical Performance Battery (SPPB).
+        Las tres subpruebas se administran habitualmente en el orden: equilibrio → velocidad de la marcha → levantarse de la silla.
+        Tiempo total: 10–15 minutos de forma manual; menos de 3 minutos con AndanteFit.
+      </p>
+      <div class="test-nav" style="margin-top: 32px;">
+        <a href="#balance">⚖️ Prueba de equilibrio</a>
+        <a href="#gait-speed">🚶 Velocidad de la marcha</a>
+        <a href="#chair-stand">🪑 Levantarse de la silla</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Balance -->
+  <section id="balance" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">1</span>
+            <h2 class="test-title">Prueba de equilibrio</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            La prueba de equilibrio evalúa la estabilidad postural estática a través de tres posiciones de pie de dificultad progresiva. Se administra en primer lugar porque requiere el menor esfuerzo, lo que permite al evaluador identificar a los participantes que pueden necesitar mayor supervisión en las pruebas posteriores.
+          </p>
+          <div class="callout">
+            <strong>Qué mide:</strong> Control postural estático, riesgo de caídas, deterioro funcional incipiente.
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Preparación</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>El participante se coloca cerca de una pared o superficie estable por seguridad. Se realizará con los zapatos puestos.</li>
+            <li><span class="step-num">2</span>El evaluador demuestra cada posición antes de comenzar la cronometración.</li>
+            <li><span class="step-num">3</span>Los brazos cuelgan libremente a los lados; el evaluador no sujeta las manos del participante durante las retenciones cronometradas.</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedimiento</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span><span><strong>Posición paralela:</strong> Pies juntos, bordes mediales en contacto. Mantener 10 segundos. Si no puede mantener ≥10s, puntuación = 0 y la prueba finaliza.</span></li>
+            <li><span class="step-num">2</span><span><strong>Posición semitándem:</strong> El lado de un pie se coloca contra el dedo gordo del otro. Mantener 10 segundos. Si no puede, puntuación = 1 y la prueba finaliza.</span></li>
+            <li><span class="step-num">3</span><span><strong>Posición tándem:</strong> El talón de un pie colocado directamente frente a los dedos del otro. Cronometrar hasta 10 segundos.</span></li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">La prueba finaliza cuando se pierde el equilibrio o el evaluador detiene la prueba.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">Puntuación</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>No puede mantener posición paralela ≥10s</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>Paralela ≥10s; semitándem &lt;10s</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>Semitándem ≥10s; tándem &lt;3s</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>Tándem 3–9.99s</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>Tándem ≥10s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gait Speed -->
+  <section id="gait-speed" class="test-section section">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">2</span>
+            <h2 class="test-title">Prueba de velocidad de la marcha</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            La velocidad de la marcha es uno de los predictores más potentes de resultados de salud en personas mayores, incluyendo mortalidad, deterioro cognitivo, hospitalización y discapacidad funcional. La caminata de 4 metros es la distancia estándar del SPPB, aunque algunas variantes utilizan 6 metros.
+          </p>
+          <div class="callout">
+            <strong>Qué mide:</strong> Movilidad funcional, estado de salud sistémico, riesgo de fragilidad y sarcopenia.
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Preparación</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Marcar un recorrido de 4 metros con líneas de inicio y fin claramente visibles sobre una superficie plana y despejada.</li>
+            <li><span class="step-num">2</span>El participante puede usar sus ayudas habituales para caminar (bastón, andador). Registrar si se usa algún dispositivo.</li>
+            <li><span class="step-num">3</span>El participante comienza desde una posición estática de pie detrás de la línea de inicio.</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedimiento</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Indicar: "Camine a su ritmo habitual, como si caminara por la calle."</li>
+            <li><span class="step-num">2</span>Iniciar la cronometración cuando el participante comienza a moverse.</li>
+            <li><span class="step-num">3</span>Detener la cronometración cuando el pie delantero cruza la línea de llegada.</li>
+            <li><span class="step-num">4</span>Realizar dos intentos; usar el tiempo más rápido para la puntuación.</li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">Puntuar 0 si el participante no puede intentar la marcha o requiere asistencia física.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">Puntuación (marcha de 4 m)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>No puede completar</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>≥8.70s (&lt;0.46 m/s)</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>6.21–8.70s (0.46–0.64 m/s)</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>4.82–6.20s (0.64–0.83 m/s)</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>&lt;4.82s (&gt;0.83 m/s)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chair Stand -->
+  <section id="chair-stand" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">3</span>
+            <h2 class="test-title">Prueba de levantarse de la silla</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            La prueba de cinco levantamientos de silla evalúa la fuerza muscular de las extremidades inferiores, la potencia y el control neuromuscular funcional. Es la subprueba más exigente y se administra en último lugar para evitar que la fatiga interfiera en las pruebas anteriores.
+          </p>
+          <div class="callout">
+            <strong>Qué mide:</strong> Fuerza y potencia muscular de las extremidades inferiores, capacidad para levantarse de una silla en la vida diaria.
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Preparación</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Usar una silla firme con una altura de asiento de aproximadamente 43–45 cm, sin reposabrazos si es posible.</li>
+            <li><span class="step-num">2</span>El participante se sienta con los brazos cruzados sobre el pecho. Los pies planos en el suelo.</li>
+            <li><span class="step-num">3</span>Pedir al participante que se levante una vez para verificar que puede realizar el movimiento sin apoyar los brazos.</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedimiento</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Indicar: "Levántese completamente y siéntese de nuevo, tan rápido como pueda con seguridad. Hágalo 5 veces seguidas."</li>
+            <li><span class="step-num">2</span>Iniciar la cronometración cuando el participante comienza a levantarse por primera vez.</li>
+            <li><span class="step-num">3</span>Detener la cronometración cuando las nalgas del participante vuelven a tocar la silla tras la quinta levantada.</li>
+            <li><span class="step-num">4</span>Puntuar 0 si el participante no puede completar 5 repeticiones sin usar los brazos, o si el tiempo supera los 60 segundos.</li>
+          </ul>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">Puntuación (5× levantarse)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>No puede completar; usa brazos; &gt;60s</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>≥16.70s</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>13.70–16.69s</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>11.20–13.69s</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>&lt;11.20s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Total -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Puntuación compuesta</span>
+        <h2>Puntuación total del SPPB</h2>
+        <p>Sume las puntuaciones de las tres subpruebas (cada una de 0 a 4) para obtener un total de 0 a 12.</p>
+      </div>
+      <div style="max-width: 680px; margin: 0 auto;">
+        <table class="total-score-table">
+          <thead>
+            <tr><th>Puntuación total</th><th>Categoría</th><th>Interpretación clínica</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>0 – 6</strong></td><td>Deterioro grave</td><td>Alto riesgo; prioridad para intervención preventiva y rehabilitadora.</td></tr>
+            <tr><td><strong>7 – 9</strong></td><td>Deterioro moderado</td><td>Riesgo intermedio; mayor beneficio de la intervención con ejercicio.</td></tr>
+            <tr><td><strong>10 – 12</strong></td><td>Normal a buena</td><td>Menor riesgo; monitorear longitudinalmente para detectar deterioro funcional precoz.</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
+          Un cambio ≥1 punto se considera una diferencia clínicamente importante en muchas poblaciones. Interprete siempre el perfil de las subpruebas junto con la puntuación total para orientar la intervención.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AndanteFit -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Evaluación automatizada</span>
+        <h2>Estandarice la administración del SPPB con AndanteFit</h2>
+        <p>
+          AndanteFit sustituye la cronometración manual con automatización multisensor: captura la velocidad de la marcha con LiDAR, el tiempo de levantarse con seguimiento de movimiento y la duración del equilibrio con una plataforma de precisión.
+          Las tres subpruebas se completan en menos de 3 minutos sin necesidad de un operador capacitado en cada sesión.
+        </p>
+      </div>
+      <div style="text-align: center;">
+        <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">Evidencia de validación</a>
+        <a href="./product.html" class="btn btn-secondary">Acerca de AndanteFit</a>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="../includes/footer.html"></div>
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/language-manager.js"></script>
+  <meta name="description" content="SPPB test protocol: step-by-step administration of the gait speed test, five-times sit-to-stand, and balance test with scoring criteria.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/sppb-test.html" />
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/sppb-test.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/sppb-test.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/sppb-test.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/sppb-test.html" />
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/sppb-test.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="SPPB Test Protocol: Administration and Scoring | AndanteFit">
+  <meta property="og:description" content="Step-by-step SPPB administration guide covering the gait speed test, five-times sit-to-stand, and balance test with scoring criteria.">
+  <meta property="og:url" content="https://andantefit.info/sppb-test.html">
+  <title>SPPB Test Protocol: Administration and Scoring | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <style>
+    .test-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.8; }
+
+    /* Test section layout */
+    .test-section { scroll-margin-top: 88px; }
+    .test-section + .test-section { border-top: 1px solid var(--color-border); }
+
+    .test-inner { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    @media (max-width: 900px) { .test-inner { grid-template-columns: 1fr; } }
+
+    .test-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-deep-blue); color: #fff; font-size: 1.125rem; font-weight: 800; flex-shrink: 0; }
+    .test-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .test-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--color-text-primary); margin: 0; }
+
+    .test-steps { list-style: none; padding: 0; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .test-steps li { display: flex; gap: 12px; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(15,76,129,0.10); color: var(--color-deep-blue); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+    .score-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; }
+    .score-card-header { background: var(--color-deep-blue); color: #fff; padding: 12px 16px; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+    .score-card table { width: 100%; border-collapse: collapse; }
+    .score-card td { padding: 10px 16px; font-size: 0.875rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: top; }
+    .score-card tr:last-child td { border-bottom: none; }
+    .score-card tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+    .score-pts { font-weight: 700; color: var(--color-text-primary); white-space: nowrap; }
+
+    .callout { background: rgba(15,76,129,0.05); border-left: 4px solid var(--color-deep-blue); border-radius: var(--border-radius); padding: 16px 20px; margin: 20px 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .callout strong { color: var(--color-text-primary); }
+
+    /* Nav tabs for quick jump */
+    .test-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .test-nav a { display: inline-block; padding: 8px 18px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; transition: all 0.2s; }
+    .test-nav a:hover { border-color: var(--color-deep-blue); color: var(--color-deep-blue); background: rgba(15,76,129,0.05); }
+
+    /* Total scoring table */
+    .total-score-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .total-score-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .total-score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
+    .total-score-table tbody tr:last-child td { border-bottom: none; }
+    .total-score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+  </style>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Test Administration</span>
+      <h1 class="hero-headline">SPPB Test Protocol</h1>
+      <p class="test-lead">
+        Step-by-step administration guide for the Short Physical Performance Battery (SPPB).
+        The three subtests are typically administered in the order: balance → gait speed → chair stand.
+        Total time: 10–15 minutes manually; under 3 minutes with AndanteFit.
+      </p>
+
+      <div class="test-nav" style="margin-top: 32px;">
+        <a href="#balance">⚖️ Balance Test</a>
+        <a href="#gait-speed">🚶 Gait Speed Test</a>
+        <a href="#chair-stand">🪑 Chair Stand Test</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Balance Test -->
+  <section id="balance" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">1</span>
+            <h2 class="test-title">Balance Test</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            The balance test assesses postural stability through three progressively challenging standing stances. It is the first subtest administered because it requires the least exertion, allowing the assessor to identify participants who may need closer supervision during subsequent tests.
+          </p>
+
+          <div class="callout">
+            <strong>What it measures:</strong> Static postural control, fall risk, early-stage functional decline.
+          </div>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Setup</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Participant stands near a wall or sturdy surface for safety. Shoes are worn.</li>
+            <li><span class="step-num">2</span>Assessor demonstrates each stance before timing begins.</li>
+            <li><span class="step-num">3</span>Arms may hang freely at sides; hands must not be held by assessor during timed holds.</li>
+          </ul>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedure</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span><span><strong>Side-by-side stand:</strong> Feet placed together, medial borders touching. Hold for 10 seconds. If unable to hold ≥10s, score = 0 and test ends.</span></li>
+            <li><span class="step-num">2</span><span><strong>Semi-tandem stand:</strong> Side of one foot placed against the big toe of the other foot. Hold for 10 seconds. If unable, score = 1 and test ends.</span></li>
+            <li><span class="step-num">3</span><span><strong>Full tandem stand:</strong> Heel of one foot placed directly in front of, touching, the toes of the other foot. Timed up to 10 seconds.</span></li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">The test ends when balance is lost or the assessor ends the trial.</p>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card-header">Scoring</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>Cannot hold side-by-side for 10s</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>Side-by-side ≥10s; semi-tandem &lt;10s</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>Semi-tandem ≥10s; full tandem &lt;3s</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>Full tandem 3–9.99s</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>Full tandem ≥10s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gait Speed Test -->
+  <section id="gait-speed" class="test-section section">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">2</span>
+            <h2 class="test-title">Gait Speed Test</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            Gait speed is one of the most powerful single predictors of health outcomes in older adults, including mortality, cognitive decline, hospitalization, and functional disability. The 4-meter walk is the standard SPPB distance, though 6-meter variants are used in some protocols.
+          </p>
+
+          <div class="callout">
+            <strong>What it measures:</strong> Functional mobility, systemic health, frailty and sarcopenia risk.
+          </div>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Setup</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Mark a 4-meter course with clear start and end lines on a flat, unobstructed surface.</li>
+            <li><span class="step-num">2</span>Participant may use their usual walking aid (cane, walker). Record if an aid is used.</li>
+            <li><span class="step-num">3</span>Participant starts from a static standing position behind the start line.</li>
+          </ul>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedure</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Instruct participant to "Walk at your usual pace, as if walking down the street."</li>
+            <li><span class="step-num">2</span>Start timing when the participant begins to move.</li>
+            <li><span class="step-num">3</span>Stop timing when the leading foot crosses the end line.</li>
+            <li><span class="step-num">4</span>Perform two trials; use the faster time for scoring.</li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">Score 0 if participant cannot attempt the walk or requires physical assistance.</p>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card-header">Scoring (4-meter walk)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>Unable to complete</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>≥8.70s (&lt;0.46 m/s)</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>6.21–8.70s (0.46–0.64 m/s)</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>4.82–6.20s (0.64–0.83 m/s)</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>&lt;4.82s (&gt;0.83 m/s)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chair Stand Test -->
+  <section id="chair-stand" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">3</span>
+            <h2 class="test-title">Chair Stand Test</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            The five-times sit-to-stand test assesses lower-extremity muscle strength, power, and functional neuromuscular control. It is the most demanding subtest and is administered last to avoid fatigue confounding the earlier subtests.
+          </p>
+
+          <div class="callout">
+            <strong>What it measures:</strong> Lower-extremity muscle strength and power, functional capacity for daily activities such as rising from a chair.
+          </div>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Setup</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Use a firm chair with a seat height of approximately 43–45 cm (17 inches), without armrests if possible.</li>
+            <li><span class="step-num">2</span>Participant sits with arms folded across their chest. Feet are flat on the floor.</li>
+            <li><span class="step-num">3</span>First, have participant rise once to verify they can complete the movement without arm support.</li>
+          </ul>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedure</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Instruct: "Rise to a full stand, then sit back down, as quickly as you safely can. Do this 5 times in a row."</li>
+            <li><span class="step-num">2</span>Start timing when participant begins to rise from the first stand.</li>
+            <li><span class="step-num">3</span>Stop timing when participant's buttocks return to the chair after the fifth rise.</li>
+            <li><span class="step-num">4</span>Score 0 if participant cannot complete 5 repetitions without using arms, or if time exceeds 60 seconds.</li>
+          </ul>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card-header">Scoring (5× sit-to-stand)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>Unable to complete; uses arms; &gt;60s</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>≥16.70s</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>13.70–16.69s</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>11.20–13.69s</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>&lt;11.20s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Total scoring -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Composite Score</span>
+        <h2>Total SPPB Score</h2>
+        <p>Sum the scores from all three subtests (each 0–4) for a total of 0–12.</p>
+      </div>
+      <div style="max-width: 680px; margin: 0 auto;">
+        <table class="total-score-table">
+          <thead>
+            <tr><th>Total Score</th><th>Category</th><th>Clinical interpretation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>0 – 6</strong></td><td>Severe impairment</td><td>High risk; priority for preventive and rehabilitative intervention.</td></tr>
+            <tr><td><strong>7 – 9</strong></td><td>Moderate impairment</td><td>Intermediate risk; greatest benefit from exercise intervention.</td></tr>
+            <tr><td><strong>10 – 12</strong></td><td>Normal to good</td><td>Lower risk; monitor longitudinally for early functional decline.</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
+          A change of ≥1 point has been proposed as a minimally important clinical difference in many populations. Always interpret subtest profiles alongside the total score to guide targeted intervention.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AndanteFit -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Automated Assessment</span>
+        <h2>Standardize SPPB Administration with AndanteFit</h2>
+        <p>
+          Manual SPPB administration requires a stopwatch, marked floor distances, and consistent technique across assessors and sessions.
+          AndanteFit replaces manual timing with multi-sensor automation—capturing gait speed via LiDAR, chair stand timing via motion tracking, and balance duration via a precision sensor platform.
+          All three subtests are completed in under 3 minutes with no trained operator required at each session.
+        </p>
+      </div>
+      <div style="text-align: center;">
+        <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">Validation Evidence</a>
+        <a href="./product.html" class="btn btn-secondary">About AndanteFit</a>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="./includes/footer.html"></div>
+  <script src="./js/main.js"></script>
+  <script src="./js/navigation.js"></script>
+</body>
+</html>

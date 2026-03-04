@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SPPB 검사 방법: 보행속도 검사, 5회 일어서기, 정적균형 검사의 단계별 실시 방법과 채점 기준을 설명합니다.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/ko/sppb-test.html" />
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/sppb-test.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/sppb-test.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/sppb-test.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/sppb-test.html" />
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/sppb-test.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="SPPB 검사 방법: 실시 절차 및 채점 기준 | AndanteFit">
+  <meta property="og:description" content="SPPB 세 가지 하위 검사의 단계별 실시 방법과 채점 기준을 설명합니다.">
+  <meta property="og:url" content="https://andantefit.info/ko/sppb-test.html">
+  <title>SPPB 검사 방법: 실시 절차 및 채점 기준 | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <style>
+    .test-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.9; }
+    .test-section { scroll-margin-top: 88px; }
+    .test-section + .test-section { border-top: 1px solid var(--color-border); }
+    .test-inner { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    @media (max-width: 900px) { .test-inner { grid-template-columns: 1fr; } }
+    .test-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-deep-blue); color: #fff; font-size: 1.125rem; font-weight: 800; flex-shrink: 0; }
+    .test-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .test-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--color-text-primary); margin: 0; }
+    .test-steps { list-style: none; padding: 0; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .test-steps li { display: flex; gap: 12px; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(15,76,129,0.10); color: var(--color-deep-blue); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .score-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; }
+    .score-card-header { background: var(--color-deep-blue); color: #fff; padding: 12px 16px; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+    .score-card table { width: 100%; border-collapse: collapse; }
+    .score-card td { padding: 10px 16px; font-size: 0.875rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: top; }
+    .score-card tr:last-child td { border-bottom: none; }
+    .score-card tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+    .score-pts { font-weight: 700; color: var(--color-text-primary); white-space: nowrap; }
+    .callout { background: rgba(15,76,129,0.05); border-left: 4px solid var(--color-deep-blue); border-radius: var(--border-radius); padding: 16px 20px; margin: 20px 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .callout strong { color: var(--color-text-primary); }
+    .test-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .test-nav a { display: inline-block; padding: 8px 18px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; transition: all 0.2s; }
+    .test-nav a:hover { border-color: var(--color-deep-blue); color: var(--color-deep-blue); background: rgba(15,76,129,0.05); }
+    .total-score-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .total-score-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .total-score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
+    .total-score-table tbody tr:last-child td { border-bottom: none; }
+    .total-score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+  </style>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">검사 실시 방법</span>
+      <h1 class="hero-headline">SPPB 검사 방법</h1>
+      <p class="test-lead">
+        간편신체기능 검사(SPPB) 세 가지 하위 검사의 단계별 실시 방법과 채점 기준을 안내합니다.
+        검사는 일반적으로 정적균형 → 보행속도 → 일어서기 순서로 진행합니다.
+        수동 검사 시 약 10–15분, AndanteFit 사용 시 3분 이내에 완료됩니다.
+      </p>
+      <div class="test-nav" style="margin-top: 32px;">
+        <a href="#balance">⚖️ 정적균형 검사</a>
+        <a href="#gait-speed">🚶 보행속도 검사</a>
+        <a href="#chair-stand">🪑 일어서기 검사</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Balance Test -->
+  <section id="balance" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">1</span>
+            <h2 class="test-title">정적균형 검사</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            정적균형 검사는 세 가지 선 자세의 균형 유지 능력을 평가합니다. 체력 소모가 가장 적어 첫 번째로 실시하며, 이후 검사 중 감독이 필요한 대상자를 미리 파악할 수 있습니다.
+          </p>
+          <div class="callout">
+            <strong>평가 영역:</strong> 정적 자세 조절 능력, 낙상 위험, 초기 기능 저하 감지.
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">준비</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>안전을 위해 벽이나 안정된 물체 가까이에서 실시하며, 신발을 착용한 채 진행합니다.</li>
+            <li><span class="step-num">2</span>검사자는 타이머를 시작하기 전에 각 자세를 직접 시범 보입니다.</li>
+            <li><span class="step-num">3</span>두 팔은 옆에 자연스럽게 늘어뜨립니다. 타이머 중에는 검사자가 손을 잡아주지 않습니다.</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">실시 방법</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span><span><strong>나란히서기(Side-by-side):</strong> 양발의 안쪽 면을 나란히 붙이고 섭니다. 10초 유지 목표. 10초 미만이면 점수 = 0, 검사 종료.</span></li>
+            <li><span class="step-num">2</span><span><strong>반일렬자세(Semi-tandem):</strong> 한쪽 발의 안쪽 면을 다른 발의 엄지발가락 옆에 붙입니다. 10초 유지 목표. 10초 미만이면 점수 = 1, 검사 종료.</span></li>
+            <li><span class="step-num">3</span><span><strong>일렬자세(Full tandem):</strong> 한쪽 발의 뒤꿈치를 다른 발의 발가락 바로 앞에 붙입니다. 최대 10초 측정.</span></li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">균형을 잃거나 검사자가 종료하면 측정을 마칩니다.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">채점 기준</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0점</span></td><td>나란히서기 10초 유지 불가</td></tr>
+              <tr><td><span class="score-pts">1점</span></td><td>나란히서기 ≥10초; 반일렬 &lt;10초</td></tr>
+              <tr><td><span class="score-pts">2점</span></td><td>반일렬 ≥10초; 일렬 &lt;3초</td></tr>
+              <tr><td><span class="score-pts">3점</span></td><td>일렬자세 3–9.99초</td></tr>
+              <tr><td><span class="score-pts">4점</span></td><td>일렬자세 ≥10초</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gait Speed -->
+  <section id="gait-speed" class="test-section section">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">2</span>
+            <h2 class="test-title">보행속도 검사</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            보행 속도는 사망, 인지 저하, 입원, 기능 장애 등 다양한 건강 결과를 예측하는 강력한 단일 지표입니다. 4m 보행이 SPPB 표준 거리이며, 일부 프로토콜에서는 6m 변형을 사용합니다.
+          </p>
+          <div class="callout">
+            <strong>평가 영역:</strong> 기능적 이동성, 전반적 건강 상태, 노쇠·근감소증 위험.
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">준비</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>평평하고 장애물이 없는 바닥에 출발선과 도착선을 4m 간격으로 표시합니다.</li>
+            <li><span class="step-num">2</span>평소 보행 보조기(지팡이, 보행기)를 사용하는 경우 그대로 사용하고 기록합니다.</li>
+            <li><span class="step-num">3</span>대상자는 출발선 뒤에서 정지 상태로 시작합니다.</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">실시 방법</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>"평소 걸으시는 속도로 걸어 주세요"라고 안내합니다.</li>
+            <li><span class="step-num">2</span>대상자가 출발하는 순간 측정을 시작합니다.</li>
+            <li><span class="step-num">3</span>선도 발이 도착선을 넘는 순간 측정을 종료합니다.</li>
+            <li><span class="step-num">4</span>2회 실시하여 빠른 기록을 채점에 사용합니다.</li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">보행이 불가능하거나 신체적 보조가 필요한 경우 0점 처리합니다.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">채점 기준 (4m 보행)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0점</span></td><td>완료 불가</td></tr>
+              <tr><td><span class="score-pts">1점</span></td><td>≥8.70초 (&lt;0.46 m/s)</td></tr>
+              <tr><td><span class="score-pts">2점</span></td><td>6.21–8.70초 (0.46–0.64 m/s)</td></tr>
+              <tr><td><span class="score-pts">3점</span></td><td>4.82–6.20초 (0.64–0.83 m/s)</td></tr>
+              <tr><td><span class="score-pts">4점</span></td><td>&lt;4.82초 (&gt;0.83 m/s)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chair Stand -->
+  <section id="chair-stand" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">3</span>
+            <h2 class="test-title">일어서기 검사</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            5회 일어서기 검사는 하지 근력, 근 파워, 기능적 신경근 조절 능력을 평가합니다. 체력 소모가 가장 크기 때문에 마지막에 실시합니다.
+          </p>
+          <div class="callout">
+            <strong>평가 영역:</strong> 하지 근력 및 파워, 의자에서 일어서기 등 일상적 이동 기능.
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">준비</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>등받이가 있고 좌석 높이 약 43–45cm인 단단한 의자를 사용합니다(팔걸이 없는 것 권장).</li>
+            <li><span class="step-num">2</span>팔을 가슴 앞에 교차하여 앉고, 발바닥은 바닥에 완전히 닿도록 합니다.</li>
+            <li><span class="step-num">3</span>검사 전 팔 사용 없이 한 번 일어서서 동작 가능 여부를 확인합니다.</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">실시 방법</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>"팔을 사용하지 않고 가능한 한 빠르고 안전하게 5번 연속으로 일어섰다 앉으세요"라고 안내합니다.</li>
+            <li><span class="step-num">2</span>첫 번째 일어서기를 시작하는 순간 측정을 시작합니다.</li>
+            <li><span class="step-num">3</span>5번째 일어선 후 엉덩이가 의자에 닿는 순간 측정을 종료합니다.</li>
+            <li><span class="step-num">4</span>팔을 사용하거나 60초 초과 시 0점 처리합니다.</li>
+          </ul>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">채점 기준 (5회 일어서기)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0점</span></td><td>완료 불가; 팔 사용; &gt;60초</td></tr>
+              <tr><td><span class="score-pts">1점</span></td><td>≥16.70초</td></tr>
+              <tr><td><span class="score-pts">2점</span></td><td>13.70–16.69초</td></tr>
+              <tr><td><span class="score-pts">3점</span></td><td>11.20–13.69초</td></tr>
+              <tr><td><span class="score-pts">4점</span></td><td>&lt;11.20초</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Total -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">종합 점수</span>
+        <h2>SPPB 총점</h2>
+        <p>세 가지 하위 검사 점수(각 0–4점)를 합산하여 0–12점의 총점을 산출합니다.</p>
+      </div>
+      <div style="max-width: 680px; margin: 0 auto;">
+        <table class="total-score-table">
+          <thead>
+            <tr><th>총점</th><th>기능 수준</th><th>임상적 해석</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>0 – 6</strong></td><td>심각한 기능 저하</td><td>위험이 높은 군. 예방 및 재활 중재 우선 대상.</td></tr>
+            <tr><td><strong>7 – 9</strong></td><td>중등도 기능 저하</td><td>중간 위험군. 운동 중재 효과가 가장 크게 나타남.</td></tr>
+            <tr><td><strong>10 – 12</strong></td><td>정상~양호</td><td>위험이 낮은 군. 초기 기능 저하 감지를 위한 종단 모니터링에 활용.</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
+          점수 변화가 1점 이상인 경우 임상적으로 의미 있는 변화로 볼 수 있습니다. 총점과 함께 하위 검사별 점수 프로파일을 해석하면 더 효과적인 중재 계획을 수립할 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AndanteFit -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">자동화 평가</span>
+        <h2>AndanteFit으로 SPPB 검사 표준화하기</h2>
+        <p>
+          AndanteFit은 LiDAR 기반 보행 속도 측정, 동작 추적 기반 일어서기 타이밍, 정밀 센서 플랫폼의 균형 시간 측정을 통해 수동 SPPB 검사를 자동화합니다.
+          세 가지 하위 검사가 3분 이내에 완료되며, 매 검사마다 전문 인력이 필요하지 않습니다.
+        </p>
+      </div>
+      <div style="text-align: center;">
+        <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">검증 논문 보기</a>
+        <a href="./product.html" class="btn btn-secondary">AndanteFit 소개</a>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="../includes/footer.html"></div>
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SPPB検査方法：歩行速度検査・5回椅子立ち上がり・静的バランス検査の実施手順と採点基準を解説します。">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/jp/sppb-test.html" />
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/sppb-test.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/sppb-test.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/sppb-test.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/sppb-test.html" />
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/sppb-test.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="SPPB検査方法：実施手順と採点基準 | AndanteFit">
+  <meta property="og:description" content="SPPBの3つのサブテストの実施手順と採点基準を解説します。">
+  <meta property="og:url" content="https://andantefit.info/jp/sppb-test.html">
+  <title>SPPB検査方法：実施手順と採点基準 | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <style>
+    .test-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.9; }
+    .test-section { scroll-margin-top: 88px; }
+    .test-section + .test-section { border-top: 1px solid var(--color-border); }
+    .test-inner { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    @media (max-width: 900px) { .test-inner { grid-template-columns: 1fr; } }
+    .test-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-deep-blue); color: #fff; font-size: 1.125rem; font-weight: 800; flex-shrink: 0; }
+    .test-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .test-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--color-text-primary); margin: 0; }
+    .test-steps { list-style: none; padding: 0; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .test-steps li { display: flex; gap: 12px; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(15,76,129,0.10); color: var(--color-deep-blue); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .score-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; }
+    .score-card-header { background: var(--color-deep-blue); color: #fff; padding: 12px 16px; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+    .score-card table { width: 100%; border-collapse: collapse; }
+    .score-card td { padding: 10px 16px; font-size: 0.875rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: top; }
+    .score-card tr:last-child td { border-bottom: none; }
+    .score-card tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+    .score-pts { font-weight: 700; color: var(--color-text-primary); white-space: nowrap; }
+    .callout { background: rgba(15,76,129,0.05); border-left: 4px solid var(--color-deep-blue); border-radius: var(--border-radius); padding: 16px 20px; margin: 20px 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .callout strong { color: var(--color-text-primary); }
+    .test-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .test-nav a { display: inline-block; padding: 8px 18px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; transition: all 0.2s; }
+    .test-nav a:hover { border-color: var(--color-deep-blue); color: var(--color-deep-blue); background: rgba(15,76,129,0.05); }
+    .total-score-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .total-score-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .total-score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
+    .total-score-table tbody tr:last-child td { border-bottom: none; }
+    .total-score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+  </style>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">検査実施方法</span>
+      <h1 class="hero-headline">SPPB検査方法</h1>
+      <p class="test-lead">
+        簡易身体能力バッテリー（SPPB）の3つのサブテストの実施手順と採点基準を解説します。
+        検査は通常、静的バランス → 歩行速度 → 椅子立ち上がりの順に実施します。
+        手動では約10〜15分、AndanteFit使用時は3分以内に完了します。
+      </p>
+      <div class="test-nav" style="margin-top: 32px;">
+        <a href="#balance">⚖️ 静的バランス検査</a>
+        <a href="#gait-speed">🚶 歩行速度検査</a>
+        <a href="#chair-stand">🪑 椅子立ち上がり検査</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Balance -->
+  <section id="balance" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">1</span>
+            <h2 class="test-title">静的バランス検査</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            3段階の立位姿勢におけるバランス保持能力を評価します。体力消耗が最も少ないため最初に実施し、後続検査で要注意の対象者を把握します。
+          </p>
+          <div class="callout">
+            <strong>評価領域：</strong>静的姿勢制御、転倒リスク、初期機能低下の検出。
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">準備</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>安全のため壁や安定した物の近くで実施し、靴を履いたまま行います。</li>
+            <li><span class="step-num">2</span>検査者は計時前に各姿勢をデモンストレーションします。</li>
+            <li><span class="step-num">3</span>両腕は体側に自然に垂らします。計時中は検査者が手を支えません。</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">実施方法</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span><span><strong>通常姿勢（両足並べ）：</strong>両足の内側を揃えて立ちます。10秒保持が目標。10秒未満なら0点、検査終了。</span></li>
+            <li><span class="step-num">2</span><span><strong>半タンデム姿勢：</strong>片方の足の内側を、もう一方の足の母趾の横に付けます。10秒保持が目標。10秒未満なら1点、検査終了。</span></li>
+            <li><span class="step-num">3</span><span><strong>タンデム姿勢：</strong>片方の足のかかとを、もう一方の足のつま先の直前に付けます。最大10秒計測。</span></li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">バランスを崩した時点、または検査者が終了した時点で計測を終了します。</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">採点基準</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0点</span></td><td>通常姿勢10秒保持不可</td></tr>
+              <tr><td><span class="score-pts">1点</span></td><td>通常姿勢≥10秒；半タンデム&lt;10秒</td></tr>
+              <tr><td><span class="score-pts">2点</span></td><td>半タンデム≥10秒；タンデム&lt;3秒</td></tr>
+              <tr><td><span class="score-pts">3点</span></td><td>タンデム姿勢 3〜9.99秒</td></tr>
+              <tr><td><span class="score-pts">4点</span></td><td>タンデム姿勢 ≥10秒</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gait Speed -->
+  <section id="gait-speed" class="test-section section">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">2</span>
+            <h2 class="test-title">歩行速度検査</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            歩行速度は死亡・認知機能低下・入院・機能障害など、様々な健康アウトカムを予測する強力な単一指標です。4m歩行がSPPBの標準距離ですが、一部のプロトコルでは6m変法が使用されます。
+          </p>
+          <div class="callout">
+            <strong>評価領域：</strong>機能的移動能力、全身健康状態、フレイル・サルコペニアリスク。
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">準備</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>平坦で障害物のない床に、スタートラインとゴールラインを4m間隔でマークします。</li>
+            <li><span class="step-num">2</span>普段から歩行補助具（杖、歩行器）を使用する場合はそのまま使用し、記録します。</li>
+            <li><span class="step-num">3</span>対象者はスタートラインの後ろで静止した状態から開始します。</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">実施方法</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>「いつも通りの速さで歩いてください」と指示します。</li>
+            <li><span class="step-num">2</span>対象者が歩き始めた瞬間に計測を開始します。</li>
+            <li><span class="step-num">3</span>先行する足がゴールラインを越えた瞬間に計測を終了します。</li>
+            <li><span class="step-num">4</span>2試行実施し、速い記録を採点に使用します。</li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">歩行不可または身体的補助が必要な場合は0点とします。</p>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">採点基準（4m歩行）</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0点</span></td><td>完了不可</td></tr>
+              <tr><td><span class="score-pts">1点</span></td><td>≥8.70秒（&lt;0.46 m/s）</td></tr>
+              <tr><td><span class="score-pts">2点</span></td><td>6.21〜8.70秒（0.46〜0.64 m/s）</td></tr>
+              <tr><td><span class="score-pts">3点</span></td><td>4.82〜6.20秒（0.64〜0.83 m/s）</td></tr>
+              <tr><td><span class="score-pts">4点</span></td><td>&lt;4.82秒（&gt;0.83 m/s）</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chair Stand -->
+  <section id="chair-stand" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">3</span>
+            <h2 class="test-title">椅子立ち上がり検査</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            5回椅子立ち上がり検査は下肢筋力・筋パワー・機能的神経筋制御能力を評価します。体力消耗が最も大きいため、最後に実施します。
+          </p>
+          <div class="callout">
+            <strong>評価領域：</strong>下肢筋力・筋パワー、椅子からの立ち上がりなど日常生活動作。
+          </div>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">準備</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>座面高さ約43〜45cmの背もたれ付き固めの椅子を使用します（肘かけなしが推奨）。</li>
+            <li><span class="step-num">2</span>腕を胸の前で交差して座り、足の裏は床に完全につけます。</li>
+            <li><span class="step-num">3</span>検査前に腕を使わずに1回立ち上がり、動作が可能か確認します。</li>
+          </ul>
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">実施方法</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>「腕を使わずに、できるだけ速く安全に5回連続で立ち座りを繰り返してください」と指示します。</li>
+            <li><span class="step-num">2</span>最初に立ち上がり始めた瞬間に計測を開始します。</li>
+            <li><span class="step-num">3</span>5回目の立ち上がり後、お尻が椅子に触れた瞬間に計測を終了します。</li>
+            <li><span class="step-num">4</span>腕を使用した場合または60秒超過の場合は0点とします。</li>
+          </ul>
+        </div>
+        <div class="score-card">
+          <div class="score-card-header">採点基準（5回立ち上がり）</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0点</span></td><td>完了不可；腕の使用；&gt;60秒</td></tr>
+              <tr><td><span class="score-pts">1点</span></td><td>≥16.70秒</td></tr>
+              <tr><td><span class="score-pts">2点</span></td><td>13.70〜16.69秒</td></tr>
+              <tr><td><span class="score-pts">3点</span></td><td>11.20〜13.69秒</td></tr>
+              <tr><td><span class="score-pts">4点</span></td><td>&lt;11.20秒</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Total -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">合計スコア</span>
+        <h2>SPPB総スコア</h2>
+        <p>3つのサブテストのスコア（各0〜4点）を合計し、0〜12点の総スコアを算出します。</p>
+      </div>
+      <div style="max-width: 680px; margin: 0 auto;">
+        <table class="total-score-table">
+          <thead>
+            <tr><th>総スコア</th><th>機能レベル</th><th>臨床的解釈</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>0 – 6</strong></td><td>重度の機能低下</td><td>リスクが高い群。予防・リハビリ介入の優先対象。</td></tr>
+            <tr><td><strong>7 – 9</strong></td><td>中等度の機能低下</td><td>中間リスク群。運動介入の効果が最も大きく現れる。</td></tr>
+            <tr><td><strong>10 – 12</strong></td><td>正常〜良好</td><td>リスクが低い群。初期機能低下の検出のため縦断モニタリングに活用。</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
+          スコアが1点以上変化した場合、臨床的に意味のある変化とみなせます。総スコアとともにサブテスト別のスコアプロファイルを解釈することで、個別化された介入計画の立案に役立ちます。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AndanteFit -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">自動化評価</span>
+        <h2>AndanteFitでSPPB検査を標準化</h2>
+        <p>
+          AndanteFitはLiDARベースの歩行速度測定、動作追跡による立ち上がり計時、精密センサープラットフォームのバランス時間測定により、手動SPPB検査を自動化します。
+          3つのサブテストが3分以内に完了し、毎回の検査に専門スタッフは不要です。
+        </p>
+      </div>
+      <div style="text-align: center;">
+        <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">検証論文を見る</a>
+        <a href="./product.html" class="btn btn-secondary">AndanteFitについて</a>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="/includes/footer.html"></div>
+  <script src="/js/main.js"></script>
+  <script src="/js/navigation.js"></script>
+</body>
+</html>

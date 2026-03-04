@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Page Not Found | AndanteFit</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .error-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-code {
+      font-size: 6rem;
+      font-weight: 700;
+      color: var(--primary-color, #2563eb);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .error-message {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .error-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .error-links a {
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .btn-primary {
+      background: var(--primary-color, #2563eb);
+      color: #fff;
+    }
+    .btn-secondary {
+      border: 1px solid var(--primary-color, #2563eb);
+      color: var(--primary-color, #2563eb);
+    }
+  </style>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+</head>
+<body>
+  <div class="error-page">
+    <div class="error-code">404</div>
+    <h1 class="error-message">Page Not Found</h1>
+    <p>The page you are looking for does not exist or has been moved.</p>
+    <div class="error-links">
+      <a href="/" class="btn-primary"><i class="fa fa-home"></i> Home (EN)</a>
+      <a href="/ko/" class="btn-secondary">홈 (KO)</a>
+      <a href="/es/" class="btn-secondary">Inicio (ES)</a>
+      <a href="/jp/" class="btn-secondary">ホーム (JP)</a>
+    </div>
+  </div>
+</body>
+</html>

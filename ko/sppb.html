@@ -41,6 +41,22 @@
     .learn-more-link { display: inline-block; margin-top: 24px; font-size: 0.9375rem; font-weight: 600; color: var(--color-text-muted); }
     .learn-more-link:hover { color: var(--color-deep-blue); }
     .title-sub { font-size: 0.7em; font-weight: 400; color: var(--color-text-muted); display: block; margin-top: 4px; }
+    .learn-more-link { display: inline-block; margin-top: 24px; font-size: 0.9375rem; font-weight: 600; color: var(--color-text-muted); }
+    .learn-more-link:hover { color: var(--color-deep-blue); }
+    .prognosis-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start; }
+    .prognosis-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--color-border); display: block; }
+    .prognosis-caption { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 10px; line-height: 1.6; font-style: italic; }
+    .guideline-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .guideline-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .guideline-table tbody td { padding: 11px 16px; font-size: 0.9rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: middle; line-height: 1.5; }
+    .guideline-table tbody tr:last-child td { border-bottom: none; }
+    .guideline-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.025); }
+    .guideline-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(15,76,129,0.12); color: var(--color-deep-blue); white-space: nowrap; }
+    .policy-block { display: flex; flex-direction: column; gap: 20px; max-width: 880px; margin: 0 auto; }
+    .policy-item { padding: 20px 24px; border-left: 4px solid var(--color-deep-blue); background: rgba(15,76,129,0.03); border-radius: 0 8px 8px 0; }
+    .policy-item-title { font-weight: 700; font-size: 1rem; color: var(--color-deep-blue); margin: 0 0 8px; }
+    .policy-item-text { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.8; margin: 0; }
+    @media (max-width: 768px) { .prognosis-layout { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -151,38 +167,132 @@
     </div>
   </section>
 
-  <!-- Clinical use -->
+  <!-- 예후적 가치 -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">예후적 가치</span>
+        <h2>SPPB: 불량한 건강 결과의 강력한 예측 지표</h2>
+        <p>SPPB는 단순한 점수 산출을 넘어, 지역사회 거주 고령자의 사망률, 낙상 위험, 이동성 장애를 독립적으로 예측합니다.</p>
+      </div>
+      <div class="prognosis-layout">
+        <div>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            SPPB는 균형, 보행, 하지 근력 세 영역에 걸친 연령 관련 기능 저하의 누적 부담을 반영하여, 포괄적인 노쇠 바이오마커로 활용됩니다. 점수가 낮을수록(≤6점) 5년 사망률, 입원 위험, 낙상 발생이 현저히 높아집니다.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            Pavasini 등의 체계적 문헌고찰 및 메타분석(2016년; n &gt; 30,000명)에서 SPPB 점수가 1점 상승할 때마다 전체 사망 위험이 통계적으로 유의하게 감소함을 확인했습니다. 동일한 기울기가 재입원, 요양시설 입소, 이동성 장애 발생에서도 관찰됩니다.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary);">
+            노쇠 관점에서 SPPB는 Fried 노쇠 표현형의 신체적 차원(느린 보행속도, 하지 근력 저하)을 반영하며, 균형 하위 검사는 보행 지표만으로는 파악하기 어려운 자세 조절 능력과 낙상 위험에 대한 추가 정보를 제공합니다.
+          </p>
+        </div>
+        <div>
+          <img
+            src="assets/sppb-prognostic-risk-kr.png"
+            alt="SPPB 점수와 고령자 사망률 및 낙상 위험 예측 자료"
+            class="prognosis-img"
+          >
+          <p class="prognosis-caption">SPPB 점수는 5년 사망률, 낙상 위험, 입원 위험을 예측합니다. 점수가 1점 높아질수록 불량한 결과 위험이 의미 있게 감소합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 국제 가이드라인 -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">적용 분야</span>
-        <h2>다양한 임상 영역에서의 활용</h2>
-        <p>SPPB는 국제 가이드라인에서 여러 임상 분야의 표준 신체기능 지표로 권고됩니다.</p>
+        <span class="section-label">국제 가이드라인</span>
+        <h2>임상 가이드라인과 연구 프레임워크에서의 SPPB</h2>
+        <p>SPPB는 유럽, 북미, 아시아 및 국제 기구의 주요 임상 분야 가이드라인에서 권고됩니다.</p>
       </div>
-      <div class="grid grid-3">
-        <div class="card">
-          <h4 class="card-title">근감소증 및 노쇠</h4>
-          <p class="card-description">유럽·미국·아시아 가이드라인의 표준 신체기능 평가 지표. 근감소증 신약 임상시험의 1차 평가변수로 활용.</p>
+      <div style="overflow-x: auto;">
+        <table class="guideline-table">
+          <thead>
+            <tr>
+              <th>임상 분야</th>
+              <th>가이드라인 / 기관</th>
+              <th>SPPB 역할</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="guideline-tag">근감소증</span></td>
+              <td>EWGSOP2 (유럽, 2018)</td>
+              <td>진단을 위한 신체기능 평가의 1차 기준</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">근감소증</span></td>
+              <td>FNIH 근감소증 프로젝트 (미국, 2014)</td>
+              <td>"약함+느림" 표현형 기준; 보행속도 역치 ≤0.8 m/s</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">근감소증</span></td>
+              <td>AWGS 2019 (아시아)</td>
+              <td>진단 및 중증도 분류를 위한 신체기능 지표</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">통합돌봄</span></td>
+              <td>WHO ICOPE (2019)</td>
+              <td>지역사회 고령자 이동능력 선별 평가 도구</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">종양학</span></td>
+              <td>ASCO (2018)</td>
+              <td>포괄적 노인평가(CGA) 내 신체기능 영역 지표</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">종양학</span></td>
+              <td>ESMO/SIOG (2021)</td>
+              <td>기능 평가 및 항암 독성 위험 층별화</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">심장 재활</span></td>
+              <td>JCS/JACR (일본, 2021)</td>
+              <td>심장 재활 중 하지 기능 평가 도구</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">코호트 연구</span></td>
+              <td>NHANES (미국)</td>
+              <td>인구 수준 기능 추적을 위한 신체기능 모듈</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">코호트 연구</span></td>
+              <td>KLHAS (한국)</td>
+              <td>국가 노화 코호트 내 기능 궤적 추적</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">임상시험</span></td>
+              <td>SPRINT (미국, 2016)</td>
+              <td>신체기능 및 보행속도 결과 지표</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 글로벌 정책 사례 -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">글로벌 정책 사례</span>
+        <h2>국내외 정책에서의 SPPB 활용</h2>
+        <p>SPPB는 연구를 넘어 전 세계 보건 시스템과 국가 돌봄 프로그램에 통합되고 있습니다.</p>
+      </div>
+      <div class="policy-block">
+        <div class="policy-item">
+          <p class="policy-item-title">🇰🇷 대한민국 — 국가 통합돌봄 프로그램</p>
+          <p class="policy-item-text">국내 델파이 합의 연구에서 지역사회 거주 고령자를 위한 통합돌봄 프로그램의 표준 신체기능 평가도구로 SPPB를 권고했습니다. 현재 보건소를 통해 운영되는 지역사회 노쇠 예방 프로그램에 통합되어, 대규모 표준화 기능 선별을 가능하게 하고 있습니다.</p>
         </div>
-        <div class="card">
-          <h4 class="card-title">WHO ICOPE</h4>
-          <p class="card-description">WHO 통합돌봄(ICOPE) 프레임워크의 이동능력 영역 평가 도구로 활용.</p>
+        <div class="policy-item">
+          <p class="policy-item-title">🌍 WHO — ICOPE 프레임워크</p>
+          <p class="policy-item-text">WHO 통합돌봄(ICOPE) 프레임워크는 이동능력 영역의 평가 도구로 SPPB를 명시적으로 권고하여, 100개 이상의 국가에서 고령자 집단 수준 기능 선별의 국제 기준으로 자리잡았습니다. 이 프레임워크는 각국 보건 시스템이 SPPB를 기능 평가 프로토콜로 채택하도록 안내합니다.</p>
         </div>
-        <div class="card">
-          <h4 class="card-title">암 재활 및 수술 전 평가</h4>
-          <p class="card-description">ASCO 및 ESMO/SIOG 가이드라인에서 노인 종합평가 및 항암 부작용 위험 선별 도구로 권고.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">심장 재활</h4>
-          <p class="card-description">JCS/JACR 가이드라인에서 심장 재활 중 하지 기능 평가 도구로 포함.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">코호트 연구</h4>
-          <p class="card-description">NHANES, 한국 노화 코호트(KLHAS), CHS 등 주요 국가 코호트에서 기능 추적 지표로 사용.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">인체적용시험</h4>
-          <p class="card-description">근기능 개선 중재 연구에서 대상자 선별 기준 및 결과 지표로 활용.</p>
+        <div class="policy-item">
+          <p class="policy-item-title">🇪🇸 스페인 / 유럽 — CIBERFES 합의문</p>
+          <p class="policy-item-text">스페인의 CIBERFES 네트워크(노쇠 및 건강 노화 분야 국립 생의학 연구 네트워크)와 유럽 노화 컨소시엄은 노화 임상 연구와 코호트 연구에서 합의된 측정 도구로 SPPB를 채택하여, 국가 간 비교 가능성과 방법론적 견고성을 확보하고 있습니다.</p>
         </div>
       </div>
     </div>
@@ -204,6 +314,27 @@
         <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">논문 보기</a>
         <a href="./product.html" class="btn btn-secondary">AndanteFit 소개</a>
       </div>
+    </div>
+  </section>
+
+  <!-- 참고문헌 -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa); padding: 32px 0;">
+    <div class="container">
+      <details>
+        <summary style="font-size: 1rem; font-weight: 600; color: var(--color-deep-blue); cursor: pointer; padding: 8px 0;">참고문헌</summary>
+        <ol style="margin-top: 16px; padding-left: 20px; line-height: 2; font-size: 0.875rem; color: var(--color-text-secondary);">
+          <li>Guralnik JM, Simonsick EM, Ferrucci L, et al. A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission. <em>J Gerontol.</em> 1994;49(2):M85–M94.</li>
+          <li>Guralnik JM, Ferrucci L, Pieper CF, et al. Lower extremity function and subsequent disability: consistency across studies, predictive models, and value of gait speed alone compared with the short physical performance battery. <em>J Gerontol A Biol Sci Med Sci.</em> 2000;55(4):M221–M231.</li>
+          <li>Pavasini R, Guralnik J, Brown JC, et al. Short Physical Performance Battery and all-cause mortality: systematic review and meta-analysis. <em>BMC Med.</em> 2016;14:215.</li>
+          <li>Perera S, Mody SH, Woodman RC, Studenski SA. Meaningful change and responsiveness in common physical performance measures in older adults. <em>J Am Geriatr Soc.</em> 2006;54(5):743–749.</li>
+          <li>Volpato S, Cavalieri M, Sioulis F, et al. Predictive value of the Short Physical Performance Battery following hospitalization in older patients. <em>J Gerontol A Biol Sci Med Sci.</em> 2011;66(1):89–96.</li>
+          <li>Kwon S, Perera S, Pahor M, et al. What is a meaningful change in physical performance? Findings from a clinical trial in older adults (the LIFE-P study). <em>J Nutr Health Aging.</em> 2009;13(6):538–544.</li>
+          <li>Studenski S, Perera S, Patel K, et al. Gait speed and survival in older adults. <em>JAMA.</em> 2011;305(1):50–58.</li>
+          <li>Buracchio TI, Dodge HH, Howieson D, Wasserman D, Kaye J. The trajectory of gait speed preceding mild cognitive impairment. <em>Arch Neurol.</em> 2010;67(8):980–986.</li>
+          <li>Welch C, Hassan-Smith ZK, Greig CA, Lord JM, Jackson TA. Acute sarcopenia secondary to hospitalisation — an emerging condition affecting medical inpatients. <em>Gerontology.</em> 2018;64(2):158–166.</li>
+          <li>Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci.</em> 2001;56(3):M146–M156. [Women's Health and Aging Study]</li>
+        </ol>
+      </details>
     </div>
   </section>
 

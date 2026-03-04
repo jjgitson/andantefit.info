@@ -38,6 +38,20 @@
     .score-table tbody tr:last-child td { border-bottom: none; }
     .score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
     .score-badge { font-weight: 700; color: var(--color-text-primary); }
+    .prognosis-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start; }
+    .prognosis-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--color-border); display: block; }
+    .prognosis-caption { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 10px; line-height: 1.6; font-style: italic; }
+    .guideline-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .guideline-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .guideline-table tbody td { padding: 11px 16px; font-size: 0.9rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: middle; line-height: 1.5; }
+    .guideline-table tbody tr:last-child td { border-bottom: none; }
+    .guideline-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.025); }
+    .guideline-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(15,76,129,0.12); color: var(--color-deep-blue); white-space: nowrap; }
+    .policy-block { display: flex; flex-direction: column; gap: 20px; max-width: 880px; margin: 0 auto; }
+    .policy-item { padding: 20px 24px; border-left: 4px solid var(--color-deep-blue); background: rgba(15,76,129,0.03); border-radius: 0 8px 8px 0; }
+    .policy-item-title { font-weight: 700; font-size: 1rem; color: var(--color-deep-blue); margin: 0 0 8px; }
+    .policy-item-text { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.8; margin: 0; }
+    @media (max-width: 768px) { .prognosis-layout { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -144,38 +158,132 @@
     </div>
   </section>
 
-  <!-- Clinical use -->
+  <!-- Valor pronóstico -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Valor pronóstico</span>
+        <h2>El SPPB como predictor de resultados adversos</h2>
+        <p>Más allá de puntuar la función de extremidades inferiores, el SPPB predice de forma independiente la mortalidad, el riesgo de caídas y la discapacidad de movilidad en personas mayores de la comunidad.</p>
+      </div>
+      <div class="prognosis-layout">
+        <div>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            El SPPB captura la carga acumulada del declive funcional relacionado con la edad en equilibrio, marcha y fuerza de extremidades inferiores — convirtiéndolo en un biomarcador integral de fragilidad. Las puntuaciones bajas (≤6) se asocian con una mortalidad a 5 años, riesgo de hospitalización e incidencia de caídas sustancialmente más elevados.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            Una revisión sistemática y metaanálisis (Pavasini et al., 2016; n &gt; 30.000) confirmó que cada incremento de 1 punto en la puntuación SPPB se asocia con una reducción estadísticamente significativa del riesgo de mortalidad por todas las causas. El mismo gradiente se observa para el reingreso hospitalario, el ingreso en residencias y la discapacidad de movilidad incidente.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary);">
+            Desde la perspectiva de la fragilidad, el SPPB refleja la dimensión fenotípica física de los criterios de fragilidad de Fried — marcha lenta y debilidad de extremidades inferiores — mientras que la subprueba de equilibrio aporta información sobre el control postural y el riesgo de caídas que no captura la marcha por sí sola.
+          </p>
+        </div>
+        <div>
+          <img
+            src="assets/sppb-prognostic-risk-en.png"
+            alt="Puntuación SPPB y riesgo pronóstico de mortalidad y caídas en personas mayores"
+            class="prognosis-img"
+          >
+          <p class="prognosis-caption">Las puntuaciones SPPB predicen la mortalidad a 5 años, el riesgo de caídas y el ingreso hospitalario. Cada punto adicional corresponde a una reducción significativa del riesgo de resultados adversos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guías internacionales -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">Base de evidencia</span>
-        <h2>Uso en entornos clínicos de todo el mundo</h2>
-        <p>El SPPB está respaldado por directrices internacionales en múltiples ámbitos clínicos relacionados con personas mayores.</p>
+        <span class="section-label">Guías internacionales</span>
+        <h2>El SPPB en guías clínicas y marcos de investigación</h2>
+        <p>El SPPB está respaldado en los principales ámbitos clínicos por organismos emisores de guías en Europa, Norteamérica, Asia y a nivel global.</p>
       </div>
-      <div class="grid grid-3">
-        <div class="card">
-          <h4 class="card-title">Sarcopenia y fragilidad</h4>
-          <p class="card-description">Medida estándar de función física en guías europeas, americanas y asiáticas. Resultado primario en ensayos de nuevos fármacos para sarcopenia.</p>
+      <div style="overflow-x: auto;">
+        <table class="guideline-table">
+          <thead>
+            <tr>
+              <th>Ámbito clínico</th>
+              <th>Guía / Organismo</th>
+              <th>Papel del SPPB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="guideline-tag">Sarcopenia</span></td>
+              <td>EWGSOP2 (Europa, 2018)</td>
+              <td>Criterio principal de rendimiento físico para el diagnóstico</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Sarcopenia</span></td>
+              <td>FNIH Sarcopenia Project (EE.UU., 2014)</td>
+              <td>Criterio del fenotipo "débil + lento"; umbral de velocidad de marcha ≤0,8 m/s</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Sarcopenia</span></td>
+              <td>AWGS 2019 (Asia)</td>
+              <td>Medida de función física para diagnóstico y clasificación de gravedad</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Atención integrada</span></td>
+              <td>OMS ICOPE (2019)</td>
+              <td>Herramienta de cribado de capacidad locomotora para personas mayores en la comunidad</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Oncología</span></td>
+              <td>ASCO (2018)</td>
+              <td>Dominio de función física en la valoración geriátrica integral (VGI)</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Oncología</span></td>
+              <td>ESMO/SIOG (2021)</td>
+              <td>Evaluación funcional y estratificación del riesgo de toxicidad por quimioterapia</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Rehab. cardíaca</span></td>
+              <td>JCS/JACR (Japón, 2021)</td>
+              <td>Evaluación funcional de extremidades inferiores en rehabilitación cardíaca</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Cohortes</span></td>
+              <td>NHANES (EE.UU.)</td>
+              <td>Módulo de rendimiento físico para seguimiento funcional a nivel poblacional</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Cohortes</span></td>
+              <td>KLHAS (Corea)</td>
+              <td>Seguimiento de trayectorias funcionales en cohorte nacional de envejecimiento</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Ensayos clínicos</span></td>
+              <td>SPRINT (EE.UU., 2016)</td>
+              <td>Medidas de resultado de rendimiento físico y velocidad de marcha</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Política global -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Política global</span>
+        <h2>El SPPB en políticas nacionales e internacionales</h2>
+        <p>Más allá de la investigación, el SPPB se ha integrado en marcos de sistemas de salud y programas nacionales de atención en todo el mundo.</p>
+      </div>
+      <div class="policy-block">
+        <div class="policy-item">
+          <p class="policy-item-title">🇰🇷 República de Corea — Programa Nacional de Atención Integrada</p>
+          <p class="policy-item-text">Un estudio de consenso Delphi nacional recomendó el SPPB como evaluación de rendimiento físico estándar en los programas de atención integrada para personas mayores que viven en la comunidad en Corea. El SPPB ya está incorporado a los programas regionales de prevención de fragilidad gestionados a través de los centros de salud pública, permitiendo el cribado funcional estandarizado a gran escala.</p>
         </div>
-        <div class="card">
-          <h4 class="card-title">OMS ICOPE</h4>
-          <p class="card-description">Utilizado para la evaluación de la capacidad locomotora en el marco ICOPE de la OMS para personas mayores.</p>
+        <div class="policy-item">
+          <p class="policy-item-title">🌍 OMS — Marco ICOPE</p>
+          <p class="policy-item-text">El marco ICOPE de Atención Integrada de Personas Mayores de la OMS respalda explícitamente el SPPB como herramienta de evaluación para el dominio de locomoción, estableciéndolo como estándar de referencia global para el cribado funcional a nivel poblacional de personas mayores. El marco orienta a los sistemas de salud de más de 100 países a adoptar el SPPB como su protocolo de evaluación funcional.</p>
         </div>
-        <div class="card">
-          <h4 class="card-title">Oncología y rehabilitación</h4>
-          <p class="card-description">Recomendado en las guías ASCO y ESMO/SIOG para la valoración geriátrica y la estratificación del riesgo de toxicidad oncológica.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">Rehabilitación cardíaca</h4>
-          <p class="card-description">Incluido en las guías JCS/JACR para la evaluación funcional de las extremidades inferiores durante la rehabilitación cardíaca.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">Investigación en cohortes</h4>
-          <p class="card-description">Utilizado en NHANES, KLHAS, CHS y otras grandes cohortes de envejecimiento para seguir trayectorias funcionales.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">Ensayos clínicos</h4>
-          <p class="card-description">Aplicado para la selección de participantes y la evaluación de resultados en estudios de intervención sobre fuerza y función.</p>
+        <div class="policy-item">
+          <p class="policy-item-title">🇪🇸 España / Europa — Consenso CIBERFES</p>
+          <p class="policy-item-text">La red española CIBERFES (Centro de Investigación Biomédica en Red — Fragilidad y Envejecimiento Saludable) y los consorcios europeos de envejecimiento han respaldado el SPPB como herramienta de medición de consenso para ensayos clínicos y estudios de cohorte en investigación sobre el envejecimiento, subrayando su comparabilidad transnacional y solidez metodológica.</p>
         </div>
       </div>
     </div>
@@ -196,6 +304,27 @@
         <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">Estudios de validación</a>
         <a href="./product.html" class="btn btn-secondary">Acerca de AndanteFit</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Referencias académicas -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa); padding: 32px 0;">
+    <div class="container">
+      <details>
+        <summary style="font-size: 1rem; font-weight: 600; color: var(--color-deep-blue); cursor: pointer; padding: 8px 0;">Referencias académicas</summary>
+        <ol style="margin-top: 16px; padding-left: 20px; line-height: 2; font-size: 0.875rem; color: var(--color-text-secondary);">
+          <li>Guralnik JM, Simonsick EM, Ferrucci L, et al. A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission. <em>J Gerontol.</em> 1994;49(2):M85–M94.</li>
+          <li>Guralnik JM, Ferrucci L, Pieper CF, et al. Lower extremity function and subsequent disability: consistency across studies, predictive models, and value of gait speed alone compared with the short physical performance battery. <em>J Gerontol A Biol Sci Med Sci.</em> 2000;55(4):M221–M231.</li>
+          <li>Pavasini R, Guralnik J, Brown JC, et al. Short Physical Performance Battery and all-cause mortality: systematic review and meta-analysis. <em>BMC Med.</em> 2016;14:215.</li>
+          <li>Perera S, Mody SH, Woodman RC, Studenski SA. Meaningful change and responsiveness in common physical performance measures in older adults. <em>J Am Geriatr Soc.</em> 2006;54(5):743–749.</li>
+          <li>Volpato S, Cavalieri M, Sioulis F, et al. Predictive value of the Short Physical Performance Battery following hospitalization in older patients. <em>J Gerontol A Biol Sci Med Sci.</em> 2011;66(1):89–96.</li>
+          <li>Kwon S, Perera S, Pahor M, et al. What is a meaningful change in physical performance? Findings from a clinical trial in older adults (the LIFE-P study). <em>J Nutr Health Aging.</em> 2009;13(6):538–544.</li>
+          <li>Studenski S, Perera S, Patel K, et al. Gait speed and survival in older adults. <em>JAMA.</em> 2011;305(1):50–58.</li>
+          <li>Buracchio TI, Dodge HH, Howieson D, Wasserman D, Kaye J. The trajectory of gait speed preceding mild cognitive impairment. <em>Arch Neurol.</em> 2010;67(8):980–986.</li>
+          <li>Welch C, Hassan-Smith ZK, Greig CA, Lord JM, Jackson TA. Acute sarcopenia secondary to hospitalisation — an emerging condition affecting medical inpatients. <em>Gerontology.</em> 2018;64(2):158–166.</li>
+          <li>Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci.</em> 2001;56(3):M146–M156. [Women's Health and Aging Study]</li>
+        </ol>
+      </details>
     </div>
   </section>
 

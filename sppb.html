@@ -52,6 +52,23 @@
     .score-badge { font-weight: 700; color: var(--color-text-primary); }
     .learn-more-link { display: inline-block; margin-top: 24px; font-size: 0.9375rem; font-weight: 600; color: var(--color-text-muted); }
     .learn-more-link:hover { color: var(--color-deep-blue); }
+    /* Prognostic Value section */
+    .prognosis-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start; }
+    .prognosis-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--color-border); display: block; }
+    .prognosis-caption { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 10px; line-height: 1.6; font-style: italic; }
+    /* Guidelines table */
+    .guideline-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .guideline-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .guideline-table tbody td { padding: 11px 16px; font-size: 0.9rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: middle; line-height: 1.5; }
+    .guideline-table tbody tr:last-child td { border-bottom: none; }
+    .guideline-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.025); }
+    .guideline-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(15,76,129,0.12); color: var(--color-deep-blue); white-space: nowrap; }
+    /* Policy section */
+    .policy-block { display: flex; flex-direction: column; gap: 20px; max-width: 880px; margin: 0 auto; }
+    .policy-item { padding: 20px 24px; border-left: 4px solid var(--color-deep-blue); background: rgba(15,76,129,0.03); border-radius: 0 8px 8px 0; }
+    .policy-item-title { font-weight: 700; font-size: 1rem; color: var(--color-deep-blue); margin: 0 0 8px; }
+    .policy-item-text { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.8; margin: 0; }
+    @media (max-width: 768px) { .prognosis-layout { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -163,38 +180,132 @@
     </div>
   </section>
 
-  <!-- Clinical use -->
+  <!-- Prognostic Value -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Prognostic Value</span>
+        <h2>SPPB as a Predictor of Adverse Outcomes</h2>
+        <p>Beyond scoring lower-extremity function, SPPB independently predicts mortality, fall risk, and mobility disability in community-dwelling older adults.</p>
+      </div>
+      <div class="prognosis-layout">
+        <div>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            The SPPB captures the cumulative burden of age-related functional decline across balance, gait, and lower-limb strength — making it a comprehensive frailty biomarker. Low scores (≤6) are associated with substantially elevated 5-year mortality, hospitalization risk, and fall incidence.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            A systematic review and meta-analysis (Pavasini et al., 2016; n &gt; 30,000) confirmed that each 1-point increment in SPPB score is associated with a statistically significant reduction in all-cause mortality risk. The same gradient is observed for hospital readmission, nursing home admission, and incident mobility disability.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary);">
+            From a frailty perspective, SPPB reflects the physical phenotype dimension of the Fried frailty criteria — slow gait speed and weak lower-limb strength — while the balance subtest adds information on postural control and fall risk not captured by gait alone.
+          </p>
+        </div>
+        <div>
+          <img
+            src="assets/sppb-prognostic-risk-en.png"
+            alt="SPPB score and prognostic risk for mortality and falls in older adults"
+            class="prognosis-img"
+          >
+          <p class="prognosis-caption">SPPB scores predict 5-year mortality, fall risk, and hospital admission. Each additional point corresponds to meaningfully reduced adverse outcome risk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- International Guidelines -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">Evidence Base</span>
-        <h2>Used Across Clinical Settings Worldwide</h2>
-        <p>SPPB is endorsed by international guidelines across multiple clinical domains involving older adults.</p>
+        <span class="section-label">International Guidelines</span>
+        <h2>SPPB in Clinical Guidelines and Research Frameworks</h2>
+        <p>SPPB is endorsed across major clinical domains by guideline bodies in Europe, North America, Asia, and globally.</p>
       </div>
-      <div class="grid grid-3">
-        <div class="card">
-          <h4 class="card-title">Sarcopenia & Frailty</h4>
-          <p class="card-description">Standard physical function measure in European, American, and Asian guidelines. Primary outcome in sarcopenia drug trials.</p>
+      <div style="overflow-x: auto;">
+        <table class="guideline-table">
+          <thead>
+            <tr>
+              <th>Clinical Domain</th>
+              <th>Guideline / Body</th>
+              <th>Role of SPPB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="guideline-tag">Sarcopenia</span></td>
+              <td>EWGSOP2 (Europe, 2018)</td>
+              <td>Primary physical performance criterion for diagnosis</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Sarcopenia</span></td>
+              <td>FNIH Sarcopenia Project (USA, 2014)</td>
+              <td>"Weak + slow" phenotype criterion; gait speed threshold ≤0.8 m/s</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Sarcopenia</span></td>
+              <td>AWGS 2019 (Asia)</td>
+              <td>Physical performance measure for diagnosis and severity classification</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Integrated Care</span></td>
+              <td>WHO ICOPE (2019)</td>
+              <td>Locomotion capacity screening for community-dwelling older people</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Oncology</span></td>
+              <td>ASCO (2018)</td>
+              <td>Physical function domain within comprehensive geriatric assessment (CGA)</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Oncology</span></td>
+              <td>ESMO/SIOG (2021)</td>
+              <td>Functional assessment and chemotherapy toxicity risk stratification</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Cardiac Rehab</span></td>
+              <td>JCS/JACR (Japan, 2021)</td>
+              <td>Lower-extremity functional assessment in cardiac rehabilitation</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Cohort Research</span></td>
+              <td>NHANES (USA)</td>
+              <td>Physical performance module for population-level functional tracking</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Cohort Research</span></td>
+              <td>KLHAS (Korea)</td>
+              <td>Functional trajectory tracking in national aging cohort</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Clinical Trials</span></td>
+              <td>SPRINT (USA, 2016)</td>
+              <td>Physical performance and gait speed outcome measures</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Policy -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Global Policy</span>
+        <h2>SPPB in National and International Policy</h2>
+        <p>Beyond research, SPPB has been integrated into health system frameworks and national care programs worldwide.</p>
+      </div>
+      <div class="policy-block">
+        <div class="policy-item">
+          <p class="policy-item-title">🇰🇷 Republic of Korea — National Integrated Care Program</p>
+          <p class="policy-item-text">A national Delphi consensus study recommended SPPB as the standard physical performance assessment in integrated care programs for community-dwelling older adults in Korea. SPPB is now incorporated into regional frailty prevention programs operated through public health centers, enabling standardized functional screening at scale.</p>
         </div>
-        <div class="card">
-          <h4 class="card-title">WHO ICOPE</h4>
-          <p class="card-description">Used for locomotion capacity assessment in the WHO Integrated Care for Older People framework.</p>
+        <div class="policy-item">
+          <p class="policy-item-title">🌍 WHO — ICOPE Framework</p>
+          <p class="policy-item-text">The WHO Integrated Care for Older People (ICOPE) framework explicitly endorses SPPB as the assessment tool for the locomotion domain, establishing it as a global reference standard for population-level functional screening of older adults. The framework guides health systems in over 100 countries to adopt SPPB as their functional assessment protocol.</p>
         </div>
-        <div class="card">
-          <h4 class="card-title">Oncology & Rehabilitation</h4>
-          <p class="card-description">Recommended in ASCO and ESMO/SIOG guidelines for geriatric assessment and treatment toxicity risk stratification.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">Cardiac Rehabilitation</h4>
-          <p class="card-description">Included in JCS/JACR guidelines for lower-extremity functional assessment during cardiac rehabilitation.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">Cohort Research</h4>
-          <p class="card-description">Used in NHANES, KLHAS, CHS, NHATS, and major European and Asian aging cohorts to track functional trajectories.</p>
-        </div>
-        <div class="card">
-          <h4 class="card-title">Clinical Trials</h4>
-          <p class="card-description">Applied for participant eligibility screening and outcome evaluation in intervention studies on strength and function.</p>
+        <div class="policy-item">
+          <p class="policy-item-title">🇪🇸 Spain / Europe — CIBERFES Consensus</p>
+          <p class="policy-item-text">The Spanish CIBERFES network (Centro de Investigación Biomédica en Red — Fragilidad y Envejecimiento Saludable) and European aging consortia have endorsed SPPB as a consensus measurement tool for clinical trials and cohort studies in aging research, underscoring its cross-national comparability and methodological robustness.</p>
         </div>
       </div>
     </div>
@@ -215,6 +326,27 @@
         <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">Validation Studies</a>
         <a href="./product.html" class="btn btn-secondary">About AndanteFit</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Academic References -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa); padding: 32px 0;">
+    <div class="container">
+      <details>
+        <summary style="font-size: 1rem; font-weight: 600; color: var(--color-deep-blue); cursor: pointer; padding: 8px 0;">Academic References</summary>
+        <ol style="margin-top: 16px; padding-left: 20px; line-height: 2; font-size: 0.875rem; color: var(--color-text-secondary);">
+          <li>Guralnik JM, Simonsick EM, Ferrucci L, et al. A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission. <em>J Gerontol.</em> 1994;49(2):M85–M94.</li>
+          <li>Guralnik JM, Ferrucci L, Pieper CF, et al. Lower extremity function and subsequent disability: consistency across studies, predictive models, and value of gait speed alone compared with the short physical performance battery. <em>J Gerontol A Biol Sci Med Sci.</em> 2000;55(4):M221–M231.</li>
+          <li>Pavasini R, Guralnik J, Brown JC, et al. Short Physical Performance Battery and all-cause mortality: systematic review and meta-analysis. <em>BMC Med.</em> 2016;14:215.</li>
+          <li>Perera S, Mody SH, Woodman RC, Studenski SA. Meaningful change and responsiveness in common physical performance measures in older adults. <em>J Am Geriatr Soc.</em> 2006;54(5):743–749.</li>
+          <li>Volpato S, Cavalieri M, Sioulis F, et al. Predictive value of the Short Physical Performance Battery following hospitalization in older patients. <em>J Gerontol A Biol Sci Med Sci.</em> 2011;66(1):89–96.</li>
+          <li>Kwon S, Perera S, Pahor M, et al. What is a meaningful change in physical performance? Findings from a clinical trial in older adults (the LIFE-P study). <em>J Nutr Health Aging.</em> 2009;13(6):538–544.</li>
+          <li>Studenski S, Perera S, Patel K, et al. Gait speed and survival in older adults. <em>JAMA.</em> 2011;305(1):50–58.</li>
+          <li>Buracchio TI, Dodge HH, Howieson D, Wasserman D, Kaye J. The trajectory of gait speed preceding mild cognitive impairment. <em>Arch Neurol.</em> 2010;67(8):980–986.</li>
+          <li>Welch C, Hassan-Smith ZK, Greig CA, Lord JM, Jackson TA. Acute sarcopenia secondary to hospitalisation — an emerging condition affecting medical inpatients. <em>Gerontology.</em> 2018;64(2):158–166.</li>
+          <li>Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci.</em> 2001;56(3):M146–M156. [Women's Health and Aging Study]</li>
+        </ol>
+      </details>
     </div>
   </section>
 

@@ -97,7 +97,12 @@
     @media print { .back-btn { display: none; } }
   </style>
 </head>
-<body onload="window.print()">
+<body>
+  <script>
+    if (new URLSearchParams(location.search).get('print') === '1') {
+      window.addEventListener('load', function() { window.print(); });
+    }
+  </script>
 
   <a href="./sppb-test.html" class="back-btn">← SPPB 검사 페이지로 돌아가기</a>
 

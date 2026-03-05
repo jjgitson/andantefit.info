@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPPB Test Protocol – Print Version | AndanteFit</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 10.5pt;
+      color: #222;
+      background: #fff;
+    }
+    @media screen {
+      body { max-width: 210mm; margin: 0 auto; padding: 12mm; }
+    }
+
+    /* Header */
+    .print-header {
+      text-align: center;
+      border-bottom: 2px solid #0f4c81;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .print-header h1 { font-size: 16pt; font-weight: 800; color: #0f4c81; letter-spacing: -0.02em; }
+    .print-header .test-order { font-size: 9pt; color: #555; margin-top: 4px; }
+    .print-header .brand { font-size: 8pt; color: #aaa; margin-top: 2px; }
+
+    /* Three test cards */
+    .test-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .test-card {
+      border: 1px solid #d0d8e4;
+      border-radius: 7px;
+      overflow: hidden;
+      break-inside: avoid;
+    }
+    .test-card-header {
+      background: #0f4c81;
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .test-card-body { padding: 8px 10px; }
+    .test-card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+      margin-bottom: 7px;
+    }
+    .test-card-section { margin-top: 6px; }
+    .test-card-section h4 {
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #0f4c81;
+      margin-bottom: 3px;
+    }
+    .test-card-section ul {
+      padding-left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .test-card-section li { font-size: 7.5pt; color: #444; line-height: 1.45; }
+
+    /* Mini scoring table inside each card */
+    .score-mini { margin-top: 7px; border-top: 1px solid #e8edf4; padding-top: 6px; }
+    .score-mini table { width: 100%; border-collapse: collapse; font-size: 7pt; }
+    .score-mini td { padding: 2px 4px; color: #444; border-bottom: 1px solid #f2f4f7; vertical-align: top; }
+    .score-mini tr:last-child td { border-bottom: none; }
+    .score-mini td:first-child { font-weight: 700; color: #0f4c81; white-space: nowrap; width: 28px; }
+
+    /* Total score */
+    .total-section { margin-bottom: 12px; break-inside: avoid; }
+    .total-section h3 {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #0f4c81;
+      border-bottom: 1px solid #d0d8e4;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+    .total-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+    .total-table th {
+      background: #0f4c81;
+      color: #fff;
+      padding: 5px 8px;
+      text-align: left;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .total-table td { padding: 4px 8px; border-bottom: 1px solid #eef0f4; color: #444; }
+    .total-table tr:nth-child(even) td { background: #f7f9fc; }
+    .total-table tr:last-child td { border-bottom: none; }
+
+    /* Record area */
+    .record-section {
+      border: 1px solid #d0d8e4;
+      border-radius: 7px;
+      padding: 10px 12px;
+      break-inside: avoid;
+    }
+    .record-section h3 {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0f4c81;
+      margin-bottom: 10px;
+    }
+    .record-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 24px; }
+    .record-field label {
+      font-size: 7pt;
+      color: #888;
+      display: block;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #b0bac8;
+      padding-bottom: 1px;
+    }
+    .record-notes { margin-top: 10px; }
+    .record-notes label {
+      font-size: 7pt;
+      color: #888;
+      display: block;
+      border-bottom: 1px solid #b0bac8;
+      padding-bottom: 1px;
+      margin-bottom: 18px;
+    }
+
+    /* Footer */
+    .print-footer {
+      text-align: center;
+      font-size: 7pt;
+      color: #bbb;
+      margin-top: 10px;
+      border-top: 1px solid #eee;
+      padding-top: 6px;
+    }
+
+    /* Screen-only back button */
+    @media screen {
+      .back-btn {
+        display: inline-block;
+        margin-bottom: 16px;
+        padding: 8px 18px;
+        background: #0f4c81;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 9pt;
+        cursor: pointer;
+        text-decoration: none;
+      }
+    }
+    @media print { .back-btn { display: none; } }
+  </style>
+</head>
+<body onload="window.print()">
+
+  <a href="./sppb-test.html" class="back-btn">← Back to SPPB page</a>
+
+  <!-- Header -->
+  <div class="print-header">
+    <h1>SPPB Test Protocol</h1>
+    <p class="test-order">Test order: Balance → Gait Speed → Chair Stand &nbsp;|&nbsp; Total time: ~10–15 min manually / &lt;3 min with AndanteFit</p>
+    <p class="brand">andantefit.info</p>
+  </div>
+
+  <!-- Three test cards -->
+  <div class="test-cards">
+
+    <!-- Balance -->
+    <div class="test-card">
+      <div class="test-card-header">1 &nbsp; Balance Test</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/en/sppb/balance-full-tandem.webp" alt="Full tandem stance during the SPPB balance test.">
+        <div class="test-card-section">
+          <h4>Setup</h4>
+          <ul>
+            <li>Stand near wall. Shoes on.</li>
+            <li>Demonstrate each stance before timing.</li>
+            <li>Arms hang freely; do not hold participant.</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>Procedure</h4>
+          <ul>
+            <li><strong>Side-by-side:</strong> Medial borders touching. Hold 10 s. If &lt;10 s → score 0, stop.</li>
+            <li><strong>Semi-tandem:</strong> Side of foot against big toe. Hold 10 s. If &lt;10 s → score 1, stop.</li>
+            <li><strong>Full tandem:</strong> Heel against toes. Time up to 10 s.</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0</td><td>Side-by-side &lt;10 s</td></tr>
+            <tr><td>1</td><td>Side-by-side ≥10 s; semi-tandem &lt;10 s</td></tr>
+            <tr><td>2</td><td>Semi-tandem ≥10 s; full tandem &lt;3 s</td></tr>
+            <tr><td>3</td><td>Full tandem 3–9.99 s</td></tr>
+            <tr><td>4</td><td>Full tandem ≥10 s</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gait Speed -->
+    <div class="test-card">
+      <div class="test-card-header">2 &nbsp; Gait Speed Test</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/en/sppb/gait-course.webp" alt="Marked 4-meter walking course for the SPPB gait speed test.">
+        <div class="test-card-section">
+          <h4>Setup</h4>
+          <ul>
+            <li>Mark 4-meter course on flat surface.</li>
+            <li>Participant may use usual walking aid.</li>
+            <li>Start from static position behind start line.</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>Procedure</h4>
+          <ul>
+            <li>"Walk at your usual pace."</li>
+            <li>Start timing when participant begins walking.</li>
+            <li>Stop when leading foot crosses end line.</li>
+            <li>Two trials; use faster time.</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0</td><td>Unable to complete</td></tr>
+            <tr><td>1</td><td>≥8.70 s (&lt;0.46 m/s)</td></tr>
+            <tr><td>2</td><td>6.21–8.70 s (0.46–0.64 m/s)</td></tr>
+            <tr><td>3</td><td>4.82–6.20 s (0.64–0.83 m/s)</td></tr>
+            <tr><td>4</td><td>&lt;4.82 s (&gt;0.83 m/s)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chair Stand -->
+    <div class="test-card">
+      <div class="test-card-header">3 &nbsp; Chair Stand Test</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/en/sppb/chair-start-position.webp" alt="Correct starting position with arms folded for the SPPB chair stand test.">
+        <div class="test-card-section">
+          <h4>Setup</h4>
+          <ul>
+            <li>Firm chair ~43–45 cm seat height, no armrests.</li>
+            <li>Arms folded across chest; feet flat on floor.</li>
+            <li>Trial rise (no arms) to verify ability.</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>Procedure</h4>
+          <ul>
+            <li>"Rise fully and sit down 5 times, as quickly as you safely can."</li>
+            <li>Start timing on first rise.</li>
+            <li>Stop on full stand of 5th rise.</li>
+            <li>Score 0 if arms used or &gt;60 s.</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0</td><td>Unable; arms used; &gt;60 s</td></tr>
+            <tr><td>1</td><td>≥16.70 s</td></tr>
+            <tr><td>2</td><td>13.70–16.69 s</td></tr>
+            <tr><td>3</td><td>11.20–13.69 s</td></tr>
+            <tr><td>4</td><td>&lt;11.20 s</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /test-cards -->
+
+  <!-- Total Score -->
+  <div class="total-section">
+    <h3>Total SPPB Score &nbsp; (Balance + Gait Speed + Chair Stand = 0–12)</h3>
+    <table class="total-table">
+      <thead>
+        <tr><th>Total Score</th><th>Category</th><th>Clinical Interpretation</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>0 – 6</strong></td><td>Severe impairment</td><td>High risk; priority for preventive and rehabilitative intervention.</td></tr>
+        <tr><td><strong>7 – 9</strong></td><td>Moderate impairment</td><td>Intermediate risk; greatest benefit from exercise intervention.</td></tr>
+        <tr><td><strong>10 – 12</strong></td><td>Normal to good</td><td>Lower risk; monitor longitudinally for early functional decline.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Record Area -->
+  <div class="record-section">
+    <h3>Session Record</h3>
+    <div class="record-grid">
+      <div class="record-field"><label>Date</label></div>
+      <div class="record-field"><label>Examiner</label></div>
+      <div class="record-field"><label>Assistive device used</label></div>
+      <div class="record-field"><label>Total Score &nbsp;(0–12)</label></div>
+    </div>
+    <div class="record-notes">
+      <label>Notes</label>
+    </div>
+  </div>
+
+  <div class="print-footer">andantefit.info &nbsp;|&nbsp; SPPB Test Protocol – Quick Reference</div>
+
+</body>
+</html>

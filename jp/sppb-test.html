@@ -54,6 +54,22 @@
     .total-score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
     .total-score-table tbody tr:last-child td { border-bottom: none; }
     .total-score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+
+    /* Image card */
+    .image-card { border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; padding: 10px; background: #ffffff; box-shadow: 0 6px 18px rgba(0,0,0,0.04); margin: 0; }
+    .image-card img { max-width: 100%; width: 100%; border-radius: 6px; display: block; }
+    .image-card figcaption { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 8px; text-align: center; line-height: 1.5; }
+
+    /* Image galleries */
+    .img-gallery-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .img-gallery-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px; }
+    @media (max-width: 700px) { .img-gallery-3, .img-gallery-2 { grid-template-columns: 1fr; } }
+
+    /* Featured single image */
+    .img-featured { margin: 20px 0; }
+
+    /* Print buttons */
+    .print-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
   </style>
 </head>
 <body>
@@ -106,6 +122,21 @@
             <li><span class="step-num">3</span><span><strong>タンデム姿勢：</strong>片方の足のかかとを、もう一方の足のつま先の直前に付けます。最大10秒計測。</span></li>
           </ul>
           <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">バランスを崩した時点、または検査者が終了した時点で計測を終了します。</p>
+
+          <div class="img-gallery-3">
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/balance-side-by-side.webp" alt="SPPBの静的バランス検査で通常姿勢（両足並べ）をとる対象者。" loading="lazy" decoding="async">
+              <figcaption>通常姿勢（両足並べ）。10秒保持。</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/balance-semi-tandem.webp" alt="SPPBの静的バランス検査で半タンデム姿勢をとる対象者。" loading="lazy" decoding="async">
+              <figcaption>半タンデム姿勢。10秒保持。</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/balance-full-tandem.webp" alt="SPPBの静的バランス検査でタンデム姿勢をとる対象者。" loading="lazy" decoding="async">
+              <figcaption>タンデム姿勢。最大10秒保持。</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="score-card">
           <div class="score-card-header">採点基準</div>
@@ -144,6 +175,12 @@
             <li><span class="step-num">2</span>普段から歩行補助具（杖、歩行器）を使用する場合はそのまま使用し、記録します。</li>
             <li><span class="step-num">3</span>対象者はスタートラインの後ろで静止した状態から開始します。</li>
           </ul>
+
+          <figure class="image-card img-featured">
+            <img src="/assets/jp/sppb/gait-course.webp" alt="SPPB歩行速度検査に使用する4m歩行コース。" loading="lazy" decoding="async">
+            <figcaption>平坦で障害物のない床に設けた4m計測コース。</figcaption>
+          </figure>
+
           <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">実施方法</h3>
           <ul class="test-steps">
             <li><span class="step-num">1</span>「いつも通りの速さで歩いてください」と指示します。</li>
@@ -152,6 +189,17 @@
             <li><span class="step-num">4</span>2試行実施し、速い記録を採点に使用します。</li>
           </ul>
           <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">歩行不可または身体的補助が必要な場合は0点とします。</p>
+
+          <div class="img-gallery-2">
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/gait-setup.webp" alt="SPPB歩行速度検査前にスタートラインに位置する対象者。" loading="lazy" decoding="async">
+              <figcaption>スタートラインの後ろで静止した状態の対象者。</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/gait-walking.webp" alt="SPPB歩行速度検査中に4mコースをいつも通りの速さで歩く対象者。" loading="lazy" decoding="async">
+              <figcaption>マークされた4mコースをいつも通りの速さで歩く対象者。</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="score-card">
           <div class="score-card-header">採点基準（4m歩行）</div>
@@ -190,6 +238,12 @@
             <li><span class="step-num">2</span>腕を胸の前で交差して座り、足の裏は床に完全につけます。</li>
             <li><span class="step-num">3</span>検査前に腕を使わずに1回立ち上がり、動作が可能か確認します。</li>
           </ul>
+
+          <figure class="image-card img-featured">
+            <img src="/assets/jp/sppb/chair-start-position.webp" alt="SPPB椅子立ち上がり検査の正しい開始姿勢 — 腕を胸の前で交差した着座状態。" loading="lazy" decoding="async">
+            <figcaption>腕を胸の前で交差した正しい開始姿勢。</figcaption>
+          </figure>
+
           <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">実施方法</h3>
           <ul class="test-steps">
             <li><span class="step-num">1</span>「腕を使わずに、できるだけ速く安全に5回連続で立ち座りを繰り返してください」と指示します。</li>
@@ -197,6 +251,21 @@
             <li><span class="step-num">3</span>5回目に完全に立ち上がった時点で計測を終了します。</li>
             <li><span class="step-num">4</span>腕を使用した場合または60秒超過の場合は0点とします。</li>
           </ul>
+
+          <div class="img-gallery-3">
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/chair-full-stand.webp" alt="SPPB椅子立ち上がり検査で完全に立ち上がった対象者。" loading="lazy" decoding="async">
+              <figcaption>各反復動作のピーク — 完全起立姿勢。</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/chair-seat-position.webp" alt="SPPB椅子立ち上がり検査で着座に戻る動作の対象者。" loading="lazy" decoding="async">
+              <figcaption>各反復を完了するための着座復帰動作。</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/jp/sppb/chair-standing-phase.webp" alt="SPPB椅子立ち上がり検査で立ち上がり途中の対象者。" loading="lazy" decoding="async">
+              <figcaption>着座から起立への移行中間段階。</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="score-card">
           <div class="score-card-header">採点基準（5回立ち上がり）</div>
@@ -236,6 +305,10 @@
         <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
           スコアが1点以上変化した場合、臨床的に意味のある変化とみなせます。総スコアとともにサブテスト別のスコアプロファイルを解釈することで、個別化された介入計画の立案に役立ちます。
         </p>
+      </div>
+      <div class="print-btns">
+        <a href="./sppb-test-print.html" target="_blank" class="btn btn-secondary">🖨️ 印刷用バージョン</a>
+        <a href="./sppb-test-print.html" target="_blank" class="btn btn-primary">⬇️ PDF ダウンロード</a>
       </div>
     </div>
   </section>

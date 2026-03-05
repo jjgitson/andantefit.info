@@ -66,6 +66,22 @@
     .total-score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
     .total-score-table tbody tr:last-child td { border-bottom: none; }
     .total-score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+
+    /* Image card */
+    .image-card { border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; padding: 10px; background: #ffffff; box-shadow: 0 6px 18px rgba(0,0,0,0.04); margin: 0; }
+    .image-card img { max-width: 100%; width: 100%; border-radius: 6px; display: block; }
+    .image-card figcaption { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 8px; text-align: center; line-height: 1.5; }
+
+    /* Image galleries */
+    .img-gallery-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .img-gallery-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px; }
+    @media (max-width: 700px) { .img-gallery-3, .img-gallery-2 { grid-template-columns: 1fr; } }
+
+    /* Featured single image */
+    .img-featured { margin: 20px 0; }
+
+    /* Print buttons */
+    .print-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
   </style>
 </head>
 <body>
@@ -122,6 +138,21 @@
             <li><span class="step-num">3</span><span><strong>Full tandem stand:</strong> Heel of one foot placed directly in front of, touching, the toes of the other foot. Timed up to 10 seconds.</span></li>
           </ul>
           <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">The test ends when balance is lost or the assessor ends the trial.</p>
+
+          <div class="img-gallery-3">
+            <figure class="image-card">
+              <img src="/assets/en/sppb/balance-side-by-side.webp" alt="Participant performing the side-by-side stance during the SPPB balance test." loading="lazy" decoding="async">
+              <figcaption>Side-by-side stand. Hold for 10 seconds.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/balance-semi-tandem.webp" alt="Participant performing the semi-tandem stance during the SPPB balance test." loading="lazy" decoding="async">
+              <figcaption>Semi-tandem stand. Hold for 10 seconds.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/balance-full-tandem.webp" alt="Participant performing the full tandem stance during the SPPB balance test." loading="lazy" decoding="async">
+              <figcaption>Full tandem stand. Hold up to 10 seconds.</figcaption>
+            </figure>
+          </div>
         </div>
 
         <div class="score-card">
@@ -164,6 +195,11 @@
             <li><span class="step-num">3</span>Participant starts from a static standing position behind the start line.</li>
           </ul>
 
+          <figure class="image-card img-featured">
+            <img src="/assets/en/sppb/gait-course.webp" alt="Marked 4-meter walking course used for the SPPB gait speed test." loading="lazy" decoding="async">
+            <figcaption>Marked 4-meter course on a flat, unobstructed surface.</figcaption>
+          </figure>
+
           <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedure</h3>
           <ul class="test-steps">
             <li><span class="step-num">1</span>Instruct participant to "Walk at your usual pace, as if walking down the street."</li>
@@ -172,6 +208,17 @@
             <li><span class="step-num">4</span>Perform two trials; use the faster time for scoring.</li>
           </ul>
           <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">Score 0 if participant cannot attempt the walk or requires physical assistance.</p>
+
+          <div class="img-gallery-2">
+            <figure class="image-card">
+              <img src="/assets/en/sppb/gait-setup.webp" alt="Participant positioned at the start line before the SPPB gait speed test." loading="lazy" decoding="async">
+              <figcaption>Participant at the start position behind the marked line.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/gait-walking.webp" alt="Participant walking at usual pace along the 4-meter course during the SPPB gait speed test." loading="lazy" decoding="async">
+              <figcaption>Participant walks at their usual pace along a marked 4-meter course.</figcaption>
+            </figure>
+          </div>
         </div>
 
         <div class="score-card">
@@ -214,6 +261,11 @@
             <li><span class="step-num">3</span>First, have participant rise once to verify they can complete the movement without arm support.</li>
           </ul>
 
+          <figure class="image-card img-featured">
+            <img src="/assets/en/sppb/chair-start-position.webp" alt="Correct starting position with arms folded across the chest for the SPPB chair stand test." loading="lazy" decoding="async">
+            <figcaption>Correct starting position with arms folded across the chest.</figcaption>
+          </figure>
+
           <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Procedure</h3>
           <ul class="test-steps">
             <li><span class="step-num">1</span>Instruct: "Rise to a full stand, then sit back down, as quickly as you safely can. Do this 5 times in a row."</li>
@@ -221,6 +273,21 @@
             <li><span class="step-num">3</span>Stop timing when the participant reaches full standing position on the fifth rise.</li>
             <li><span class="step-num">4</span>Score 0 if participant cannot complete 5 repetitions without using arms, or if time exceeds 60 seconds.</li>
           </ul>
+
+          <div class="img-gallery-3">
+            <figure class="image-card">
+              <img src="/assets/en/sppb/chair-full-stand.webp" alt="Participant reaching full standing position during the SPPB chair stand test." loading="lazy" decoding="async">
+              <figcaption>Full standing position at the top of each repetition.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/chair-seat-position.webp" alt="Participant returning to seated position during the SPPB chair stand test." loading="lazy" decoding="async">
+              <figcaption>Returning to seated position to complete each repetition.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/chair-standing-phase.webp" alt="Participant mid-rise during the SPPB chair stand test." loading="lazy" decoding="async">
+              <figcaption>Mid-rise phase showing the transition from seated to standing.</figcaption>
+            </figure>
+          </div>
         </div>
 
         <div class="score-card">
@@ -261,6 +328,10 @@
         <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
           A change of ≥1 point has been proposed as a minimally important clinical difference in many populations. Always interpret subtest profiles alongside the total score to guide targeted intervention.
         </p>
+      </div>
+      <div class="print-btns">
+        <a href="./sppb-test-print.html" target="_blank" class="btn btn-secondary">🖨️ Print-friendly version</a>
+        <a href="./sppb-test-print.html" target="_blank" class="btn btn-primary">⬇️ Download PDF</a>
       </div>
     </div>
   </section>

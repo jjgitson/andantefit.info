@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/js/language-manager.js"></script>
-  <meta name="description" content="SPPB test protocol: step-by-step administration of the gait speed test, five-times sit-to-stand, and balance test with scoring criteria.">
+  <meta name="description" content="SPPB protocol with step-by-step instructions and scoring tables for balance, 4-meter gait speed, and 5× sit-to-stand. Print-friendly version available.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="canonical" href="https://andantefit.info/sppb-test.html" />
   <link rel="alternate" hreflang="en" href="https://andantefit.info/sppb-test.html" />
@@ -14,10 +14,13 @@
   <link rel="alternate" hreflang="x-default" href="https://andantefit.info/sppb-test.html" />
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="AndanteFit">
-  <meta property="og:title" content="SPPB Test Protocol: Administration and Scoring | AndanteFit">
-  <meta property="og:description" content="Step-by-step SPPB administration guide covering the gait speed test, five-times sit-to-stand, and balance test with scoring criteria.">
+  <meta property="og:title" content="SPPB Test Protocol (4m Walk, 5× Chair Stand, Balance) | AndanteFit">
+  <meta property="og:description" content="SPPB protocol with step-by-step instructions and scoring tables for balance, 4-meter gait speed, and 5× sit-to-stand. Print-friendly version available.">
   <meta property="og:url" content="https://andantefit.info/sppb-test.html">
-  <title>SPPB Test Protocol: Administration and Scoring | AndanteFit</title>
+  <meta property="og:image" content="https://andantefit.info/assets/en/sppb/gait-course.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <title>SPPB Test Protocol (4m Walk, 5× Chair Stand, Balance) | AndanteFit</title>
   <link rel="stylesheet" href="/css/style.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
   <script>
@@ -82,7 +85,28 @@
 
     /* Print buttons */
     .print-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+
+    /* Aspect-ratio for CLS prevention */
+    .img-gallery-3 img, .img-gallery-2 img { aspect-ratio: 3/4; object-fit: cover; }
+    .img-featured img { aspect-ratio: 16/9; object-fit: cover; }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "SPPB Test Protocol (4m Walk, 5× Chair Stand, Balance)",
+    "description": "Step-by-step SPPB administration guide with scoring tables for balance, 4-meter gait speed, and 5× sit-to-stand.",
+    "url": "https://andantefit.info/sppb-test.html",
+    "mainEntityOfPage": "https://andantefit.info/sppb-test.html",
+    "publisher": { "@type": "Organization", "name": "AndanteFit", "url": "https://andantefit.info" },
+    "about": [
+      { "@type": "Thing", "name": "Short Physical Performance Battery" },
+      { "@type": "Thing", "name": "Gait speed" },
+      { "@type": "Thing", "name": "Chair stand test" },
+      { "@type": "Thing", "name": "Balance test" }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="navigation-container"></div>
@@ -141,15 +165,15 @@
 
           <div class="img-gallery-3">
             <figure class="image-card">
-              <img src="/assets/en/sppb/balance-side-by-side.webp" alt="Participant performing the side-by-side stance during the SPPB balance test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/balance-side-by-side.webp" alt="SPPB balance test: side-by-side stance with feet together, held for 10 seconds." loading="lazy" decoding="async">
               <figcaption>Side-by-side stand. Hold for 10 seconds.</figcaption>
             </figure>
             <figure class="image-card">
-              <img src="/assets/en/sppb/balance-semi-tandem.webp" alt="Participant performing the semi-tandem stance during the SPPB balance test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/balance-semi-tandem.webp" alt="SPPB balance test: semi-tandem stance position held for 10 seconds." loading="lazy" decoding="async">
               <figcaption>Semi-tandem stand. Hold for 10 seconds.</figcaption>
             </figure>
             <figure class="image-card">
-              <img src="/assets/en/sppb/balance-full-tandem.webp" alt="Participant performing the full tandem stance during the SPPB balance test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/balance-full-tandem.webp" alt="SPPB balance test: full tandem stance timed up to 10 seconds." loading="lazy" decoding="async">
               <figcaption>Full tandem stand. Hold up to 10 seconds.</figcaption>
             </figure>
           </div>
@@ -196,7 +220,7 @@
           </ul>
 
           <figure class="image-card img-featured">
-            <img src="/assets/en/sppb/gait-course.webp" alt="Marked 4-meter walking course used for the SPPB gait speed test." loading="lazy" decoding="async">
+            <img src="/assets/en/sppb/gait-course.webp" alt="SPPB gait speed test: marked 4-meter walking course on a flat, unobstructed surface." loading="eager" decoding="async" fetchpriority="high">
             <figcaption>Marked 4-meter course on a flat, unobstructed surface.</figcaption>
           </figure>
 
@@ -211,11 +235,11 @@
 
           <div class="img-gallery-2">
             <figure class="image-card">
-              <img src="/assets/en/sppb/gait-setup.webp" alt="Participant positioned at the start line before the SPPB gait speed test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/gait-setup.webp" alt="SPPB gait speed test: participant positioned at the start line for the 4-meter walk." loading="lazy" decoding="async">
               <figcaption>Participant at the start position behind the marked line.</figcaption>
             </figure>
             <figure class="image-card">
-              <img src="/assets/en/sppb/gait-walking.webp" alt="Participant walking at usual pace along the 4-meter course during the SPPB gait speed test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/gait-walking.webp" alt="SPPB gait speed test: participant walking at usual pace along the marked 4-meter course." loading="lazy" decoding="async">
               <figcaption>Participant walks at their usual pace along a marked 4-meter course.</figcaption>
             </figure>
           </div>
@@ -262,7 +286,7 @@
           </ul>
 
           <figure class="image-card img-featured">
-            <img src="/assets/en/sppb/chair-start-position.webp" alt="Correct starting position with arms folded across the chest for the SPPB chair stand test." loading="lazy" decoding="async">
+            <img src="/assets/en/sppb/chair-start-position.webp" alt="SPPB chair stand test: correct starting position with arms folded across the chest." loading="lazy" decoding="async">
             <figcaption>Correct starting position with arms folded across the chest.</figcaption>
           </figure>
 
@@ -276,15 +300,15 @@
 
           <div class="img-gallery-3">
             <figure class="image-card">
-              <img src="/assets/en/sppb/chair-full-stand.webp" alt="Participant reaching full standing position during the SPPB chair stand test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/chair-full-stand.webp" alt="SPPB chair stand test: participant reaching full standing position on each of 5 repetitions." loading="lazy" decoding="async">
               <figcaption>Full standing position at the top of each repetition.</figcaption>
             </figure>
             <figure class="image-card">
-              <img src="/assets/en/sppb/chair-seat-position.webp" alt="Participant returning to seated position during the SPPB chair stand test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/chair-seat-position.webp" alt="SPPB chair stand test: participant returning to seated position after each stand." loading="lazy" decoding="async">
               <figcaption>Returning to seated position to complete each repetition.</figcaption>
             </figure>
             <figure class="image-card">
-              <img src="/assets/en/sppb/chair-standing-phase.webp" alt="Participant mid-rise during the SPPB chair stand test." loading="lazy" decoding="async">
+              <img src="/assets/en/sppb/chair-standing-phase.webp" alt="SPPB chair stand test: mid-rise phase during the 5× sit-to-stand sequence." loading="lazy" decoding="async">
               <figcaption>Mid-rise phase showing the transition from seated to standing.</figcaption>
             </figure>
           </div>
@@ -331,7 +355,7 @@
       </div>
       <div class="print-btns">
         <a href="./sppb-test-print.html" target="_blank" class="btn btn-secondary">🖨️ Print-friendly version</a>
-        <a href="./sppb-test-print.html" target="_blank" class="btn btn-primary">⬇️ Download PDF</a>
+        <a href="./sppb-test-print.html?print=1" target="_blank" class="btn btn-primary">⬇️ Download PDF</a>
       </div>
     </div>
   </section>
@@ -351,6 +375,7 @@
         </p>
       </div>
       <div style="text-align: center;">
+        <a href="./what-is-sppb.html" class="btn btn-secondary" style="margin-right: 12px;">What is SPPB?</a>
         <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">Validation Evidence</a>
         <a href="./product.html" class="btn btn-secondary">About AndanteFit</a>
       </div>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPPB検査方法 – 印刷用 | AndanteFit</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', Arial, sans-serif;
+      font-size: 10.5pt;
+      color: #222;
+      background: #fff;
+    }
+    @media screen {
+      body { max-width: 210mm; margin: 0 auto; padding: 12mm; }
+    }
+
+    .print-header {
+      text-align: center;
+      border-bottom: 2px solid #0f4c81;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .print-header h1 { font-size: 16pt; font-weight: 800; color: #0f4c81; letter-spacing: -0.02em; }
+    .print-header .test-order { font-size: 9pt; color: #555; margin-top: 4px; }
+    .print-header .brand { font-size: 8pt; color: #aaa; margin-top: 2px; }
+
+    .test-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .test-card { border: 1px solid #d0d8e4; border-radius: 7px; overflow: hidden; break-inside: avoid; }
+    .test-card-header {
+      background: #0f4c81;
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .test-card-body { padding: 8px 10px; }
+    .test-card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+      margin-bottom: 7px;
+    }
+    .test-card-section { margin-top: 6px; }
+    .test-card-section h4 { font-size: 7.5pt; font-weight: 700; color: #0f4c81; margin-bottom: 3px; }
+    .test-card-section ul { padding-left: 12px; display: flex; flex-direction: column; gap: 2px; }
+    .test-card-section li { font-size: 7.5pt; color: #444; line-height: 1.45; }
+
+    .score-mini { margin-top: 7px; border-top: 1px solid #e8edf4; padding-top: 6px; }
+    .score-mini table { width: 100%; border-collapse: collapse; font-size: 7pt; }
+    .score-mini td { padding: 2px 4px; color: #444; border-bottom: 1px solid #f2f4f7; vertical-align: top; }
+    .score-mini tr:last-child td { border-bottom: none; }
+    .score-mini td:first-child { font-weight: 700; color: #0f4c81; white-space: nowrap; width: 32px; }
+
+    .total-section { margin-bottom: 12px; break-inside: avoid; }
+    .total-section h3 { font-size: 10pt; font-weight: 700; color: #0f4c81; border-bottom: 1px solid #d0d8e4; padding-bottom: 4px; margin-bottom: 8px; }
+    .total-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+    .total-table th { background: #0f4c81; color: #fff; padding: 5px 8px; text-align: left; font-size: 7.5pt; font-weight: 700; }
+    .total-table td { padding: 4px 8px; border-bottom: 1px solid #eef0f4; color: #444; }
+    .total-table tr:nth-child(even) td { background: #f7f9fc; }
+    .total-table tr:last-child td { border-bottom: none; }
+
+    .record-section { border: 1px solid #d0d8e4; border-radius: 7px; padding: 10px 12px; break-inside: avoid; }
+    .record-section h3 { font-size: 9pt; font-weight: 700; color: #0f4c81; margin-bottom: 10px; }
+    .record-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 24px; }
+    .record-field label { font-size: 7pt; color: #888; display: block; margin-bottom: 14px; border-bottom: 1px solid #b0bac8; padding-bottom: 1px; }
+    .record-notes { margin-top: 10px; }
+    .record-notes label { font-size: 7pt; color: #888; display: block; border-bottom: 1px solid #b0bac8; padding-bottom: 1px; margin-bottom: 18px; }
+
+    .print-footer { text-align: center; font-size: 7pt; color: #bbb; margin-top: 10px; border-top: 1px solid #eee; padding-top: 6px; }
+
+    @media screen {
+      .back-btn { display: inline-block; margin-bottom: 16px; padding: 8px 18px; background: #0f4c81; color: #fff; border: none; border-radius: 6px; font-size: 9pt; cursor: pointer; text-decoration: none; }
+    }
+    @media print { .back-btn { display: none; } }
+  </style>
+</head>
+<body onload="window.print()">
+
+  <a href="./sppb-test.html" class="back-btn">← SPPB検査ページに戻る</a>
+
+  <div class="print-header">
+    <h1>SPPB検査方法</h1>
+    <p class="test-order">実施順序：静的バランス → 歩行速度 → 椅子立ち上がり &nbsp;|&nbsp; 所要時間：手動 約10〜15分 / AndanteFit使用時 3分未満</p>
+    <p class="brand">andantefit.info</p>
+  </div>
+
+  <div class="test-cards">
+
+    <!-- 静的バランス -->
+    <div class="test-card">
+      <div class="test-card-header">1 &nbsp; 静的バランス検査</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/jp/sppb/balance-full-tandem.webp" alt="SPPBの静的バランス検査でタンデム姿勢をとる対象者。">
+        <div class="test-card-section">
+          <h4>準備</h4>
+          <ul>
+            <li>壁の近くで実施。靴を履いたまま。</li>
+            <li>計時前に各姿勢をデモンストレーション。</li>
+            <li>両腕は体側に自然に垂らす。計時中は支えない。</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>実施方法</h4>
+          <ul>
+            <li><strong>通常姿勢：</strong>両足内側を揃える。10秒保持。10秒未満 → 0点、終了。</li>
+            <li><strong>半タンデム：</strong>片足内側をもう一方の母趾横に付ける。10秒保持。10秒未満 → 1点、終了。</li>
+            <li><strong>タンデム：</strong>踵を前足のつま先に付ける。最大10秒計測。</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0点</td><td>通常姿勢10秒未満</td></tr>
+            <tr><td>1点</td><td>通常≥10秒；半タンデム&lt;10秒</td></tr>
+            <tr><td>2点</td><td>半タンデム≥10秒；タンデム&lt;3秒</td></tr>
+            <tr><td>3点</td><td>タンデム 3〜9.99秒</td></tr>
+            <tr><td>4点</td><td>タンデム ≥10秒</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 歩行速度 -->
+    <div class="test-card">
+      <div class="test-card-header">2 &nbsp; 歩行速度検査</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/jp/sppb/gait-course.webp" alt="SPPB歩行速度検査に使用する4m歩行コース。">
+        <div class="test-card-section">
+          <h4>準備</h4>
+          <ul>
+            <li>平坦な床に4mコースをマーク。</li>
+            <li>普段の歩行補助具はそのまま使用し記録。</li>
+            <li>スタートラインの後ろで静止した状態から開始。</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>実施方法</h4>
+          <ul>
+            <li>「いつも通りの速さで歩いてください。」</li>
+            <li>歩き始めた瞬間に計測開始。</li>
+            <li>先行足がゴールラインを越えた時点で終了。</li>
+            <li>2試行実施し、速い記録を採点に使用。</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0点</td><td>完了不可</td></tr>
+            <tr><td>1点</td><td>≥8.70秒（&lt;0.46 m/s）</td></tr>
+            <tr><td>2点</td><td>6.21〜8.70秒（0.46〜0.64 m/s）</td></tr>
+            <tr><td>3点</td><td>4.82〜6.20秒（0.64〜0.83 m/s）</td></tr>
+            <tr><td>4点</td><td>&lt;4.82秒（&gt;0.83 m/s）</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 椅子立ち上がり -->
+    <div class="test-card">
+      <div class="test-card-header">3 &nbsp; 椅子立ち上がり検査</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/jp/sppb/chair-start-position.webp" alt="SPPB椅子立ち上がり検査の正しい開始姿勢。">
+        <div class="test-card-section">
+          <h4>準備</h4>
+          <ul>
+            <li>座面高さ43〜45cmの固めの椅子（肘かけなし推奨）。</li>
+            <li>腕を胸の前で交差；足裏は床に密着。</li>
+            <li>腕を使わず1回立ち上がり、動作確認。</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>実施方法</h4>
+          <ul>
+            <li>「腕を使わず、できるだけ速く安全に5回立ち座りを繰り返してください。」</li>
+            <li>最初の立ち上がり開始時に計測開始。</li>
+            <li>5回目の完全起立時に終了。</li>
+            <li>腕使用または60秒超過の場合は0点。</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0点</td><td>完了不可；腕使用；&gt;60秒</td></tr>
+            <tr><td>1点</td><td>≥16.70秒</td></tr>
+            <tr><td>2点</td><td>13.70〜16.69秒</td></tr>
+            <tr><td>3点</td><td>11.20〜13.69秒</td></tr>
+            <tr><td>4点</td><td>&lt;11.20秒</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="total-section">
+    <h3>SPPB総スコア &nbsp; (バランス + 歩行速度 + 椅子立ち上がり = 0〜12点)</h3>
+    <table class="total-table">
+      <thead>
+        <tr><th>総スコア</th><th>機能レベル</th><th>臨床的解釈</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>0 – 6</strong></td><td>重度の機能低下</td><td>リスクが高い群。予防・リハビリ介入の優先対象。</td></tr>
+        <tr><td><strong>7 – 9</strong></td><td>中等度の機能低下</td><td>中間リスク群。運動介入の効果が最も大きく現れる。</td></tr>
+        <tr><td><strong>10 – 12</strong></td><td>正常〜良好</td><td>リスクが低い群。初期機能低下の検出のため縦断モニタリングに活用。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="record-section">
+    <h3>検査記録</h3>
+    <div class="record-grid">
+      <div class="record-field"><label>検査日</label></div>
+      <div class="record-field"><label>検査者</label></div>
+      <div class="record-field"><label>歩行補助具の使用</label></div>
+      <div class="record-field"><label>総スコア &nbsp;(0〜12点)</label></div>
+    </div>
+    <div class="record-notes">
+      <label>特記事項</label>
+    </div>
+  </div>
+
+  <div class="print-footer">andantefit.info &nbsp;|&nbsp; SPPB検査方法 – 現場参照用</div>
+
+</body>
+</html>

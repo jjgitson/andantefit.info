@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPPB 검사 방법 – 인쇄용 | AndanteFit</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', Arial, sans-serif;
+      font-size: 10.5pt;
+      color: #222;
+      background: #fff;
+    }
+    @media screen {
+      body { max-width: 210mm; margin: 0 auto; padding: 12mm; }
+    }
+
+    .print-header {
+      text-align: center;
+      border-bottom: 2px solid #0f4c81;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .print-header h1 { font-size: 16pt; font-weight: 800; color: #0f4c81; letter-spacing: -0.02em; }
+    .print-header .test-order { font-size: 9pt; color: #555; margin-top: 4px; }
+    .print-header .brand { font-size: 8pt; color: #aaa; margin-top: 2px; }
+
+    .test-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .test-card { border: 1px solid #d0d8e4; border-radius: 7px; overflow: hidden; break-inside: avoid; }
+    .test-card-header {
+      background: #0f4c81;
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .test-card-body { padding: 8px 10px; }
+    .test-card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+      margin-bottom: 7px;
+    }
+    .test-card-section { margin-top: 6px; }
+    .test-card-section h4 {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: #0f4c81;
+      margin-bottom: 3px;
+    }
+    .test-card-section ul { padding-left: 12px; display: flex; flex-direction: column; gap: 2px; }
+    .test-card-section li { font-size: 7.5pt; color: #444; line-height: 1.45; }
+
+    .score-mini { margin-top: 7px; border-top: 1px solid #e8edf4; padding-top: 6px; }
+    .score-mini table { width: 100%; border-collapse: collapse; font-size: 7pt; }
+    .score-mini td { padding: 2px 4px; color: #444; border-bottom: 1px solid #f2f4f7; vertical-align: top; }
+    .score-mini tr:last-child td { border-bottom: none; }
+    .score-mini td:first-child { font-weight: 700; color: #0f4c81; white-space: nowrap; width: 28px; }
+
+    .total-section { margin-bottom: 12px; break-inside: avoid; }
+    .total-section h3 {
+      font-size: 10pt; font-weight: 700; color: #0f4c81;
+      border-bottom: 1px solid #d0d8e4; padding-bottom: 4px; margin-bottom: 8px;
+    }
+    .total-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+    .total-table th {
+      background: #0f4c81; color: #fff; padding: 5px 8px;
+      text-align: left; font-size: 7.5pt; font-weight: 700;
+    }
+    .total-table td { padding: 4px 8px; border-bottom: 1px solid #eef0f4; color: #444; }
+    .total-table tr:nth-child(even) td { background: #f7f9fc; }
+    .total-table tr:last-child td { border-bottom: none; }
+
+    .record-section { border: 1px solid #d0d8e4; border-radius: 7px; padding: 10px 12px; break-inside: avoid; }
+    .record-section h3 { font-size: 9pt; font-weight: 700; color: #0f4c81; margin-bottom: 10px; }
+    .record-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 24px; }
+    .record-field label { font-size: 7pt; color: #888; display: block; margin-bottom: 14px; border-bottom: 1px solid #b0bac8; padding-bottom: 1px; }
+    .record-notes { margin-top: 10px; }
+    .record-notes label { font-size: 7pt; color: #888; display: block; border-bottom: 1px solid #b0bac8; padding-bottom: 1px; margin-bottom: 18px; }
+
+    .print-footer { text-align: center; font-size: 7pt; color: #bbb; margin-top: 10px; border-top: 1px solid #eee; padding-top: 6px; }
+
+    @media screen {
+      .back-btn { display: inline-block; margin-bottom: 16px; padding: 8px 18px; background: #0f4c81; color: #fff; border: none; border-radius: 6px; font-size: 9pt; cursor: pointer; text-decoration: none; }
+    }
+    @media print { .back-btn { display: none; } }
+  </style>
+</head>
+<body onload="window.print()">
+
+  <a href="./sppb-test.html" class="back-btn">← SPPB 검사 페이지로 돌아가기</a>
+
+  <div class="print-header">
+    <h1>SPPB 검사 방법</h1>
+    <p class="test-order">검사 순서: 정적균형 → 보행속도 → 일어서기 &nbsp;|&nbsp; 소요 시간: 수동 약 10–15분 / AndanteFit 사용 시 3분 미만</p>
+    <p class="brand">andantefit.info</p>
+  </div>
+
+  <div class="test-cards">
+
+    <!-- 정적균형 -->
+    <div class="test-card">
+      <div class="test-card-header">1 &nbsp; 정적균형 검사</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/ko/sppb/balance-full-tandem.webp" alt="SPPB 정적균형 검사 중 일렬 자세를 취하는 대상자.">
+        <div class="test-card-section">
+          <h4>준비</h4>
+          <ul>
+            <li>벽 근처에서 실시. 신발 착용.</li>
+            <li>측정 전 각 자세 시범 시행.</li>
+            <li>두 팔은 자연스럽게 늘어뜨림. 손잡이 금지.</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>실시 방법</h4>
+          <ul>
+            <li><strong>나란히서기:</strong> 양발 안쪽 면 붙임. 10초 유지. 미달 시 0점, 종료.</li>
+            <li><strong>반일렬:</strong> 한쪽 발 안쪽을 다른 발 엄지 옆에. 10초 유지. 미달 시 1점, 종료.</li>
+            <li><strong>일렬:</strong> 뒤꿈치를 앞발 발끝에 붙임. 최대 10초 측정.</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0점</td><td>나란히 10초 미달</td></tr>
+            <tr><td>1점</td><td>나란히 ≥10초; 반일렬 &lt;10초</td></tr>
+            <tr><td>2점</td><td>반일렬 ≥10초; 일렬 &lt;3초</td></tr>
+            <tr><td>3점</td><td>일렬 3–9.99초</td></tr>
+            <tr><td>4점</td><td>일렬 ≥10초</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 보행속도 -->
+    <div class="test-card">
+      <div class="test-card-header">2 &nbsp; 보행속도 검사</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/ko/sppb/gait-course.webp" alt="SPPB 보행속도 검사에 사용하는 4m 측정 코스.">
+        <div class="test-card-section">
+          <h4>준비</h4>
+          <ul>
+            <li>평탄한 바닥에 출발선·도착선 4m 표시.</li>
+            <li>평소 보행보조기 사용 시 그대로 사용, 기록.</li>
+            <li>출발선 뒤에서 정지 상태로 시작.</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>실시 방법</h4>
+          <ul>
+            <li>"평소 걷는 속도로 걸어 주세요."</li>
+            <li>첫 발 내딛는 순간 측정 시작.</li>
+            <li>선도 발이 도착선 통과 시 종료.</li>
+            <li>2회 실시, 빠른 기록 사용.</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0점</td><td>완료 불가</td></tr>
+            <tr><td>1점</td><td>≥8.70초 (&lt;0.46 m/s)</td></tr>
+            <tr><td>2점</td><td>6.21–8.70초 (0.46–0.64 m/s)</td></tr>
+            <tr><td>3점</td><td>4.82–6.20초 (0.64–0.83 m/s)</td></tr>
+            <tr><td>4점</td><td>&lt;4.82초 (&gt;0.83 m/s)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 일어서기 -->
+    <div class="test-card">
+      <div class="test-card-header">3 &nbsp; 일어서기 검사</div>
+      <div class="test-card-body">
+        <img class="test-card-img" src="/assets/ko/sppb/chair-start-position.webp" alt="SPPB 일어서기 검사의 올바른 시작 자세.">
+        <div class="test-card-section">
+          <h4>준비</h4>
+          <ul>
+            <li>좌석 높이 43–45cm 단단한 의자(팔걸이 없음 권장).</li>
+            <li>팔을 가슴 앞에 교차, 발바닥은 바닥에 밀착.</li>
+            <li>팔 없이 1회 일어서서 가능 여부 확인.</li>
+          </ul>
+        </div>
+        <div class="test-card-section">
+          <h4>실시 방법</h4>
+          <ul>
+            <li>"팔 쓰지 않고 최대한 빠르게 5번 연속으로 일어섰다 앉으세요."</li>
+            <li>첫 번째 일어서기 시작 시 측정.</li>
+            <li>5번째 완전 기립 시 종료.</li>
+            <li>팔 사용 또는 60초 초과 시 0점.</li>
+          </ul>
+        </div>
+        <div class="score-mini">
+          <table>
+            <tr><td>0점</td><td>완료 불가; 팔 사용; &gt;60초</td></tr>
+            <tr><td>1점</td><td>≥16.70초</td></tr>
+            <tr><td>2점</td><td>13.70–16.69초</td></tr>
+            <tr><td>3점</td><td>11.20–13.69초</td></tr>
+            <tr><td>4점</td><td>&lt;11.20초</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="total-section">
+    <h3>SPPB 총점 &nbsp; (정적균형 + 보행속도 + 일어서기 = 0–12점)</h3>
+    <table class="total-table">
+      <thead>
+        <tr><th>총점</th><th>기능 수준</th><th>임상적 해석</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>0 – 6</strong></td><td>심각한 기능 저하</td><td>위험이 높은 군. 예방 및 재활 중재 우선 대상.</td></tr>
+        <tr><td><strong>7 – 9</strong></td><td>중등도 기능 저하</td><td>중간 위험군. 운동 중재 효과가 가장 크게 나타남.</td></tr>
+        <tr><td><strong>10 – 12</strong></td><td>정상~양호</td><td>위험이 낮은 군. 초기 기능 저하 감지를 위한 종단 모니터링 권장.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="record-section">
+    <h3>검사 기록</h3>
+    <div class="record-grid">
+      <div class="record-field"><label>검사 날짜</label></div>
+      <div class="record-field"><label>검사자</label></div>
+      <div class="record-field"><label>보행보조기 사용 여부</label></div>
+      <div class="record-field"><label>총점 &nbsp;(0–12점)</label></div>
+    </div>
+    <div class="record-notes">
+      <label>특이 사항</label>
+    </div>
+  </div>
+
+  <div class="print-footer">andantefit.info &nbsp;|&nbsp; SPPB 검사 방법 – 현장 참고 자료</div>
+
+</body>
+</html>

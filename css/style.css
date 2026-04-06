@@ -878,3 +878,9 @@ a:hover {
     gap: calc(var(--spacing-unit) * 4);
   }
 }
+
+/* === CASE STUDY: Remove left accent bars from cards and boxes === */
+/* Overrides Tailwind border-l-* utility classes used in case study pages */
+[class*="border-l-"] {
+  border-left-width: 0 !important;
+}

@@ -889,3 +889,23 @@ a:hover {
 .card-base {
   box-shadow: none !important;
 }
+
+/* === CASE STUDY: Neutralize mid-tone accent text colors ===
+   Targets 500–700 range colors on light backgrounds only.
+   Light tones (100–400, used on dark backgrounds) are intentionally excluded.
+   Chart colors are JS-based (Chart.js) and unaffected by this rule. */
+.text-teal-500, .text-teal-600, .text-teal-700,
+.text-blue-600, .text-blue-700,
+.text-sky-500, .text-sky-700,
+.text-cyan-600,
+.text-indigo-600,
+.text-violet-700,
+.text-purple-600,
+.text-rose-600, .text-rose-700,
+.text-red-500, .text-red-600, .text-red-700,
+.text-amber-500, .text-amber-600,
+.text-orange-500, .text-orange-600,
+.text-green-600, .text-green-700,
+.text-emerald-500, .text-emerald-600, .text-emerald-700 {
+  color: #374151 !important;
+}

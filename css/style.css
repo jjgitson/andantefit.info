@@ -884,3 +884,8 @@ a:hover {
 [class*="border-l-"] {
   border-left-width: 0 !important;
 }
+
+/* === CASE STUDY: Remove box-shadow from cards === */
+.card-base {
+  box-shadow: none !important;
+}

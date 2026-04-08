@@ -80,6 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
             ko: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html',
             es: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html',
             jp: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html'
+        },
+        '2026-04-06-Sarcopenia-Management-Korea': {
+            en: '2026-04-06-Sarcopenia-Management-Korea-EN.html',
+            ko: '2026-04-06-Sarcopenia-Management-Korea-KR.html',
+            es: '2026-04-06-Sarcopenia-Management-Korea-ES.html',
+            jp: '2026-04-06-Sarcopenia-Management-Korea-JP.html'
+        },
+        '2026-04-08-BNR17-Muscle-Function-Older-Adults': {
+            ko: '2026-04-08-BNR17-Muscle-Function-Older-Adults-KR.html'
         }
     };
 

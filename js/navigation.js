@@ -88,7 +88,10 @@ document.addEventListener('DOMContentLoaded', function() {
             jp: '2026-04-06-Sarcopenia-Management-Korea-JP.html'
         },
         '2026-04-08-BNR17-Muscle-Function-Older-Adults': {
-            ko: '2026-04-08-BNR17-Muscle-Function-Older-Adults-KR.html'
+            en: '2026-04-08-BNR17-Muscle-Function-Older-Adults-EN.html',
+            ko: '2026-04-08-BNR17-Muscle-Function-Older-Adults-KR.html',
+            es: '2026-04-08-BNR17-Muscle-Function-Older-Adults-ES.html',
+            jp: '2026-04-08-BNR17-Muscle-Function-Older-Adults-JP.html'
         }
     };
 

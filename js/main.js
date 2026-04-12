@@ -215,6 +215,16 @@ document.head.appendChild(style);
 // Expose utility functions globally
 window.AndanteFit = AndanteFit;
 
+// Activate obfuscated email links after dynamic HTML is injected
+function initEmailLinks(root) {
+    const scope = root || document;
+    scope.querySelectorAll('a.obf-email[data-u][data-d]').forEach(function(el) {
+        const email = el.dataset.u + '\u0040' + el.dataset.d;
+        el.href = 'mailto:' + email;
+        el.textContent = email;
+    });
+}
+
 // js/main.js 파일 맨 아래에 추가
 function includeHTML() {
     const elements = document.querySelectorAll('[data-include]');
@@ -229,6 +239,7 @@ function includeHTML() {
                 .then(data => {
                     el.innerHTML = data;
                     el.removeAttribute('data-include');
+                    initEmailLinks(el);
                 })
                 .catch(error => console.error('Error loading include:', error));
         }

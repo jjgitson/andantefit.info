@@ -60,6 +60,7 @@
 <div id="root" class="appFont"></div>
 
 <script type="text/babel">
+const _em = 'snm' + '\u0040' + 'dyphi.com';
 const { useState, useEffect } = React;
 
 function LucideIcon({ name, className = "" }) {
@@ -414,7 +415,7 @@ const App = () => {
     request our service overview today.
   </p>
   <a
-    href="mailto:snm@dyphi.com"
+    href={'mailto:' + _em}
     className="block bg-orange-500 hover:bg-orange-600 text-white font-black text-center py-3 px-6 rounded-xl transition-colors no-underline"
   >
     Request Service Overview &amp; Consultation →

@@ -60,6 +60,7 @@
 <div id="root" class="appFont"></div>
 
 <script type="text/babel">
+const _em = 'snm' + '\u0040' + 'dyphi.com';
 const { useState, useEffect } = React;
 
 function LucideIcon({ name, className = "" }) {
@@ -437,7 +438,7 @@ const App = () => {
     지금 바로 서비스 소개서를 받아보세요.
   </p>
   <a
-    href="mailto:snm@dyphi.com"
+    href={'mailto:' + _em}
     className="block bg-orange-500 hover:bg-orange-600 text-white font-black text-center py-3 px-6 rounded-xl transition-colors no-underline"
   >
     서비스 소개서 및 상담 신청하기 →

@@ -1,0 +1,103 @@
+<script>
+// ─── 케이스 목록 ───────────────────────────────────────────────
+function getCasesHTML(params) {
+  showLoading(true);
+  callServer('case.list', params || {}).then(data => {
+    const cases = data.cases || [];
+    const html = `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">케이스 목록 (${cases.length}건)</span>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="caseSearch" placeholder="케이스 ID 검색" oninput="filterCases()">
+          <select id="caseStatusFilter" onchange="filterCases()">
+            <option value="">전체 상태</option>
+            <option>Draft</option>
+            <option>Under Hospital Review</option>
+            <option>Hospital Approved</option>
+            <option>Supplier Coordination</option>
+            <option>Shipment In Transit</option>
+            <option>Acceptance Check Pending</option>
+            <option>Acceptance Confirmed</option>
+            <option>Scheduled</option>
+            <option>Completed</option>
+            <option>Follow-up Ongoing</option>
+            <option>Closed</option>
+            <option>Cancelled</option>
+          </select>
+          <select id="casePriorityFilter" onchange="filterCases()">
+            <option value="">전체 우선순위</option>
+            <option>Urgent</option>
+            <option>High</option>
+            <option>Normal</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>케이스 ID</th>
+                <th>병원</th>
+                <th>적응증</th>
+                <th>담당자</th>
+                <th>우선순위</th>
+                <th>상태</th>
+                <th>시술일</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="casesTbody">
+              ${renderCaseRows_(cases)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+    showContent(html);
+  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+}
+
+function renderCaseRows_(cases) {
+  if (cases.length === 0) return `
+    <tr><td colspan="8">
+      <div class="empty-state">
+        <div class="empty-state-icon">🗂️</div>
+        <h3>케이스가 없습니다</h3>
+      </div>
+    </td></tr>
+  `;
+  return cases.map(c => `
+    <tr class="case-row clickable-row"
+      data-id="${c.case_id}"
+      data-status="${c.case_status}"
+      data-priority="${c.priority || ''}"
+      onclick="loadPage('caseDetail', {caseId:'${c.case_id}'})"
+    >
+      <td><code>${c.case_id}</code></td>
+      <td>${c.hospital_id || '-'}</td>
+      <td>${c.target_indication || '-'}</td>
+      <td>${c.assigned_coordinator || '-'}</td>
+      <td>${c.priority ? `<span class="badge badge-${c.priority==='Urgent'?'red':c.priority==='High'?'orange':'gray'}">${c.priority}</span>` : '-'}</td>
+      <td>${statusBadge(c.case_status)}</td>
+      <td>${c.treatment_date ? fmtDate(c.treatment_date) : '-'}</td>
+      <td><button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();loadPage('caseDetail',{caseId:'${c.case_id}'})">상세</button></td>
+    </tr>
+  `).join('');
+}
+
+function filterCases() {
+  const search = document.getElementById('caseSearch').value.toLowerCase();
+  const status = document.getElementById('caseStatusFilter').value;
+  const priority = document.getElementById('casePriorityFilter').value;
+  document.querySelectorAll('.case-row').forEach(row => {
+    const id = row.dataset.id.toLowerCase();
+    const rowStatus = row.dataset.status;
+    const rowPriority = row.dataset.priority;
+    const ok = (!search || id.includes(search)) &&
+               (!status || rowStatus === status) &&
+               (!priority || rowPriority === priority);
+    row.style.display = ok ? '' : 'none';
+  });
+}
+</script>

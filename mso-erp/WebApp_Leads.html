@@ -1,0 +1,253 @@
+<script>
+// ─── 리드 목록 ─────────────────────────────────────────────────
+function getLeadsHTML(params) {
+  showLoading(true);
+  callServer('lead.list', params || {}).then(data => {
+    const leads = data.leads || [];
+    const canCreate = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
+
+    const html = `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">리드 목록 (${leads.length}건)</span>
+          ${canCreate ? `<button class="btn btn-primary btn-sm" onclick="showNewLeadModal()">+ 신규 리드</button>` : ''}
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="leadSearch" placeholder="이름/이메일 검색" oninput="filterLeads()">
+          <select id="leadStatusFilter" onchange="filterLeads()">
+            <option value="">전체 상태</option>
+            <option value="New">New</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Awaiting Documents">Awaiting Documents</option>
+            <option value="Ready for Hospital Review">Ready for Hospital Review</option>
+            <option value="Closed - No Progress">Closed - No Progress</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table id="leadsTable">
+            <thead>
+              <tr>
+                <th>Lead ID</th>
+                <th>이름</th>
+                <th>국가</th>
+                <th>주요 관심</th>
+                <th>담당자</th>
+                <th>상태</th>
+                <th>문의일</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${leads.length === 0 ? `
+                <tr><td colspan="8">
+                  <div class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <h3>등록된 리드가 없습니다</h3>
+                  </div>
+                </td></tr>
+              ` : leads.map(l => `
+                <tr class="lead-row" data-name="${l.patient_name || ''}" data-email="${l.email || ''}" data-status="${l.lead_status || ''}">
+                  <td><code>${l.lead_id}</code></td>
+                  <td><strong>${l.patient_name || '-'}</strong></td>
+                  <td>${l.country || '-'}</td>
+                  <td>${l.chief_interest || '-'}</td>
+                  <td>${l.assigned_coordinator || '-'}</td>
+                  <td>${statusBadge(l.lead_status)}</td>
+                  <td>${fmtDate(l.inquiry_date)}</td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="showLeadDetail(${JSON.stringify(l).replace(/"/g,'&quot;')})">
+                      상세
+                    </button>
+                    ${canCreate && l.lead_status === 'Ready for Hospital Review' ? `
+                      <button class="btn btn-sm btn-primary" onclick="convertToCase('${l.lead_id}')">
+                        케이스 전환
+                      </button>
+                    ` : ''}
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+    showContent(html);
+  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+}
+
+function filterLeads() {
+  const search = document.getElementById('leadSearch').value.toLowerCase();
+  const status = document.getElementById('leadStatusFilter').value;
+  document.querySelectorAll('.lead-row').forEach(row => {
+    const name = row.dataset.name.toLowerCase();
+    const email = row.dataset.email.toLowerCase();
+    const rowStatus = row.dataset.status;
+    const matchSearch = !search || name.includes(search) || email.includes(search);
+    const matchStatus = !status || rowStatus === status;
+    row.style.display = matchSearch && matchStatus ? '' : 'none';
+  });
+}
+
+// ─── 신규 리드 모달 ───────────────────────────────────────────
+function showNewLeadModal() {
+  const body = `
+    <form id="newLeadForm" class="form-grid">
+      <div class="form-group">
+        <label class="required">환자명</label>
+        <input type="text" name="patient_name" required placeholder="홍길동">
+      </div>
+      <div class="form-group">
+        <label class="required">국가</label>
+        <input type="text" name="country" required placeholder="Korea">
+      </div>
+      <div class="form-group">
+        <label>전화번호</label>
+        <input type="tel" name="phone" placeholder="+82-10-0000-0000">
+      </div>
+      <div class="form-group">
+        <label>이메일</label>
+        <input type="email" name="email" placeholder="patient@email.com">
+      </div>
+      <div class="form-group">
+        <label class="required">유입 채널</label>
+        <select name="source_channel" required>
+          <option value="">선택</option>
+          <option>웹사이트</option>
+          <option>SNS</option>
+          <option>소개</option>
+          <option>에이전트</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="required">문의일</label>
+        <input type="date" name="inquiry_date" value="${new Date().toISOString().split('T')[0]}" required>
+      </div>
+      <div class="form-group full">
+        <label class="required">주요 관심</label>
+        <input type="text" name="chief_interest" required placeholder="예: 무릎 줄기세포 치료">
+      </div>
+      <div class="form-group full">
+        <label>메모</label>
+        <textarea name="notes" placeholder="추가 정보"></textarea>
+      </div>
+    </form>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitNewLead()">리드 등록</button>
+  `;
+  showModal('신규 리드 등록', body, footer);
+}
+
+function submitNewLead() {
+  const form = document.getElementById('newLeadForm');
+  if (!form.reportValidity()) return;
+  const data = Object.fromEntries(new FormData(form));
+
+  callServer('lead.create', data).then(result => {
+    closeModal();
+    showAlert(`리드 등록 완료: ${result.leadId}`, 'success');
+    loadPage('leads');
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+// ─── 리드 상세 모달 ───────────────────────────────────────────
+function showLeadDetail(lead) {
+  const body = `
+    <div class="detail-grid" style="margin-bottom:16px">
+      <div class="detail-item"><label>Lead ID</label><div class="value"><code>${lead.lead_id}</code></div></div>
+      <div class="detail-item"><label>상태</label><div class="value">${statusBadge(lead.lead_status)}</div></div>
+      <div class="detail-item"><label>환자명</label><div class="value">${lead.patient_name || '-'}</div></div>
+      <div class="detail-item"><label>국가</label><div class="value">${lead.country || '-'}</div></div>
+      <div class="detail-item"><label>연락처</label><div class="value">${lead.phone || '-'}</div></div>
+      <div class="detail-item"><label>이메일</label><div class="value">${lead.email || '-'}</div></div>
+      <div class="detail-item"><label>유입 채널</label><div class="value">${lead.source_channel || '-'}</div></div>
+      <div class="detail-item"><label>문의일</label><div class="value">${fmtDate(lead.inquiry_date)}</div></div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>주요 관심</label>
+      <div class="value">${lead.chief_interest || '-'}</div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>상태 변경</label>
+      <select id="leadStatusChange">
+        <option value="${lead.lead_status}">${lead.lead_status} (현재)</option>
+        <option value="Contacted">Contacted</option>
+        <option value="Awaiting Documents">Awaiting Documents</option>
+        <option value="Ready for Hospital Review">Ready for Hospital Review</option>
+        <option value="Closed - No Progress">Closed - No Progress</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>메모</label>
+      <textarea id="leadNotes">${lead.notes || ''}</textarea>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">닫기</button>
+    <button class="btn btn-primary" onclick="updateLead('${lead.lead_id}')">저장</button>
+  `;
+  showModal(`리드 상세 - ${lead.lead_id}`, body, footer);
+}
+
+function updateLead(leadId) {
+  const status = document.getElementById('leadStatusChange').value;
+  const notes = document.getElementById('leadNotes').value;
+  callServer('lead.update', { lead_id: leadId, lead_status: status, notes }).then(() => {
+    closeModal();
+    showAlert('리드 업데이트 완료', 'success');
+    loadPage('leads');
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+// ─── 케이스 전환 ──────────────────────────────────────────────
+function convertToCase(leadId) {
+  const body = `
+    <p style="margin-bottom:16px">리드 <strong>${leadId}</strong>를 케이스로 전환합니다.</p>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">병원 ID</label>
+        <input type="text" id="convHospital" required placeholder="HOSP-001">
+      </div>
+      <div class="form-group full">
+        <label class="required">적응증</label>
+        <input type="text" id="convIndication" required placeholder="무릎 연골 재생">
+      </div>
+      <div class="form-group">
+        <label>공급업체 ID</label>
+        <input type="text" id="convSupplier" placeholder="SUPP-001">
+      </div>
+      <div class="form-group">
+        <label>우선순위</label>
+        <select id="convPriority">
+          <option value="Normal">Normal</option>
+          <option value="High">High</option>
+          <option value="Urgent">Urgent</option>
+        </select>
+      </div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitConvertToCase('${leadId}')">케이스 생성</button>
+  `;
+  showModal('케이스 전환', body, footer);
+}
+
+function submitConvertToCase(leadId) {
+  const hospitalId = document.getElementById('convHospital').value;
+  const indication = document.getElementById('convIndication').value;
+  if (!hospitalId || !indication) { showAlert('필수 항목을 입력하세요', 'warning'); return; }
+
+  callServer('case.create', {
+    leadId, hospital_id: hospitalId, target_indication: indication,
+    supplier_id: document.getElementById('convSupplier').value,
+    priority: document.getElementById('convPriority').value,
+  }).then(result => {
+    closeModal();
+    showAlert(`케이스 생성 완료: ${result.caseId}`, 'success');
+    loadPage('caseDetail', { caseId: result.caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+</script>

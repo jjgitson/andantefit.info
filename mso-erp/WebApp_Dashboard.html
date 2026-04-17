@@ -1,0 +1,92 @@
+<script>
+function getDashboardHTML(params) {
+  showLoading(true);
+  callServer('dashboard.summary', {}).then(data => {
+    const d = data;
+    const html = `
+      <div class="stat-grid">
+        <div class="stat-card primary" onclick="loadPage('leads', {status:'New'})">
+          <div class="stat-number">${d.newLeads}</div>
+          <div class="stat-label">신규 리드</div>
+        </div>
+        <div class="stat-card blue" onclick="loadPage('cases', {status:'Under Hospital Review'})">
+          <div class="stat-number">${d.underReview}</div>
+          <div class="stat-label">병원 검토 중</div>
+        </div>
+        <div class="stat-card success" onclick="loadPage('cases', {status:'Scheduled'})">
+          <div class="stat-number">${d.upcomingTreatments.length}</div>
+          <div class="stat-label">시술 예정</div>
+        </div>
+        <div class="stat-card warning" onclick="loadPage('followup')">
+          <div class="stat-number">${d.overdueFollowups}</div>
+          <div class="stat-label">추적관찰 지연</div>
+        </div>
+        <div class="stat-card danger" onclick="loadPage('billing')">
+          <div class="stat-number">${fmtMoney(d.outstandingAmount)}</div>
+          <div class="stat-label">미수금</div>
+        </div>
+        <div class="stat-card warning" onclick="loadPage('supplier')">
+          <div class="stat-number">${d.delayedOrders}</div>
+          <div class="stat-label">납기 지연</div>
+        </div>
+        <div class="stat-card orange" onclick="loadPage('supplier')">
+          <div class="stat-number">${d.pendingAcceptance}</div>
+          <div class="stat-label">검수 대기</div>
+        </div>
+      </div>
+
+      ${d.upcomingTreatments.length > 0 ? `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📅 시술 예정 케이스</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>케이스 ID</th><th>병원</th><th>시술일</th><th></th></tr></thead>
+            <tbody>
+              ${d.upcomingTreatments.map(t => `
+                <tr class="clickable-row" onclick="loadPage('caseDetail', {caseId:'${t.caseId}'})">
+                  <td><strong>${t.caseId}</strong></td>
+                  <td>${t.hospital}</td>
+                  <td>${fmtDate(t.date)}</td>
+                  <td><button class="btn btn-sm btn-secondary">상세 보기</button></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      ` : ''}
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">⚡ 빠른 작업</span></div>
+          <div class="card-body btn-group" style="flex-direction:column;align-items:flex-start">
+            ${APP.role !== 'Supplier User' && APP.role !== 'Hospital User' ? `
+              <button class="btn btn-primary" onclick="showNewLeadModal()">+ 신규 리드 등록</button>
+            ` : ''}
+            <button class="btn btn-secondary" onclick="loadPage('cases')">케이스 목록 보기</button>
+            <button class="btn btn-secondary" onclick="loadPage('followup')">추적관찰 현황</button>
+            ${APP.role === 'Finance User' || APP.role === 'MSO Admin' ? `
+              <button class="btn btn-secondary" onclick="loadPage('billing')">미수금 확인</button>
+            ` : ''}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">ℹ️ 내 정보</span></div>
+          <div class="card-body">
+            <div class="detail-grid">
+              <div class="detail-item"><label>이름</label><div class="value">${APP.name}</div></div>
+              <div class="detail-item"><label>역할</label><div class="value">${statusBadge(APP.role)}</div></div>
+              <div class="detail-item"><label>이메일</label><div class="value" style="font-size:12px">${APP.user}</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    showContent(html);
+  }).catch(err => {
+    showContent(`<div class="alert alert-error">데이터 로드 실패: ${err.message}</div>`);
+  });
+}
+</script>

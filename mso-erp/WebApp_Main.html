@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSO-ERP</title>
+  <?!= include_('WebApp_Styles'); ?>
+</head>
+<body>
+
+<!-- 네비게이션 사이드바 -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h1 class="logo">MSO-ERP</h1>
+    <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+  </div>
+  <div class="user-info">
+    <div class="user-avatar"><?= userName.charAt(0).toUpperCase() ?></div>
+    <div>
+      <div class="user-name"><?= userName ?></div>
+      <div class="user-role badge-<?= userRole.toLowerCase().replace(/\s/g, '-') ?>"><?= userRole ?></div>
+    </div>
+  </div>
+  <ul class="nav-menu">
+    <li class="nav-item <?= page==='dashboard'?'active':'' ?>" onclick="loadPage('dashboard')">
+      <span class="nav-icon">📊</span><span>대시보드</span>
+    </li>
+    <li class="nav-item <?= page==='leads'?'active':'' ?>" onclick="loadPage('leads')" id="nav-leads">
+      <span class="nav-icon">📋</span><span>리드 관리</span>
+    </li>
+    <li class="nav-item <?= page==='cases'?'active':'' ?>" onclick="loadPage('cases')">
+      <span class="nav-icon">🗂️</span><span>케이스</span>
+    </li>
+    <li class="nav-item" onclick="loadPage('supplier')" id="nav-supplier">
+      <span class="nav-icon">🏭</span><span>공급 관리</span>
+    </li>
+    <li class="nav-item" onclick="loadPage('billing')" id="nav-billing">
+      <span class="nav-icon">💳</span><span>결제/청구</span>
+    </li>
+    <li class="nav-item" onclick="loadPage('followup')">
+      <span class="nav-icon">🔔</span><span>추적관리</span>
+    </li>
+    <li class="nav-item" onclick="loadPage('calendar')">
+      <span class="nav-icon">📅</span><span>일정</span>
+    </li>
+  </ul>
+</nav>
+
+<!-- 오버레이 (모바일) -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- 메인 컨텐츠 -->
+<div class="main-wrapper">
+  <header class="top-bar">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <h2 class="page-title" id="pageTitle">대시보드</h2>
+    <div class="header-actions">
+      <button class="btn btn-sm btn-primary" id="headerActionBtn" style="display:none"></button>
+    </div>
+  </header>
+
+  <!-- 알림 영역 -->
+  <div id="alertBox" class="alert" style="display:none"></div>
+
+  <!-- 페이지 컨텐츠 -->
+  <main class="content" id="mainContent">
+    <div class="loading-spinner" id="loadingSpinner">
+      <div class="spinner"></div>
+      <p>로딩 중...</p>
+    </div>
+  </main>
+</div>
+
+<!-- 모달 -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" id="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="modalTitle"></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<script>
+// ─── 전역 상태 ─────────────────────────────────────────────────
+const APP = {
+  user: '<?= userEmail ?>',
+  role: '<?= userRole ?>',
+  name: '<?= userName ?>',
+  currentPage: '<?= page ?>',
+};
+
+// 역할별 메뉴 가시성 설정
+(function initNav() {
+  const role = APP.role;
+  if (role === 'Supplier User') {
+    document.getElementById('nav-leads').style.display = 'none';
+    document.getElementById('nav-billing').style.display = 'none';
+  }
+  if (role === 'Hospital User') {
+    document.getElementById('nav-billing').style.display = 'none';
+  }
+  if (role === 'Finance User') {
+    document.getElementById('nav-supplier').style.display = 'none';
+  }
+})();
+
+// ─── 페이지 라우터 ─────────────────────────────────────────────
+const PAGE_TEMPLATES = {
+  dashboard: getDashboardHTML,
+  leads: getLeadsHTML,
+  cases: getCasesHTML,
+  caseDetail: getCaseDetailHTML,
+  supplier: getSupplierHTML,
+  billing: getBillingHTML,
+  followup: getFollowupHTML,
+  calendar: getCalendarHTML,
+};
+
+const PAGE_TITLES = {
+  dashboard: '대시보드',
+  leads: '리드 관리',
+  cases: '케이스 목록',
+  caseDetail: '케이스 상세',
+  supplier: '공급 관리',
+  billing: '결제/청구',
+  followup: '추적관리',
+  calendar: '일정',
+};
+
+function loadPage(page, params) {
+  APP.currentPage = page;
+  APP.currentParams = params || {};
+  document.getElementById('pageTitle').textContent = PAGE_TITLES[page] || page;
+
+  // 활성 메뉴 표시
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+  showLoading(true);
+
+  const renderFn = PAGE_TEMPLATES[page];
+  if (renderFn) {
+    renderFn(params);
+  } else {
+    showContent('<p>페이지를 찾을 수 없습니다.</p>');
+  }
+
+  // 모바일: 페이지 전환 시 사이드바 닫기
+  if (window.innerWidth <= 768) toggleSidebar(false);
+}
+
+function showContent(html) {
+  showLoading(false);
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function showLoading(show) {
+  const spinner = document.getElementById('loadingSpinner');
+  if (show) {
+    document.getElementById('mainContent').innerHTML = '';
+    document.getElementById('mainContent').appendChild(spinner);
+    spinner.style.display = 'flex';
+  } else {
+    spinner.style.display = 'none';
+  }
+}
+
+// ─── API 통신 ──────────────────────────────────────────────────
+function api(action, data) {
+  return new Promise((resolve, reject) => {
+    google.script.run
+      .withSuccessHandler(result => {
+        if (typeof result === 'string') result = JSON.parse(result);
+        if (result.error) reject(new Error(result.error));
+        else resolve(result);
+      })
+      .withFailureHandler(err => reject(err))
+      .doPost_({ action, data: data || {} });
+  });
+}
+
+// Apps Script 서버 함수를 직접 호출하는 래퍼
+// (실제로는 doPost를 통해 action 기반으로 호출)
+function callServer(action, data) {
+  return new Promise((resolve, reject) => {
+    google.script.run
+      .withSuccessHandler(r => {
+        try { resolve(typeof r === 'string' ? JSON.parse(r) : r); }
+        catch(e) { resolve(r); }
+      })
+      .withFailureHandler(reject)
+      .handleClientRequest(action, data || {});
+  });
+}
+
+// ─── UI 헬퍼 ──────────────────────────────────────────────────
+function showAlert(msg, type) {
+  const box = document.getElementById('alertBox');
+  box.className = `alert alert-${type || 'info'}`;
+  box.textContent = msg;
+  box.style.display = 'block';
+  setTimeout(() => { box.style.display = 'none'; }, 4000);
+}
+
+function showModal(title, bodyHtml, footerHtml) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalFooter').innerHTML = footerHtml || '';
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+}
+
+function toggleSidebar(forceOpen) {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const isOpen = sidebar.classList.contains('open');
+  const shouldOpen = forceOpen !== undefined ? forceOpen : !isOpen;
+  sidebar.classList.toggle('open', shouldOpen);
+  overlay.classList.toggle('show', shouldOpen);
+}
+
+function fmtDate(iso) {
+  if (!iso) return '-';
+  return new Date(iso).toLocaleDateString('ko-KR');
+}
+
+function fmtMoney(amount) {
+  if (!amount) return '-';
+  return Number(amount).toLocaleString('ko-KR') + '원';
+}
+
+function statusBadge(status) {
+  const colorMap = {
+    'Draft': 'gray', 'Under Hospital Review': 'blue', 'Hospital Approved': 'green',
+    'Supplier Coordination': 'orange', 'Shipment In Transit': 'purple',
+    'Acceptance Check Pending': 'yellow', 'Acceptance Confirmed': 'teal',
+    'Scheduled': 'blue', 'Completed': 'green', 'Follow-up Ongoing': 'orange',
+    'Closed': 'gray', 'Cancelled': 'red',
+    'New': 'blue', 'Contacted': 'teal', 'Awaiting Documents': 'orange',
+    'Ready for Hospital Review': 'green', 'Closed - No Progress': 'gray',
+  };
+  const color = colorMap[status] || 'gray';
+  return `<span class="badge badge-${color}">${status}</span>`;
+}
+
+// ─── 초기 페이지 로드 ─────────────────────────────────────────
+window.addEventListener('load', () => {
+  loadPage(APP.currentPage);
+});
+</script>
+
+<?!= include_('WebApp_Dashboard'); ?>
+<?!= include_('WebApp_Leads'); ?>
+<?!= include_('WebApp_Cases'); ?>
+<?!= include_('WebApp_CaseDetail'); ?>
+
+</body>
+</html>

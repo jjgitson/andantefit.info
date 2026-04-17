@@ -2,6 +2,12 @@
 // setupAllSheets() 를 한 번 실행하면 모든 탭과 헤더가 생성됨
 
 const SHEET_HEADERS = {
+  Users: [
+    'user_email', 'role', 'display_name',
+    'hospital_id', 'supplier_id',
+    'active', 'allowed_case_scope', 'created_at',
+  ],
+
   Patients: [
     'patient_id', 'patient_code', 'full_name', 'english_name',
     'date_of_birth', 'sex', 'nationality', 'passport_no',

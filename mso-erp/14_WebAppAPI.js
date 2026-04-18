@@ -196,8 +196,8 @@ function createPatient(data, user, role) {
     data.preferred_language || '',
     data.guardian_name || '',
     data.guardian_contact || '',
-    data.consent_privacy || 'FALSE',
-    data.consent_data_transfer || 'FALSE',
+    data.consent_privacy  === true || data.consent_privacy  === 'true',   // Boolean
+    data.consent_data_transfer === true || data.consent_data_transfer === 'true', // Boolean
     now,
     user,
   ]);
@@ -270,7 +270,7 @@ function getCaseDetail(caseId, user, role, profile) {
     throw new Error('본인 병원 케이스만 조회할 수 있습니다');
   }
 
-  const reviews     = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEW).filter(r => r.case_id === caseId);
+  const reviews     = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS).filter(r => r.case_id === caseId);
   const orders      = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS).filter(o => o.case_id === caseId);
   const docs        = sheetToObjects_(ss, CONFIG.SHEETS.DOCUMENTS).filter(d => d.case_id === caseId && d.is_latest === 'Yes');
   const billing_    = sheetToObjects_(ss, CONFIG.SHEETS.BILLING).filter(b => b.case_id === caseId);
@@ -303,7 +303,7 @@ function getCaseDetail(caseId, user, role, profile) {
 
 function getReview(caseId) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const reviews = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEW).filter(r => r.case_id === caseId);
+  const reviews = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS).filter(r => r.case_id === caseId);
   return { reviews };
 }
 
@@ -312,7 +312,7 @@ function submitHospitalReview(data, user, role) {
   if (!data.review_result) throw new Error('review_result 필드가 필요합니다');
 
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const sheet = ss.getSheetByName(CONFIG.SHEETS.MEDICAL_REVIEW);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.MEDICAL_REVIEWS);
   const rows = sheet.getDataRange().getValues();
   const headers = rows[0];
   const now = new Date();
@@ -321,6 +321,7 @@ function submitHospitalReview(data, user, role) {
     if (rows[i][headers.indexOf('case_id')] !== data.case_id) continue;
 
     const updatable = {
+      review_status: CONFIG.REVIEW_STATUS.COMPLETED,   // 심사 완료 표시
       review_result: data.review_result,
       next_medical_step: data.next_medical_step || '',
       consultation_date: data.consultation_date ? new Date(data.consultation_date) : '',
@@ -415,7 +416,7 @@ function getBilling(data, user, role) {
  * 청구 생성 또는 업데이트 (단일 엔드포인트)
  */
 function saveBilling(data, user, role) {
-  if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
+  if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
 
   if (data.billing_id) {
     // 기존 레코드 필드 업데이트
@@ -532,10 +533,11 @@ function createAppointment_api(data, user, role) {
   sheet.appendRow([
     aptId, data.case_id, data.appointment_type,
     data.scheduled_date ? new Date(data.scheduled_date) : '',
+    data.scheduled_time || '',   // scheduled_time
     data.location || '',
     data.responsible_party || user,
     data.attendee_status || 'Pending',
-    'FALSE', eventId, data.notes || '',
+    false, eventId, data.notes || '',
   ]);
 
   return { success: true, appointmentId: aptId };

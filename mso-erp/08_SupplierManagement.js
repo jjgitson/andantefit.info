@@ -2,7 +2,7 @@
 
 /**
  * 공급 요청 생성
- * Hospital Approved 상태에서만 허용 (상태 전이 규칙과 연동)
+ * Hospital Approved 또는 Supplier Coordination 상태에서만 허용
  * @param {Object} params
  * @returns {string} supplier_order_id
  */
@@ -18,32 +18,32 @@ function createSupplierOrder(params) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   const sheet = ss.getSheetByName(CONFIG.SHEETS.SUPPLIER_ORDERS);
 
-  const orderId = generateCustomId(CONFIG.SHEETS.SUPPLIER_ORDERS, 'SUPORD', 'supplier_order_id');
+  // ID 접두사: CONFIG.ID_PREFIXES.SUPPLIER_ORDERS = 'ORD'
+  const orderId = generateCustomId(CONFIG.SHEETS.SUPPLIER_ORDERS,
+    CONFIG.ID_PREFIXES.SUPPLIER_ORDERS, 'supplier_order_id');
   const now = new Date();
 
+  // Supplier_Orders 헤더 (19컬럼, acceptance_check_status만 요약 참조)
   sheet.appendRow([
-    orderId,
-    params.caseId,
-    params.supplierId,
-    now,
-    params.requestedItem || '',
-    params.quantity || 1,
-    params.expectedShipDate || '',
-    '', // confirmed_ship_date
-    '', // delivery_date
-    '', // lot_batch_no
-    '', // coa_link
-    '', // shipment_tracking_no
-    CONFIG.SUPPLIER_STATUS.REQUESTED,
-    params.storageCondition || '',
-    '', // temp_log_link
-    'FALSE', // transport_incident_flag
-    '', // transport_incident_notes
-    CONFIG.ACCEPTANCE_STATUS.NOT_STARTED,
-    '', // acceptance_checked_by
-    '', // acceptance_checked_at
-    '', // acceptance_notes
-    params.notes || '',
+    orderId,                                // supplier_order_id
+    params.caseId,                          // case_id
+    params.supplierId,                      // supplier_id
+    now,                                    // request_date
+    params.requestedItem || '',             // requested_item
+    params.quantity || 1,                   // quantity
+    params.expectedShipDate || '',          // expected_ship_date
+    '',                                     // confirmed_ship_date
+    '',                                     // delivery_date
+    '',                                     // lot_batch_no
+    '',                                     // coa_link
+    '',                                     // shipment_tracking_no
+    CONFIG.SUPPLIER_STATUS.REQUESTED,       // supplier_status
+    params.storageCondition || '',          // storage_condition
+    '',                                     // temp_log_link
+    false,                                  // transport_incident_flag (Boolean)
+    '',                                     // transport_incident_notes
+    CONFIG.ACCEPTANCE_STATUS.NOT_STARTED,   // acceptance_check_status (요약)
+    params.notes || '',                     // notes
   ]);
 
   // 케이스 상태 → Supplier Coordination
@@ -52,13 +52,10 @@ function createSupplierOrder(params) {
       params.requestedBy || Session.getActiveUser().getEmail(), 'MSO Coordinator');
   }
 
-  // 공급업체명 조회
   const supplierName = getSupplierName_(params.supplierId);
 
-  // Supplier Logistics 캘린더 이벤트
   if (params.expectedShipDate) {
-    const eventId = createShipmentEtaEvent(params.caseId, supplierName, new Date(params.expectedShipDate));
-    // 이벤트 ID는 Appointments에 저장하거나 Order 행에 저장 가능
+    createShipmentEtaEvent(params.caseId, supplierName, new Date(params.expectedShipDate));
   }
 
   addActivityLog({
@@ -75,23 +72,26 @@ function createSupplierOrder(params) {
 
 /**
  * 공급업체 출고 확정 입력
+ * Supplier_Orders: supplier_status = In Transit, 출고 상세 필드 업데이트
  * @param {string} orderId
  * @param {Object} params
- * @param {Date} params.confirmedShipDate
- * @param {string} params.lotBatchNo
- * @param {string} params.coaLink
- * @param {string} params.trackingNo
- * @param {string} params.updatedBy
  */
 function confirmShipment(orderId, params) {
   const order = getSupplierOrderData_(orderId);
   if (!order) throw new Error(`주문을 찾을 수 없습니다: ${orderId}`);
+  if (order.supplier_status !== CONFIG.SUPPLIER_STATUS.REQUESTED &&
+      order.supplier_status !== CONFIG.SUPPLIER_STATUS.CONFIRMED) {
+    throw new Error(`출고 확정은 Requested 또는 Confirmed 상태에서만 가능합니다. (현재: ${order.supplier_status})`);
+  }
 
   updateSupplierOrderField_(orderId, 'confirmed_ship_date', params.confirmedShipDate, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'lot_batch_no', params.lotBatchNo, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'coa_link', params.coaLink, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'shipment_tracking_no', params.trackingNo, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'supplier_status', CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
+  updateSupplierOrderField_(orderId, 'lot_batch_no',        params.lotBatchNo,        params.updatedBy);
+  updateSupplierOrderField_(orderId, 'coa_link',            params.coaLink || '',     params.updatedBy);
+  updateSupplierOrderField_(orderId, 'shipment_tracking_no', params.trackingNo || '', params.updatedBy);
+  updateSupplierOrderField_(orderId, 'temp_log_link',       params.tempLogLink || '', params.updatedBy);
+  updateSupplierOrderField_(orderId, 'storage_condition',   params.storageCondition || '', params.updatedBy);
+  updateSupplierOrderField_(orderId, 'supplier_status',     CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
+  updateSupplierOrderField_(orderId, 'acceptance_check_status', CONFIG.ACCEPTANCE_STATUS.PENDING, params.updatedBy);
 
   changeCaseStatus(order.case_id, CONFIG.CASE_STATUS.SHIPMENT_IN_TRANSIT,
     params.updatedBy, 'Supplier User');
@@ -107,6 +107,10 @@ function confirmShipment(orderId, params) {
 
 /**
  * 입고 검수 결과 입력
+ * - Acceptance_Checks 시트에 검수 레코드 생성
+ * - Supplier_Orders.acceptance_check_status 업데이트 (요약)
+ * - 케이스 상태 전환 (Accepted → Acceptance Confirmed, Rejected → Supplier Coordination)
+ *
  * @param {string} orderId
  * @param {Object} params
  * @param {'Accepted'|'Rejected'} params.result
@@ -117,17 +121,42 @@ function recordAcceptanceCheck(orderId, params) {
   const order = getSupplierOrderData_(orderId);
   if (!order) throw new Error(`주문을 찾을 수 없습니다: ${orderId}`);
 
+  // 검수는 Delivered 또는 Acceptance_Check_Pending 상태에서만 가능
+  const allowedCaseStatuses = [
+    CONFIG.CASE_STATUS.ACCEPTANCE_CHECK_PENDING,
+    CONFIG.CASE_STATUS.SHIPMENT_IN_TRANSIT,
+  ];
+  const caseData = getCaseData_(order.case_id);
+  if (caseData && !allowedCaseStatuses.includes(caseData.case_status)) {
+    throw new Error(`입고 검수는 배송 중 또는 검수 대기 상태에서만 가능합니다. (현재: ${caseData.case_status})`);
+  }
+
+  // 1. Acceptance_Checks 시트에 검수 레코드 저장
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const accSheet = ss.getSheetByName(CONFIG.SHEETS.ACCEPTANCE_CHECKS);
+  const acceptanceId = generateCustomId(CONFIG.SHEETS.ACCEPTANCE_CHECKS,
+    CONFIG.ID_PREFIXES.ACCEPTANCE_CHECKS, 'acceptance_id');
+
+  accSheet.appendRow([
+    acceptanceId,
+    orderId,
+    order.case_id,
+    new Date(),              // check_date
+    params.checkedBy,        // checked_by_email
+    params.result,           // result: Accepted | Rejected
+    params.notes || '',      // notes
+    new Date(),              // created_at
+  ]);
+
+  // 2. Supplier_Orders 요약 필드만 업데이트
   updateSupplierOrderField_(orderId, 'acceptance_check_status', params.result, params.checkedBy);
-  updateSupplierOrderField_(orderId, 'acceptance_checked_by', params.checkedBy, params.checkedBy);
-  updateSupplierOrderField_(orderId, 'acceptance_checked_at', new Date(), params.checkedBy);
-  updateSupplierOrderField_(orderId, 'acceptance_notes', params.notes || '', params.checkedBy);
   updateSupplierOrderField_(orderId, 'supplier_status', CONFIG.SUPPLIER_STATUS.DELIVERED, params.checkedBy);
 
+  // 3. 케이스 상태 전환
   if (params.result === CONFIG.ACCEPTANCE_STATUS.ACCEPTED) {
     changeCaseStatus(order.case_id, CONFIG.CASE_STATUS.ACCEPTANCE_CONFIRMED,
       params.checkedBy, 'Hospital User');
   } else {
-    // 반려 시 Supplier Coordination으로 복귀
     changeCaseStatus(order.case_id, CONFIG.CASE_STATUS.SUPPLIER_COORDINATION,
       params.checkedBy, 'Hospital User');
     notifyAcceptanceRejected_(order.case_id, orderId, params.notes);
@@ -138,13 +167,16 @@ function recordAcceptanceCheck(orderId, params) {
     actorEmail: params.checkedBy,
     actorRole: 'Hospital User',
     actionType: 'ACCEPTANCE_CHECK_COMPLETED',
-    summary: `입고 검수: ${params.result} (${orderId})`,
-    nextAction: params.result === 'Accepted' ? '시술 일정 확정' : '재공급 요청',
+    summary: `입고 검수: ${params.result} (주문: ${orderId}, 검수ID: ${acceptanceId})`,
+    nextAction: params.result === CONFIG.ACCEPTANCE_STATUS.ACCEPTED
+      ? '시술 일정 확정' : '재공급 요청',
   });
+
+  return acceptanceId;
 }
 
 /**
- * 납기 지연 케이스 조회
+ * 납기 지연 주문 조회
  * @returns {Array<Object>}
  */
 function getDelayedSupplierOrders() {
@@ -169,7 +201,7 @@ function getDelayedSupplierOrders() {
     });
 }
 
-// ─── 내부 헬퍼 ───────────────────────────────────────────────
+// ─── 내부 헬퍼 ────────────────────────────────────────────────────
 
 function getSupplierOrderData_(orderId) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
@@ -193,6 +225,11 @@ function updateSupplierOrderField_(orderId, fieldName, newValue, changedBy) {
   const data = sheet.getDataRange().getValues();
   const headers = data[0];
   const colIdx = headers.indexOf(fieldName);
+
+  if (colIdx === -1) {
+    Logger.log(`updateSupplierOrderField_: 컬럼 없음 '${fieldName}' in Supplier_Orders`);
+    return;
+  }
 
   for (let i = 1; i < data.length; i++) {
     if (data[i][headers.indexOf('supplier_order_id')] !== orderId) continue;

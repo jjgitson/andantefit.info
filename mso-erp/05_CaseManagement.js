@@ -90,7 +90,7 @@ function convertLeadToCase(leadId, caseParams) {
     if (data[i][headers.indexOf('lead_id')] === leadId) {
       sheet.getRange(i + 1, headers.indexOf('converted_to_case_id') + 1).setValue(caseId);
       sheet.getRange(i + 1, headers.indexOf('lead_status') + 1)
-        .setValue(CONFIG.LEAD_STATUS.READY_FOR_REVIEW);
+        .setValue(CONFIG.LEAD_STATUS.CONVERTED);
       break;
     }
   }
@@ -113,22 +113,23 @@ function requestHospitalReview(caseId, requestedBy) {
   const caseData = getCaseData_(caseId);
   if (caseData) {
     const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-    const reviewSheet = ss.getSheetByName(CONFIG.SHEETS.MEDICAL_REVIEW);
-    const reviewId = generateCustomId(CONFIG.SHEETS.MEDICAL_REVIEW, 'REV', 'review_id');
+    const reviewSheet = ss.getSheetByName(CONFIG.SHEETS.MEDICAL_REVIEWS);
+    const reviewId = generateCustomId(CONFIG.SHEETS.MEDICAL_REVIEWS, 'REV', 'review_id');
 
     reviewSheet.appendRow([
       reviewId,
       caseId,
       caseData.hospital_id,
-      now,
-      '',
-      '',
-      CONFIG.REVIEW_RESULT.PENDING,
-      '',
-      '',
-      '',
-      '',
-      '',
+      now,                            // review_request_date
+      '',                             // review_completed_date
+      '',                             // hospital_user
+      CONFIG.REVIEW_STATUS.PENDING,   // review_status
+      '',                             // review_result (비어있음 — 심사 완료 후 입력)
+      '',                             // next_medical_step
+      '',                             // consultation_date
+      '',                             // additional_test_required
+      '',                             // medical_notes_link
+      '',                             // notes
     ]);
 
     addActivityLog({

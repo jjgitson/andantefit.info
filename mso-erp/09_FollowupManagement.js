@@ -86,7 +86,7 @@ function completeFollowup(followupId, params) {
     sheet.getRange(i + 1, headers.indexOf('followup_notes') + 1)
       .setValue(params.notes || '');
     sheet.getRange(i + 1, headers.indexOf('escalation_required') + 1)
-      .setValue(params.escalationRequired ? 'TRUE' : 'FALSE');
+      .setValue(!!params.escalationRequired);   // Boolean
 
     createAuditLog('Followups', followupId, 'completed_date', '', now,
       params.completedBy, 'Apps Script');
@@ -147,7 +147,7 @@ function createFollowupRecord_(params) {
     params.dueDate || '',
     '', // completed_date
     params.responsibleParty || '',
-    'FALSE', // escalation_required
+    false,   // escalation_required (Boolean)
     '', // patient_response
     params.notes || '',
     '', // calendar_event_id

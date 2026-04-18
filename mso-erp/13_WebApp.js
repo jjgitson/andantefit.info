@@ -16,7 +16,7 @@ function doGet(e) {
   }
 
   // 비활성 계정 처리
-  if (profile.active === 'FALSE') {
+  if (profile.active === false || profile.active === 'FALSE') {
     return HtmlService.createHtmlOutput('<h2 style="padding:40px;font-family:sans-serif">계정이 비활성화되었습니다. 관리자에게 문의하세요.</h2>');
   }
 
@@ -58,7 +58,7 @@ function handleClientRequest(action, data) {
     const email = Session.getActiveUser().getEmail();
     const profile = getUserProfile_(email);
 
-    if (!profile || profile.active === 'FALSE') {
+    if (!profile || profile.active === false || profile.active === 'FALSE') {
       return JSON.stringify({ error: '접근 권한이 없습니다', code: 403 });
     }
 

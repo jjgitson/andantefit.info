@@ -21,9 +21,10 @@ const ROLE_PERMISSIONS = {
     'dashboard.summary',
     'lead.list', 'lead.create', 'lead.update',
     'case.list', 'case.get', 'case.create', 'case.changeStatus',
-    'patient.get',
+    'patient.get', 'patient.create',
     'review.get',
     'supplier.order.create', 'supplier.order.list',
+    'billing.list', 'billing.save',
     'followup.list', 'followup.complete',
     'document.register', 'document.list',
     'appointment.list', 'appointment.create',
@@ -47,7 +48,7 @@ const ROLE_PERMISSIONS = {
   'Finance User': [
     'dashboard.summary',
     'case.list', 'case.get',
-    'billing.list', 'billing.create',
+    'billing.list', 'billing.save',
     'billing.issueQuote', 'billing.issueInvoice', 'billing.recordPayment',
   ],
 };

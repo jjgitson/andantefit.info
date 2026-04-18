@@ -14,7 +14,7 @@ function getCalendarId_(calendarType) {
   for (let i = 1; i < data.length; i++) {
     if (
       data[i][headers.indexOf('calendar_type')] === calendarType &&
-      data[i][headers.indexOf('active')] === 'TRUE'
+      (data[i][headers.indexOf('active')] === true || data[i][headers.indexOf('active')] === 'TRUE')
     ) {
       return data[i][headers.indexOf('calendar_id')];
     }

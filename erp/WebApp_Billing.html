@@ -26,13 +26,13 @@ function getBillingHTML(params) {
         <div class="card-header"><span class="card-title" style="color:var(--danger)">🔴 결제 기한 초과 (${overdue.length}건)</span></div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Billing ID</th><th>케이스</th><th>청구액</th><th>미수금</th><th>만료일</th><th>상태</th><th></th></tr></thead>
+            <thead><tr><th class="mobile-hide">Billing ID</th><th>케이스</th><th class="mobile-hide">청구액</th><th>미수금</th><th>만료일</th><th>상태</th><th></th></tr></thead>
             <tbody>
               ${overdue.map(b => `
                 <tr style="background:#fff0f0">
-                  <td><code>${b.billing_id}</code></td>
+                  <td class="mobile-hide"><code>${b.billing_id}</code></td>
                   <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})">${b.case_id}</a></td>
-                  <td>${fmtMoney(b.invoice_amount)}</td>
+                  <td class="mobile-hide">${fmtMoney(b.invoice_amount)}</td>
                   <td style="color:var(--danger);font-weight:700">${fmtMoney(Number(b.invoice_amount||0)-Number(b.paid_amount||0))}</td>
                   <td style="color:var(--danger)">${fmtDate(b.due_date)}</td>
                   <td>${statusBadge(b.payment_status)}</td>
@@ -66,8 +66,12 @@ function getBillingHTML(params) {
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>Billing ID</th><th>케이스</th><th>통화</th><th>견적액</th><th>청구액</th>
-                <th>납입액</th><th>미수금</th><th>만료일</th><th>상태</th><th>액션</th></tr>
+              <tr>
+                <th class="mobile-hide">Billing ID</th><th>케이스</th>
+                <th class="mobile-hide">통화</th><th class="mobile-hide">견적액</th>
+                <th class="mobile-hide">청구액</th><th class="mobile-hide">납입액</th>
+                <th>미수금</th><th>만료일</th><th>상태</th><th>액션</th>
+              </tr>
             </thead>
             <tbody>
               ${billing.length === 0 ? `<tr><td colspan="10"><div class="empty-state"><div class="empty-state-icon">💳</div><h3>청구 내역 없음</h3></div></td></tr>` :
@@ -78,12 +82,12 @@ function getBillingHTML(params) {
                 return `
                   <tr class="bill-row" data-id="${b.billing_id}" data-caseid="${b.case_id}" data-status="${b.payment_status}"
                     style="${isOverdue ? 'background:#fff8f0' : ''}">
-                    <td><code>${b.billing_id}</code></td>
+                    <td class="mobile-hide"><code>${b.billing_id}</code></td>
                     <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})">${b.case_id}</a></td>
-                    <td>${b.currency||'KRW'}</td>
-                    <td>${fmtMoney(b.quote_amount)}</td>
-                    <td>${fmtMoney(b.invoice_amount)}</td>
-                    <td>${fmtMoney(b.paid_amount)}</td>
+                    <td class="mobile-hide">${b.currency||'KRW'}</td>
+                    <td class="mobile-hide">${fmtMoney(b.quote_amount)}</td>
+                    <td class="mobile-hide">${fmtMoney(b.invoice_amount)}</td>
+                    <td class="mobile-hide">${fmtMoney(b.paid_amount)}</td>
                     <td style="${outstanding_>0?'color:var(--danger);font-weight:700':''}">${outstanding_>0?fmtMoney(outstanding_):'-'}</td>
                     <td style="${isOverdue?'color:var(--danger)':''}">${fmtDate(b.due_date)}</td>
                     <td>${statusBadge(b.payment_status)}</td>

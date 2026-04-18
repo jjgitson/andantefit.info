@@ -42,12 +42,12 @@ function getCasesHTML(params) {
               <tr>
                 <th>케이스 ID</th>
                 <th>병원</th>
-                <th>적응증</th>
-                <th>담당자</th>
+                <th class="mobile-hide">적응증</th>
+                <th class="mobile-hide">담당자</th>
                 <th>우선순위</th>
                 <th>상태</th>
                 <th>시술일</th>
-                <th></th>
+                <th class="mobile-hide"></th>
               </tr>
             </thead>
             <tbody id="casesTbody">
@@ -82,12 +82,12 @@ function renderCaseRows_(cases) {
     >
       <td><code>${c.case_id}</code>${isDeleted ? ' <span class="badge badge-red" style="font-size:10px">삭제됨</span>' : ''}</td>
       <td>${c.hospital_id || '-'}</td>
-      <td>${c.target_indication || '-'}</td>
-      <td>${c.assigned_coordinator || '-'}</td>
+      <td class="mobile-hide">${c.target_indication || '-'}</td>
+      <td class="mobile-hide">${c.assigned_coordinator || '-'}</td>
       <td>${c.priority ? statusBadge(c.priority) : '-'}</td>
       <td>${statusBadge(c.case_status)}</td>
       <td>${c.treatment_date ? fmtDate(c.treatment_date) : '-'}</td>
-      <td>
+      <td class="mobile-hide">
         <button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();loadPage('caseDetail',{caseId:'${c.case_id}'})">상세</button>
       </td>
     </tr>

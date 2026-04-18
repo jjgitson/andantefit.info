@@ -31,7 +31,7 @@ function getFollowupHTML(params) {
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>케이스</th><th>단계</th><th>마감일</th><th>D+</th><th>담당</th><th>에스컬레이션</th><th></th></tr></thead>
+            <thead><tr><th>케이스</th><th>단계</th><th>마감일</th><th>D+</th><th class="mobile-hide">담당</th><th class="mobile-hide">에스컬레이션</th><th></th></tr></thead>
             <tbody>
               ${overdue.map(f => {
                 const daysOver = Math.floor((today - new Date(f.due_date)) / (1000*60*60*24));
@@ -41,8 +41,8 @@ function getFollowupHTML(params) {
                     <td><strong>${f.followup_stage}</strong></td>
                     <td style="color:var(--danger)">${fmtDate(f.due_date)}</td>
                     <td><span class="badge badge-red">+${daysOver}일</span></td>
-                    <td>${f.responsible_party||'-'}</td>
-                    <td>${f.escalation_required==='TRUE' ? '<span class="badge badge-red">필요</span>' : '-'}</td>
+                    <td class="mobile-hide">${f.responsible_party||'-'}</td>
+                    <td class="mobile-hide">${f.escalation_required==='TRUE' ? '<span class="badge badge-red">필요</span>' : '-'}</td>
                     <td><button class="btn btn-sm btn-primary" onclick="showFollowupModal('${f.followup_id}','${f.followup_stage}','${f.case_id}')">완료 처리</button></td>
                   </tr>
                 `;
@@ -74,7 +74,7 @@ function getFollowupHTML(params) {
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>케이스</th><th>단계</th><th>마감일</th><th>완료일</th><th>담당</th><th>환자 반응</th><th>에스컬레이션</th><th></th></tr>
+              <tr><th>케이스</th><th>단계</th><th>마감일</th><th class="mobile-hide">완료일</th><th class="mobile-hide">담당</th><th class="mobile-hide">환자 반응</th><th class="mobile-hide">에스컬레이션</th><th></th></tr>
             </thead>
             <tbody>
               ${followups.length === 0 ? `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">🔔</div><h3>추적관찰 없음</h3></div></td></tr>` :
@@ -88,10 +88,10 @@ function getFollowupHTML(params) {
                     <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})">${f.case_id}</a></td>
                     <td><strong>${f.followup_stage}</strong></td>
                     <td style="${isOver ? 'color:var(--danger)' : ''}">${fmtDate(f.due_date)}</td>
-                    <td>${f.completed_date ? fmtDate(f.completed_date) : '<span style="color:var(--gray-500)">-</span>'}</td>
-                    <td>${f.responsible_party||'-'}</td>
-                    <td style="font-size:12px">${f.patient_response||'-'}</td>
-                    <td>${f.escalation_required==='TRUE' ? '<span class="badge badge-red">필요</span>' : '-'}</td>
+                    <td class="mobile-hide">${f.completed_date ? fmtDate(f.completed_date) : '<span style="color:var(--gray-500)">-</span>'}</td>
+                    <td class="mobile-hide">${f.responsible_party||'-'}</td>
+                    <td class="mobile-hide" style="font-size:12px">${f.patient_response||'-'}</td>
+                    <td class="mobile-hide">${f.escalation_required==='TRUE' ? '<span class="badge badge-red">필요</span>' : '-'}</td>
                     <td>
                       ${!isDone ? `<button class="btn btn-sm btn-success" onclick="showFollowupModal('${f.followup_id}','${f.followup_stage}','${f.case_id}')">완료</button>` : '<span class="badge badge-green">✓ 완료</span>'}
                     </td>

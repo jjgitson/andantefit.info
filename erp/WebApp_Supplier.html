@@ -50,14 +50,14 @@ function getSupplierHTML(params) {
           <table>
             <thead>
               <tr>
-                <th>주문 ID</th>
+                <th class="mobile-hide">주문 ID</th>
                 <th>케이스</th>
-                ${!isSupplier ? '<th>공급업체</th>' : ''}
-                <th>요청 품목</th>
+                ${!isSupplier ? '<th class="mobile-hide">공급업체</th>' : ''}
+                <th class="mobile-hide">요청 품목</th>
                 <th>예정 출고</th>
-                <th>배치번호</th>
+                <th class="mobile-hide">배치번호</th>
                 <th>상태</th>
-                <th>운송/문서</th>
+                <th class="mobile-hide">운송/문서</th>
                 <th>액션</th>
               </tr>
             </thead>
@@ -86,14 +86,14 @@ function renderOrderRows_(orders, isSupplier) {
       <tr class="order-row" data-id="${o.supplier_order_id}" data-caseid="${o.case_id}"
           data-status="${o.supplier_status}" data-acceptance="${o.acceptance_check_status}"
           style="${isDelayed ? 'background:#fff8e1' : ''}">
-        <td><code>${o.supplier_order_id}</code></td>
+        <td class="mobile-hide"><code>${o.supplier_order_id}</code></td>
         <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${o.case_id}'})">${o.case_id}</a></td>
-        ${!isSupplier ? `<td>${o.supplier_id||'-'}</td>` : ''}
-        <td>${o.requested_item||'-'}</td>
+        ${!isSupplier ? `<td class="mobile-hide">${o.supplier_id||'-'}</td>` : ''}
+        <td class="mobile-hide">${o.requested_item||'-'}</td>
         <td style="${isDelayed ? 'color:var(--danger);font-weight:700' : ''}">${fmtDate(o.expected_ship_date)}</td>
-        <td>${o.lot_batch_no || '<span style="color:var(--gray-500)">-</span>'}</td>
+        <td class="mobile-hide">${o.lot_batch_no || '<span style="color:var(--gray-500)">-</span>'}</td>
         <td>${statusBadge(o.supplier_status)}</td>
-        <td>
+        <td class="mobile-hide">
           ${o.shipment_tracking_no ? `<span style="font-size:11px">${o.shipment_tracking_no}</span>` : '-'}
           ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank" style="margin-left:4px">COA</a>` : ''}
         </td>

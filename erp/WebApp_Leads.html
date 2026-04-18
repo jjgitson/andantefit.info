@@ -27,11 +27,11 @@ function getLeadsHTML(params) {
           <table id="leadsTable">
             <thead>
               <tr>
-                <th>Lead ID</th>
+                <th class="mobile-hide">Lead ID</th>
                 <th>이름</th>
-                <th>국가</th>
-                <th>주요 관심</th>
-                <th>담당자</th>
+                <th class="mobile-hide">국가</th>
+                <th class="mobile-hide">주요 관심</th>
+                <th class="mobile-hide">담당자</th>
                 <th>상태</th>
                 <th>문의일</th>
                 <th></th>
@@ -47,11 +47,11 @@ function getLeadsHTML(params) {
                 </td></tr>
               ` : leads.map(l => `
                 <tr class="lead-row" data-name="${l.patient_name || ''}" data-email="${l.email || ''}" data-status="${l.lead_status || ''}">
-                  <td><code>${l.lead_id}</code></td>
+                  <td class="mobile-hide"><code>${l.lead_id}</code></td>
                   <td><strong>${l.patient_name || '-'}</strong></td>
-                  <td>${l.country || '-'}</td>
-                  <td>${l.chief_interest || '-'}</td>
-                  <td>${l.assigned_coordinator || '-'}</td>
+                  <td class="mobile-hide">${l.country || '-'}</td>
+                  <td class="mobile-hide">${l.chief_interest || '-'}</td>
+                  <td class="mobile-hide">${l.assigned_coordinator || '-'}</td>
                   <td>${statusBadge(l.lead_status)}</td>
                   <td>${fmtDate(l.inquiry_date)}</td>
                   <td>

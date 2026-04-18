@@ -2,23 +2,24 @@
 // 케이스 상태 → 단계 번호·라벨·다음 할 일
 var CASE_PHASE = {
   'Draft':                    { step:1,  label:'초안',         next:'병원 검토 요청',      color:'var(--gray-500)' },
-  'Hospital Approved':        { step:2,  label:'병원 승인',    next:'공급 주문 등록',      color:'var(--primary)' },
-  'Supplier Coordination':    { step:3,  label:'공급 조율',    next:'출고 확정',           color:'#f59e0b' },
-  'Shipment In Transit':      { step:4,  label:'배송 중',      next:'출고 확정',           color:'#f59e0b' },
-  'Acceptance Check Pending': { step:5,  label:'입고 검수',    next:'검수 결과 입력',      color:'#f59e0b' },
-  'Acceptance Confirmed':     { step:6,  label:'출고 확정',    next:'시술 일정 확정',      color:'var(--primary)' },
-  'Scheduled':                { step:7,  label:'시술 예정',    next:'시술 완료 처리',      color:'#8b5cf6' },
-  'Completed':                { step:8,  label:'시술 완료',    next:'추적관찰 시작',       color:'var(--success)' },
-  'Follow-up Ongoing':        { step:9,  label:'추적관찰 중',  next:'추적관찰 완료 처리',  color:'var(--success)' },
-  'Closed':                   { step:10, label:'종료',         next:null,                  color:'var(--gray-400)' },
+  'Under Hospital Review':    { step:2,  label:'병원 검토 중', next:'병원 승인 처리',      color:'#3b82f6' },
+  'Hospital Approved':        { step:3,  label:'병원 승인',    next:'공급 주문 등록',      color:'var(--primary)' },
+  'Supplier Coordination':    { step:4,  label:'공급 조율',    next:'출고 확정',           color:'#f59e0b' },
+  'Shipment In Transit':      { step:5,  label:'배송 중',      next:'출고 확정',           color:'#f59e0b' },
+  'Acceptance Check Pending': { step:6,  label:'입고 검수',    next:'검수 결과 입력',      color:'#f59e0b' },
+  'Acceptance Confirmed':     { step:7,  label:'출고 확정',    next:'시술 일정 확정',      color:'var(--primary)' },
+  'Scheduled':                { step:8,  label:'시술 예정',    next:'시술 완료 처리',      color:'#8b5cf6' },
+  'Completed':                { step:9,  label:'시술 완료',    next:'추적관찰 시작',       color:'var(--success)' },
+  'Follow-up Ongoing':        { step:10, label:'추적관찰 중',  next:'추적관찰 완료 처리',  color:'var(--success)' },
+  'Closed':                   { step:11, label:'종료',         next:null,                  color:'var(--gray-400)' },
   'Cancelled':                { step:0,  label:'취소됨',       next:null,                  color:'var(--danger)' },
 };
-var PHASE_TOTAL = 9; // 1~9 활성 단계
+var PHASE_TOTAL = 10; // 1~10 활성 단계
 
 // ─── 케이스 목록 ───────────────────────────────────────────────
 function getCasesHTML(params) {
   showLoading(true);
-  callServer('case.list', { showDeleted: true }).then(data => {
+  callServer('case.list', {}).then(data => {
     const cases = data.cases || [];
     const canCreate = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
 
@@ -41,6 +42,7 @@ function getCasesHTML(params) {
           <select id="caseStepFilter" onchange="filterCases()">
             <option value="">전체 단계</option>
             <option value="Draft">초안</option>
+            <option value="Under Hospital Review">병원 검토 중</option>
             <option value="Hospital Approved">병원 승인</option>
             <option value="Supplier Coordination">공급 조율</option>
             <option value="Shipment In Transit">배송 중</option>

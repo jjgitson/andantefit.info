@@ -543,6 +543,42 @@ function submitHospitalReview(data, user, role) {
   throw new Error('해당 검토를 찾을 수 없습니다');
 }
 
+/**
+ * 병원 검토 결과 원스텝 기록 — review 레코드가 없어도 생성 후 결과까지 저장.
+ * MSO 담당자가 오프라인 협의 결과를 빠르게 기록하는 용도.
+ */
+function recordHospitalResult_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.caseId)       throw new Error('caseId가 필요합니다');
+  if (!data.review_result) throw new Error('review_result가 필요합니다');
+
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+
+  // 기존 Pending 검토 레코드 찾기 (없으면 새로 생성)
+  let reviews = cachedRead_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS)
+    .filter(r => r.case_id === data.caseId && r.review_status === CONFIG.REVIEW_STATUS.PENDING);
+
+  let reviewId;
+  if (reviews.length > 0) {
+    reviewId = reviews[0].review_id;
+  } else {
+    // 케이스가 'Under Hospital Review'가 아니면 먼저 상태 전환
+    const caseData = getCaseData_(data.caseId);
+    if (caseData && caseData.case_status === CONFIG.CASE_STATUS.DRAFT) {
+      changeCaseStatus(data.caseId, CONFIG.CASE_STATUS.UNDER_HOSPITAL_REVIEW, user, role);
+    }
+    reviewId = requestHospitalReview(data.caseId, user, '');
+  }
+
+  // review.submit 재사용
+  return submitHospitalReview({
+    review_id:         reviewId,
+    review_result:     data.review_result,
+    consultation_date: data.consultation_date || '',
+    notes:             data.notes || '',
+  }, user, role);
+}
+
 // ════════════════════════════════════════════════════════════
 // SUPPLIER ORDERS
 // ════════════════════════════════════════════════════════════
@@ -550,6 +586,14 @@ function submitHospitalReview(data, user, role) {
 function getSupplierOrders(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   let orders = cachedRead_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
+
+  // 삭제된 케이스의 주문은 제외
+  const activeCaseIds = new Set(
+    cachedRead_(ss, CONFIG.SHEETS.CASES)
+      .filter(c => !c.is_deleted || String(c.is_deleted).toLowerCase() === 'false')
+      .map(c => c.case_id)
+  );
+  orders = orders.filter(o => activeCaseIds.has(o.case_id));
 
   if (role === ROLES.SUPPLIER_USER) {
     orders = orders.filter(o => o.supplier_id === profile.supplier_id);

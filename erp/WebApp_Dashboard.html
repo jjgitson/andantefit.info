@@ -18,6 +18,7 @@ function renderDashboard_(d) {
 
   const PIPELINE = [
     ['Draft',                    '초안',        'var(--gray-400)'],
+    ['Under Hospital Review',    '병원 검토 중','#3b82f6'],
     ['Hospital Approved',        '병원 승인',   'var(--primary)'],
     ['Supplier Coordination',    '공급 조율',   '#f59e0b'],
     ['Shipment In Transit',      '배송 중',     '#f59e0b'],
@@ -212,6 +213,7 @@ function dashboardBottomCards_() {
             <button class="btn btn-secondary" onclick="showNewCaseModal()">+ 신규 케이스 생성</button>
           ` : ''}
           <button class="btn btn-secondary" onclick="loadPage('cases')">케이스 목록</button>
+          <button class="btn btn-secondary" onclick="loadPage('treatmentSchedule')">시술 일정</button>
           <button class="btn btn-secondary" onclick="loadPage('schedule')">팀 일정 캘린더</button>
         </div>
       </div>

@@ -72,7 +72,7 @@ function doGet(e) {
     );
   }
 
-  const page = (e && e.parameter.page) || 'schedule';
+  const page = (e && e.parameter.page) || 'cases';
 
   const template = HtmlService.createTemplateFromFile('WebApp_Main');
   template.userEmail    = email;
@@ -248,6 +248,7 @@ function dispatchAction_(action, data, user, role, profile) {
     'review.request': () => requestReview_api(data, user, role),
     'review.get':     () => getReview(data.caseId),
     'review.submit':  () => submitHospitalReview(data, user, role),
+    'review.record':  () => recordHospitalResult_api(data, user, role),
 
     // 공급 주문
     'supplier.order.list':        () => getSupplierOrders(data, user, role, profile),

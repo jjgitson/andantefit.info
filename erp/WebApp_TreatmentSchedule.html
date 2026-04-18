@@ -1,0 +1,93 @@
+<script>
+console.log('[MSO] treatmentSchedule include loaded');
+
+function getTreatmentScheduleHTML(params) {
+  showLoading(true);
+  callServer('case.list', {}).then(data => {
+    const cases = data.cases || [];
+
+    const scheduled      = cases.filter(c => c.case_status === 'Scheduled');
+    const needsSched     = cases.filter(c => c.case_status === 'Acceptance Confirmed');
+    const today          = new Date(); today.setHours(0,0,0,0);
+
+    function sortByDate(arr) {
+      return arr.slice().sort((a,b) => new Date(a.treatment_date||'9999') - new Date(b.treatment_date||'9999'));
+    }
+
+    // ── 시술 예정 목록 ─────────────────────────────────────────
+    const scheduledRows = sortByDate(scheduled).map(c => {
+      const d = c.treatment_date ? new Date(c.treatment_date) : null;
+      if (d) d.setHours(0,0,0,0);
+      const diff = d ? Math.round((d - today) / (1000*60*60*24)) : null;
+      const diffLabel = diff === null ? '-' : diff === 0 ? '오늘' : diff < 0 ? `D+${-diff}` : `D-${diff}`;
+      const diffColor = diff === null ? 'var(--gray-400)' : diff <= 0 ? 'var(--danger)' : diff <= 3 ? 'var(--warning)' : 'var(--primary)';
+      return `
+        <tr onclick="loadPage('caseDetail',{caseId:'${c.case_id}'})" style="cursor:pointer" class="clickable-row">
+          <td>
+            <div style="font-weight:600">${c.patient_name || c.case_id}</div>
+            <div style="font-size:11px;color:var(--gray-500)">${c.case_id}</div>
+          </td>
+          <td>${c.hospital_id || '-'}</td>
+          <td>${c.target_indication || '-'}</td>
+          <td>${c.treatment_date ? fmtDate(c.treatment_date) : '-'}</td>
+          <td style="font-weight:700;color:${diffColor}">${diffLabel}</td>
+          <td>${c.assigned_coordinator || '-'}</td>
+          <td>${c.priority ? statusBadge(c.priority) : '-'}</td>
+        </tr>
+      `;
+    }).join('');
+
+    // ── 시술 일정 확정 대기 목록 ───────────────────────────────
+    const needsSchedRows = needsSched.map(c => `
+      <tr onclick="loadPage('caseDetail',{caseId:'${c.case_id}'})" style="cursor:pointer" class="clickable-row">
+        <td>
+          <div style="font-weight:600">${c.patient_name || c.case_id}</div>
+          <div style="font-size:11px;color:var(--gray-500)">${c.case_id}</div>
+        </td>
+        <td>${c.hospital_id || '-'}</td>
+        <td>${c.target_indication || '-'}</td>
+        <td>
+          <button class="btn btn-success btn-sm" onclick="event.stopPropagation();showScheduleTreatmentModal('${c.case_id}')">
+            시술 일정 확정
+          </button>
+        </td>
+        <td>${c.assigned_coordinator || '-'}</td>
+      </tr>
+    `).join('');
+
+    const html = `
+      <!-- 시술 예정 -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header">
+          <span class="card-title">🩺 시술 예정 (${scheduled.length}건)</span>
+        </div>
+        ${scheduled.length === 0
+          ? `<div class="empty-state"><div class="empty-state-icon">🩺</div><h3>예정된 시술 없음</h3></div>`
+          : `<div class="table-wrap">
+              <table>
+                <thead><tr><th>환자</th><th>병원</th><th>적응증</th><th>시술일</th><th>D-Day</th><th>담당자</th><th>우선순위</th></tr></thead>
+                <tbody>${scheduledRows}</tbody>
+              </table>
+            </div>`
+        }
+      </div>
+
+      <!-- 일정 확정 대기 -->
+      ${needsSched.length > 0 ? `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title" style="color:var(--warning)">⏳ 시술 일정 확정 대기 (${needsSched.length}건)</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>환자</th><th>병원</th><th>적응증</th><th>액션</th><th>담당자</th></tr></thead>
+            <tbody>${needsSchedRows}</tbody>
+          </table>
+        </div>
+      </div>
+      ` : ''}
+    `;
+    showContent(html);
+  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+}
+</script>

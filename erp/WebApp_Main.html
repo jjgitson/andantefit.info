@@ -22,9 +22,6 @@
     </div>
   </div>
   <ul class="nav-menu">
-    <li class="nav-item <?= page==='dashboard'?'active':'' ?>" onclick="loadPage('dashboard')" id="nav-dashboard">
-      <span class="nav-icon">📊</span><span>대시보드</span>
-    </li>
     <li class="nav-item <?= page==='leads'?'active':'' ?>" onclick="loadPage('leads')" id="nav-leads">
       <span class="nav-icon">📋</span><span>리드 관리</span>
     </li>
@@ -33,6 +30,9 @@
     </li>
     <li class="nav-item <?= page==='supplier'?'active':'' ?>" onclick="loadPage('supplier')" id="nav-supplier">
       <span class="nav-icon">🏭</span><span>공급 관리</span>
+    </li>
+    <li class="nav-item <?= page==='treatmentSchedule'?'active':'' ?>" onclick="loadPage('treatmentSchedule')" id="nav-treatmentSchedule">
+      <span class="nav-icon">🩺</span><span>시술 일정</span>
     </li>
     <li class="nav-item <?= page==='billing'?'active':'' ?>" onclick="loadPage('billing')" id="nav-billing">
       <span class="nav-icon">💳</span><span>결제/청구</span>
@@ -53,7 +53,7 @@
 <div class="main-wrapper">
   <header class="top-bar">
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-    <h2 class="page-title" id="pageTitle">대시보드</h2>
+    <h2 class="page-title" id="pageTitle">케이스 목록</h2>
     <div class="header-actions">
       <button class="btn btn-sm btn-primary" id="headerActionBtn" style="display:none"></button>
     </div>
@@ -64,17 +64,17 @@
 
 <!-- 모바일 하단 탭바 -->
 <nav class="bottom-nav" id="bottomNav">
-  <div class="bn-item <?= page==='schedule'?'active':'' ?>" onclick="loadPage('schedule')" id="bn-schedule">
-    <span class="bn-icon">📅</span><span>일정</span>
-  </div>
   <div class="bn-item <?= page==='cases'?'active':'' ?>" onclick="loadPage('cases')" id="bn-cases">
     <span class="bn-icon">🗂️</span><span>케이스</span>
   </div>
-  <div class="bn-item <?= page==='leads'?'active':'' ?>" onclick="loadPage('leads')" id="bn-leads">
-    <span class="bn-icon">📋</span><span>리드</span>
+  <div class="bn-item <?= page==='treatmentSchedule'?'active':'' ?>" onclick="loadPage('treatmentSchedule')" id="bn-treatmentSchedule">
+    <span class="bn-icon">🩺</span><span>시술</span>
   </div>
   <div class="bn-item <?= page==='followup'?'active':'' ?>" onclick="loadPage('followup')" id="bn-followup">
     <span class="bn-icon">🔔</span><span>추적</span>
+  </div>
+  <div class="bn-item <?= page==='billing'?'active':'' ?>" onclick="loadPage('billing')" id="bn-billing">
+    <span class="bn-icon">💳</span><span>결제</span>
   </div>
   <div class="bn-item" onclick="toggleSidebar()" id="bn-more">
     <span class="bn-icon">☰</span><span>더보기</span>
@@ -99,11 +99,11 @@
   아래 메인 스크립트에서 PAGE_FN_MAP에 실제 함수 레퍼런스를 저장할 수 있다.
   순서를 바꾸면 ReferenceError 또는 TDZ 에러가 발생한다.
 -->
-<?!= include_('WebApp_Dashboard'); ?>
 <?!= include_('WebApp_Leads'); ?>
 <?!= include_('WebApp_Cases'); ?>
 <?!= include_('WebApp_CaseDetail'); ?>
 <?!= include_('WebApp_Supplier'); ?>
+<?!= include_('WebApp_TreatmentSchedule'); ?>
 <?!= include_('WebApp_Billing'); ?>
 <?!= include_('WebApp_Followup'); ?>
 <?!= include_('WebApp_Schedule'); ?>
@@ -116,7 +116,6 @@
 -->
 <script>
 console.log('[MSO] main script loaded');
-console.log('[MSO] typeof getDashboardHTML =', typeof getDashboardHTML);
 
 // ─── 전역 상태 ──────────────────────────────────────────────
 // var 사용: const/let TDZ 방지 (OAuth 다이얼로그 등 이른 실행 환경 대응)
@@ -152,28 +151,25 @@ console.log('[MSO] APP initialized | user:', APP.user, '| role:', APP.role,
 // ─── 페이지 라우터 ───────────────────────────────────────────
 // 문자열 기반 지연 조회: 초기화 시점 ReferenceError 완전 방지
 // loadPage() 호출 시 window[fnName]으로 실제 함수를 찾는다.
-console.log('[MSO] typeof getDashboardHTML before PAGE_FN_MAP =', typeof getDashboardHTML);
 var PAGE_FN_MAP = {
-  dashboard:  'getDashboardHTML',
-  leads:      'getLeadsHTML',
-  cases:      'getCasesHTML',
-  caseDetail: 'getCaseDetailHTML',
-  supplier:   'getSupplierHTML',
-  billing:    'getBillingHTML',
-  followup:   'getFollowupHTML',
-  schedule:   'getScheduleHTML',
+  leads:             'getLeadsHTML',
+  cases:             'getCasesHTML',
+  caseDetail:        'getCaseDetailHTML',
+  supplier:          'getSupplierHTML',
+  treatmentSchedule: 'getTreatmentScheduleHTML',
+  billing:           'getBillingHTML',
+  followup:          'getFollowupHTML',
+  schedule:          'getScheduleHTML',
 };
-console.log('[MSO] PAGE_FN_MAP built | keys:', Object.keys(PAGE_FN_MAP).join(', '));
-
 var PAGE_TITLES = {
-  dashboard:  '대시보드',
-  leads:      '리드 관리',
-  cases:      '케이스 목록',
-  caseDetail: '케이스 상세',
-  supplier:   '공급 관리',
-  billing:    '결제/청구',
-  followup:   '추적관리',
-  schedule:   '팀 일정',
+  leads:             '리드 관리',
+  cases:             '케이스 목록',
+  caseDetail:        '케이스 상세',
+  supplier:          '공급 관리',
+  treatmentSchedule: '시술 일정',
+  billing:           '결제/청구',
+  followup:          '추적관리',
+  schedule:          '팀 일정',
 };
 
 function loadPage(page, params) {
@@ -466,10 +462,7 @@ window.addEventListener('load', function() {
 });
 
 function initApp_() {
-  console.log('[MSO] initApp started | page:', APP.currentPage,
-    '| typeof getDashboardHTML:', typeof getDashboardHTML,
-    '| typeof window.getDashboardHTML:', typeof window.getDashboardHTML,
-    '| PAGE_FN_MAP.dashboard:', PAGE_FN_MAP.dashboard);
+  console.log('[MSO] initApp started | page:', APP.currentPage);
 
   // Step 1: ping() 직접 호출 — google.script.run 자체 동작 여부 확인 (인증 불필요)
   console.log('[MSO] calling ping() directly (bypasses handleClientRequest)...');

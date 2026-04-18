@@ -80,30 +80,32 @@ function getCaseDetailHTML(params) {
         </div>
 
         <!-- 일정 요약 -->
-        ${data.appointments && data.appointments.length > 0 ? `
         <div class="card">
           <div class="card-header">
             <span class="card-title">📅 일정</span>
             <button class="btn btn-sm btn-secondary" onclick="showAddAppointmentModal('${c.case_id}')">+ 일정 추가</button>
           </div>
+          ${!data.appointments || data.appointments.length === 0 ? `
+            <div class="empty-state" style="padding:24px"><div class="empty-state-icon">📅</div><h3>등록된 일정 없음</h3></div>
+          ` : `
           <div class="table-wrap">
             <table>
-              <thead><tr><th>유형</th><th>날짜</th><th>장소</th><th>담당</th><th>상태</th></tr></thead>
+              <thead><tr><th>유형</th><th>날짜</th><th class="mobile-hide">장소</th><th class="mobile-hide">담당</th><th>상태</th></tr></thead>
               <tbody>
                 ${data.appointments.map(a => `
                   <tr>
                     <td>${a.appointment_type}</td>
                     <td>${fmtDate(a.scheduled_date)}</td>
-                    <td>${a.location || '-'}</td>
-                    <td>${a.responsible_party || '-'}</td>
+                    <td class="mobile-hide">${a.location || '-'}</td>
+                    <td class="mobile-hide">${a.responsible_party || '-'}</td>
                     <td>${statusBadge(a.attendee_status)}</td>
                   </tr>
                 `).join('')}
               </tbody>
             </table>
           </div>
+          `}
         </div>
-        ` : ''}
       </div>
 
       <!-- 병원 검토 탭 -->
@@ -272,6 +274,8 @@ function submitSupplierOrder(caseId) {
   const item       = document.getElementById('soItem').value.trim();
   if (!supplierId) { showAlert('공급업체를 선택하세요', 'warning'); return; }
   if (!item)       { showAlert('제품/세포 유형을 입력하세요', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('supplier.order.create', {
     caseId, supplierId,
     requestedItem:            item,
@@ -287,7 +291,7 @@ function submitSupplierOrder(caseId) {
     closeModal();
     showAlert(`공급 요청 등록 완료: ${result.orderId}`, 'success');
     loadPage('caseDetail', { caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 케이스 액션 버튼 ─────────────────────────────────────────
@@ -325,9 +329,11 @@ function showCaseDeleteModal(caseId) {
 
 function confirmCaseDelete(caseId) {
   const reason = document.getElementById('caseDetailDeleteReason').value;
+  const btn = document.querySelector('#modalFooter .btn-danger');
+  setLoadingBtn(btn, true);
   callServer('case.delete', { caseId, reason })
     .then(() => { closeModal(); showAlert('케이스가 삭제되었습니다', 'success'); loadPage('cases'); })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 병원 검토 탭 렌더링 ─────────────────────────────────────
@@ -437,6 +443,8 @@ function showReviewSubmitModal(reviewId, caseId) {
 function submitReview(reviewId, caseId) {
   const result = document.getElementById('revResult').value;
   if (!result) { showAlert('검토 결과를 선택하세요', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('review.submit', {
     review_id: reviewId, case_id: caseId, review_result: result,
     next_medical_step: document.getElementById('revNextStep').value,
@@ -448,7 +456,7 @@ function submitReview(reviewId, caseId) {
     closeModal();
     showAlert('검토 결과 제출 완료', 'success');
     loadPage('caseDetail', { caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 주문/배송 탭 렌더링 ─────────────────────────────────────
@@ -509,6 +517,8 @@ function showCaseShipModal(orderId, defaultLot) {
 }
 
 function submitCaseShipment(orderId) {
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('supplier.shipment.confirm', {
     orderId,
     lotBatchNo: document.getElementById('caseShipLot').value,
@@ -516,7 +526,7 @@ function submitCaseShipment(orderId) {
   }).then(() => {
     closeModal(); showAlert('배송 중으로 변경되었습니다', 'success');
     loadPage('caseDetail', { caseId: APP.currentParams.caseId });
-  }).catch(err => { closeModal(); showAlert(err.message, 'error'); });
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 function showCaseDeliveryModal(orderId) {
@@ -535,11 +545,13 @@ function showCaseDeliveryModal(orderId) {
 function submitCaseDelivery(orderId) {
   const date = document.getElementById('caseDeliveryDate').value;
   if (!date) { showAlert('병원 전달일을 입력하세요', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('supplier.delivery.confirm', { orderId, deliveryDate: date })
     .then(() => {
       closeModal(); showAlert('출고 확정 완료 — 병원 전달이 기록되었습니다', 'success');
       loadPage('caseDetail', { caseId: APP.currentParams.caseId });
-    }).catch(err => { closeModal(); showAlert(err.message, 'error'); });
+    }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 문서 탭 렌더링 ───────────────────────────────────────────
@@ -618,6 +630,8 @@ function submitDocUpload(caseId) {
   const fileName = document.getElementById('docFileName').value;
   const link = document.getElementById('docLink').value;
   if (!docType || !fileName || !link) { showAlert('필수 항목을 입력하세요', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('document.register', {
     caseId, documentType: docType, fileName, driveLink: link,
     expiryDate: document.getElementById('docExpiry').value,
@@ -625,7 +639,7 @@ function submitDocUpload(caseId) {
   }).then(() => {
     closeModal(); showAlert('문서 등록 완료', 'success');
     loadPage('caseDetail', { caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 결제 탭 렌더링 ───────────────────────────────────────────
@@ -715,6 +729,8 @@ function showFollowupCompleteModal(followupId, stage) {
 }
 
 function submitFollowupComplete(followupId) {
+  const btn = document.querySelector('#modalFooter .btn-success');
+  setLoadingBtn(btn, true);
   callServer('followup.complete', {
     followupId,
     patientResponse: document.getElementById('fupResponse').value,
@@ -723,7 +739,7 @@ function submitFollowupComplete(followupId) {
   }).then(() => {
     closeModal(); showAlert('추적관찰 완료 처리됨', 'success');
     loadPage('caseDetail', { caseId: APP.currentParams.caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 시술기록 탭 렌더링 ──────────────────────────────────────
@@ -794,6 +810,8 @@ function submitProcedure(caseId) {
   const type = document.getElementById('procType').value;
   const date = document.getElementById('procDate').value;
   if (!type || !date) { showAlert('시술 유형과 날짜를 입력하세요', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('procedure.create', {
     caseId, procedureType: type, procedureDate: date,
     physician:  document.getElementById('procPhysician').value,
@@ -804,29 +822,100 @@ function submitProcedure(caseId) {
   }).then(() => {
     closeModal(); showAlert('시술 기록 저장 완료', 'success');
     loadPage('caseDetail', { caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
+}
+
+// ─── 시술 일정 확정 모달 ─────────────────────────────────────
+function showScheduleTreatmentModal(caseId) {
+  const today = new Date().toISOString().split('T')[0];
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">시술 예정일</label>
+        <input type="date" id="schedDate" required value="${today}">
+      </div>
+      <div class="form-group full">
+        <label class="required">담당 의사</label>
+        <input type="text" id="schedPhysician" required placeholder="Dr. Kim">
+      </div>
+      <div class="form-group full">
+        <label>장소</label>
+        <input type="text" id="schedLocation" placeholder="수술실 1">
+      </div>
+      <div class="form-group full">
+        <label>메모</label>
+        <textarea id="schedNotes" placeholder="추가 안내 사항"></textarea>
+      </div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-success" onclick="submitScheduleTreatment('${caseId}')">시술 일정 확정</button>
+  `;
+  showModal('시술 일정 확정', body, footer);
+}
+
+function submitScheduleTreatment(caseId) {
+  const date = document.getElementById('schedDate').value;
+  const physician = document.getElementById('schedPhysician').value.trim();
+  if (!date) { showAlert('시술 예정일을 입력하세요', 'warning'); return; }
+  if (!physician) { showAlert('담당 의사를 입력하세요', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-success');
+  setLoadingBtn(btn, true);
+  callServer('case.scheduleTreatment', {
+    caseId, treatmentDate: date, physician,
+    location: document.getElementById('schedLocation').value,
+    notes: document.getElementById('schedNotes').value,
+  }).then(() => {
+    closeModal(); showAlert('시술 일정이 확정되었습니다', 'success');
+    loadPage('caseDetail', { caseId });
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 케이스 액션 함수들 ───────────────────────────────────────
 function requestHospitalReview(caseId) {
-  if (!confirm(`${caseId}에 대해 병원 검토를 요청하시겠습니까?`)) return;
+  showModal('병원 검토 요청', `<p>케이스 <strong>${caseId}</strong>에 대해 병원 검토를 요청합니다.</p>`, `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="_doRequestReview('${caseId}')">검토 요청</button>
+  `);
+}
+function _doRequestReview(caseId) {
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('review.request', { caseId })
-    .then(() => { showAlert('병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
-    .catch(err => showAlert(err.message, 'error'));
+    .then(() => { closeModal(); showAlert('병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 function requestAdditionalReview(caseId, orderId) {
-  if (!confirm(`주문 ${orderId}에 대한 추가 병원 검토를 요청하시겠습니까?`)) return;
+  showModal('추가 검토 요청', `<p>주문 <strong>${orderId}</strong>에 대한 추가 병원 검토를 요청합니다.</p>`, `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="_doRequestAdditionalReview('${caseId}','${orderId}')">검토 요청</button>
+  `);
+}
+function _doRequestAdditionalReview(caseId, orderId) {
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('review.request', { caseId, linkedOrderId: orderId })
-    .then(() => { showAlert('추가 병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
-    .catch(err => showAlert(err.message, 'error'));
+    .then(() => { closeModal(); showAlert('추가 병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 function markTreatmentComplete(caseId) {
-  if (!confirm('시술 완료 처리하시겠습니까? 추적관찰 일정이 자동 생성됩니다.')) return;
+  showModal('시술 완료 처리', `
+    <p style="margin-bottom:8px">케이스 <strong>${caseId}</strong> 시술 완료 처리를 진행합니다.</p>
+    <p style="font-size:13px;color:var(--gray-600)">시술 완료 후 D7·D14·D30·D90·D180 추적관찰 일정이 자동 생성됩니다.</p>
+  `, `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-success" onclick="_doMarkComplete('${caseId}')">완료 처리</button>
+  `);
+}
+function _doMarkComplete(caseId) {
+  const btn = document.querySelector('#modalFooter .btn-success');
+  setLoadingBtn(btn, true);
   callServer('case.changeStatus', { caseId, targetStatus: 'Completed' })
-    .then(() => { showAlert('시술 완료 처리됨', 'success'); loadPage('caseDetail', { caseId }); })
-    .catch(err => showAlert(err.message, 'error'));
+    .then(() => { closeModal(); showAlert('시술 완료 처리됨', 'success'); loadPage('caseDetail', { caseId }); })
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 function showAddAppointmentModal(caseId) {
@@ -862,6 +951,8 @@ function submitAppointment(caseId) {
   const type = document.getElementById('aptType').value;
   const date = document.getElementById('aptDate').value;
   if (!type || !date) { showAlert('필수 항목 입력', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('appointment.create', {
     case_id: caseId, appointment_type: type, scheduled_date: date,
     location: document.getElementById('aptLocation').value,
@@ -869,6 +960,6 @@ function submitAppointment(caseId) {
   }).then(() => {
     closeModal(); showAlert('일정 추가 완료', 'success');
     loadPage('caseDetail', { caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 </script>

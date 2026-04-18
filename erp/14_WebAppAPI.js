@@ -299,6 +299,45 @@ function updateCaseStatus(caseId, targetStatus, user, role) {
 }
 
 /**
+ * 시술 일정 확정: treatment_date 기록 + 상태를 Scheduled로 변경
+ */
+function scheduleTreatment_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.HOSPITAL_USER].includes(role)) throw new Error('권한 없음');
+  if (!data.caseId)        throw new Error('caseId가 필요합니다');
+  if (!data.treatmentDate) throw new Error('시술 예정일이 필요합니다');
+  if (!data.physician)     throw new Error('담당 의사를 입력하세요');
+
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.CASES);
+  const rows = sheetToObjects_(ss, CONFIG.SHEETS.CASES);
+  const idx  = rows.findIndex(r => r.case_id === data.caseId);
+  if (idx < 0) throw new Error('케이스를 찾을 수 없습니다');
+
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const rowNum  = idx + 2;
+
+  function setCol_(name, val) {
+    const c = headers.indexOf(name);
+    if (c >= 0) sheet.getRange(rowNum, c + 1).setValue(val);
+  }
+
+  setCol_('treatment_date', data.treatmentDate);
+  setCol_('physician',      data.physician);
+  if (data.location) setCol_('treatment_location', data.location);
+
+  invalidateCache_(CONFIG.SHEETS.CASES);
+  changeCaseStatus(data.caseId, CONFIG.CASE_STATUS.SCHEDULED, user, role);
+
+  addActivityLog({
+    caseId: data.caseId, actorEmail: user, actorRole: role,
+    actionType: 'TREATMENT_SCHEDULED',
+    summary: `시술 일정 확정: ${data.treatmentDate} / ${data.physician}`,
+  });
+
+  return { success: true };
+}
+
+/**
  * 케이스 전체 상세 데이터 반환
  */
 function getCaseDetail(caseId, user, role, profile) {

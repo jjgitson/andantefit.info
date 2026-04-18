@@ -231,8 +231,9 @@ function dispatchAction_(action, data, user, role, profile) {
     'case.list':         () => getCases(data, user, role, profile),
     'case.get':          () => getCaseDetail(data.caseId, user, role, profile),
     'case.create':       () => createCase_api(data, user, role),
-    'case.changeStatus': () => updateCaseStatus(data.caseId, data.targetStatus, user, role),
-    'case.delete':       () => softDeleteCase_api(data, user, role),
+    'case.changeStatus':       () => updateCaseStatus(data.caseId, data.targetStatus, user, role),
+    'case.scheduleTreatment':  () => scheduleTreatment_api(data, user, role),
+    'case.delete':             () => softDeleteCase_api(data, user, role),
 
     // 환자
     'patient.get':    () => getPatient(data.patientId, user, role),

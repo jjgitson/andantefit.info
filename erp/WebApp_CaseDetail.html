@@ -170,15 +170,15 @@ function switchTab(event, tabId) {
 // ─── Phase 표시 ──────────────────────────────────────────────
 function renderPhaseIndicator_(c) {
   const PHASE = {
-    'Draft':                    { label: '초안',          next: '병원 검토를 요청하세요',             condition: '병원 검토 탭 → + 검토 요청',                        owner: 'MSO 담당자' },
-    'Hospital Approved':        { label: '병원 승인',     next: '공급 주문 정보를 등록하세요',         condition: '공급업체·제품·배송 예정일·픽업 담당자 입력',          owner: 'MSO 담당자' },
-    'Supplier Coordination':    { label: '공급 조율',     next: '출고 확정 정보를 입력하세요',         condition: '출고일·배치번호 입력 후 케이스 상태 수동 변경',        owner: 'MSO/공급업체' },
-    'Shipment In Transit':      { label: '배송 중',       next: '수령 후 입고 검수를 진행하세요',      condition: '주문/배송 탭 → 검수 버튼',                          owner: '병원 담당자' },
-    'Acceptance Check Pending': { label: '입고 검수 대기',next: '입고 검수 결과를 입력하세요',         condition: '주문/배송 탭 → 검수 버튼',                          owner: '병원 담당자' },
-    'Acceptance Confirmed':     { label: '입고 확인',     next: '시술 일정을 확정하세요',              condition: '시술기록 탭 → 시술 일정 확정',                      owner: 'MSO/병원' },
-    'Scheduled':                { label: '시술 예정',     next: '시술 완료 처리를 해주세요',           condition: '상단 "시술 완료 처리" 버튼 클릭',                    owner: '병원 담당자' },
-    'Completed':                { label: '시술 완료',     next: '추적관찰 일정을 확인하세요',          condition: 'D7 추적관찰 기록 시작',                             owner: 'MSO 담당자' },
-    'Follow-up Ongoing':        { label: '추적관찰 중',   next: '단계별 추적관찰을 완료하세요',        condition: 'D7→D14→D30→D90→D180 완료 후 케이스 종료',           owner: 'MSO 담당자' },
+    'Draft':                    { label: '초안',          next: '병원 검토를 요청하세요',             condition: '병원검토 탭 → [+ 검토 요청] 클릭',                   owner: 'MSO 담당자' },
+    'Hospital Approved':        { label: '병원 승인',     next: '공급 주문을 등록하세요',              condition: '[공급 요청] 클릭 → 공급업체·제품·배송 예정일 입력',  owner: 'MSO 담당자' },
+    'Supplier Coordination':    { label: '공급 조율',     next: '출고 확정 정보를 입력하세요',         condition: '주문/배송 탭 → [출고 확정] 클릭 → 확정 출고일·LOT 번호 입력', owner: 'MSO/공급업체' },
+    'Shipment In Transit':      { label: '배송 중',       next: '수령 후 입고 검수를 진행하세요',      condition: '주문/배송 탭 → [검수] 클릭 → Accepted/Rejected 선택',owner: '병원 담당자' },
+    'Acceptance Check Pending': { label: '입고 검수 대기',next: '입고 검수 결과를 입력하세요',         condition: '주문/배송 탭 → [검수] 클릭 → 검수 결과 저장',        owner: '병원 담당자' },
+    'Acceptance Confirmed':     { label: '입고 확인',     next: '시술 일정을 확정하세요',              condition: '시술기록 탭 → [시술 일정 확정] → 날짜·의사 입력',    owner: 'MSO/병원' },
+    'Scheduled':                { label: '시술 예정',     next: '시술 완료 후 완료 처리하세요',        condition: '상단 [시술 완료 처리] 버튼 클릭',                    owner: '병원 담당자' },
+    'Completed':                { label: '시술 완료',     next: '추적관찰을 시작하세요',               condition: '추적관리 탭 → D7 완료 처리부터 시작',               owner: 'MSO 담당자' },
+    'Follow-up Ongoing':        { label: '추적관찰 중',   next: '단계별 추적관찰을 완료하세요',        condition: 'D7 → D14 → D30 → D90 → D180 순서로 완료 처리',      owner: 'MSO 담당자' },
     'Closed':                   { label: '케이스 종료',   next: '완료된 케이스입니다',                 condition: '-',                                                owner: '-' },
     'Cancelled':                { label: '취소됨',        next: '취소된 케이스입니다',                 condition: '-',                                                owner: '-' },
   };
@@ -249,8 +249,9 @@ function showSupplierOrderModal(caseId) {
           <label>유의사항</label>
           <input type="text" id="soCautions" placeholder="예: 충격 주의, 직사광선 차단">
         </div>
-        <div class="form-group full">
-          <label><input type="checkbox" id="soAddReview"> 추가 병원 검토 필요</label>
+        <div class="form-group full" style="display:flex;align-items:center;gap:8px">
+          <input type="checkbox" id="soAddReview" style="width:auto;margin:0">
+          <label style="margin:0;font-weight:normal">추가 병원 검토 필요</label>
         </div>
         <div class="form-group full">
           <label>MSO 협의 메모</label>
@@ -293,6 +294,7 @@ function submitSupplierOrder(caseId) {
 function renderCaseActionButtons_(c) {
   const role = APP.role;
   const s = c.case_status;
+  const isDeleted = c.is_deleted === true || String(c.is_deleted).toLowerCase() === 'true';
   const btns = [];
 
   if (['Hospital Approved','Supplier Coordination'].includes(s) && ['MSO Admin','MSO Coordinator'].includes(role)) {
@@ -301,8 +303,31 @@ function renderCaseActionButtons_(c) {
   if (s === 'Scheduled' && ['MSO Admin','Hospital User'].includes(role)) {
     btns.push(`<button class="btn btn-success btn-sm" onclick="markTreatmentComplete('${c.case_id}')">시술 완료 처리</button>`);
   }
+  if (['MSO Admin','MSO Coordinator'].includes(role) && !isDeleted) {
+    btns.push(`<button class="btn btn-danger btn-sm" onclick="showCaseDeleteModal('${c.case_id}')">삭제</button>`);
+  }
 
   return btns.join('');
+}
+
+function showCaseDeleteModal(caseId) {
+  showModal('케이스 삭제', `
+    <p style="margin-bottom:12px"><strong>${caseId}</strong> 케이스를 삭제하시겠습니까?</p>
+    <div class="form-group">
+      <label>삭제 사유</label>
+      <input type="text" id="caseDetailDeleteReason" placeholder="예: 환자 취소, 중복 생성">
+    </div>
+  `, `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-danger" onclick="confirmCaseDelete('${caseId}')">삭제</button>
+  `);
+}
+
+function confirmCaseDelete(caseId) {
+  const reason = document.getElementById('caseDetailDeleteReason').value;
+  callServer('case.delete', { caseId, reason })
+    .then(() => { closeModal(); showAlert('케이스가 삭제되었습니다', 'success'); loadPage('cases'); })
+    .catch(err => showAlert(err.message, 'error'));
 }
 
 // ─── 병원 검토 탭 렌더링 ─────────────────────────────────────
@@ -465,8 +490,8 @@ function renderOrderTab_(orders, c) {
                 <td>${statusBadge(o.acceptance_check_status)}</td>
                 <td>${reviewBadge}</td>
                 <td>
-                  ${canShip && o.supplier_status === 'Requested' ? `<button class="btn btn-sm btn-primary" onclick="showConfirmShipmentModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
-                  ${canAccept && o.supplier_status === 'Delivered' ? `<button class="btn btn-sm btn-success" onclick="showAcceptanceModal('${o.supplier_order_id}')">검수</button>` : ''}
+                  ${canShip && o.supplier_status === 'Requested' ? `<button class="btn btn-sm btn-primary" onclick="showCaseShipModal('${o.supplier_order_id}','${(o.expected_ship_date||'').substring(0,10)}','${(o.lot_batch_no||'')}')">출고 확정</button>` : ''}
+                  ${canAccept && o.supplier_status === 'Delivered' ? `<button class="btn btn-sm btn-success" onclick="showCaseAcceptModal('${o.supplier_order_id}')">검수</button>` : ''}
                   ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank">COA</a>` : ''}
                   ${o.temp_log_link ? `<a class="btn btn-sm btn-secondary" href="${o.temp_log_link}" target="_blank">온도</a>` : ''}
                 </td>
@@ -480,61 +505,63 @@ function renderOrderTab_(orders, c) {
   `;
 }
 
-function showConfirmShipmentModal(orderId) {
+function showCaseShipModal(orderId, defaultDate, defaultLot) {
   const body = `
     <div class="form-grid">
-      <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="shipDate" required></div>
-      <div class="form-group"><label class="required">배치번호</label><input type="text" id="lotNo" required placeholder="LOT-2026-001"></div>
-      <div class="form-group"><label>트래킹 번호</label><input type="text" id="trackNo" placeholder="FedEx 운송장번호"></div>
-      <div class="form-group full"><label>COA 링크</label><input type="url" id="coaLink" placeholder="https://drive.google.com/..."></div>
+      <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="caseShipDate" required value="${defaultDate || ''}"></div>
+      <div class="form-group"><label class="required">배치번호 (LOT)</label><input type="text" id="caseShipLot" required placeholder="LOT-2026-001" value="${defaultLot || ''}"></div>
+      <div class="form-group"><label>운송장 번호</label><input type="text" id="caseShipTrack" placeholder="FedEx 운송장번호"></div>
+      <div class="form-group full"><label>COA Drive 링크</label><input type="url" id="caseShipCoa" placeholder="https://drive.google.com/..."></div>
     </div>
   `;
   const footer = `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitShipment('${orderId}')">출고 확정</button>
+    <button class="btn btn-primary" onclick="submitCaseShipment('${orderId}')">출고 확정</button>
   `;
   showModal('출고 확정', body, footer);
 }
 
-function submitShipment(orderId) {
+function submitCaseShipment(orderId) {
+  const date = document.getElementById('caseShipDate').value;
+  const lot  = document.getElementById('caseShipLot').value;
+  if (!date || !lot) { showAlert('출고일과 배치번호는 필수입니다', 'warning'); return; }
   callServer('supplier.shipment.confirm', {
-    orderId, confirmedShipDate: document.getElementById('shipDate').value,
-    lotBatchNo: document.getElementById('lotNo').value,
-    trackingNo: document.getElementById('trackNo').value,
-    coaLink: document.getElementById('coaLink').value,
+    orderId, confirmedShipDate: date, lotBatchNo: lot,
+    trackingNo: document.getElementById('caseShipTrack').value,
+    coaLink:    document.getElementById('caseShipCoa').value,
   }).then(() => {
     closeModal(); showAlert('출고 확정 완료', 'success');
     loadPage('caseDetail', { caseId: APP.currentParams.caseId });
   }).catch(err => showAlert(err.message, 'error'));
 }
 
-function showAcceptanceModal(orderId) {
+function showCaseAcceptModal(orderId) {
   const body = `
     <div class="form-grid">
       <div class="form-group full">
         <label class="required">검수 결과</label>
-        <select id="accResult" required>
+        <select id="caseAccResult" required>
           <option value="">선택</option>
           <option value="Accepted">Accepted (입고 승인)</option>
           <option value="Rejected">Rejected (반려)</option>
         </select>
       </div>
-      <div class="form-group full"><label>검수 메모</label><textarea id="accNotes"></textarea></div>
+      <div class="form-group full"><label>검수 메모</label><textarea id="caseAccNotes"></textarea></div>
     </div>
     <div class="alert alert-info" style="margin-top:8px">⚕️ 입고 검수는 병원 책임자가 수행합니다.</div>
   `;
   const footer = `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitAcceptance('${orderId}')">검수 결과 저장</button>
+    <button class="btn btn-primary" onclick="submitCaseAcceptance('${orderId}')">검수 결과 저장</button>
   `;
   showModal('입고 검수', body, footer);
 }
 
-function submitAcceptance(orderId) {
-  const result = document.getElementById('accResult').value;
+function submitCaseAcceptance(orderId) {
+  const result = document.getElementById('caseAccResult').value;
   if (!result) { showAlert('검수 결과를 선택하세요', 'warning'); return; }
   callServer('supplier.acceptance.record', {
-    orderId, result, notes: document.getElementById('accNotes').value,
+    orderId, result, notes: document.getElementById('caseAccNotes').value,
   }).then(() => {
     closeModal(); showAlert('검수 결과 저장 완료', 'success');
     loadPage('caseDetail', { caseId: APP.currentParams.caseId });

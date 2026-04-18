@@ -236,6 +236,8 @@ function createPatient(data, user, role) {
 
 function getCases(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  // 목록 조회는 항상 최신 데이터 (캐시 강제 무효화 후 재읽기)
+  invalidateCache_(CONFIG.SHEETS.CASES);
   let cases = cachedRead_(ss, CONFIG.SHEETS.CASES);
   cases = filterCasesByRole_(cases, user, role, profile);
 

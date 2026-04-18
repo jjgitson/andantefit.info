@@ -22,10 +22,11 @@ function getCaseDetailHTML(params) {
       <div class="tabs">
         <div class="tab active" onclick="switchTab(event,'tab-summary')">요약</div>
         <div class="tab" onclick="switchTab(event,'tab-review')">병원 검토</div>
-        <div class="tab" onclick="switchTab(event,'tab-supplier')">공급/검수</div>
+        <div class="tab" onclick="switchTab(event,'tab-orders')">주문/배송</div>
+        <div class="tab" onclick="switchTab(event,'tab-procedure')">시술기록</div>
         <div class="tab" onclick="switchTab(event,'tab-docs')">문서</div>
-        <div class="tab" onclick="switchTab(event,'tab-billing')">결제</div>
-        <div class="tab" onclick="switchTab(event,'tab-followup')">추적관찰</div>
+        <div class="tab" onclick="switchTab(event,'tab-billing')">결제/청구</div>
+        <div class="tab" onclick="switchTab(event,'tab-followup')">추적관리</div>
         <div class="tab" onclick="switchTab(event,'tab-log')">활동 로그</div>
       </div>
 
@@ -99,9 +100,14 @@ function getCaseDetailHTML(params) {
         ${renderReviewTab_(data.reviews, c, data)}
       </div>
 
-      <!-- 공급/검수 탭 -->
-      <div class="tab-content" id="tab-supplier">
-        ${renderSupplierTab_(data.orders, c)}
+      <!-- 주문/배송 탭 -->
+      <div class="tab-content" id="tab-orders">
+        ${renderOrderTab_(data.orders, c)}
+      </div>
+
+      <!-- 시술기록 탭 -->
+      <div class="tab-content" id="tab-procedure">
+        ${renderProcedureTab_(data.procedures, c)}
       </div>
 
       <!-- 문서 탭 -->
@@ -156,11 +162,8 @@ function renderCaseActionButtons_(c) {
   const s = c.case_status;
   const btns = [];
 
-  if (s === 'Hospital Approved' && ['MSO Admin','MSO Coordinator'].includes(role)) {
+  if (['Hospital Approved','Supplier Coordination'].includes(s) && ['MSO Admin','MSO Coordinator'].includes(role)) {
     btns.push(`<button class="btn btn-primary btn-sm" onclick="showSupplierOrderModal('${c.case_id}')">공급 요청</button>`);
-  }
-  if (s === 'Acceptance Confirmed' && ['MSO Admin','Hospital User'].includes(role)) {
-    btns.push(`<button class="btn btn-success btn-sm" onclick="showScheduleTreatmentModal('${c.case_id}')">시술 일정 확정</button>`);
   }
   if (s === 'Scheduled' && ['MSO Admin','Hospital User'].includes(role)) {
     btns.push(`<button class="btn btn-success btn-sm" onclick="markTreatmentComplete('${c.case_id}')">시술 완료 처리</button>`);
@@ -171,42 +174,64 @@ function renderCaseActionButtons_(c) {
 
 // ─── 병원 검토 탭 렌더링 ─────────────────────────────────────
 function renderReviewTab_(reviews, c, data) {
-  const review   = reviews && reviews[0];
-  const canRequest = c.case_status === 'Draft' && ['MSO Admin','MSO Coordinator'].includes(APP.role);
-  const canSubmit  = ['MSO Admin','Hospital User'].includes(APP.role);
+  const role = APP.role;
+  const hasPending = reviews && reviews.some(r => r.review_status === 'Pending');
+  const canRequest = ['MSO Admin','MSO Coordinator'].includes(role) &&
+    ['Draft','Supplier Coordination'].includes(c.case_status) && !hasPending;
+  const canSubmit = ['MSO Admin','Hospital User'].includes(role);
 
-  if (!review) return `
-    <div class="empty-state">
-      <div class="empty-state-icon">🔬</div>
-      <h3>병원 검토 요청 전입니다</h3>
-      ${canRequest ? `<button class="btn btn-primary" style="margin-top:16px" onclick="requestHospitalReview('${c.case_id}')">검토 요청</button>` : ''}
+  const headerBtn = canRequest
+    ? `<button class="btn btn-primary btn-sm" onclick="requestHospitalReview('${c.case_id}')">+ 검토 요청</button>`
+    : '';
+
+  if (!reviews || reviews.length === 0) return `
+    <div class="card">
+      <div class="card-header"><span class="card-title">병원 검토 이력</span>${headerBtn}</div>
+      <div class="empty-state"><div class="empty-state-icon">🔬</div><h3>검토 요청 내역 없음</h3></div>
     </div>
   `;
+
+  const cards = reviews.map((r, idx) => {
+    const isPending = r.review_status === 'Pending';
+    const submitBtn = canSubmit && isPending
+      ? `<button class="btn btn-primary btn-sm" onclick="showReviewSubmitModal('${r.review_id}','${r.case_id}')">결과 입력</button>`
+      : '';
+    const linkedBadge = r.linked_order_id
+      ? `<span class="badge badge-orange" style="font-size:11px">추가검토: ${r.linked_order_id}</span>`
+      : `<span class="badge badge-gray" style="font-size:11px">최초검토</span>`;
+    return `
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-header">
+          <span class="card-title">검토 #${reviews.length - idx} ${linkedBadge}</span>
+          ${submitBtn}
+        </div>
+        <div class="card-body">
+          <div class="detail-grid">
+            <div class="detail-item"><label>요청일</label><div class="value">${fmtDate(r.review_request_date)}</div></div>
+            <div class="detail-item"><label>완료일</label><div class="value">${r.review_completed_date ? fmtDate(r.review_completed_date) : '-'}</div></div>
+            <div class="detail-item"><label>진행 상태</label><div class="value">${statusBadge(r.review_status)}</div></div>
+            <div class="detail-item"><label>검토 결과</label><div class="value">${r.review_result ? statusBadge(r.review_result) : '-'}</div></div>
+            ${r.hospital_user ? `<div class="detail-item"><label>담당 의사</label><div class="value">${r.hospital_user}</div></div>` : ''}
+            ${r.next_medical_step ? `<div class="detail-item"><label>다음 단계</label><div class="value">${r.next_medical_step}</div></div>` : ''}
+            ${r.consultation_date ? `<div class="detail-item"><label>상담일</label><div class="value">${fmtDate(r.consultation_date)}</div></div>` : ''}
+            ${r.additional_test_required ? `<div class="detail-item"><label>추가 검사</label><div class="value">${r.additional_test_required}</div></div>` : ''}
+            ${r.medical_notes_link ? `<div class="detail-item full"><label>의료 기록</label><div class="value"><a href="${r.medical_notes_link}" target="_blank">🔗 열기</a></div></div>` : ''}
+          </div>
+          ${r.notes ? `<p style="margin-top:10px;color:var(--gray-700);font-size:13px">${r.notes}</p>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
 
   return `
     <div class="card">
-      <div class="card-header">
-        <span class="card-title">병원 검토 현황</span>
-        ${canSubmit && review.review_result === 'Pending' ? `<button class="btn btn-primary btn-sm" onclick="showReviewSubmitModal('${c.case_id}')">검토 결과 입력</button>` : ''}
-      </div>
-      <div class="card-body">
-        <div class="detail-grid">
-          <div class="detail-item"><label>검토 요청일</label><div class="value">${fmtDate(review.review_request_date)}</div></div>
-          <div class="detail-item"><label>검토 완료일</label><div class="value">${fmtDate(review.review_completed_date)}</div></div>
-          <div class="detail-item"><label>담당 의사</label><div class="value">${review.hospital_user || '-'}</div></div>
-          <div class="detail-item"><label>검토 결과</label><div class="value">${statusBadge(review.review_result)}</div></div>
-          <div class="detail-item"><label>다음 의료 단계</label><div class="value">${review.next_medical_step || '-'}</div></div>
-          <div class="detail-item"><label>상담일</label><div class="value">${fmtDate(review.consultation_date)}</div></div>
-          <div class="detail-item"><label>추가 검사 필요</label><div class="value">${review.additional_test_required || '-'}</div></div>
-          ${review.medical_notes_link ? `<div class="detail-item full"><label>의료 기록</label><div class="value"><a href="${review.medical_notes_link}" target="_blank">🔗 열기</a></div></div>` : ''}
-        </div>
-        ${review.notes ? `<p style="margin-top:12px;color:var(--gray-700)">${review.notes}</p>` : ''}
-      </div>
+      <div class="card-header"><span class="card-title">병원 검토 이력</span>${headerBtn}</div>
     </div>
+    ${cards}
   `;
 }
 
-function showReviewSubmitModal(caseId) {
+function showReviewSubmitModal(reviewId, caseId) {
   const body = `
     <div class="form-grid">
       <div class="form-group full">
@@ -246,16 +271,16 @@ function showReviewSubmitModal(caseId) {
   `;
   const footer = `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitReview('${caseId}')">검토 결과 제출</button>
+    <button class="btn btn-primary" onclick="submitReview('${reviewId}','${caseId}')">검토 결과 제출</button>
   `;
   showModal('병원 검토 결과 입력', body, footer);
 }
 
-function submitReview(caseId) {
+function submitReview(reviewId, caseId) {
   const result = document.getElementById('revResult').value;
   if (!result) { showAlert('검토 결과를 선택하세요', 'warning'); return; }
   callServer('review.submit', {
-    case_id: caseId, review_result: result,
+    review_id: reviewId, case_id: caseId, review_result: result,
     next_medical_step: document.getElementById('revNextStep').value,
     consultation_date: document.getElementById('revConsDate').value,
     additional_test_required: document.getElementById('revAddTest').value,
@@ -268,26 +293,36 @@ function submitReview(caseId) {
   }).catch(err => showAlert(err.message, 'error'));
 }
 
-// ─── 공급/검수 탭 렌더링 ─────────────────────────────────────
-function renderSupplierTab_(orders, c) {
-  const canOrder = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+// ─── 주문/배송 탭 렌더링 ─────────────────────────────────────
+function renderOrderTab_(orders, c) {
+  const canOrder  = ['MSO Admin','MSO Coordinator'].includes(APP.role);
   const canAccept = ['MSO Admin','Hospital User'].includes(APP.role);
-  const canShip = ['MSO Admin','Supplier User'].includes(APP.role);
+  const canShip   = ['MSO Admin','Supplier User'].includes(APP.role);
+  const orderableStatus = ['Hospital Approved','Supplier Coordination'].includes(c.case_status);
 
   return `
     <div class="card">
       <div class="card-header">
         <span class="card-title">공급 주문 목록</span>
-        ${canOrder && c.case_status === 'Hospital Approved' ? `<button class="btn btn-primary btn-sm" onclick="showSupplierOrderModal('${c.case_id}')">+ 공급 요청</button>` : ''}
+        ${canOrder && orderableStatus ? `<button class="btn btn-primary btn-sm" onclick="showSupplierOrderModal('${c.case_id}')">+ 공급 요청</button>` : ''}
       </div>
       ${!orders || orders.length === 0 ? `
         <div class="empty-state"><div class="empty-state-icon">🏭</div><h3>공급 요청 없음</h3></div>
       ` : `
       <div class="table-wrap">
         <table>
-          <thead><tr><th>주문 ID</th><th>요청 품목</th><th>예정 출고</th><th>배치번호</th><th>상태</th><th>검수</th><th></th></tr></thead>
+          <thead><tr><th>주문 ID</th><th>요청 품목</th><th>예정 출고</th><th>배치번호</th><th>상태</th><th>검수</th><th>추가검토</th><th></th></tr></thead>
           <tbody>
-            ${orders.map(o => `
+            ${orders.map(o => {
+              const needsReview = o.requires_additional_review === true || o.requires_additional_review === 'TRUE';
+              const reviewCleared = o.additional_review_cleared === true || o.additional_review_cleared === 'TRUE';
+              const reviewBadge = needsReview
+                ? (reviewCleared
+                    ? '<span class="badge badge-green" style="font-size:11px">완료</span>'
+                    : `<span class="badge badge-orange" style="font-size:11px">대기중</span>
+                       ${canOrder ? `<button class="btn btn-xs btn-secondary" style="margin-left:4px" onclick="requestAdditionalReview('${c.case_id}','${o.supplier_order_id}')">검토요청</button>` : ''}`)
+                : '-';
+              return `
               <tr>
                 <td><code>${o.supplier_order_id}</code></td>
                 <td>${o.requested_item || '-'}</td>
@@ -295,6 +330,7 @@ function renderSupplierTab_(orders, c) {
                 <td>${o.lot_batch_no || '-'}</td>
                 <td>${statusBadge(o.supplier_status)}</td>
                 <td>${statusBadge(o.acceptance_check_status)}</td>
+                <td>${reviewBadge}</td>
                 <td>
                   ${canShip && o.supplier_status === 'Requested' ? `<button class="btn btn-sm btn-primary" onclick="showConfirmShipmentModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
                   ${canAccept && o.supplier_status === 'Delivered' ? `<button class="btn btn-sm btn-success" onclick="showAcceptanceModal('${o.supplier_order_id}')">검수</button>` : ''}
@@ -302,7 +338,7 @@ function renderSupplierTab_(orders, c) {
                   ${o.temp_log_link ? `<a class="btn btn-sm btn-secondary" href="${o.temp_log_link}" target="_blank">온도</a>` : ''}
                 </td>
               </tr>
-            `).join('')}
+            `}).join('')}
           </tbody>
         </table>
       </div>
@@ -549,11 +585,99 @@ function submitFollowupComplete(followupId) {
   }).catch(err => showAlert(err.message, 'error'));
 }
 
+// ─── 시술기록 탭 렌더링 ──────────────────────────────────────
+function renderProcedureTab_(procedures, c) {
+  const canRecord = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  const canSchedule = ['MSO Admin','Hospital User'].includes(APP.role) && c.case_status === 'Acceptance Confirmed';
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">시술 기록</span>
+        <div class="btn-group">
+          ${canSchedule ? `<button class="btn btn-success btn-sm" onclick="showScheduleTreatmentModal('${c.case_id}')">시술 일정 확정</button>` : ''}
+          ${canRecord ? `<button class="btn btn-primary btn-sm" onclick="showProcedureModal('${c.case_id}')">+ 시술 기록</button>` : ''}
+        </div>
+      </div>
+      ${!procedures || procedures.length === 0 ? `
+        <div class="empty-state"><div class="empty-state-icon">💉</div><h3>시술 기록 없음</h3></div>
+      ` : `
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>시술 ID</th><th>날짜</th><th>유형</th><th>의사</th><th>장소</th><th>상태</th><th>결과 메모</th></tr></thead>
+          <tbody>
+            ${procedures.map(p => `
+              <tr>
+                <td><code>${p.procedure_id}</code></td>
+                <td>${fmtDate(p.procedure_date)}</td>
+                <td>${p.procedure_type || '-'}</td>
+                <td>${p.physician || '-'}</td>
+                <td>${p.location || '-'}</td>
+                <td>${statusBadge(p.status)}</td>
+                <td style="max-width:200px;white-space:normal">${p.outcome_notes || '-'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      `}
+    </div>
+  `;
+}
+
+function showProcedureModal(caseId) {
+  const typeOptions = ['Cell Injection','IV Infusion','Consultation','Other']
+    .map(t => `<option value="${t}">${t}</option>`).join('');
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">시술 유형</label>
+        <select id="procType" required><option value="">선택</option>${typeOptions}</select>
+      </div>
+      <div class="form-group"><label class="required">시술 예정일</label><input type="date" id="procDate" required></div>
+      <div class="form-group"><label>의사</label><input type="text" id="procPhysician" placeholder="Dr. Kim"></div>
+      <div class="form-group"><label>연결 주문 ID</label><input type="text" id="procOrderId" placeholder="ORD-2026-001"></div>
+      <div class="form-group"><label>병원 ID</label><input type="text" id="procHospId"></div>
+      <div class="form-group"><label>장소</label><input type="text" id="procLocation"></div>
+      <div class="form-group full"><label>결과 메모</label><textarea id="procOutcome"></textarea></div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitProcedure('${caseId}')">저장</button>
+  `;
+  showModal('시술 기록 추가', body, footer);
+}
+
+function submitProcedure(caseId) {
+  const type = document.getElementById('procType').value;
+  const date = document.getElementById('procDate').value;
+  if (!type || !date) { showAlert('시술 유형과 날짜를 입력하세요', 'warning'); return; }
+  callServer('procedure.create', {
+    caseId, procedureType: type, procedureDate: date,
+    physician:  document.getElementById('procPhysician').value,
+    orderId:    document.getElementById('procOrderId').value,
+    hospitalId: document.getElementById('procHospId').value,
+    location:   document.getElementById('procLocation').value,
+    outcomeNotes: document.getElementById('procOutcome').value,
+  }).then(() => {
+    closeModal(); showAlert('시술 기록 저장 완료', 'success');
+    loadPage('caseDetail', { caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
 // ─── 케이스 액션 함수들 ───────────────────────────────────────
 function requestHospitalReview(caseId) {
   if (!confirm(`${caseId}에 대해 병원 검토를 요청하시겠습니까?`)) return;
   callServer('review.request', { caseId })
     .then(() => { showAlert('병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
+    .catch(err => showAlert(err.message, 'error'));
+}
+
+function requestAdditionalReview(caseId, orderId) {
+  if (!confirm(`주문 ${orderId}에 대한 추가 병원 검토를 요청하시겠습니까?`)) return;
+  callServer('review.request', { caseId, linkedOrderId: orderId })
+    .then(() => { showAlert('추가 병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
     .catch(err => showAlert(err.message, 'error'));
 }
 

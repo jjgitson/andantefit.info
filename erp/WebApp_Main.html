@@ -22,25 +22,25 @@
     </div>
   </div>
   <ul class="nav-menu">
-    <li class="nav-item <?= page==='dashboard'?'active':'' ?>" onclick="loadPage('dashboard')">
+    <li class="nav-item <?= page==='dashboard'?'active':'' ?>" onclick="loadPage('dashboard')" id="nav-dashboard">
       <span class="nav-icon">📊</span><span>대시보드</span>
     </li>
     <li class="nav-item <?= page==='leads'?'active':'' ?>" onclick="loadPage('leads')" id="nav-leads">
       <span class="nav-icon">📋</span><span>리드 관리</span>
     </li>
-    <li class="nav-item <?= page==='cases'?'active':'' ?>" onclick="loadPage('cases')">
+    <li class="nav-item <?= page==='cases'?'active':'' ?>" onclick="loadPage('cases')" id="nav-cases">
       <span class="nav-icon">🗂️</span><span>케이스</span>
     </li>
-    <li class="nav-item" onclick="loadPage('supplier')" id="nav-supplier">
+    <li class="nav-item <?= page==='supplier'?'active':'' ?>" onclick="loadPage('supplier')" id="nav-supplier">
       <span class="nav-icon">🏭</span><span>공급 관리</span>
     </li>
-    <li class="nav-item" onclick="loadPage('billing')" id="nav-billing">
+    <li class="nav-item <?= page==='billing'?'active':'' ?>" onclick="loadPage('billing')" id="nav-billing">
       <span class="nav-icon">💳</span><span>결제/청구</span>
     </li>
-    <li class="nav-item" onclick="loadPage('followup')">
+    <li class="nav-item <?= page==='followup'?'active':'' ?>" onclick="loadPage('followup')" id="nav-followup">
       <span class="nav-icon">🔔</span><span>추적관리</span>
     </li>
-    <li class="nav-item" onclick="loadPage('schedule')" id="nav-schedule">
+    <li class="nav-item <?= page==='schedule'?'active':'' ?>" onclick="loadPage('schedule')" id="nav-schedule">
       <span class="nav-icon">📅</span><span>팀 일정</span>
     </li>
   </ul>
@@ -61,6 +61,25 @@
   <div id="alertBox" class="alert" style="display:none"></div>
   <main class="content" id="mainContent"></main>
 </div>
+
+<!-- 모바일 하단 탭바 -->
+<nav class="bottom-nav" id="bottomNav">
+  <div class="bn-item <?= page==='schedule'?'active':'' ?>" onclick="loadPage('schedule')" id="bn-schedule">
+    <span class="bn-icon">📅</span><span>일정</span>
+  </div>
+  <div class="bn-item <?= page==='cases'?'active':'' ?>" onclick="loadPage('cases')" id="bn-cases">
+    <span class="bn-icon">🗂️</span><span>케이스</span>
+  </div>
+  <div class="bn-item <?= page==='leads'?'active':'' ?>" onclick="loadPage('leads')" id="bn-leads">
+    <span class="bn-icon">📋</span><span>리드</span>
+  </div>
+  <div class="bn-item <?= page==='followup'?'active':'' ?>" onclick="loadPage('followup')" id="bn-followup">
+    <span class="bn-icon">🔔</span><span>추적</span>
+  </div>
+  <div class="bn-item" onclick="toggleSidebar()" id="bn-more">
+    <span class="bn-icon">☰</span><span>더보기</span>
+  </div>
+</nav>
 
 <!-- 모달 -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
@@ -114,15 +133,19 @@ console.log('[MSO] APP initialized | user:', APP.user, '| role:', APP.role,
 // ─── 역할별 메뉴 가시성 ─────────────────────────────────────
 (function() {
   var role = APP.role;
+  function hide(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  }
   if (role === 'Supplier User') {
-    document.getElementById('nav-leads').style.display = 'none';
-    document.getElementById('nav-billing').style.display = 'none';
+    hide('nav-leads'); hide('nav-billing');
+    hide('bn-leads');
   }
   if (role === 'Hospital User') {
-    document.getElementById('nav-billing').style.display = 'none';
+    hide('nav-billing');
   }
   if (role === 'Finance User') {
-    document.getElementById('nav-supplier').style.display = 'none';
+    hide('nav-supplier');
   }
 })();
 
@@ -159,9 +182,16 @@ function loadPage(page, params) {
   APP.currentPage   = page;
   APP.currentParams = params || {};
   document.getElementById('pageTitle').textContent = (PAGE_TITLES && PAGE_TITLES[page]) || page;
-  document.querySelectorAll('.nav-item').forEach(function(el) {
-    el.classList.remove('active');
-  });
+
+  // 사이드바 active 동기화
+  document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.remove('active'); });
+  var navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+
+  // 하단 탭바 active 동기화
+  document.querySelectorAll('.bn-item').forEach(function(el) { el.classList.remove('active'); });
+  var bnEl = document.getElementById('bn-' + page);
+  if (bnEl) bnEl.classList.add('active');
 
   showLoading(true);
 
@@ -256,7 +286,12 @@ function showAlert(msg, type) {
   box.className = 'alert alert-' + (type || 'info');
   box.textContent = msg;
   box.style.display = 'block';
-  setTimeout(function() { box.style.display = 'none'; }, 4000);
+  // 애니메이션 재시작 (연속 호출 시)
+  box.style.animation = 'none';
+  void box.offsetHeight;
+  box.style.animation = '';
+  clearTimeout(box._timer);
+  box._timer = setTimeout(function() { box.style.display = 'none'; }, 4000);
 }
 
 function showModal(title, bodyHtml, footerHtml) {
@@ -264,6 +299,13 @@ function showModal(title, bodyHtml, footerHtml) {
   document.getElementById('modalBody').innerHTML = bodyHtml;
   document.getElementById('modalFooter').innerHTML = footerHtml || '';
   document.getElementById('modalOverlay').style.display = 'flex';
+  // 첫 번째 입력 필드 자동 포커스
+  setTimeout(function() {
+    var first = document.querySelector(
+      '#modalBody input:not([type=hidden]):not([readonly]), #modalBody select, #modalBody textarea'
+    );
+    if (first) first.focus();
+  }, 60);
 }
 
 function closeModal() {
@@ -379,6 +421,39 @@ function statusBadge(status) {
   var color = colorMap[status] || 'gray';
   return '<span class="badge badge-' + color + '">' + labelOf(status) + '</span>';
 }
+
+// ─── 버튼 로딩 상태 헬퍼 ────────────────────────────────────
+function setLoadingBtn(btn, loading, text) {
+  if (!btn) return;
+  if (loading) {
+    btn.dataset.origHtml = btn.innerHTML;
+    btn.innerHTML = '<span class="btn-spinner"></span>' + (text || '처리 중...');
+    btn.disabled = true;
+  } else {
+    if (btn.dataset.origHtml) btn.innerHTML = btn.dataset.origHtml;
+    btn.disabled = false;
+    delete btn.dataset.origHtml;
+  }
+}
+
+// ─── 키보드 단축키 ────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  var overlay = document.getElementById('modalOverlay');
+  var isOpen  = overlay && overlay.style.display === 'flex';
+  // ESC → 모달 닫기
+  if (e.key === 'Escape' && isOpen) { closeModal(); return; }
+  // Enter → 모달 기본 버튼 클릭 (textarea/button 제외)
+  if (e.key === 'Enter' && isOpen
+      && document.activeElement.tagName !== 'TEXTAREA'
+      && document.activeElement.tagName !== 'BUTTON'
+      && !e.isComposing) {
+    var footer = document.getElementById('modalFooter');
+    if (footer) {
+      var btn = footer.querySelector('.btn-primary:not(:disabled)');
+      if (btn) { e.preventDefault(); btn.click(); }
+    }
+  }
+});
 
 // ─── 초기화: window.load 이후에만 실행 ─────────────────────
 document.addEventListener('DOMContentLoaded', function() {

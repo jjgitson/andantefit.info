@@ -302,6 +302,7 @@ function getCaseDetail(caseId, user, role, profile) {
   const followups   = sheetToObjects_(ss, CONFIG.SHEETS.FOLLOWUPS).filter(f => f.case_id === caseId);
   const activities  = sheetToObjects_(ss, CONFIG.SHEETS.ACTIVITY_LOG).filter(a => a.case_id === caseId).slice(-30).reverse();
   const appointments= sheetToObjects_(ss, CONFIG.SHEETS.APPOINTMENTS).filter(a => a.case_id === caseId);
+  const procedures  = sheetToObjects_(ss, CONFIG.SHEETS.PROCEDURES).filter(p => p.case_id === caseId);
 
   // Supplier는 환자 정보 미제공
   let patient = null;
@@ -318,7 +319,7 @@ function getCaseDetail(caseId, user, role, profile) {
   return {
     case: caseData, patient,
     reviews, orders: filteredOrders, docs,
-    billing: billing_, followups, activities, appointments,
+    billing: billing_, followups, activities, appointments, procedures,
   };
 }
 
@@ -329,8 +330,8 @@ function getCaseDetail(caseId, user, role, profile) {
 function requestReview_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
   if (!data.caseId) throw new Error('caseId가 필요합니다');
-  requestHospitalReview(data.caseId, user);
-  return { success: true };
+  const reviewId = requestHospitalReview(data.caseId, user, data.linkedOrderId || '');
+  return { success: true, reviewId };
 }
 
 function getReview(caseId) {
@@ -342,6 +343,7 @@ function getReview(caseId) {
 function submitHospitalReview(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.HOSPITAL_USER].includes(role)) throw new Error('권한 없음');
   if (!data.review_result) throw new Error('review_result 필드가 필요합니다');
+  if (!data.review_id) throw new Error('review_id 필드가 필요합니다');
 
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   const sheet = ss.getSheetByName(CONFIG.SHEETS.MEDICAL_REVIEWS);
@@ -350,18 +352,21 @@ function submitHospitalReview(data, user, role) {
   const now = new Date();
 
   for (let i = 1; i < rows.length; i++) {
-    if (rows[i][headers.indexOf('case_id')] !== data.case_id) continue;
+    if (rows[i][headers.indexOf('review_id')] !== data.review_id) continue;
+
+    const caseId        = rows[i][headers.indexOf('case_id')];
+    const linkedOrderId = rows[i][headers.indexOf('linked_order_id')];
 
     const updatable = {
-      review_status: CONFIG.REVIEW_STATUS.COMPLETED,   // 심사 완료 표시
-      review_result: data.review_result,
-      next_medical_step: data.next_medical_step || '',
-      consultation_date: data.consultation_date ? new Date(data.consultation_date) : '',
+      review_status:          CONFIG.REVIEW_STATUS.COMPLETED,
+      review_result:          data.review_result,
+      next_medical_step:      data.next_medical_step || '',
+      consultation_date:      data.consultation_date ? new Date(data.consultation_date) : '',
       additional_test_required: data.additional_test_required || '',
-      medical_notes_link: data.medical_notes_link || '',
-      notes: data.notes || '',
-      review_completed_date: now,
-      hospital_user: user,
+      medical_notes_link:     data.medical_notes_link || '',
+      notes:                  data.notes || '',
+      review_completed_date:  now,
+      hospital_user:          user,
     };
 
     Object.entries(updatable).forEach(([field, val]) => {
@@ -369,25 +374,30 @@ function submitHospitalReview(data, user, role) {
       if (col !== -1) sheet.getRange(i + 1, col + 1).setValue(val);
     });
 
-    // 검토 결과에 따른 케이스 상태 직접 업데이트 (상태기계 시트 우회 — 검토 승인 전용)
+    // 추가 검토(linked_order_id 있음) + Suitable → 주문 차단 해제
+    if (linkedOrderId && data.review_result === CONFIG.REVIEW_RESULT.SUITABLE) {
+      clearAdditionalReview_(linkedOrderId);
+    }
+
+    // 케이스 상태 전환 (상태기계 우회 — 검토 결과 전용)
     if (data.review_result === CONFIG.REVIEW_RESULT.SUITABLE) {
-      updateCaseField_(data.case_id, 'hospital_decision_at', now, user);
-      updateCaseField_(data.case_id, 'case_status', CONFIG.CASE_STATUS.HOSPITAL_APPROVED, user);
-      notifyStatusChange(data.case_id, CONFIG.CASE_STATUS.HOSPITAL_APPROVED);
+      updateCaseField_(caseId, 'hospital_decision_at', now, user);
+      updateCaseField_(caseId, 'case_status', CONFIG.CASE_STATUS.HOSPITAL_APPROVED, user);
+      notifyStatusChange(caseId, CONFIG.CASE_STATUS.HOSPITAL_APPROVED);
     } else if (data.review_result === CONFIG.REVIEW_RESULT.NOT_SUITABLE) {
-      updateCaseField_(data.case_id, 'case_status', CONFIG.CASE_STATUS.CANCELLED, user);
-      notifyStatusChange(data.case_id, CONFIG.CASE_STATUS.CANCELLED);
+      updateCaseField_(caseId, 'case_status', CONFIG.CASE_STATUS.CANCELLED, user);
+      notifyStatusChange(caseId, CONFIG.CASE_STATUS.CANCELLED);
     }
 
     addActivityLog({
-      caseId: data.case_id, actorEmail: user, actorRole: role,
+      caseId, actorEmail: user, actorRole: role,
       actionType: 'HOSPITAL_REVIEW_SUBMITTED',
       summary: `병원 검토 결과 제출: ${data.review_result}`,
     });
 
     return { success: true };
   }
-  throw new Error('해당 케이스의 검토 요청을 찾을 수 없습니다');
+  throw new Error('해당 검토를 찾을 수 없습니다');
 }
 
 // ════════════════════════════════════════════════════════════
@@ -575,6 +585,56 @@ function createAppointment_api(data, user, role) {
   ]);
 
   return { success: true, appointmentId: aptId };
+}
+
+// ════════════════════════════════════════════════════════════
+// PROCEDURES
+// ════════════════════════════════════════════════════════════
+
+function getProcedures_api(data, user, role, profile) {
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  let procedures = sheetToObjects_(ss, CONFIG.SHEETS.PROCEDURES);
+  if (data.caseId) procedures = procedures.filter(p => p.case_id === data.caseId);
+  return { procedures };
+}
+
+function createProcedure_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.caseId) throw new Error('caseId가 필요합니다');
+
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.PROCEDURES);
+  const procedureId = generateCustomId(CONFIG.SHEETS.PROCEDURES, CONFIG.ID_PREFIXES.PROCEDURES, 'procedure_id');
+  const now = new Date();
+
+  // Procedures 헤더: procedure_id, case_id, order_id, procedure_date, procedure_type,
+  //   physician, hospital_id, location, status, outcome_notes, follow_up_notes,
+  //   recorded_by, created_at
+  sheet.appendRow([
+    procedureId,
+    data.caseId,
+    data.orderId || '',
+    data.procedureDate ? new Date(data.procedureDate) : '',
+    data.procedureType || '',
+    data.physician || '',
+    data.hospitalId || '',
+    data.location || '',
+    CONFIG.PROCEDURE_STATUS.PLANNED,
+    data.outcomeNotes || '',
+    data.followUpNotes || '',
+    user,
+    now,
+  ]);
+
+  addActivityLog({
+    caseId: data.caseId,
+    actorEmail: user,
+    actorRole: role,
+    actionType: 'PROCEDURE_RECORDED',
+    summary: `시술 기록 생성: ${procedureId} (${data.procedureType || ''})`,
+  });
+
+  return { success: true, procedureId };
 }
 
 // ════════════════════════════════════════════════════════════

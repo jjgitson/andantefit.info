@@ -266,6 +266,10 @@ function dispatchAction_(action, data, user, role, profile) {
     'document.register': () => registerDocument_api(data, user, role),
     'document.list':     () => getDocuments(data.caseId, user, role),
 
+    // 시술 기록
+    'procedure.list':   () => getProcedures_api(data, user, role, profile),
+    'procedure.create': () => createProcedure_api(data, user, role),
+
     // 일정
     'appointment.list':   () => getAppointments(data, user, role),
     'appointment.create': () => createAppointment_api(data, user, role),

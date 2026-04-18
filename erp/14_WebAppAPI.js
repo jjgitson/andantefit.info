@@ -14,12 +14,12 @@ function getDashboardData(user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   const today = new Date();
 
-  const cases    = sheetToObjects_(ss, CONFIG.SHEETS.CASES);
-  const leads    = sheetToObjects_(ss, CONFIG.SHEETS.LEADS);
-  const followups= sheetToObjects_(ss, CONFIG.SHEETS.FOLLOWUPS);
-  const billing  = sheetToObjects_(ss, CONFIG.SHEETS.BILLING);
-  const orders   = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
-  const reviews  = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS);
+  const cases    = cachedRead_(ss, CONFIG.SHEETS.CASES);
+  const leads    = cachedRead_(ss, CONFIG.SHEETS.LEADS);
+  const followups= cachedRead_(ss, CONFIG.SHEETS.FOLLOWUPS);
+  const billing  = cachedRead_(ss, CONFIG.SHEETS.BILLING);
+  const orders   = cachedRead_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
+  const reviews  = cachedRead_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS);
   Logger.log(`[getDashboardData] 시트 로드 완료: cases=${cases.length} leads=${leads.length} orders=${orders.length}`);
 
   // is_deleted 필터 적용
@@ -77,7 +77,7 @@ function getDashboardData(user, role, profile) {
 
 function getLeads(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  let leads = sheetToObjects_(ss, CONFIG.SHEETS.LEADS);
+  let leads = cachedRead_(ss, CONFIG.SHEETS.LEADS);
 
   if (!data.showDeleted) {
     leads = leads.filter(l => !l.is_deleted || String(l.is_deleted).toLowerCase() === 'false');
@@ -129,6 +129,7 @@ function createLead(data, user, role) {
   });
 
   return { success: true, leadId };
+  invalidateCache_(CONFIG.SHEETS.LEADS);
 }
 
 function updateLead(data, user, role) {
@@ -162,6 +163,7 @@ function updateLead(data, user, role) {
       actionType: 'LEAD_UPDATED', summary: `리드 수정: ${data.lead_id} → 상태: ${data.lead_status||'변경없음'}` });
 
     return { success: true };
+    invalidateCache_(CONFIG.SHEETS.LEADS);
   }
   throw new Error(`리드를 찾을 수 없습니다: ${data.lead_id}`);
 }
@@ -172,7 +174,7 @@ function updateLead(data, user, role) {
 
 function getPatient(patientId, user, role) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const patients = sheetToObjects_(ss, CONFIG.SHEETS.PATIENTS);
+  const patients = cachedRead_(ss, CONFIG.SHEETS.PATIENTS);
   const patient = patients.find(p => p.patient_id === patientId);
   if (!patient) throw new Error('환자를 찾을 수 없습니다');
 
@@ -234,7 +236,7 @@ function createPatient(data, user, role) {
 
 function getCases(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  let cases = sheetToObjects_(ss, CONFIG.SHEETS.CASES);
+  let cases = cachedRead_(ss, CONFIG.SHEETS.CASES);
   cases = filterCasesByRole_(cases, user, role, profile);
 
   if (!data.showDeleted) {
@@ -261,7 +263,7 @@ function createCase_api(data, user, role) {
   // 리드 전환: 리드 정보로 환자 자동 생성 + 리드 상태 Converted 업데이트
   if (!patientId && data.lead_id) {
     const ss   = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-    const lead = sheetToObjects_(ss, CONFIG.SHEETS.LEADS).find(l => l.lead_id === data.lead_id);
+    const lead = cachedRead_(ss, CONFIG.SHEETS.LEADS).find(l => l.lead_id === data.lead_id);
     if (lead) {
       const patResult = createPatient(
         { full_name: lead.patient_name, nationality: lead.country,
@@ -284,6 +286,7 @@ function createCase_api(data, user, role) {
     remarks:             data.remarks || '',
   });
   return { success: true, caseId };
+  invalidateCache_(CONFIG.SHEETS.CASES, CONFIG.SHEETS.LEADS);
 }
 
 /**
@@ -313,14 +316,14 @@ function getCaseDetail(caseId, user, role, profile) {
     throw new Error('본인 병원 케이스만 조회할 수 있습니다');
   }
 
-  const reviews     = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS).filter(r => r.case_id === caseId);
-  const orders      = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS).filter(o => o.case_id === caseId);
-  const docs        = sheetToObjects_(ss, CONFIG.SHEETS.DOCUMENTS).filter(d => d.case_id === caseId && d.is_latest === 'Yes');
-  const billing_    = sheetToObjects_(ss, CONFIG.SHEETS.BILLING).filter(b => b.case_id === caseId);
-  const followups   = sheetToObjects_(ss, CONFIG.SHEETS.FOLLOWUPS).filter(f => f.case_id === caseId);
-  const activities  = sheetToObjects_(ss, CONFIG.SHEETS.ACTIVITY_LOG).filter(a => a.case_id === caseId).slice(-30).reverse();
-  const appointments= sheetToObjects_(ss, CONFIG.SHEETS.APPOINTMENTS).filter(a => a.case_id === caseId);
-  const procedures  = sheetToObjects_(ss, CONFIG.SHEETS.PROCEDURES).filter(p => p.case_id === caseId);
+  const reviews     = cachedRead_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS).filter(r => r.case_id === caseId);
+  const orders      = cachedRead_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS).filter(o => o.case_id === caseId);
+  const docs        = cachedRead_(ss, CONFIG.SHEETS.DOCUMENTS).filter(d => d.case_id === caseId && d.is_latest === 'Yes');
+  const billing_    = cachedRead_(ss, CONFIG.SHEETS.BILLING).filter(b => b.case_id === caseId);
+  const followups   = cachedRead_(ss, CONFIG.SHEETS.FOLLOWUPS).filter(f => f.case_id === caseId);
+  const activities  = cachedRead_(ss, CONFIG.SHEETS.ACTIVITY_LOG).filter(a => a.case_id === caseId).slice(-30).reverse();
+  const appointments= cachedRead_(ss, CONFIG.SHEETS.APPOINTMENTS).filter(a => a.case_id === caseId);
+  const procedures  = cachedRead_(ss, CONFIG.SHEETS.PROCEDURES).filter(p => p.case_id === caseId);
 
   // Supplier는 환자 정보 미제공
   let patient = null;
@@ -330,12 +333,12 @@ function getCaseDetail(caseId, user, role, profile) {
   }
 
   // coordinator display_name 조인
-  const usersRows  = sheetToObjects_(ss, CONFIG.SHEETS.USERS);
+  const usersRows  = cachedRead_(ss, CONFIG.SHEETS.USERS);
   const coordUser  = usersRows.find(u => u.user_email === caseData.assigned_coordinator);
   const coordName  = coordUser ? (coordUser.display_name || caseData.assigned_coordinator) : caseData.assigned_coordinator;
 
   // hospital_name 조인
-  const hospRows   = sheetToObjects_(ss, CONFIG.SHEETS.HOSPITALS);
+  const hospRows   = cachedRead_(ss, CONFIG.SHEETS.HOSPITALS);
   const hospRecord = hospRows.find(h => h.hospital_id === caseData.hospital_id);
   const hospName   = hospRecord ? (hospRecord.hospital_name || caseData.hospital_id) : caseData.hospital_id;
 
@@ -366,7 +369,7 @@ function requestReview_api(data, user, role) {
 
 function getReview(caseId) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const reviews = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS).filter(r => r.case_id === caseId);
+  const reviews = cachedRead_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS).filter(r => r.case_id === caseId);
   return { reviews };
 }
 
@@ -436,12 +439,12 @@ function submitHospitalReview(data, user, role) {
 
 function getSupplierOrders(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  let orders = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
+  let orders = cachedRead_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
 
   if (role === ROLES.SUPPLIER_USER) {
     orders = orders.filter(o => o.supplier_id === profile.supplier_id);
   } else if (role === ROLES.MSO_COORDINATOR) {
-    const myCaseIds = sheetToObjects_(ss, CONFIG.SHEETS.CASES)
+    const myCaseIds = cachedRead_(ss, CONFIG.SHEETS.CASES)
       .filter(c => c.assigned_coordinator === user).map(c => c.case_id);
     orders = orders.filter(o => myCaseIds.includes(o.case_id));
   }
@@ -461,12 +464,14 @@ function createSupplierOrder_api(data, user, role) {
 function confirmShipment_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR, ROLES.SUPPLIER_USER].includes(role)) throw new Error('권한 없음');
   confirmShipment(data.orderId, { ...data, updatedBy: user });
+  invalidateCache_(CONFIG.SHEETS.SUPPLIER_ORDERS, CONFIG.SHEETS.CASES);
   return { success: true };
 }
 
 function confirmDelivery_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
   confirmDelivery(data.orderId, { ...data, updatedBy: user });
+  invalidateCache_(CONFIG.SHEETS.SUPPLIER_ORDERS, CONFIG.SHEETS.CASES);
   return { success: true };
 }
 
@@ -474,6 +479,7 @@ function recordAcceptanceCheck_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.HOSPITAL_USER].includes(role)) throw new Error('권한 없음');
   if (!data.result) throw new Error('검수 결과(result) 필드가 필요합니다');
   recordAcceptanceCheck(data.orderId, { result: data.result, notes: data.notes, checkedBy: user });
+  invalidateCache_(CONFIG.SHEETS.SUPPLIER_ORDERS, CONFIG.SHEETS.CASES);
   return { success: true };
 }
 
@@ -484,7 +490,7 @@ function recordAcceptanceCheck_api(data, user, role) {
 function getBilling(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  let rows = sheetToObjects_(ss, CONFIG.SHEETS.BILLING);
+  let rows = cachedRead_(ss, CONFIG.SHEETS.BILLING);
   if (data.caseId) rows = rows.filter(b => b.case_id === data.caseId);
   if (data.onlyOutstanding) {
     rows = rows.filter(b => [CONFIG.PAYMENT_STATUS.INVOICE_SENT, CONFIG.PAYMENT_STATUS.PARTIALLY_PAID].includes(b.payment_status));
@@ -524,6 +530,7 @@ function saveBilling(data, user, role) {
 
   // 신규 생성
   const billingId = createBillingRecord({ ...data, createdBy: user });
+  invalidateCache_(CONFIG.SHEETS.BILLING);
   return { success: true, billing_id: billingId };
 }
 
@@ -531,24 +538,28 @@ function markQuoteAgreed_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
   if (!data.billingId) throw new Error('billingId가 필요합니다');
   markQuoteAgreed(data.billingId, user);
+  invalidateCache_(CONFIG.SHEETS.BILLING);
   return { success: true };
 }
 
 function issueQuote_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
   issueQuote(data.billingId, { ...data, issuedBy: user });
+  invalidateCache_(CONFIG.SHEETS.BILLING);
   return { success: true };
 }
 
 function issueInvoice_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
   issueInvoice(data.billingId, { ...data, issuedBy: user });
+  invalidateCache_(CONFIG.SHEETS.BILLING);
   return { success: true };
 }
 
 function recordPayment_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
   recordPayment(data.billingId, { paidAmount: data.paidAmount, paidDate: data.paidDate, processedBy: user });
+  invalidateCache_(CONFIG.SHEETS.BILLING);
   return { success: true };
 }
 
@@ -558,7 +569,7 @@ function recordPayment_api(data, user, role) {
 
 function getFollowups(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  let rows = sheetToObjects_(ss, CONFIG.SHEETS.FOLLOWUPS);
+  let rows = cachedRead_(ss, CONFIG.SHEETS.FOLLOWUPS);
 
   if (role === ROLES.MSO_COORDINATOR) {
     rows = rows.filter(f => f.responsible_party === user);
@@ -578,6 +589,7 @@ function completeFollowup_api(data, user, role) {
     completedBy: user,
   });
   return { success: true };
+  invalidateCache_(CONFIG.SHEETS.FOLLOWUPS);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -586,6 +598,7 @@ function completeFollowup_api(data, user, role) {
 
 function registerDocument_api(data, user, role) {
   const docId = registerDocument({ ...data, uploadedBy: user });
+  invalidateCache_(CONFIG.SHEETS.DOCUMENTS);
   return { success: true, documentId: docId };
 }
 
@@ -599,14 +612,14 @@ function getDocuments(caseId, user, role) {
 
 function getAppointments(data, user, role) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  let apts = sheetToObjects_(ss, CONFIG.SHEETS.APPOINTMENTS);
+  let apts = cachedRead_(ss, CONFIG.SHEETS.APPOINTMENTS);
 
   if (data.caseId) {
     apts = apts.filter(a => a.case_id === data.caseId);
   } else {
     // 팀 전체 조회 시 케이스에서 hospital_id + assigned_coordinator 조인
     const caseMap = {};
-    sheetToObjects_(ss, CONFIG.SHEETS.CASES).forEach(c => { caseMap[c.case_id] = c; });
+    cachedRead_(ss, CONFIG.SHEETS.CASES).forEach(c => { caseMap[c.case_id] = c; });
     apts = apts.map(a => {
       const c = caseMap[a.case_id] || {};
       return { ...a, hospital_id: c.hospital_id || '', assigned_coordinator: c.assigned_coordinator || '' };
@@ -653,7 +666,7 @@ function createAppointment_api(data, user, role) {
 
 function getProcedures_api(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  let procedures = sheetToObjects_(ss, CONFIG.SHEETS.PROCEDURES);
+  let procedures = cachedRead_(ss, CONFIG.SHEETS.PROCEDURES);
   if (data.caseId) procedures = procedures.filter(p => p.case_id === data.caseId);
   return { procedures };
 }
@@ -695,6 +708,7 @@ function createProcedure_api(data, user, role) {
   });
 
   return { success: true, procedureId };
+  invalidateCache_(CONFIG.SHEETS.PROCEDURES);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -720,6 +734,45 @@ function sheetToObjects_(ss, sheetName) {
       });
       return obj;
     });
+}
+
+// ─── CacheService 래퍼 ───────────────────────────────────────
+
+const CACHE_TTL_ = {
+  [CONFIG.SHEETS.CASES]:           120,
+  [CONFIG.SHEETS.LEADS]:           120,
+  [CONFIG.SHEETS.SUPPLIER_ORDERS]: 60,
+  [CONFIG.SHEETS.MEDICAL_REVIEWS]: 120,
+  [CONFIG.SHEETS.BILLING]:         180,
+  [CONFIG.SHEETS.FOLLOWUPS]:       180,
+  [CONFIG.SHEETS.DOCUMENTS]:       300,
+  [CONFIG.SHEETS.HOSPITALS]:       1800,
+  [CONFIG.SHEETS.SUPPLIERS]:       1800,
+  [CONFIG.SHEETS.USERS]:           1800,
+};
+
+function cachedRead_(ss, sheetName) {
+  const cache = CacheService.getScriptCache();
+  const key = 'sheet_' + sheetName;
+  try {
+    const hit = cache.get(key);
+    if (hit) return JSON.parse(hit);
+  } catch(e) {}
+
+  const rows = cachedRead_(ss, sheetName);
+  try {
+    const json = JSON.stringify(rows);
+    if (json.length < 95000) {
+      cache.put(key, json, CACHE_TTL_[sheetName] || 120);
+    }
+  } catch(e) {}
+  return rows;
+}
+
+function invalidateCache_() {
+  const cache = CacheService.getScriptCache();
+  const keys = Array.from(arguments).map(n => 'sheet_' + n);
+  cache.removeAll(keys);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -768,6 +821,7 @@ function softDeleteLead_api(data, user, role) {
     set('deleted_at',    new Date());
     set('deleted_by',    user);
     set('delete_reason', data.reason || '');
+    invalidateCache_(CONFIG.SHEETS.LEADS);
     return { success: true };
   }
   throw new Error('리드를 찾을 수 없습니다');
@@ -802,6 +856,7 @@ function softDeleteCase_api(data, user, role) {
       actionType: 'CASE_DELETED',
       summary: `케이스 소프트 삭제: ${data.caseId} (사유: ${data.reason || '미기재'})`,
     });
+    invalidateCache_(CONFIG.SHEETS.CASES);
     return { success: true };
   }
   throw new Error('케이스를 찾을 수 없습니다');
@@ -812,7 +867,7 @@ function softDeleteCase_api(data, user, role) {
  */
 function getHospitalList() {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const hospitals = sheetToObjects_(ss, CONFIG.SHEETS.HOSPITALS)
+  const hospitals = cachedRead_(ss, CONFIG.SHEETS.HOSPITALS)
     .filter(h => String(h.active).toLowerCase() !== 'no' && String(h.active).toLowerCase() !== 'false')
     .map(h => ({ id: h.hospital_id, name: h.hospital_name || h.hospital_id }));
   return { hospitals };
@@ -820,7 +875,7 @@ function getHospitalList() {
 
 function getSupplierList() {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const suppliers = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIERS)
+  const suppliers = cachedRead_(ss, CONFIG.SHEETS.SUPPLIERS)
     .filter(s => String(s.active).toLowerCase() !== 'no' && String(s.active).toLowerCase() !== 'false')
     .map(s => ({ id: s.supplier_id, name: s.supplier_name || s.supplier_id }));
   return { suppliers };
@@ -832,7 +887,7 @@ function getSupplierList() {
  */
 function getCoordinatorList(user, role) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const allUsers = sheetToObjects_(ss, CONFIG.SHEETS.USERS);
+  const allUsers = cachedRead_(ss, CONFIG.SHEETS.USERS);
 
   if (role === ROLES.MSO_ADMIN) {
     const coordinators = allUsers

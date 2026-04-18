@@ -95,9 +95,10 @@ function confirmShipment(orderId, params) {
     throw new Error(`배송 중 확인은 주문 완료 상태에서만 가능합니다. (현재: ${order.supplier_status})`);
   }
 
-  if (params.lotBatchNo) updateSupplierOrderField_(orderId, 'lot_batch_no', params.lotBatchNo, params.updatedBy);
-  if (params.trackingNo) updateSupplierOrderField_(orderId, 'shipment_tracking_no', params.trackingNo, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'supplier_status', CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
+  const transitFields = { supplier_status: CONFIG.SUPPLIER_STATUS.IN_TRANSIT };
+  if (params.lotBatchNo) transitFields.lot_batch_no = params.lotBatchNo;
+  if (params.trackingNo) transitFields.shipment_tracking_no = params.trackingNo;
+  batchUpdateSupplierOrder_(orderId, transitFields, params.updatedBy);
 
   // 케이스 → Shipment In Transit
   const caseData = getCaseData_(order.case_id);
@@ -130,9 +131,11 @@ function confirmDelivery(orderId, params) {
   }
 
   const deliveryDate = params.deliveryDate || Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
-  updateSupplierOrderField_(orderId, 'delivery_date',          deliveryDate,                            params.updatedBy);
-  updateSupplierOrderField_(orderId, 'supplier_status',         CONFIG.SUPPLIER_STATUS.DELIVERED,        params.updatedBy);
-  updateSupplierOrderField_(orderId, 'acceptance_check_status', CONFIG.ACCEPTANCE_STATUS.ACCEPTED,       params.updatedBy);
+  batchUpdateSupplierOrder_(orderId, {
+    delivery_date:          deliveryDate,
+    supplier_status:        CONFIG.SUPPLIER_STATUS.DELIVERED,
+    acceptance_check_status: CONFIG.ACCEPTANCE_STATUS.ACCEPTED,
+  }, params.updatedBy);
 
   // 케이스 → Acceptance Confirmed
   const caseData = getCaseData_(order.case_id);
@@ -262,6 +265,28 @@ function getSupplierOrderData_(orderId) {
     }
   }
   return null;
+}
+
+function batchUpdateSupplierOrder_(orderId, fieldMap, changedBy) {
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.SUPPLIER_ORDERS);
+  const data = sheet.getDataRange().getValues();
+  const headers = data[0];
+
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][headers.indexOf('supplier_order_id')] !== orderId) continue;
+    Object.entries(fieldMap).forEach(([field, newVal]) => {
+      const col = headers.indexOf(field);
+      if (col === -1) return;
+      const oldVal = data[i][col];
+      sheet.getRange(i + 1, col + 1).setValue(newVal);
+      if (String(oldVal) !== String(newVal)) {
+        createAuditLog('Supplier_Orders', orderId, field, oldVal, newVal,
+          changedBy || Session.getActiveUser().getEmail(), 'Apps Script');
+      }
+    });
+    return;
+  }
 }
 
 function updateSupplierOrderField_(orderId, fieldName, newValue, changedBy) {

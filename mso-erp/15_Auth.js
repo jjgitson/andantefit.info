@@ -18,6 +18,7 @@ const ROLE_PERMISSIONS = {
   'MSO Admin': ['*'],
 
   'MSO Coordinator': [
+    'ping',
     'dashboard.summary',
     'lead.list', 'lead.create', 'lead.update',
     'case.list', 'case.get', 'case.create', 'case.changeStatus',
@@ -31,6 +32,7 @@ const ROLE_PERMISSIONS = {
   ],
 
   'Hospital User': [
+    'ping',
     'dashboard.summary',
     'case.list', 'case.get',
     'review.submit', 'review.get',
@@ -40,12 +42,14 @@ const ROLE_PERMISSIONS = {
   ],
 
   'Supplier User': [
+    'ping',
     'dashboard.summary',
     'supplier.order.list', 'supplier.shipment.confirm',
     'document.list', 'document.register',
   ],
 
   'Finance User': [
+    'ping',
     'dashboard.summary',
     'case.list', 'case.get',
     'billing.list', 'billing.save',

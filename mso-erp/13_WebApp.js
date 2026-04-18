@@ -137,6 +137,25 @@ function initSession(idToken) {
   }
 }
 
+// ─── ping: 연결 테스트 (인증 불필요) ─────────────────────────
+
+/**
+ * google.script.run 동작 여부 확인용. handleClientRequest 경유 없이 직접 호출.
+ * 브라우저 콘솔에서: google.script.run.withSuccessHandler(console.log).ping()
+ * @returns {string} JSON { pong, ts, email }
+ */
+function ping() {
+  const activeEmail    = (Session.getActiveUser().getEmail()    || '').trim().toLowerCase();
+  const effectiveEmail = (Session.getEffectiveUser().getEmail() || '').trim().toLowerCase();
+  Logger.log(`[ping] activeUser="${activeEmail}" effectiveUser="${effectiveEmail}"`);
+  return JSON.stringify({
+    pong:      true,
+    ts:        new Date().toISOString(),
+    email:     activeEmail || '(empty)',
+    effective: effectiveEmail,
+  });
+}
+
 // ─── handleClientRequest: 클라이언트 API 엔드포인트 ──────────
 
 /**
@@ -147,6 +166,7 @@ function initSession(idToken) {
  * @returns {string} JSON 문자열
  */
 function handleClientRequest(action, data) {
+  Logger.log(`[handleClientRequest] START action="${action}"`);
   try {
     let email = (Session.getActiveUser().getEmail() || '').trim().toLowerCase();
 
@@ -190,6 +210,9 @@ function handleClientRequest(action, data) {
 
 function dispatchAction_(action, data, user, role, profile) {
   const A = {
+    // 진단
+    'ping': () => ({ pong: true, ts: new Date().toISOString(), user, role }),
+
     // 사용자
     'user.profile':    () => apiGetCurrentProfile(data, user, role),
     'user.list':       () => apiGetUsers(data, user, role),

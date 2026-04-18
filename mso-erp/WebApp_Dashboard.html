@@ -1,12 +1,23 @@
 <script>
 function getDashboardHTML(params) {
   showLoading(true);
-  callServer('dashboard.summary', {})
+
+  // Step A: callServer('ping') — 인증 흐름 전체(handleClientRequest + nonce) 테스트
+  // ping이 실패하면 인증 문제, ping이 성공하면 dashboard.summary 액션 매핑 문제
+  console.log('[MSO][dashboard] Step A: callServer ping test');
+  callServer('ping', {})
+    .then(function(r) {
+      console.log('[MSO][dashboard] Step A ping OK:', JSON.stringify(r));
+      // Step B: 실제 대시보드 데이터 요청
+      console.log('[MSO][dashboard] Step B: callServer dashboard.summary');
+      return callServer('dashboard.summary', {});
+    })
     .then(function(data) {
+      console.log('[MSO][dashboard] Step B dashboard.summary OK');
       renderDashboard_(data);
     })
     .catch(function(err) {
-      console.error('[dashboard] 로드 실패:', err.message);
+      console.error('[MSO][dashboard] FAILED:', err.message);
       renderDashboardFallback_(err.message);
     });
 }

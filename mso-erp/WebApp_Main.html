@@ -60,9 +60,7 @@
   <div id="alertBox" class="alert" style="display:none"></div>
 
   <!-- 페이지 컨텐츠 -->
-  <main class="content" id="mainContent">
-    <!-- 초기 로딩 상태: JS가 로드되면 loadPage()가 대체함 -->
-  </main>
+  <main class="content" id="mainContent"></main>
 </div>
 
 <!-- 모달 -->
@@ -78,14 +76,18 @@
 </div>
 
 <script>
+console.log('[MSO] script block loaded');
+
 // ─── 전역 상태 ─────────────────────────────────────────────────
 const APP = {
   user:         '<?= userEmail ?>',
   role:         '<?= userRole ?>',
   name:         '<?= userName ?>',
   currentPage:  '<?= page ?>',
-  sessionNonce: '<?= sessionNonce ?>',  // handleClientRequest 인증에 사용
+  sessionNonce: '<?= sessionNonce ?>',
 };
+console.log('[MSO] APP initialized | user:', APP.user, '| role:', APP.role,
+  '| nonce:', APP.sessionNonce ? APP.sessionNonce.substring(0, 8) + '...' : '(none)');
 
 // 역할별 메뉴 가시성
 (function initNav() {
@@ -103,10 +105,9 @@ const APP = {
 })();
 
 // ─── 페이지 라우터 ─────────────────────────────────────────────
-// PAGE_TEMPLATES는 window.load 이후에 초기화해야 함:
-// 각 페이지 함수들은 별도 <script> 블록에 있으므로
-// 이 블록이 실행되는 시점에는 아직 정의되지 않은 상태임.
-// loadPage()는 window[fnName]()으로 런타임에 함수를 조회함.
+// PAGE_FN_MAP은 문자열 키를 사용해 런타임에 window[fnName]()으로 조회.
+// 이 <script> 블록 실행 시점에는 별도 <script>에 정의된 페이지 함수들이
+// 아직 미정의이므로 함수 레퍼런스를 직접 저장하면 ReferenceError 발생.
 const PAGE_FN_MAP = {
   dashboard:  'getDashboardHTML',
   leads:      'getLeadsHTML',
@@ -130,70 +131,103 @@ const PAGE_TITLES = {
 };
 
 function loadPage(page, params) {
-  APP.currentPage  = page;
+  console.log('[MSO] renderPage called with page:', page,
+    '| params:', JSON.stringify(params || {}));
+  APP.currentPage   = page;
   APP.currentParams = params || {};
   document.getElementById('pageTitle').textContent = PAGE_TITLES[page] || page;
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(function(el) {
+    el.classList.remove('active');
+  });
 
   showLoading(true);
 
-  const fnName = PAGE_FN_MAP[page];
-  const renderFn = fnName ? window[fnName] : null;
+  var fnName   = PAGE_FN_MAP[page];
+  var renderFn = fnName ? window[fnName] : null;
 
   if (typeof renderFn === 'function') {
     try {
       renderFn(params);
     } catch (err) {
-      showContent(`<div class="alert alert-error">페이지 렌더링 오류: ${err.message}</div>`);
+      console.error('[MSO] renderPage exception in', page, ':', err);
+      showContent('<div class="alert alert-error">페이지 렌더링 오류: ' + err.message + '</div>');
     }
   } else {
-    showContent(`<div class="alert alert-warning">준비 중인 페이지입니다: ${page}</div>`);
+    console.warn('[MSO] renderPage: no render function for page:', page,
+      '(fnName:', fnName, ', window[fnName]:', typeof window[fnName], ')');
+    showContent('<div class="alert alert-warning">준비 중인 페이지입니다: ' + page + '</div>');
   }
 
   if (window.innerWidth <= 768) toggleSidebar(false);
 }
 
 function showContent(html) {
-  document.getElementById('mainContent').innerHTML =
-    '<div class="loading-spinner" id="loadingSpinner" style="display:none"><div class="spinner"></div><p>로딩 중...</p></div>' +
-    html;
+  document.getElementById('mainContent').innerHTML = html;
 }
 
 function showLoading(show) {
-  const content = document.getElementById('mainContent');
   if (show) {
-    content.innerHTML =
+    document.getElementById('mainContent').innerHTML =
       '<div class="loading-spinner" id="loadingSpinner" style="display:flex">' +
       '<div class="spinner"></div><p>로딩 중...</p></div>';
   }
 }
 
+// ─── 치명적 오류 표시 (google.script.run 실패 시) ───────────────
+function showFatalError_(msg) {
+  console.error('[MSO] showFatalError_:', msg);
+  var content = document.getElementById('mainContent');
+  if (!content) return;
+  content.innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:center;min-height:300px">' +
+    '<div style="max-width:520px;padding:28px 24px;background:#fff2f2;border:2px solid #ea4335;' +
+    'border-radius:12px;text-align:center">' +
+    '<div style="font-size:36px;margin-bottom:12px">⚠️</div>' +
+    '<h3 style="color:#c62828;margin:0 0 8px">서버 통신 오류</h3>' +
+    '<p style="color:#5f6368;font-size:13px;word-break:break-all;margin:0 0 16px">' + msg + '</p>' +
+    '<p style="color:#888;font-size:12px;margin:0 0 16px">' +
+    '브라우저 콘솔(F12)에서 [MSO] 로그를 확인하세요.</p>' +
+    '<button onclick="location.reload()" style="padding:8px 20px;background:#ea4335;color:#fff;' +
+    'border:none;border-radius:6px;cursor:pointer;font-size:14px">새로고침</button>' +
+    '</div></div>';
+}
+
 // ─── API 통신 ──────────────────────────────────────────────────
 /**
- * 서버 handleClientRequest 호출.
- * - APP.sessionNonce가 있으면 data.__nonce 에 포함 (GSI / _ownerBypass 세션)
- * - 서버 응답이 {error: ...} 이면 Promise.reject
+ * handleClientRequest 호출 래퍼.
+ * - APP.sessionNonce → data.__nonce 에 포함 (GSI / _ownerBypass 세션 인증)
+ * - 서버가 {error: ...} 반환 시 → Promise.reject
+ * - google.script.run 자체 실패 시 → showFatalError_ + Promise.reject
  */
 function callServer(action, data) {
-  const payload = Object.assign({}, data || {});
+  console.log('[MSO] callServer called with action:', action,
+    '| nonce:', APP.sessionNonce ? APP.sessionNonce.substring(0, 8) + '...' : '(none)');
+  var payload = Object.assign({}, data || {});
   if (APP.sessionNonce) payload.__nonce = APP.sessionNonce;
 
-  return new Promise((resolve, reject) => {
+  return new Promise(function(resolve, reject) {
     google.script.run
       .withSuccessHandler(function(raw) {
+        console.log('[MSO] success callback entered for action:', action,
+          '| raw preview:', typeof raw === 'string' ? raw.substring(0, 100) : JSON.stringify(raw).substring(0, 100));
         try {
-          const r = (typeof raw === 'string') ? JSON.parse(raw) : raw;
+          var r = (typeof raw === 'string') ? JSON.parse(raw) : raw;
           if (r && r.error) {
+            console.warn('[MSO] server returned error for action:', action, '|', r.error);
             reject(new Error('[' + (r.code || 'ERR') + '] ' + r.error));
           } else {
             resolve(r);
           }
         } catch (e) {
+          console.error('[MSO] JSON parse error for action:', action, '|', e.message);
           reject(new Error('응답 파싱 실패: ' + e.message));
         }
       })
       .withFailureHandler(function(err) {
-        reject(new Error(err && err.message ? err.message : String(err)));
+        var msg = err && err.message ? err.message : String(err);
+        console.error('[MSO] failure callback entered for action:', action, '| err:', msg);
+        showFatalError_(action + ' 호출 실패: ' + msg);
+        reject(new Error(msg));
       })
       .handleClientRequest(action, payload);
   });
@@ -201,20 +235,16 @@ function callServer(action, data) {
 
 // ─── 캘린더 페이지 스텁 ───────────────────────────────────────
 function getCalendarHTML() {
-  showContent(`
-    <div class="card">
-      <div class="card-header"><span class="card-title">📅 일정</span></div>
-      <div class="card-body">
-        <p style="color:var(--gray-600);padding:24px 0">캘린더 뷰는 준비 중입니다.<br>
-          케이스 상세 화면에서 개별 일정을 관리하세요.</p>
-      </div>
-    </div>
-  `);
+  showContent(
+    '<div class="card"><div class="card-header"><span class="card-title">📅 일정</span></div>' +
+    '<div class="card-body"><p style="color:var(--gray-600);padding:24px 0">' +
+    '캘린더 뷰는 준비 중입니다.<br>케이스 상세 화면에서 개별 일정을 관리하세요.</p></div></div>'
+  );
 }
 
 // ─── UI 헬퍼 ──────────────────────────────────────────────────
 function showAlert(msg, type) {
-  const box = document.getElementById('alertBox');
+  var box = document.getElementById('alertBox');
   box.className = 'alert alert-' + (type || 'info');
   box.textContent = msg;
   box.style.display = 'block';
@@ -233,28 +263,28 @@ function closeModal() {
 }
 
 function toggleSidebar(forceOpen) {
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  const isOpen  = sidebar.classList.contains('open');
-  const shouldOpen = (forceOpen !== undefined) ? forceOpen : !isOpen;
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('overlay');
+  var isOpen  = sidebar.classList.contains('open');
+  var shouldOpen = (forceOpen !== undefined) ? forceOpen : !isOpen;
   sidebar.classList.toggle('open', shouldOpen);
   overlay.classList.toggle('show', shouldOpen);
 }
 
 function fmtDate(iso) {
   if (!iso) return '-';
-  const d = new Date(iso);
+  var d = new Date(iso);
   return isNaN(d.getTime()) ? String(iso).split('T')[0] : d.toLocaleDateString('ko-KR');
 }
 
 function fmtMoney(amount) {
-  const n = Number(amount);
+  var n = Number(amount);
   if (!amount || isNaN(n)) return '-';
   return n.toLocaleString('ko-KR') + '원';
 }
 
 function statusBadge(status) {
-  const colorMap = {
+  var colorMap = {
     'Draft': 'gray', 'Under Hospital Review': 'blue', 'Hospital Approved': 'green',
     'Supplier Coordination': 'orange', 'Shipment In Transit': 'purple',
     'Acceptance Check Pending': 'yellow', 'Acceptance Confirmed': 'teal',
@@ -275,15 +305,42 @@ function statusBadge(status) {
     'Supplier User': 'orange', 'Finance User': 'purple',
   };
   if (!status) return '<span class="badge badge-gray">-</span>';
-  const color = colorMap[status] || 'gray';
-  return `<span class="badge badge-${color}">${status}</span>`;
+  var color = colorMap[status] || 'gray';
+  return '<span class="badge badge-' + color + '">' + status + '</span>';
 }
 
-// ─── 초기 페이지 로드 ─────────────────────────────────────────
-// window.load 이후에 실행: 이 시점에는 모든 include 스크립트가 로드됨
-window.addEventListener('load', function() {
-  loadPage(APP.currentPage);
+// ─── 초기화 ────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('[MSO] DOMContentLoaded entered');
 });
+
+window.addEventListener('load', function() {
+  console.log('[MSO] window load entered');
+  initApp_();
+});
+
+function initApp_() {
+  console.log('[MSO] initApp started | page:', APP.currentPage);
+
+  // Step 1: google.script.run 자체 동작 여부를 ping()으로 확인
+  // ping()은 handleClientRequest를 경유하지 않아 인증과 무관하게 응답해야 함
+  console.log('[MSO] calling ping() directly (no auth required)...');
+  google.script.run
+    .withSuccessHandler(function(raw) {
+      console.log('[MSO] ping() SUCCESS:', raw);
+    })
+    .withFailureHandler(function(err) {
+      var msg = err && err.message ? err.message : String(err);
+      console.error('[MSO] ping() FAILED — google.script.run not working:', msg);
+      showFatalError_('google.script.run 연결 실패 (ping): ' + msg +
+        '\n\nApps Script 배포가 올바른지 확인하세요.');
+    })
+    .ping();
+
+  // Step 2: 첫 페이지 렌더링 (ping과 독립적으로 진행)
+  loadPage(APP.currentPage);
+}
 </script>
 
 <?!= include_('WebApp_Dashboard'); ?>

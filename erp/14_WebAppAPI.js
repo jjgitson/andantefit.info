@@ -720,6 +720,24 @@ function sheetToObjects_(ss, sheetName) {
 // 참조 데이터 (케이스 전환 모달용)
 // ════════════════════════════════════════════════════════════
 
+/**
+ * 소프트삭제 컬럼이 없으면 시트에 추가 후 headers 배열도 갱신
+ */
+function ensureSoftDeleteCols_(sheet, headers) {
+  const SOFT_COLS = ['is_deleted', 'deleted_at', 'deleted_by', 'delete_reason'];
+  let added = false;
+  SOFT_COLS.forEach(col => {
+    if (headers.indexOf(col) === -1) {
+      const newIdx = sheet.getLastColumn() + 1;
+      sheet.getRange(1, newIdx).setValue(col);
+      sheet.getRange(1, newIdx).setFontWeight('bold').setBackground('#4A86E8').setFontColor('#FFFFFF');
+      headers.push(col);
+      added = true;
+    }
+  });
+  if (added) Logger.log(`[ensureSoftDeleteCols_] ${sheet.getName()}에 소프트삭제 컬럼 추가`);
+}
+
 function softDeleteLead_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
   if (!data.leadId) throw new Error('leadId가 필요합니다');
@@ -728,6 +746,7 @@ function softDeleteLead_api(data, user, role) {
   const sheet = ss.getSheetByName(CONFIG.SHEETS.LEADS);
   const rows = sheet.getDataRange().getValues();
   const headers = rows[0];
+  ensureSoftDeleteCols_(sheet, headers);
 
   for (let i = 1; i < rows.length; i++) {
     if (rows[i][headers.indexOf('lead_id')] !== data.leadId) continue;
@@ -756,6 +775,7 @@ function softDeleteCase_api(data, user, role) {
   const sheet = ss.getSheetByName(CONFIG.SHEETS.CASES);
   const rows = sheet.getDataRange().getValues();
   const headers = rows[0];
+  ensureSoftDeleteCols_(sheet, headers);
 
   for (let i = 1; i < rows.length; i++) {
     if (rows[i][headers.indexOf('case_id')] !== data.caseId) continue;

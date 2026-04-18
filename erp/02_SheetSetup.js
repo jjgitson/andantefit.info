@@ -224,15 +224,30 @@ function setupAllSheets() {
       Logger.log(`시트 생성: ${sheetName}`);
     }
 
-    const firstRow = sheet.getRange(1, 1, 1, headers.length).getValues()[0];
-    if (firstRow[0] !== headers[0]) {
+    const lastCol = Math.max(sheet.getLastColumn(), 1);
+    const existingHeaders = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+
+    if (!existingHeaders[0] || existingHeaders[0] !== headers[0]) {
+      // 신규 시트: 전체 헤더 설정
       sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-      sheet.getRange(1, 1, 1, headers.length)
-        .setFontWeight('bold')
-        .setBackground('#4A86E8')
-        .setFontColor('#FFFFFF');
-      sheet.setFrozenRows(1);
+    } else {
+      // 기존 시트: 누락된 컬럼만 오른쪽에 추가
+      headers.forEach(h => {
+        if (existingHeaders.indexOf(h) === -1) {
+          const newColIdx = sheet.getLastColumn() + 1;
+          sheet.getRange(1, newColIdx).setValue(h);
+          existingHeaders.push(h);
+          Logger.log(`컬럼 추가: ${sheetName}.${h}`);
+        }
+      });
     }
+
+    // 헤더 행 스타일 통일
+    sheet.getRange(1, 1, 1, sheet.getLastColumn())
+      .setFontWeight('bold')
+      .setBackground('#4A86E8')
+      .setFontColor('#FFFFFF');
+    sheet.setFrozenRows(1);
   });
 
   seedMasterData_(ss);

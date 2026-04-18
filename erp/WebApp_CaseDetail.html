@@ -509,7 +509,7 @@ function showCaseShipModal(orderId, defaultDate, defaultLot) {
   const body = `
     <div class="form-grid">
       <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="caseShipDate" required value="${defaultDate || ''}"></div>
-      <div class="form-group"><label class="required">배치번호 (LOT)</label><input type="text" id="caseShipLot" required placeholder="LOT-2026-001" value="${defaultLot || ''}"></div>
+      <div class="form-group"><label>배치번호 (LOT)</label><input type="text" id="caseShipLot" placeholder="LOT-2026-001" value="${defaultLot || ''}"></div>
       <div class="form-group"><label>운송장 번호</label><input type="text" id="caseShipTrack" placeholder="FedEx 운송장번호"></div>
       <div class="form-group full"><label>COA Drive 링크</label><input type="url" id="caseShipCoa" placeholder="https://drive.google.com/..."></div>
     </div>
@@ -523,8 +523,8 @@ function showCaseShipModal(orderId, defaultDate, defaultLot) {
 
 function submitCaseShipment(orderId) {
   const date = document.getElementById('caseShipDate').value;
+  if (!date) { showAlert('확정 출고일은 필수입니다', 'warning'); return; }
   const lot  = document.getElementById('caseShipLot').value;
-  if (!date || !lot) { showAlert('출고일과 배치번호는 필수입니다', 'warning'); return; }
   callServer('supplier.shipment.confirm', {
     orderId, confirmedShipDate: date, lotBatchNo: lot,
     trackingNo: document.getElementById('caseShipTrack').value,

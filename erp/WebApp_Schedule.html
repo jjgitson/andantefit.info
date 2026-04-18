@@ -1,0 +1,197 @@
+<script>
+// ─── 팀 일정 ──────────────────────────────────────────────────
+function getScheduleHTML() {
+  showLoading(true);
+  Promise.all([
+    callServer('appointment.list', {}),
+    callServer('hospital.list', {}),
+    callServer('coordinator.list', {}),
+  ]).then(([aptData, hospData, coordData]) => {
+    window._schedApts    = aptData.appointments || [];
+    window._schedHospMap = {};
+    (hospData.hospitals || []).forEach(h => { window._schedHospMap[h.id] = h.name; });
+
+    const hospOptions  = (hospData.hospitals  || []).map(h =>
+      `<option value="${h.id}">${h.name}</option>`).join('');
+    const coordOptions = (coordData.coordinators || []).map(c =>
+      `<option value="${c.email}">${c.name}</option>`).join('');
+
+    const html = `
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header">
+          <span class="card-title">팀 일정</span>
+          ${['MSO Admin','MSO Coordinator'].includes(APP.role)
+            ? `<button class="btn btn-primary btn-sm" onclick="showGlobalAppointmentModal()">+ 일정 추가</button>`
+            : ''}
+        </div>
+        <div class="card-body" style="padding-bottom:4px">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <select id="schedCoord" onchange="applyScheduleFilter()" style="min-width:160px">
+              <option value="">전체 담당자</option>${coordOptions}
+            </select>
+            <select id="schedHosp" onchange="applyScheduleFilter()" style="min-width:160px">
+              <option value="">전체 병원</option>${hospOptions}
+            </select>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="date" id="schedFrom" onchange="applyScheduleFilter()">
+              <span style="color:var(--gray-500)">~</span>
+              <input type="date" id="schedTo" onchange="applyScheduleFilter()">
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="clearScheduleFilter()">초기화</button>
+          </div>
+        </div>
+      </div>
+      <div id="scheduleTable"></div>
+    `;
+    showContent(html);
+    renderScheduleTable_(window._schedApts);
+  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+}
+
+function renderScheduleTable_(apts) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const el = document.getElementById('scheduleTable');
+  if (!el) return;
+
+  if (!apts || apts.length === 0) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📅</div><h3>일정 없음</h3></div>`;
+    return;
+  }
+
+  // 오늘 이후 / 이전 그룹 분리
+  const upcoming = apts.filter(a => !a.scheduled_date || new Date(a.scheduled_date) >= today);
+  const past     = apts.filter(a => a.scheduled_date && new Date(a.scheduled_date) < today);
+
+  el.innerHTML = `
+    ${upcoming.length > 0 ? `
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header"><span class="card-title">예정 일정 (${upcoming.length})</span></div>
+      <div class="table-wrap">${buildAptTable_(upcoming, false)}</div>
+    </div>` : ''}
+    ${past.length > 0 ? `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title" style="color:var(--gray-500)">지난 일정 (${past.length})</span>
+      </div>
+      <div class="table-wrap">${buildAptTable_(past, true)}</div>
+    </div>` : ''}
+  `;
+}
+
+function buildAptTable_(apts, isPastSection) {
+  const rows = apts.map(a => {
+    const hospName = (window._schedHospMap || {})[a.hospital_id] || a.hospital_id || '-';
+    return `
+      <tr style="${isPastSection ? 'color:var(--gray-400)' : ''}">
+        <td style="white-space:nowrap;font-weight:${isPastSection?'normal':'600'}">
+          ${fmtDate(a.scheduled_date)}
+          ${a.scheduled_time ? `<br><span style="font-size:11px;font-weight:normal">${a.scheduled_time}</span>` : ''}
+        </td>
+        <td>${a.appointment_type || '-'}</td>
+        <td>
+          <a href="javascript:void(0)"
+             onclick="loadPage('caseDetail',{caseId:'${a.case_id}'})"
+             style="color:var(--primary)">${a.case_id}</a>
+        </td>
+        <td>${hospName}</td>
+        <td style="font-size:12px">${a.responsible_party || '-'}</td>
+        <td>${a.location || '-'}</td>
+        <td>${statusBadge(a.attendee_status)}</td>
+        <td style="max-width:180px;white-space:normal;font-size:12px;color:var(--gray-600)">${a.notes || '-'}</td>
+      </tr>
+    `;
+  }).join('');
+
+  return `
+    <table>
+      <thead>
+        <tr>
+          <th>날짜</th><th>유형</th><th>케이스</th>
+          <th>병원</th><th>담당자</th><th>장소</th>
+          <th>상태</th><th>메모</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function applyScheduleFilter() {
+  const coord = document.getElementById('schedCoord').value;
+  const hosp  = document.getElementById('schedHosp').value;
+  const from  = document.getElementById('schedFrom').value;
+  const to    = document.getElementById('schedTo').value;
+
+  const filtered = (window._schedApts || []).filter(a => {
+    if (coord && a.responsible_party !== coord && a.assigned_coordinator !== coord) return false;
+    if (hosp  && a.hospital_id !== hosp) return false;
+    if (from  && a.scheduled_date && a.scheduled_date.substring(0, 10) < from) return false;
+    if (to    && a.scheduled_date && a.scheduled_date.substring(0, 10) > to)   return false;
+    return true;
+  });
+
+  renderScheduleTable_(filtered);
+}
+
+function clearScheduleFilter() {
+  ['schedCoord','schedHosp','schedFrom','schedTo'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  renderScheduleTable_(window._schedApts || []);
+}
+
+// ─── 팀 일정 추가 모달 ─────────────────────────────────────────
+function showGlobalAppointmentModal() {
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">케이스 ID</label>
+        <input type="text" id="gAptCaseId" required placeholder="CASE-2026-001">
+      </div>
+      <div class="form-group full">
+        <label class="required">일정 유형</label>
+        <select id="gAptType" required>
+          <option value="">선택</option>
+          <option>First Consultation</option>
+          <option>Hospital Consultation</option>
+          <option>Additional Test</option>
+          <option>Treatment Day</option>
+          <option>Acceptance Check</option>
+          <option>Follow-up Call</option>
+          <option>Follow-up Visit</option>
+          <option>Billing Review</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="required">날짜/시간</label>
+        <input type="datetime-local" id="gAptDate" required>
+      </div>
+      <div class="form-group"><label>장소</label><input type="text" id="gAptLocation"></div>
+      <div class="form-group full"><label>메모</label><textarea id="gAptNotes"></textarea></div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitGlobalAppointment()">저장</button>
+  `;
+  showModal('일정 추가', body, footer);
+}
+
+function submitGlobalAppointment() {
+  const caseId = (document.getElementById('gAptCaseId').value || '').trim();
+  const type   = document.getElementById('gAptType').value;
+  const date   = document.getElementById('gAptDate').value;
+  if (!caseId || !type || !date) { showAlert('케이스 ID, 유형, 날짜는 필수입니다', 'warning'); return; }
+  callServer('appointment.create', {
+    case_id: caseId, appointment_type: type, scheduled_date: date,
+    location: document.getElementById('gAptLocation').value,
+    notes:    document.getElementById('gAptNotes').value,
+  }).then(() => {
+    closeModal();
+    showAlert('일정 추가 완료', 'success');
+    getScheduleHTML();
+  }).catch(err => showAlert(err.message, 'error'));
+}
+</script>

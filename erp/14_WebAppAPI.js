@@ -564,7 +564,22 @@ function getDocuments(caseId, user, role) {
 function getAppointments(data, user, role) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   let apts = sheetToObjects_(ss, CONFIG.SHEETS.APPOINTMENTS);
-  if (data.caseId) apts = apts.filter(a => a.case_id === data.caseId);
+
+  if (data.caseId) {
+    apts = apts.filter(a => a.case_id === data.caseId);
+  } else {
+    // 팀 전체 조회 시 케이스에서 hospital_id + assigned_coordinator 조인
+    const caseMap = {};
+    sheetToObjects_(ss, CONFIG.SHEETS.CASES).forEach(c => { caseMap[c.case_id] = c; });
+    apts = apts.map(a => {
+      const c = caseMap[a.case_id] || {};
+      return { ...a, hospital_id: c.hospital_id || '', assigned_coordinator: c.assigned_coordinator || '' };
+    });
+  }
+
+  // 날짜 오름차순 정렬
+  apts.sort((a, b) => new Date(a.scheduled_date) - new Date(b.scheduled_date));
+
   return { appointments: apts };
 }
 

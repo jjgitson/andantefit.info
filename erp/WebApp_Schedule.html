@@ -1,9 +1,16 @@
 <script>
+var CAL_ALL_IDS = [
+  'c_a29000156dff2754c933b86d976291438560c4f6a61ad4e9328ea5a8c7e69145@group.calendar.google.com',
+  'c_505ada4a196a311925bcbdcd311945bae858274d9d16ed52720d6d67ef948b08@group.calendar.google.com',
+  'c_e91e7e0aae5c63485a35b170faa98c5b983e1ec86757380e14c123e2568fe8e5@group.calendar.google.com',
+  'c_eba03c032236dfa1734d6961ac21de666f1cc4631c6f23e6921fe238d91c96cf@group.calendar.google.com',
+];
+
 var CAL_TABS = [
   {
     id: 'mso',
     label: 'MSO 전체',
-    src: 'c_a29000156dff2754c933b86d976291438560c4f6a61ad4e9328ea5a8c7e69145@group.calendar.google.com',
+    src: null, // 4개 캘린더 모두 표시
   },
   {
     id: 'hospital',
@@ -28,8 +35,11 @@ function getScheduleHTML(params) {
   ).join('');
 
   var panes = CAL_TABS.map((t, i) => {
+    var srcParams = t.src
+      ? '?src=' + encodeURIComponent(t.src)
+      : '?' + CAL_ALL_IDS.map(id => 'src=' + encodeURIComponent(id)).join('&');
     var url = 'https://calendar.google.com/calendar/embed'
-      + '?src=' + encodeURIComponent(t.src)
+      + srcParams
       + '&ctz=Asia%2FSeoul&hl=ko&mode=MONTH'
       + '&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0';
     return `

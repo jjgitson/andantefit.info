@@ -156,9 +156,6 @@ function renderCaseActionButtons_(c) {
   const s = c.case_status;
   const btns = [];
 
-  if (s === 'Draft' && ['MSO Admin','MSO Coordinator'].includes(role)) {
-    btns.push(`<button class="btn btn-primary btn-sm" onclick="requestHospitalReview('${c.case_id}')">병원 검토 요청</button>`);
-  }
   if (s === 'Hospital Approved' && ['MSO Admin','MSO Coordinator'].includes(role)) {
     btns.push(`<button class="btn btn-primary btn-sm" onclick="showSupplierOrderModal('${c.case_id}')">공급 요청</button>`);
   }
@@ -174,10 +171,17 @@ function renderCaseActionButtons_(c) {
 
 // ─── 병원 검토 탭 렌더링 ─────────────────────────────────────
 function renderReviewTab_(reviews, c, data) {
-  const review = reviews && reviews[0];
-  const canSubmit = ['MSO Admin','Hospital User'].includes(APP.role);
+  const review   = reviews && reviews[0];
+  const canRequest = c.case_status === 'Draft' && ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  const canSubmit  = ['MSO Admin','Hospital User'].includes(APP.role);
 
-  if (!review) return `<div class="empty-state"><div class="empty-state-icon">🔬</div><h3>병원 검토 요청 전입니다</h3></div>`;
+  if (!review) return `
+    <div class="empty-state">
+      <div class="empty-state-icon">🔬</div>
+      <h3>병원 검토 요청 전입니다</h3>
+      ${canRequest ? `<button class="btn btn-primary" style="margin-top:16px" onclick="requestHospitalReview('${c.case_id}')">검토 요청</button>` : ''}
+    </div>
+  `;
 
   return `
     <div class="card">
@@ -548,7 +552,7 @@ function submitFollowupComplete(followupId) {
 // ─── 케이스 액션 함수들 ───────────────────────────────────────
 function requestHospitalReview(caseId) {
   if (!confirm(`${caseId}에 대해 병원 검토를 요청하시겠습니까?`)) return;
-  callServer('case.changeStatus', { caseId, targetStatus: 'Under Hospital Review' })
+  callServer('review.request', { caseId })
     .then(() => { showAlert('병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
     .catch(err => showAlert(err.message, 'error'));
 }

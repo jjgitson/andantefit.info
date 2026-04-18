@@ -26,7 +26,7 @@ function getDashboardData(user, role, profile) {
   return {
     // 운영 KPI
     newLeads: leads.filter(l => l.lead_status === CONFIG.LEAD_STATUS.NEW).length,
-    underReview: myCases.filter(c => c.case_status === CONFIG.CASE_STATUS.UNDER_HOSPITAL_REVIEW).length,
+    underReview: myCases.filter(c => c.case_status === CONFIG.CASE_STATUS.DRAFT).length,
     upcomingTreatments: myCases
       .filter(c => c.treatment_date && new Date(c.treatment_date) >= today &&
         c.case_status === CONFIG.CASE_STATUS.SCHEDULED)
@@ -326,6 +326,13 @@ function getCaseDetail(caseId, user, role, profile) {
 // HOSPITAL REVIEW
 // ════════════════════════════════════════════════════════════
 
+function requestReview_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.caseId) throw new Error('caseId가 필요합니다');
+  requestHospitalReview(data.caseId, user);
+  return { success: true };
+}
+
 function getReview(caseId) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   const reviews = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS).filter(r => r.case_id === caseId);
@@ -362,12 +369,14 @@ function submitHospitalReview(data, user, role) {
       if (col !== -1) sheet.getRange(i + 1, col + 1).setValue(val);
     });
 
-    // 승인 → 케이스 상태 변경
+    // 검토 결과에 따른 케이스 상태 직접 업데이트 (상태기계 시트 우회 — 검토 승인 전용)
     if (data.review_result === CONFIG.REVIEW_RESULT.SUITABLE) {
       updateCaseField_(data.case_id, 'hospital_decision_at', now, user);
-      changeCaseStatus(data.case_id, CONFIG.CASE_STATUS.HOSPITAL_APPROVED, user, role);
+      updateCaseField_(data.case_id, 'case_status', CONFIG.CASE_STATUS.HOSPITAL_APPROVED, user);
+      notifyStatusChange(data.case_id, CONFIG.CASE_STATUS.HOSPITAL_APPROVED);
     } else if (data.review_result === CONFIG.REVIEW_RESULT.NOT_SUITABLE) {
-      changeCaseStatus(data.case_id, CONFIG.CASE_STATUS.CANCELLED, user, role);
+      updateCaseField_(data.case_id, 'case_status', CONFIG.CASE_STATUS.CANCELLED, user);
+      notifyStatusChange(data.case_id, CONFIG.CASE_STATUS.CANCELLED);
     }
 
     addActivityLog({

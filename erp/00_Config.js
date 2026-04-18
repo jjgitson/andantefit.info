@@ -55,7 +55,6 @@ const CONFIG = {
 
   CASE_STATUS: {
     DRAFT:                    'Draft',
-    UNDER_HOSPITAL_REVIEW:    'Under Hospital Review',
     HOSPITAL_APPROVED:        'Hospital Approved',
     SUPPLIER_COORDINATION:    'Supplier Coordination',
     SHIPMENT_IN_TRANSIT:      'Shipment In Transit',
@@ -79,9 +78,8 @@ const CONFIG = {
 
   // Medical_Reviews.review_status — 프로세스 진행 상태
   REVIEW_STATUS: {
-    PENDING:    'Pending',
-    IN_REVIEW:  'In Review',
-    COMPLETED:  'Completed',
+    PENDING:   'Pending',
+    COMPLETED: 'Completed',
   },
 
   // Medical_Reviews.review_result — 의료적 판정 결과

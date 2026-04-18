@@ -114,16 +114,6 @@ function onCaseStatusChanged_(caseId, oldStatus, newStatus, rowData, headers) {
   const get = (col) => rowData[headers.indexOf(col)];
 
   switch (newStatus) {
-    case CONFIG.CASE_STATUS.UNDER_HOSPITAL_REVIEW:
-      createCalendarEvent(
-        CONFIG.CALENDAR_TYPES.HOSPITAL_COORD,
-        `[검토] ${get('case_id')} - ${get('hospital_id')}`,
-        addDays_(new Date(), 3),
-        buildEventDescription_(caseId, '병원 검토 마감')
-      );
-      notifyStatusChange(caseId, newStatus);
-      break;
-
     case CONFIG.CASE_STATUS.HOSPITAL_APPROVED:
       notifyStatusChange(caseId, newStatus);
       break;

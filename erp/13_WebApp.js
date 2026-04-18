@@ -241,8 +241,9 @@ function dispatchAction_(action, data, user, role, profile) {
     'coordinator.list': () => getCoordinatorList(user, role),
 
     // 병원 검토
-    'review.get':    () => getReview(data.caseId),
-    'review.submit': () => submitHospitalReview(data, user, role),
+    'review.request': () => requestReview_api(data, user, role),
+    'review.get':     () => getReview(data.caseId),
+    'review.submit':  () => submitHospitalReview(data, user, role),
 
     // 공급 주문
     'supplier.order.list':        () => getSupplierOrders(data, user, role, profile),

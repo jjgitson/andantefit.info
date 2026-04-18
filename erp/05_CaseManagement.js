@@ -107,7 +107,6 @@ function requestHospitalReview(caseId, requestedBy) {
   const now = new Date();
 
   updateCaseField_(caseId, 'hospital_review_requested_at', now);
-  changeCaseStatus(caseId, CONFIG.CASE_STATUS.UNDER_HOSPITAL_REVIEW, requestedBy, 'MSO Coordinator');
 
   // Medical Review 레코드 생성
   const caseData = getCaseData_(caseId);

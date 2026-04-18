@@ -254,6 +254,7 @@ function dispatchAction_(action, data, user, role, profile) {
     // 결제
     'billing.list':          () => getBilling(data, user, role),
     'billing.save':          () => saveBilling(data, user, role),
+    'billing.markAgreed':    () => markQuoteAgreed_api(data, user, role),
     'billing.issueQuote':    () => issueQuote_api(data, user, role),
     'billing.issueInvoice':  () => issueInvoice_api(data, user, role),
     'billing.recordPayment': () => recordPayment_api(data, user, role),

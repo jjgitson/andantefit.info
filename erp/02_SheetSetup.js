@@ -90,6 +90,10 @@ const SHEET_HEADERS = {
     'acceptance_check_status',      // → Master_Status (acceptance_status): 최신 결과 참조용
     'requires_additional_review',   // Boolean: 이 주문에 대해 추가 병원 검토 필요 여부
     'additional_review_cleared',    // Boolean: 추가 검토 완료(Suitable) 확인됨
+    'pickup_person',                // MSO 픽업 담당자 이름/연락처
+    'acceptance_person',            // 병원 측 인수 담당자 이름
+    'cautions',                     // 취급 유의사항 (냉장, 충격금지 등)
+    'mso_notes',                    // MSO 내부 협의 메모
     'notes',
   ],
 
@@ -130,7 +134,12 @@ const SHEET_HEADERS = {
     'billing_id', 'case_id',
     'quote_no', 'invoice_no',
     'currency', 'quote_amount', 'invoice_amount', 'paid_amount',
-    'payment_status',    // → Master_Status (payment_status)
+    'payment_status',        // → Master_Status (payment_status)
+    'quote_agreed_at',       // 견적 협의 완료 일시 (MSO 기록)
+    'quote_sent_at',         // 견적서 전달 일시
+    'invoice_sent_at',       // 인보이스 전달 일시
+    'payment_confirmed_by',  // 입금 확인자 이메일
+    'payment_confirmed_at',  // 입금 확인 일시
     'due_date', 'paid_date',
     'refund_amount', 'calendar_event_id', 'notes',
   ],
@@ -254,17 +263,16 @@ function seedStatusMaster_(ss) {
   const rows = [
     // ── case_status ──────────────────────────────
     ['case_status', 'Draft',                    '초안',            '', 1],
-    ['case_status', 'Under Hospital Review',    '병원 검토 중',    '', 2],
-    ['case_status', 'Hospital Approved',        '병원 승인',       '', 3],
-    ['case_status', 'Supplier Coordination',    '공급 조율',       '', 4],
-    ['case_status', 'Shipment In Transit',      '배송 중',         '', 5],
-    ['case_status', 'Acceptance Check Pending', '입고 검수 대기',  '', 6],
-    ['case_status', 'Acceptance Confirmed',     '입고 확인',       '', 7],
-    ['case_status', 'Scheduled',                '시술 예정',       '', 8],
-    ['case_status', 'Completed',                '시술 완료',       '', 9],
-    ['case_status', 'Follow-up Ongoing',        '추적관찰 중',     '', 10],
-    ['case_status', 'Closed',                   '종료',            '', 11],
-    ['case_status', 'Cancelled',                '취소',            '', 12],
+    ['case_status', 'Hospital Approved',        '병원 승인',       '', 2],
+    ['case_status', 'Supplier Coordination',    '공급 조율',       '', 3],
+    ['case_status', 'Shipment In Transit',      '배송 중',         '', 4],
+    ['case_status', 'Acceptance Check Pending', '입고 검수 대기',  '', 5],
+    ['case_status', 'Acceptance Confirmed',     '입고 확인',       '', 6],
+    ['case_status', 'Scheduled',                '시술 예정',       '', 7],
+    ['case_status', 'Completed',                '시술 완료',       '', 8],
+    ['case_status', 'Follow-up Ongoing',        '추적관찰 중',     '', 9],
+    ['case_status', 'Closed',                   '종료',            '', 10],
+    ['case_status', 'Cancelled',                '취소',            '', 11],
 
     // ── lead_status ──────────────────────────────
     ['lead_status', 'New',                      '신규',            '', 1],
@@ -276,8 +284,7 @@ function seedStatusMaster_(ss) {
 
     // ── review_status (프로세스 진행 상태) ─────────
     ['review_status', 'Pending',                '심사 대기',       '', 1],
-    ['review_status', 'In Review',              '심사 중',         '', 2],
-    ['review_status', 'Completed',              '심사 완료',       '', 3],
+    ['review_status', 'Completed',              '심사 완료',       '', 2],
 
     // ── review_result (의료 판정 결과) ──────────────
     ['review_result', 'Suitable',               '적합',            '시술 진행 가능', 1],

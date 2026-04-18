@@ -28,7 +28,7 @@ function createSupplierOrder(params) {
     CONFIG.ID_PREFIXES.SUPPLIER_ORDERS, 'supplier_order_id');
   const now = new Date();
 
-  // Supplier_Orders 헤더 (21컬럼)
+  // Supplier_Orders 헤더 (25컬럼)
   sheet.appendRow([
     orderId,                                      // supplier_order_id
     params.caseId,                                // case_id
@@ -50,6 +50,10 @@ function createSupplierOrder(params) {
     CONFIG.ACCEPTANCE_STATUS.NOT_STARTED,         // acceptance_check_status
     !!params.requiresAdditionalReview,            // requires_additional_review
     false,                                        // additional_review_cleared
+    params.pickupPerson || '',                    // pickup_person
+    params.acceptancePerson || '',                // acceptance_person
+    params.cautions || '',                        // cautions
+    params.msoNotes || '',                        // mso_notes
     params.notes || '',                           // notes
   ]);
 
@@ -97,18 +101,18 @@ function confirmShipment(orderId, params) {
   updateSupplierOrderField_(orderId, 'shipment_tracking_no', params.trackingNo || '', params.updatedBy);
   updateSupplierOrderField_(orderId, 'temp_log_link',       params.tempLogLink || '', params.updatedBy);
   updateSupplierOrderField_(orderId, 'storage_condition',   params.storageCondition || '', params.updatedBy);
-  updateSupplierOrderField_(orderId, 'supplier_status',     CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'acceptance_check_status', CONFIG.ACCEPTANCE_STATUS.PENDING, params.updatedBy);
+  updateSupplierOrderField_(orderId, 'supplier_status',          CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
+  updateSupplierOrderField_(orderId, 'acceptance_check_status',  CONFIG.ACCEPTANCE_STATUS.PENDING,  params.updatedBy);
 
-  changeCaseStatus(order.case_id, CONFIG.CASE_STATUS.SHIPMENT_IN_TRANSIT,
-    params.updatedBy, 'Supplier User');
+  // 케이스 상태는 자동 전환하지 않음 — MSO 담당자가 케이스 탭에서 수동으로 변경
 
   addActivityLog({
     caseId: order.case_id,
     actorEmail: params.updatedBy,
-    actorRole: 'Supplier User',
+    actorRole: 'MSO Coordinator',
     actionType: 'SHIPMENT_CONFIRMED',
-    summary: `출고 확정: ${orderId}, 배치번호: ${params.lotBatchNo}, 트래킹: ${params.trackingNo}`,
+    summary: `출고 확정 기록: ${orderId}, 배치번호: ${params.lotBatchNo}, 트래킹: ${params.trackingNo}`,
+    nextAction: '케이스 상태를 "배송 중"으로 변경 후 수령 대기',
   });
 }
 
@@ -159,13 +163,9 @@ function recordAcceptanceCheck(orderId, params) {
   updateSupplierOrderField_(orderId, 'acceptance_check_status', params.result, params.checkedBy);
   updateSupplierOrderField_(orderId, 'supplier_status', CONFIG.SUPPLIER_STATUS.DELIVERED, params.checkedBy);
 
-  // 3. 케이스 상태 전환
-  if (params.result === CONFIG.ACCEPTANCE_STATUS.ACCEPTED) {
-    changeCaseStatus(order.case_id, CONFIG.CASE_STATUS.ACCEPTANCE_CONFIRMED,
-      params.checkedBy, 'Hospital User');
-  } else {
-    changeCaseStatus(order.case_id, CONFIG.CASE_STATUS.SUPPLIER_COORDINATION,
-      params.checkedBy, 'Hospital User');
+  // 3. 케이스 상태는 자동 전환하지 않음 — MSO 담당자가 케이스 탭에서 수동으로 변경
+  // 반려 시 담당 코디에게 이메일 알림만 발송
+  if (params.result === CONFIG.ACCEPTANCE_STATUS.REJECTED) {
     notifyAcceptanceRejected_(order.case_id, orderId, params.notes);
   }
 
@@ -174,9 +174,9 @@ function recordAcceptanceCheck(orderId, params) {
     actorEmail: params.checkedBy,
     actorRole: 'Hospital User',
     actionType: 'ACCEPTANCE_CHECK_COMPLETED',
-    summary: `입고 검수: ${params.result} (주문: ${orderId}, 검수ID: ${acceptanceId})`,
+    summary: `입고 검수 기록: ${params.result} (주문: ${orderId}, 검수ID: ${acceptanceId})`,
     nextAction: params.result === CONFIG.ACCEPTANCE_STATUS.ACCEPTED
-      ? '시술 일정 확정' : '재공급 요청',
+      ? '케이스 상태를 "입고 확인"으로 변경' : '케이스 상태를 "공급 조율"로 변경 후 재공급 협의',
   });
 
   return acceptanceId;

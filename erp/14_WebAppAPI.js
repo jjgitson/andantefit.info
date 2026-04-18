@@ -429,7 +429,7 @@ function createSupplierOrder_api(data, user, role) {
 }
 
 function confirmShipment_api(data, user, role) {
-  if (![ROLES.MSO_ADMIN, ROLES.SUPPLIER_USER].includes(role)) throw new Error('권한 없음');
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR, ROLES.SUPPLIER_USER].includes(role)) throw new Error('권한 없음');
   confirmShipment(data.orderId, { ...data, updatedBy: user });
   return { success: true };
 }
@@ -465,7 +465,9 @@ function saveBilling(data, user, role) {
   if (data.billing_id) {
     // 기존 레코드 필드 업데이트
     const updatable = ['quote_no','invoice_no','currency','quote_amount','invoice_amount',
-      'paid_amount','payment_status','due_date','paid_date','refund_amount','notes'];
+      'paid_amount','payment_status',
+      'quote_agreed_at','quote_sent_at','invoice_sent_at','payment_confirmed_by','payment_confirmed_at',
+      'due_date','paid_date','refund_amount','notes'];
     const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
     const sheet = ss.getSheetByName(CONFIG.SHEETS.BILLING);
     const rows = sheet.getDataRange().getValues();
@@ -487,6 +489,13 @@ function saveBilling(data, user, role) {
   // 신규 생성
   const billingId = createBillingRecord({ ...data, createdBy: user });
   return { success: true, billing_id: billingId };
+}
+
+function markQuoteAgreed_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
+  if (!data.billingId) throw new Error('billingId가 필요합니다');
+  markQuoteAgreed(data.billingId, user);
+  return { success: true };
 }
 
 function issueQuote_api(data, user, role) {

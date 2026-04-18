@@ -11,6 +11,7 @@ function createBillingRecord(params) {
 
   const billingId = generateCustomId(CONFIG.SHEETS.BILLING, 'BILL', 'billing_id');
 
+  // Billing 헤더 (19컬럼)
   sheet.appendRow([
     billingId,
     params.caseId,
@@ -19,13 +20,18 @@ function createBillingRecord(params) {
     params.currency || 'KRW',
     params.quoteAmount || 0,
     params.invoiceAmount || 0,
-    0, // paid_amount
-    CONFIG.PAYMENT_STATUS.NOT_ISSUED,
-    params.dueDate || '',
-    '', // paid_date
-    0, // refund_amount
-    '', // calendar_event_id
-    params.notes || '',
+    0,                                  // paid_amount
+    CONFIG.PAYMENT_STATUS.NOT_ISSUED,   // payment_status
+    '',                                 // quote_agreed_at
+    '',                                 // quote_sent_at
+    '',                                 // invoice_sent_at
+    '',                                 // payment_confirmed_by
+    '',                                 // payment_confirmed_at
+    params.dueDate || '',               // due_date
+    '',                                 // paid_date
+    0,                                  // refund_amount
+    '',                                 // calendar_event_id
+    params.notes || '',                 // notes
   ]);
 
   addActivityLog({
@@ -48,9 +54,10 @@ function issueQuote(billingId, params) {
   const billing = getBillingData_(billingId);
   if (!billing) throw new Error(`청구 레코드를 찾을 수 없습니다: ${billingId}`);
 
-  updateBillingField_(billingId, 'quote_no', params.quoteNo, params.issuedBy);
-  updateBillingField_(billingId, 'quote_amount', params.quoteAmount, params.issuedBy);
-  updateBillingField_(billingId, 'due_date', params.dueDate, params.issuedBy);
+  updateBillingField_(billingId, 'quote_no',       params.quoteNo,     params.issuedBy);
+  updateBillingField_(billingId, 'quote_amount',   params.quoteAmount, params.issuedBy);
+  updateBillingField_(billingId, 'due_date',       params.dueDate,     params.issuedBy);
+  updateBillingField_(billingId, 'quote_sent_at',  new Date(),         params.issuedBy);
   updateBillingField_(billingId, 'payment_status', CONFIG.PAYMENT_STATUS.QUOTE_SENT, params.issuedBy);
 
   // 결제 마감일 캘린더 이벤트
@@ -81,10 +88,11 @@ function issueInvoice(billingId, params) {
   const billing = getBillingData_(billingId);
   if (!billing) throw new Error(`청구 레코드를 찾을 수 없습니다: ${billingId}`);
 
-  updateBillingField_(billingId, 'invoice_no', params.invoiceNo, params.issuedBy);
-  updateBillingField_(billingId, 'invoice_amount', params.invoiceAmount, params.issuedBy);
-  updateBillingField_(billingId, 'due_date', params.dueDate, params.issuedBy);
-  updateBillingField_(billingId, 'payment_status', CONFIG.PAYMENT_STATUS.INVOICE_SENT, params.issuedBy);
+  updateBillingField_(billingId, 'invoice_no',      params.invoiceNo,     params.issuedBy);
+  updateBillingField_(billingId, 'invoice_amount',  params.invoiceAmount, params.issuedBy);
+  updateBillingField_(billingId, 'due_date',        params.dueDate,       params.issuedBy);
+  updateBillingField_(billingId, 'invoice_sent_at', new Date(),           params.issuedBy);
+  updateBillingField_(billingId, 'payment_status',  CONFIG.PAYMENT_STATUS.INVOICE_SENT, params.issuedBy);
 
   addActivityLog({
     caseId: billing.case_id,
@@ -110,8 +118,10 @@ function recordPayment(billingId, params) {
   const newPaidAmount = (Number(billing.paid_amount) || 0) + Number(params.paidAmount);
   const invoiceAmount = Number(billing.invoice_amount) || 0;
 
-  updateBillingField_(billingId, 'paid_amount', newPaidAmount, params.processedBy);
-  updateBillingField_(billingId, 'paid_date', params.paidDate || new Date(), params.processedBy);
+  updateBillingField_(billingId, 'paid_amount',          newPaidAmount,             params.processedBy);
+  updateBillingField_(billingId, 'paid_date',            params.paidDate || new Date(), params.processedBy);
+  updateBillingField_(billingId, 'payment_confirmed_by', params.processedBy,         params.processedBy);
+  updateBillingField_(billingId, 'payment_confirmed_at', new Date(),                 params.processedBy);
 
   const newStatus = newPaidAmount >= invoiceAmount
     ? CONFIG.PAYMENT_STATUS.PAID
@@ -130,6 +140,25 @@ function recordPayment(billingId, params) {
     actorRole: 'Finance User',
     actionType: 'PAYMENT_RECORDED',
     summary: `입금 처리: ${params.paidAmount} (누적: ${newPaidAmount} / ${invoiceAmount})`,
+  });
+}
+
+/**
+ * 견적 협의 완료 기록 — 구두/서면 합의 후 MSO 담당자가 직접 호출
+ * @param {string} billingId
+ * @param {string} agreedBy
+ */
+function markQuoteAgreed(billingId, agreedBy) {
+  const billing = getBillingData_(billingId);
+  if (!billing) throw new Error(`청구 레코드를 찾을 수 없습니다: ${billingId}`);
+  updateBillingField_(billingId, 'quote_agreed_at', new Date(), agreedBy);
+  addActivityLog({
+    caseId: billing.case_id,
+    actorEmail: agreedBy,
+    actorRole: 'MSO Coordinator',
+    actionType: 'QUOTE_AGREED',
+    summary: `견적 협의 완료 기록: ${billingId}`,
+    nextAction: '견적서 전달 후 인보이스 발행 예정',
   });
 }
 

@@ -19,7 +19,7 @@ const ROLE_PERMISSIONS = {
 
   'MSO Coordinator': [
     'ping',
-    'dashboard.summary',
+    'dashboard.summary', 'calendar.events',
     'lead.list', 'lead.create', 'lead.update',
     'case.list', 'case.get', 'case.create', 'case.changeStatus',
     'patient.get', 'patient.create',
@@ -34,7 +34,7 @@ const ROLE_PERMISSIONS = {
 
   'Hospital User': [
     'ping',
-    'dashboard.summary',
+    'dashboard.summary', 'calendar.events',
     'case.list', 'case.get',
     'review.submit', 'review.get',
     'supplier.order.list', 'supplier.acceptance.record',
@@ -44,14 +44,14 @@ const ROLE_PERMISSIONS = {
 
   'Supplier User': [
     'ping',
-    'dashboard.summary',
+    'dashboard.summary', 'calendar.events',
     'supplier.order.list', 'supplier.shipment.confirm',
     'document.list', 'document.register',
   ],
 
   'Finance User': [
     'ping',
-    'dashboard.summary',
+    'dashboard.summary', 'calendar.events',
     'case.list', 'case.get',
     'billing.list', 'billing.save',
     'billing.issueQuote', 'billing.issueInvoice', 'billing.recordPayment',

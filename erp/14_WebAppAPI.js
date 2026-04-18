@@ -650,14 +650,106 @@ function createAppointment_api(data, user, role) {
   sheet.appendRow([
     aptId, data.case_id, data.appointment_type,
     data.scheduled_date ? new Date(data.scheduled_date) : '',
-    data.scheduled_time || '',   // scheduled_time
+    data.scheduled_time || '',
     data.location || '',
     data.responsible_party || user,
     data.attendee_status || 'Pending',
     false, eventId, data.notes || '',
   ]);
 
+  invalidateCache_(CONFIG.SHEETS.APPOINTMENTS);
   return { success: true, appointmentId: aptId };
+}
+
+// ════════════════════════════════════════════════════════════
+// CALENDAR EVENTS (통합)
+// ════════════════════════════════════════════════════════════
+
+function getCalendarEvents(data, user, role, profile) {
+  const ss   = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const events = [];
+
+  // 권한별 허용 케이스 ID 집합
+  const allCases  = cachedRead_(ss, CONFIG.SHEETS.CASES)
+    .filter(c => !c.is_deleted || String(c.is_deleted).toLowerCase() === 'false');
+  const myCases   = filterCasesByRole_(allCases, user, role, profile);
+  const caseIdSet = new Set(myCases.map(c => c.case_id));
+  const caseMap   = {};
+  myCases.forEach(c => { caseMap[c.case_id] = c; });
+
+  // 1. 시술 예정일 (Cases.treatment_date)
+  myCases.forEach(c => {
+    if (!c.treatment_date) return;
+    events.push({
+      date:    String(c.treatment_date).substring(0, 10),
+      type:    'treatment',
+      label:   '시술',
+      caseId:  c.case_id,
+      detail:  `${c.target_indication || ''} · ${c.hospital_id || ''}`,
+    });
+  });
+
+  // 2. 추적관찰 마감일 (Followups.due_date, 미완료만)
+  cachedRead_(ss, CONFIG.SHEETS.FOLLOWUPS)
+    .filter(f => caseIdSet.has(f.case_id) && f.due_date && !f.completed_date)
+    .forEach(f => {
+      events.push({
+        date:   String(f.due_date).substring(0, 10),
+        type:   'followup',
+        label:  `추적 ${f.stage || ''}`.trim(),
+        caseId: f.case_id,
+        detail: f.notes || '',
+      });
+    });
+
+  // 3. 예정 출고일 (Supplier_Orders, 배송 전 주문만)
+  cachedRead_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS)
+    .filter(o => caseIdSet.has(o.case_id) && o.expected_ship_date &&
+      ['Requested','Confirmed'].includes(o.supplier_status))
+    .forEach(o => {
+      events.push({
+        date:   String(o.expected_ship_date).substring(0, 10),
+        type:   'shipment',
+        label:  '예정 출고',
+        caseId: o.case_id,
+        detail: o.requested_item || '',
+      });
+    });
+
+  // 4. 팀 일정 (Appointments)
+  const aptCaseMap = {};
+  cachedRead_(ss, CONFIG.SHEETS.CASES).forEach(c => { aptCaseMap[c.case_id] = c; });
+  cachedRead_(ss, CONFIG.SHEETS.APPOINTMENTS)
+    .filter(a => caseIdSet.has(a.case_id))
+    .forEach(a => {
+      if (!a.scheduled_date) return;
+      events.push({
+        date:   String(a.scheduled_date).substring(0, 10),
+        type:   'appointment',
+        label:  a.appointment_type || '일정',
+        caseId: a.case_id,
+        detail: a.location || a.notes || '',
+      });
+    });
+
+  // 5. 결제 마감일 (Billing.due_date, 미납만)
+  if ([ROLES.MSO_ADMIN, ROLES.FINANCE_USER, ROLES.MSO_COORDINATOR].includes(role)) {
+    cachedRead_(ss, CONFIG.SHEETS.BILLING)
+      .filter(b => caseIdSet.has(b.case_id) && b.due_date &&
+        ['Invoice Sent','Partially Paid'].includes(b.payment_status))
+      .forEach(b => {
+        events.push({
+          date:   String(b.due_date).substring(0, 10),
+          type:   'billing',
+          label:  '결제 마감',
+          caseId: b.case_id,
+          detail: b.invoice_amount ? b.invoice_amount + ' ' + (b.currency||'') : '',
+        });
+      });
+  }
+
+  events.sort((a, b) => a.date.localeCompare(b.date));
+  return { events };
 }
 
 // ════════════════════════════════════════════════════════════

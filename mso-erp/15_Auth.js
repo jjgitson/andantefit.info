@@ -65,6 +65,9 @@ function getCurrentUserProfile() {
  */
 function getUserProfile_(email) {
   if (!email) return null;
+  const normalizedEmail = email.trim().toLowerCase();
+  Logger.log(`[getUserProfile_] 조회: "${normalizedEmail}"`);
+
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   const sheet = ss.getSheetByName(CONFIG.SHEETS.USERS);
   if (!sheet) return null;
@@ -75,14 +78,19 @@ function getUserProfile_(email) {
   const colActive = headers.indexOf('active');
 
   for (let i = 1; i < data.length; i++) {
-    if (data[i][colEmail] !== email) continue;
-    // active 컬럼이 Boolean false 또는 빈 값이면 비활성 처리
+    const rowEmail = (data[i][colEmail] || '').toString().trim().toLowerCase();
+    if (rowEmail !== normalizedEmail) continue;
     const activeVal = data[i][colActive];
-    if (activeVal === false || activeVal === '' || activeVal === 'FALSE') continue;
+    if (activeVal === false || activeVal === '' || activeVal === 'FALSE') {
+      Logger.log(`[getUserProfile_] 비활성 계정: "${normalizedEmail}"`);
+      continue;
+    }
     const obj = {};
     headers.forEach((h, idx) => { obj[h] = data[i][idx]; });
+    Logger.log(`[getUserProfile_] 프로필 발견: role="${obj.role}"`);
     return obj;
   }
+  Logger.log(`[getUserProfile_] 미등록: "${normalizedEmail}"`);
   return null;
 }
 

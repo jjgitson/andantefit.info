@@ -122,4 +122,9 @@ const CONFIG = {
   BILLING_REMINDER_DAYS:  3,
   SUPPLIER_DELAY_DAYS:    1,
   DRIVE_ROOT_FOLDER_NAME: 'MSO-ERP-Cases',
+
+  // Google OAuth 클라이언트 ID (GSI 외부 사용자 인증용)
+  // GCP Console → API 및 서비스 → 사용자 인증 정보 → OAuth 클라이언트 ID
+  // 웹 애플리케이션 유형, Apps Script 배포 URL을 승인된 출처에 추가
+  GOOGLE_CLIENT_ID: '',
 };

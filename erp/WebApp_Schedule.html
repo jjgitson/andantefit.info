@@ -1,222 +1,57 @@
 <script>
-// ─── 캘린더 (월간 그리드) ──────────────────────────────────────
+var CAL_TABS = [
+  {
+    id: 'mso',
+    label: 'MSO 전체',
+    src: 'c_a29000156dff2754c933b86d976291438560c4f6a61ad4e9328ea5a8c7e69145@group.calendar.google.com',
+  },
+  {
+    id: 'hospital',
+    label: '병원',
+    src: 'c_505ada4a196a311925bcbdcd311945bae858274d9d16ed52720d6d67ef948b08@group.calendar.google.com',
+  },
+  {
+    id: 'supplier',
+    label: '공급/물류',
+    src: 'c_e91e7e0aae5c63485a35b170faa98c5b983e1ec86757380e14c123e2568fe8e5@group.calendar.google.com',
+  },
+  {
+    id: 'billing',
+    label: '결제 마감',
+    src: 'c_eba03c032236dfa1734d6961ac21de666f1cc4631c6f23e6921fe238d91c96cf@group.calendar.google.com',
+  },
+];
 
-// 표시 중인 연/월 (오늘 기준 초기화)
-var _calYear  = new Date().getFullYear();
-var _calMonth = new Date().getMonth(); // 0-based
-var _calEvents = [];   // { date:'YYYY-MM-DD', type, title, caseId?, color }
+function getScheduleHTML(params) {
+  var tabs = CAL_TABS.map((t, i) =>
+    `<div class="tab ${i===0?'active':''}" onclick="switchCalTab(this,'cal-${t.id}')">${t.label}</div>`
+  ).join('');
 
-// 이벤트 유형별 색상
-var CAL_COLOR = {
-  treatment:   { bg: '#dcfce7', border: '#16a34a', text: '#15803d' },
-  followup:    { bg: '#fef9c3', border: '#ca8a04', text: '#a16207' },
-  shipment:    { bg: '#ede9fe', border: '#7c3aed', text: '#6d28d9' },
-  appointment: { bg: '#dbeafe', border: '#2563eb', text: '#1d4ed8' },
-  billing:     { bg: '#ffedd5', border: '#ea580c', text: '#c2410c' },
-};
+  var panes = CAL_TABS.map((t, i) => {
+    var url = 'https://calendar.google.com/calendar/embed'
+      + '?src=' + encodeURIComponent(t.src)
+      + '&ctz=Asia%2FSeoul&hl=ko&mode=MONTH'
+      + '&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0';
+    return `
+      <div class="tab-content ${i===0?'active':''}" id="cal-${t.id}">
+        <iframe src="${url}"
+          style="border:0;width:100%;height:calc(100vh - 220px);min-height:520px;border-radius:var(--radius)"
+          frameborder="0" scrolling="no" allowfullscreen></iframe>
+      </div>
+    `;
+  }).join('');
 
-var CAL_TYPE_LABEL = {
-  treatment:   '수술/시술',
-  followup:    '팔로업',
-  shipment:    '출고 예정',
-  appointment: '일정',
-  billing:     '청구',
-};
-
-var APT_TYPE_KO = {
-  'First Consultation':   '초진 상담',
-  'Hospital Consultation':'병원 상담',
-  'Additional Test':      '추가 검사',
-  'Treatment Day':        '수술/시술일',
-  'Acceptance Check':     '수령 확인',
-  'Follow-up Call':       '팔로업 통화',
-  'Follow-up Visit':      '팔로업 방문',
-  'Billing Review':       '청구 검토',
-};
-
-function getScheduleHTML() {
-  showLoading(true);
-  callServer('calendar.events', {}).then(function(res) {
-    _calEvents = res.events || [];
-    _calYear   = new Date().getFullYear();
-    _calMonth  = new Date().getMonth();
-    renderCalendarPage_();
-  }).catch(function(err) {
-    showContent('<div class="alert alert-error">' + err.message + '</div>');
-  });
-}
-
-function renderCalendarPage_() {
   var html = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="btn btn-secondary btn-sm" onclick="calNav(-1)">&#8249;</button>
-        <span id="calTitle" style="font-size:18px;font-weight:700;min-width:140px;text-align:center"></span>
-        <button class="btn btn-secondary btn-sm" onclick="calNav(1)">&#8250;</button>
-        <button class="btn btn-secondary btn-sm" onclick="calGoToday()" style="margin-left:4px">오늘</button>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        ${buildLegend_()}
-      </div>
-    </div>
-    <div class="card">
-      <div id="calGrid" style="overflow:hidden"></div>
-    </div>
-    <div id="calEventList" style="margin-top:16px"></div>
+    <div class="tabs">${tabs}</div>
+    ${panes}
   `;
   showContent(html);
-  renderCalGrid_();
 }
 
-function buildLegend_() {
-  return Object.keys(CAL_COLOR).map(function(t) {
-    var c = CAL_COLOR[t];
-    return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px">'
-      + '<span style="width:10px;height:10px;border-radius:2px;background:' + c.border + ';display:inline-block"></span>'
-      + CAL_TYPE_LABEL[t] + '</span>';
-  }).join('');
+function switchCalTab(el, paneId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
 }
-
-function renderCalGrid_() {
-  var year  = _calYear;
-  var month = _calMonth; // 0-based
-  var title = document.getElementById('calTitle');
-  if (title) title.textContent = year + '년 ' + (month + 1) + '월';
-
-  // 이달 이벤트 인덱스 (날짜→배열)
-  var monthStr = year + '-' + String(month + 1).padStart(2, '0');
-  var evMap = {};
-  _calEvents.forEach(function(ev) {
-    if (!ev.date || ev.date.substring(0, 7) !== monthStr) return;
-    var d = ev.date.substring(8, 10);
-    if (!evMap[d]) evMap[d] = [];
-    evMap[d].push(ev);
-  });
-
-  var firstDay = new Date(year, month, 1).getDay(); // 0=Sun
-  var daysInMonth = new Date(year, month + 1, 0).getDate();
-  var todayStr = new Date().toISOString().substring(0, 10);
-
-  // 요일 헤더
-  var days = ['일', '월', '화', '수', '목', '금', '토'];
-  var headerHTML = days.map(function(d, i) {
-    var color = i === 0 ? '#dc2626' : i === 6 ? '#2563eb' : 'var(--gray-700)';
-    return '<div style="text-align:center;font-size:12px;font-weight:600;color:' + color + ';padding:8px 0;border-bottom:1px solid var(--gray-200)">' + d + '</div>';
-  }).join('');
-
-  // 날짜 셀
-  var cells = [];
-  // 빈 셀 (이전달)
-  for (var i = 0; i < firstDay; i++) {
-    cells.push('<div style="min-height:90px;background:var(--gray-50);border-bottom:1px solid var(--gray-100);border-right:1px solid var(--gray-100)"></div>');
-  }
-
-  for (var day = 1; day <= daysInMonth; day++) {
-    var dayStr = String(day).padStart(2, '0');
-    var dateStr = monthStr + '-' + dayStr;
-    var isToday = dateStr === todayStr;
-    var dow = (firstDay + day - 1) % 7;
-    var isWeekend = dow === 0 || dow === 6;
-    var numColor = dow === 0 ? '#dc2626' : dow === 6 ? '#2563eb' : 'var(--gray-800)';
-
-    var evList = evMap[dayStr] || [];
-    // 최대 3개 표시 후 +N more
-    var MAX_SHOW = 3;
-    var shown = evList.slice(0, MAX_SHOW);
-    var rest  = evList.length - MAX_SHOW;
-
-    var pillsHTML = shown.map(function(ev) {
-      var c = CAL_COLOR[ev.type] || { bg: '#f3f4f6', border: '#9ca3af', text: '#374151' };
-      var label = (ev.type === 'appointment' ? (APT_TYPE_KO[ev.title] || ev.title) : ev.title) || '';
-      if (label.length > 14) label = label.substring(0, 13) + '…';
-      var click = ev.caseId
-        ? 'onclick="loadPage(\'caseDetail\',{caseId:\'' + ev.caseId + '\'})" style="cursor:pointer"'
-        : '';
-      return '<div ' + click + ' title="' + ev.title + '"'
-        + ' style="font-size:10px;padding:1px 4px;margin:1px 0;border-radius:3px;border-left:3px solid ' + c.border + ';background:' + c.bg + ';color:' + c.text + ';overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'
-        + label + '</div>';
-    }).join('');
-
-    if (rest > 0) {
-      pillsHTML += '<div onclick="showDayEvents(\'' + dateStr + '\')" style="font-size:10px;color:var(--primary);cursor:pointer;padding:1px 4px">+' + rest + '개 더보기</div>';
-    }
-
-    cells.push(
-      '<div onclick="showDayEvents(\'' + dateStr + '\')" '
-      + 'style="min-height:90px;border-bottom:1px solid var(--gray-100);border-right:1px solid var(--gray-100);padding:4px;cursor:pointer;'
-      + (isToday ? 'background:#eff6ff;' : isWeekend ? 'background:var(--gray-50);' : '')
-      + '">'
-      + '<div style="font-size:12px;font-weight:' + (isToday ? '700' : '500') + ';color:' + (isToday ? '#fff' : numColor) + ';'
-      + (isToday ? 'background:#2563eb;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;' : 'margin-bottom:2px;')
-      + '">' + day + '</div>'
-      + pillsHTML
-      + '</div>'
-    );
-  }
-
-  // 나머지 빈 셀
-  var total = Math.ceil((firstDay + daysInMonth) / 7) * 7;
-  for (var j = firstDay + daysInMonth; j < total; j++) {
-    cells.push('<div style="min-height:90px;background:var(--gray-50);border-bottom:1px solid var(--gray-100);border-right:1px solid var(--gray-100)"></div>');
-  }
-
-  var grid = document.getElementById('calGrid');
-  if (!grid) return;
-  grid.innerHTML =
-    '<div style="display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--gray-200);border-left:1px solid var(--gray-200)">'
-    + headerHTML + cells.join('')
-    + '</div>';
-
-  // 이달 이벤트 요약 목록 초기화
-  document.getElementById('calEventList').innerHTML = '';
-}
-
-function calNav(delta) {
-  _calMonth += delta;
-  if (_calMonth < 0)  { _calMonth = 11; _calYear--; }
-  if (_calMonth > 11) { _calMonth = 0;  _calYear++; }
-  renderCalGrid_();
-}
-
-function calGoToday() {
-  _calYear  = new Date().getFullYear();
-  _calMonth = new Date().getMonth();
-  renderCalGrid_();
-}
-
-function showDayEvents(dateStr) {
-  var evList = _calEvents.filter(function(ev) { return ev.date === dateStr; });
-  var listEl = document.getElementById('calEventList');
-  if (!listEl) return;
-
-  if (evList.length === 0) {
-    listEl.innerHTML = '';
-    return;
-  }
-
-  var parts = dateStr.split('-');
-  var heading = parts[0] + '년 ' + parseInt(parts[1]) + '월 ' + parseInt(parts[2]) + '일 일정';
-
-  var rows = evList.map(function(ev) {
-    var c = CAL_COLOR[ev.type] || { bg: '#f3f4f6', border: '#9ca3af', text: '#374151' };
-    var typeLabel = CAL_TYPE_LABEL[ev.type] || ev.type;
-    var displayTitle = ev.type === 'appointment' ? (APT_TYPE_KO[ev.title] || ev.title) : ev.title;
-    var caseLink = ev.caseId
-      ? '<a href="javascript:void(0)" onclick="loadPage(\'caseDetail\',{caseId:\'' + ev.caseId + '\'})" style="color:var(--primary);font-size:12px">' + ev.caseId + '</a>'
-      : '-';
-    return '<tr>'
-      + '<td><span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;background:' + c.bg + ';color:' + c.text + ';border:1px solid ' + c.border + '">' + typeLabel + '</span></td>'
-      + '<td style="font-weight:500">' + displayTitle + '</td>'
-      + '<td>' + caseLink + '</td>'
-      + '</tr>';
-  }).join('');
-
-  listEl.innerHTML =
-    '<div class="card">'
-    + '<div class="card-header"><span class="card-title">' + heading + ' (' + evList.length + '건)</span>'
-    + '<button class="btn btn-secondary btn-sm" onclick="document.getElementById(\'calEventList\').innerHTML=\'\'">닫기</button></div>'
-    + '<div class="table-wrap"><table><thead><tr><th>유형</th><th>내용</th><th>케이스</th></tr></thead>'
-    + '<tbody>' + rows + '</tbody></table></div></div>';
-}
-
 </script>

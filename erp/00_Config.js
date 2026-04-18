@@ -3,7 +3,7 @@
 const CONFIG = {
   SPREADSHEET_ID: SpreadsheetApp.getActiveSpreadsheet().getId(),
 
-  // ─── 시트 이름 (총 19개, 복수형 통일) ──────────────────────────
+  // ─── 시트 이름 (총 20개, 복수형 통일) ──────────────────────────
   SHEETS: {
     USERS:                   'Users',
     PATIENTS:                'Patients',
@@ -14,6 +14,7 @@ const CONFIG = {
     MEDICAL_REVIEWS:         'Medical_Reviews',
     SUPPLIER_ORDERS:         'Supplier_Orders',
     ACCEPTANCE_CHECKS:       'Acceptance_Checks',
+    PROCEDURES:              'Procedures',
     APPOINTMENTS:            'Appointments',
     BILLING:                 'Billing',
     FOLLOWUPS:               'Followups',
@@ -34,6 +35,7 @@ const CONFIG = {
     MEDICAL_REVIEWS:   'REV',
     SUPPLIER_ORDERS:   'ORD',
     ACCEPTANCE_CHECKS: 'ACC',
+    PROCEDURES:        'PROC',
     APPOINTMENTS:      'APT',
     BILLING:           'BILL',
     FOLLOWUPS:         'FUP',
@@ -84,10 +86,10 @@ const CONFIG = {
 
   // Medical_Reviews.review_result — 의료적 판정 결과
   REVIEW_RESULT: {
-    SUITABLE:          'Suitable',
-    NOT_SUITABLE:      'Not Suitable',
-    DEFERRED:          'Deferred',
-    NEED_MORE_INFO:    'Need More Information',
+    SUITABLE:       'Suitable',
+    NOT_SUITABLE:   'Not Suitable',
+    DEFERRED:       'Deferred',
+    NEED_MORE_INFO: 'Need More Information',
   },
 
   SUPPLIER_STATUS: {
@@ -107,13 +109,28 @@ const CONFIG = {
   },
 
   PAYMENT_STATUS: {
-    NOT_ISSUED:      'Not Issued',
-    QUOTE_SENT:      'Quote Sent',
-    INVOICE_SENT:    'Invoice Sent',
-    PARTIALLY_PAID:  'Partially Paid',
-    PAID:            'Paid',
-    REFUNDED:        'Refunded',
+    NOT_ISSUED:     'Not Issued',
+    QUOTE_SENT:     'Quote Sent',
+    INVOICE_SENT:   'Invoice Sent',
+    PARTIALLY_PAID: 'Partially Paid',
+    PAID:           'Paid',
+    REFUNDED:       'Refunded',
   },
+
+  // Procedures.procedure_status
+  PROCEDURE_STATUS: {
+    PLANNED:   'Planned',
+    COMPLETED: 'Completed',
+    CANCELLED: 'Cancelled',
+  },
+
+  // Procedures.procedure_type — 내부 저장값 (영어)
+  PROCEDURE_TYPES: [
+    'Cell Injection',
+    'IV Infusion',
+    'Consultation',
+    'Other',
+  ],
 
   FOLLOWUP_STAGES: ['D7', 'D14', 'D30', 'D90', 'D180'],
 
@@ -121,8 +138,5 @@ const CONFIG = {
   SUPPLIER_DELAY_DAYS:    1,
   DRIVE_ROOT_FOLDER_NAME: 'MSO-ERP-Cases',
 
-  // Google OAuth 클라이언트 ID (GSI 외부 사용자 인증용)
-  // GCP Console → API 및 서비스 → 사용자 인증 정보 → OAuth 클라이언트 ID
-  // 웹 애플리케이션 유형, Apps Script 배포 URL을 승인된 출처에 추가
   GOOGLE_CLIENT_ID: '',
 };

@@ -1,7 +1,7 @@
 // MSO ERP - 시트 초기화 모듈
 // setupAllSheets() 를 한 번 실행하면 모든 탭과 헤더가 생성됨
 
-// ─── 최종 19개 시트 헤더 정의 ────────────────────────────────────
+// ─── 최종 20개 시트 헤더 정의 (Procedures 포함) ───────────────────
 // 규칙: 시트명은 복수형 유지 / active 컬럼은 Boolean (TRUE/FALSE)
 // patient_code는 Patients에서만 생성, Cases는 patient_id로 참조
 
@@ -64,33 +64,52 @@ const SHEET_HEADERS = {
     'active',            // Boolean
   ],
 
-  // 7. 병원 심사 (복수형 Medical_Reviews로 통일)
+  // 7. 병원 심사 (반복 가능 — 케이스당 N건)
   Medical_Reviews: [
     'review_id', 'case_id', 'hospital_id',
+    'linked_order_id',    // 추가 검토를 유발한 주문 ID (최초 검토는 빈값)
     'review_request_date', 'review_completed_date',
     'hospital_user',
-    'review_status',      // → Master_Status (review_status): Pending / In Review / Completed
-    'review_result',      // → Master_Status (review_result): Suitable / Not Suitable / Deferred / Need More Information
+    'review_status',      // Pending | Completed
+    'review_result',      // Suitable | Not Suitable | Deferred | Need More Information
     'next_medical_step',
     'consultation_date', 'additional_test_required',
     'medical_notes_link', 'notes',
   ],
 
-  // 8. 공급 주문 (acceptance_check_status만 참조용으로 유지, 상세는 Acceptance_Checks)
+  // 8. 공급 주문 (케이스당 N건 가능)
   Supplier_Orders: [
     'supplier_order_id', 'case_id', 'supplier_id',
     'request_date', 'requested_item', 'quantity',
     'expected_ship_date', 'confirmed_ship_date', 'delivery_date',
     'lot_batch_no', 'coa_link',
     'shipment_tracking_no',
-    'supplier_status',          // → Master_Status (supplier_status)
+    'supplier_status',              // → Master_Status (supplier_status)
     'storage_condition', 'temp_log_link',
     'transport_incident_flag', 'transport_incident_notes',
-    'acceptance_check_status',  // → Master_Status (acceptance_status): 최신 결과 참조용
+    'acceptance_check_status',      // → Master_Status (acceptance_status): 최신 결과 참조용
+    'requires_additional_review',   // Boolean: 이 주문에 대해 추가 병원 검토 필요 여부
+    'additional_review_cleared',    // Boolean: 추가 검토 완료(Suitable) 확인됨
     'notes',
   ],
 
-  // 9. 입고 검수 기록 (Acceptance_Checks — Supplier_Orders 1:N)
+  // 9. 시술/주사 기록 (케이스당 N건 가능)
+  Procedures: [
+    'procedure_id', 'case_id',
+    'order_id',           // 연계 주문 ID (선택)
+    'procedure_date',
+    'procedure_type',     // Cell Injection | IV Infusion | Consultation | Other
+    'physician',          // 시술 의사
+    'hospital_id',
+    'location',           // 시술 장소/병동
+    'status',             // Planned | Completed | Cancelled
+    'outcome_notes',      // 시술 결과/경과
+    'follow_up_notes',    // 후속 조치
+    'recorded_by',        // 기록자 이메일
+    'created_at',
+  ],
+
+  // 11. 입고 검수 기록 (Acceptance_Checks — Supplier_Orders 1:N)
   Acceptance_Checks: [
     'acceptance_id', 'supplier_order_id', 'case_id',
     'check_date', 'checked_by_email',
@@ -98,7 +117,7 @@ const SHEET_HEADERS = {
     'notes', 'created_at',
   ],
 
-  // 10. 일정
+  // 12. 일정
   Appointments: [
     'appointment_id', 'case_id', 'appointment_type',
     'scheduled_date', 'scheduled_time', 'location',
@@ -106,7 +125,7 @@ const SHEET_HEADERS = {
     'reminder_sent', 'calendar_event_id', 'notes',
   ],
 
-  // 11. 결제/청구
+  // 13. 결제/청구
   Billing: [
     'billing_id', 'case_id',
     'quote_no', 'invoice_no',
@@ -116,7 +135,7 @@ const SHEET_HEADERS = {
     'refund_amount', 'calendar_event_id', 'notes',
   ],
 
-  // 12. 추적관찰
+  // 14. 추적관찰
   Followups: [
     'followup_id', 'case_id',
     'followup_stage',    // D7 | D14 | D30 | D90 | D180
@@ -125,7 +144,7 @@ const SHEET_HEADERS = {
     'patient_response', 'followup_notes', 'calendar_event_id',
   ],
 
-  // 13. 문서
+  // 15. 문서
   Documents: [
     'document_id', 'case_id', 'patient_id',
     'document_type', 'file_name', 'version_no',
@@ -136,21 +155,21 @@ const SHEET_HEADERS = {
     'expiry_date', 'notes',
   ],
 
-  // 14. 활동 로그
+  // 16. 활동 로그
   Activity_Log: [
     'activity_id', 'case_id', 'activity_date',
     'actor_role', 'actor_name', 'actor_email',
     'action_type', 'summary', 'next_action', 'next_action_date',
   ],
 
-  // 15. 감사 로그
+  // 17. 감사 로그
   Audit_Log: [
     'audit_id', 'entity_name', 'entity_id',
     'field_name', 'old_value', 'new_value',
     'edited_by', 'edited_at', 'change_source',
   ],
 
-  // 16. 상태값 마스터 (모든 엔티티 상태 정의)
+  // 18. 상태값 마스터 (모든 엔티티 상태 정의)
   Master_Status: [
     'status_key',      // 컬럼명 기준 키 (예: case_status, lead_status, review_result)
     'status_value',    // 실제 저장값 (영어)
@@ -159,19 +178,19 @@ const SHEET_HEADERS = {
     'sort_order',
   ],
 
-  // 17. 상태 전환 규칙
+  // 19. 상태 전환 규칙
   Master_Status_Transitions: [
     'entity_name', 'from_status', 'to_status',
     'allowed_roles', 'requires_field', 'description',
   ],
 
-  // 18. 문서 유형 마스터
+  // 20. 문서 유형 마스터
   Master_DocumentTypes: [
     'doc_type_key', 'display_name', 'required_for_case',
     'expiry_tracked', 'notes',
   ],
 
-  // 19. 구글 캘린더 연동 설정
+  // 21. 구글 캘린더 연동 설정
   Master_Calendar_Config: [
     'calendar_type', 'calendar_id', 'display_name',
     'active',    // Boolean
@@ -182,7 +201,7 @@ const SHEET_HEADERS = {
 
 /**
  * 전체 시트 탭 및 헤더 초기화 (최초 1회 실행)
- * 총 19개 시트 생성
+ * 총 20개 시트 + Procedures 포함 생성
  */
 function setupAllSheets() {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);

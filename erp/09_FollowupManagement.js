@@ -86,7 +86,11 @@ function completeFollowup(followupId, params) {
     sheet.getRange(i + 1, headers.indexOf('followup_notes') + 1)
       .setValue(params.notes || '');
     sheet.getRange(i + 1, headers.indexOf('escalation_required') + 1)
-      .setValue(!!params.escalationRequired);   // Boolean
+      .setValue(!!params.escalationRequired);
+    const nextVisitCol = headers.indexOf('next_visit_date');
+    if (nextVisitCol >= 0 && params.nextVisitDate) {
+      sheet.getRange(i + 1, nextVisitCol + 1).setValue(new Date(params.nextVisitDate));
+    }
 
     createAuditLog('Followups', followupId, 'completed_date', '', now,
       params.completedBy, 'Apps Script');

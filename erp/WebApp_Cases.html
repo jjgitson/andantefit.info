@@ -1,27 +1,50 @@
 <script>
+// 케이스 상태 → 단계 번호·라벨·다음 할 일
+var CASE_PHASE = {
+  'Draft':                    { step:1,  label:'초안',         next:'병원 검토 요청',      color:'var(--gray-500)' },
+  'Hospital Approved':        { step:2,  label:'병원 승인',    next:'공급 주문 등록',      color:'var(--primary)' },
+  'Supplier Coordination':    { step:3,  label:'공급 조율',    next:'출고 확정',           color:'#f59e0b' },
+  'Shipment In Transit':      { step:4,  label:'배송 중',      next:'출고 확정',           color:'#f59e0b' },
+  'Acceptance Check Pending': { step:5,  label:'입고 검수',    next:'검수 결과 입력',      color:'#f59e0b' },
+  'Acceptance Confirmed':     { step:6,  label:'출고 확정',    next:'시술 일정 확정',      color:'var(--primary)' },
+  'Scheduled':                { step:7,  label:'시술 예정',    next:'시술 완료 처리',      color:'#8b5cf6' },
+  'Completed':                { step:8,  label:'시술 완료',    next:'추적관찰 시작',       color:'var(--success)' },
+  'Follow-up Ongoing':        { step:9,  label:'추적관찰 중',  next:'추적관찰 완료 처리',  color:'var(--success)' },
+  'Closed':                   { step:10, label:'종료',         next:null,                  color:'var(--gray-400)' },
+  'Cancelled':                { step:0,  label:'취소됨',       next:null,                  color:'var(--danger)' },
+};
+var PHASE_TOTAL = 9; // 1~9 활성 단계
+
 // ─── 케이스 목록 ───────────────────────────────────────────────
 function getCasesHTML(params) {
   showLoading(true);
   callServer('case.list', {}).then(data => {
     const cases = data.cases || [];
     const canCreate = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
+
+    // 단계별 건수
+    const counts = {};
+    cases.forEach(c => {
+      const p = CASE_PHASE[c.case_status];
+      const key = p ? p.label : c.case_status;
+      counts[key] = (counts[key] || 0) + 1;
+    });
+
     const html = `
       <div class="card">
         <div class="card-header">
           <span class="card-title">케이스 목록 (${cases.length}건)</span>
-          <div class="btn-group">
-            ${canCreate ? `<button class="btn btn-primary btn-sm" onclick="showNewCaseModal()">+ 신규 케이스</button>` : ''}
-          </div>
+          ${canCreate ? `<button class="btn btn-primary btn-sm" onclick="showNewCaseModal()">+ 신규 케이스</button>` : ''}
         </div>
         <div class="filter-bar">
-          <input type="text" id="caseSearch" placeholder="케이스 ID 검색" oninput="filterCases()">
-          <select id="caseStatusFilter" onchange="filterCases()">
-            <option value="">전체 상태</option>
+          <input type="text" id="caseSearch" placeholder="케이스 ID / 환자 / 적응증 검색" oninput="filterCases()">
+          <select id="caseStepFilter" onchange="filterCases()">
+            <option value="">전체 단계</option>
             <option value="Draft">초안</option>
             <option value="Hospital Approved">병원 승인</option>
             <option value="Supplier Coordination">공급 조율</option>
             <option value="Shipment In Transit">배송 중</option>
-            <option value="Acceptance Check Pending">입고 검수 대기</option>
+            <option value="Acceptance Check Pending">입고 검수</option>
             <option value="Acceptance Confirmed">출고 확정</option>
             <option value="Scheduled">시술 예정</option>
             <option value="Completed">시술 완료</option>
@@ -40,14 +63,13 @@ function getCasesHTML(params) {
           <table>
             <thead>
               <tr>
-                <th>케이스 ID</th>
-                <th>병원</th>
-                <th class="mobile-hide">적응증</th>
+                <th>케이스</th>
+                <th class="mobile-hide">병원 / 적응증</th>
                 <th class="mobile-hide">담당자</th>
-                <th>우선순위</th>
-                <th>상태</th>
-                <th>시술일</th>
-                <th class="mobile-hide"></th>
+                <th>현재 단계</th>
+                <th>다음 할 일</th>
+                <th class="mobile-hide">시술일</th>
+                <th class="mobile-hide">우선순위</th>
               </tr>
             </thead>
             <tbody id="casesTbody">
@@ -63,35 +85,64 @@ function getCasesHTML(params) {
 
 function renderCaseRows_(cases) {
   if (cases.length === 0) return `
-    <tr><td colspan="8">
+    <tr><td colspan="7">
       <div class="empty-state">
         <div class="empty-state-icon">🗂️</div>
         <h3>케이스가 없습니다</h3>
       </div>
     </td></tr>
   `;
+
   return cases.map(c => {
     const isDeleted = c.is_deleted === true || String(c.is_deleted).toLowerCase() === 'true';
+    const p = CASE_PHASE[c.case_status] || { step:0, label: c.case_status, next:null, color:'var(--gray-400)' };
+    const isActive = p.step > 0 && p.step < 10;
+    const isUrgent = c.priority === 'Urgent';
+
     return `
     <tr class="case-row clickable-row"
       data-id="${c.case_id}"
       data-status="${c.case_status}"
       data-priority="${c.priority || ''}"
       onclick="loadPage('caseDetail', {caseId:'${c.case_id}'})"
-      style="${isDeleted ? 'opacity:0.45;background:#fff5f5' : ''}"
+      style="${isDeleted ? 'opacity:0.45;background:#fff5f5' : isUrgent ? 'background:#fff8f0' : ''}"
     >
-      <td><code>${c.case_id}</code>${isDeleted ? ' <span class="badge badge-red" style="font-size:10px">삭제됨</span>' : ''}</td>
-      <td>${c.hospital_id || '-'}</td>
-      <td class="mobile-hide">${c.target_indication || '-'}</td>
-      <td class="mobile-hide">${c.assigned_coordinator || '-'}</td>
-      <td>${c.priority ? statusBadge(c.priority) : '-'}</td>
-      <td>${statusBadge(c.case_status)}</td>
-      <td>${c.treatment_date ? fmtDate(c.treatment_date) : '-'}</td>
-      <td class="mobile-hide">
-        <button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();loadPage('caseDetail',{caseId:'${c.case_id}'})">상세</button>
+      <td>
+        <div style="font-weight:600;font-size:13px">${c.case_id}${isDeleted ? ' <span class="badge badge-red" style="font-size:10px">삭제됨</span>' : ''}</div>
+        <div class="mobile-only" style="font-size:11px;color:var(--gray-600);margin-top:2px">${c.hospital_id || '-'} · ${c.target_indication || '-'}</div>
       </td>
+      <td class="mobile-hide">
+        <div style="font-size:13px">${c.hospital_id || '-'}</div>
+        <div style="font-size:11px;color:var(--gray-600)">${c.target_indication || '-'}</div>
+      </td>
+      <td class="mobile-hide" style="font-size:12px">${c.assigned_coordinator || '-'}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          ${isActive ? `<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:${p.color};color:#fff;font-size:10px;font-weight:700;flex-shrink:0">${p.step}</span>` : ''}
+          <span style="font-size:12px;font-weight:600;color:${p.color}">${p.label}</span>
+        </div>
+        ${isActive ? `<div style="margin-top:3px;height:3px;background:var(--gray-200);border-radius:2px;width:80px"><div style="height:3px;border-radius:2px;background:${p.color};width:${(p.step/PHASE_TOTAL*100).toFixed(0)}%"></div></div>` : ''}
+      </td>
+      <td style="font-size:12px;color:${p.next ? 'var(--primary)' : 'var(--gray-400)'}">
+        ${p.next ? `→ ${p.next}` : '-'}
+      </td>
+      <td class="mobile-hide" style="font-size:12px">${c.treatment_date ? fmtDate(c.treatment_date) : '-'}</td>
+      <td class="mobile-hide">${c.priority ? statusBadge(c.priority) : '-'}</td>
     </tr>
   `}).join('');
+}
+
+function filterCases() {
+  const search   = document.getElementById('caseSearch').value.toLowerCase();
+  const status   = document.getElementById('caseStepFilter').value;
+  const priority = document.getElementById('casePriorityFilter').value;
+  document.querySelectorAll('.case-row').forEach(row => {
+    const id  = row.dataset.id.toLowerCase();
+    const ok  = (!search   || id.includes(search)) &&
+                (!status   || row.dataset.status === status) &&
+                (!priority || row.dataset.priority === priority);
+    row.style.display = ok ? '' : 'none';
+  });
 }
 
 // ─── 신규 케이스 생성 ─────────────────────────────────────────
@@ -178,7 +229,6 @@ function submitNewCase() {
   if (!hospitalId)  { showAlert('병원을 선택하세요', 'warning'); return; }
   if (!indication)  { showAlert('적응증을 입력하세요', 'warning'); return; }
 
-  // 1단계: 환자 생성 → 2단계: 케이스 생성
   const btn = document.querySelector('#modalFooter .btn-primary');
   setLoadingBtn(btn, true);
   callServer('patient.create', { full_name: name, nationality, phone })
@@ -196,21 +246,5 @@ function submitNewCase() {
       loadPage('caseDetail', { caseId: caseResult.caseId });
     })
     .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
-}
-
-
-function filterCases() {
-  const search = document.getElementById('caseSearch').value.toLowerCase();
-  const status = document.getElementById('caseStatusFilter').value;
-  const priority = document.getElementById('casePriorityFilter').value;
-  document.querySelectorAll('.case-row').forEach(row => {
-    const id = row.dataset.id.toLowerCase();
-    const rowStatus = row.dataset.status;
-    const rowPriority = row.dataset.priority;
-    const ok = (!search || id.includes(search)) &&
-               (!status || rowStatus === status) &&
-               (!priority || rowPriority === priority);
-    row.style.display = ok ? '' : 'none';
-  });
 }
 </script>

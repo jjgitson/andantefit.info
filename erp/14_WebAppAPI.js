@@ -285,8 +285,9 @@ function createCase_api(data, user, role) {
     priority:            data.priority || 'Normal',
     remarks:             data.remarks || '',
   });
+  invalidateCache_(CONFIG.SHEETS.CASES);
+  invalidateCache_(CONFIG.SHEETS.LEADS);
   return { success: true, caseId };
-  invalidateCache_(CONFIG.SHEETS.CASES, CONFIG.SHEETS.LEADS);
 }
 
 /**
@@ -648,12 +649,13 @@ function completeFollowup_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
   completeFollowup(data.followupId, {
     patientResponse: data.patientResponse,
-    notes: data.notes,
+    nextVisitDate:   data.nextVisitDate,
+    notes:           data.notes,
     escalationRequired: data.escalationRequired,
     completedBy: user,
   });
-  return { success: true };
   invalidateCache_(CONFIG.SHEETS.FOLLOWUPS);
+  return { success: true };
 }
 
 // ════════════════════════════════════════════════════════════

@@ -16,11 +16,11 @@ function getLeadsHTML(params) {
           <input type="text" id="leadSearch" placeholder="이름/이메일 검색" oninput="filterLeads()">
           <select id="leadStatusFilter" onchange="filterLeads()">
             <option value="">전체 상태</option>
-            <option value="New">New</option>
-            <option value="Contacted">Contacted</option>
-            <option value="Awaiting Documents">Awaiting Documents</option>
-            <option value="Ready for Hospital Review">Ready for Hospital Review</option>
-            <option value="Closed - No Progress">Closed - No Progress</option>
+            <option value="New">신규</option>
+            <option value="Contacted">연락 완료</option>
+            <option value="Awaiting Documents">서류 대기</option>
+            <option value="Ready for Hospital Review">병원 검토 대기</option>
+            <option value="Closed - No Progress">종료 (진행 불가)</option>
           </select>
         </div>
         <div class="table-wrap">
@@ -172,11 +172,11 @@ function showLeadDetail(lead) {
     <div class="form-group" style="margin-bottom:12px">
       <label>상태 변경</label>
       <select id="leadStatusChange">
-        <option value="${lead.lead_status}">${lead.lead_status} (현재)</option>
-        <option value="Contacted">Contacted</option>
-        <option value="Awaiting Documents">Awaiting Documents</option>
-        <option value="Ready for Hospital Review">Ready for Hospital Review</option>
-        <option value="Closed - No Progress">Closed - No Progress</option>
+        <option value="${lead.lead_status}">${labelOf(lead.lead_status)} (현재)</option>
+        <option value="Contacted">연락 완료</option>
+        <option value="Awaiting Documents">서류 대기</option>
+        <option value="Ready for Hospital Review">병원 검토 대기</option>
+        <option value="Closed - No Progress">종료 (진행 불가)</option>
       </select>
     </div>
     <div class="form-group">
@@ -268,9 +268,9 @@ function convertToCase(leadId) {
         <div class="form-group">
           <label>우선순위</label>
           <select id="convPriority">
-            <option value="Normal">Normal</option>
-            <option value="High">High</option>
-            <option value="Urgent">Urgent</option>
+            <option value="Normal">보통</option>
+            <option value="High">높음</option>
+            <option value="Urgent">긴급</option>
           </select>
         </div>
         <div class="form-group">

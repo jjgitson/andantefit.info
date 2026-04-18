@@ -291,6 +291,68 @@ function fmtMoney(amount) {
   return n.toLocaleString('ko-KR') + '원';
 }
 
+var STATUS_LABELS = {
+  // 케이스 상태
+  'Draft': '초안',
+  'Under Hospital Review': '병원 검토 중',
+  'Hospital Approved': '병원 승인',
+  'Supplier Coordination': '공급 조율',
+  'Shipment In Transit': '배송 중',
+  'Acceptance Check Pending': '입고 검수 대기',
+  'Acceptance Confirmed': '출고 확정',
+  'Scheduled': '시술 예정',
+  'Completed': '시술 완료',
+  'Follow-up Ongoing': '추적관찰 중',
+  'Closed': '종료',
+  'Cancelled': '취소됨',
+  // 리드 상태
+  'New': '신규',
+  'Contacted': '연락 완료',
+  'Awaiting Documents': '서류 대기',
+  'Ready for Hospital Review': '병원 검토 대기',
+  'Converted': '케이스 전환',
+  'Closed - No Progress': '종료 (진행 불가)',
+  // 검토 상태
+  'Pending': '대기 중',
+  'In Review': '검토 중',
+  'Suitable': '진행 가능',
+  'Not Suitable': '진행 불가',
+  'Deferred': '보류',
+  'Need More Information': '추가 정보 필요',
+  // 공급 상태
+  'Not Requested': '미주문',
+  'Requested': '주문 완료',
+  'Confirmed': '확정',
+  'In Transit': '배송 중',
+  'Delivered': '출고 확정',
+  // 검수 상태
+  'Not Started': '대기',
+  'Accepted': '승인',
+  'Rejected': '반려',
+  // 결제 상태
+  'Not Issued': '미발행',
+  'Quote Sent': '견적 발송',
+  'Invoice Sent': '청구서 발송',
+  'Partially Paid': '일부 납부',
+  'Paid': '납부 완료',
+  'Refunded': '환불',
+  // 역할
+  'MSO Admin': 'MSO 관리자',
+  'MSO Coordinator': 'MSO 코디네이터',
+  'Hospital User': '병원 담당자',
+  'Supplier User': '공급업체',
+  'Finance User': '재무 담당자',
+  // 우선순위
+  'Urgent': '긴급',
+  'High': '높음',
+  'Normal': '보통',
+};
+
+function labelOf(status) {
+  if (!status) return '-';
+  return STATUS_LABELS[status] || status;
+}
+
 function statusBadge(status) {
   var colorMap = {
     'Draft': 'gray', 'Under Hospital Review': 'blue', 'Hospital Approved': 'green',
@@ -304,17 +366,18 @@ function statusBadge(status) {
     'Pending': 'yellow', 'In Review': 'blue',
     'Suitable': 'green', 'Not Suitable': 'red', 'Deferred': 'orange',
     'Need More Information': 'yellow',
-    'Requested': 'blue', 'Confirmed': 'teal', 'In Transit': 'purple',
-    'Delivered': 'green',
+    'Not Requested': 'gray', 'Requested': 'blue', 'Confirmed': 'teal',
+    'In Transit': 'purple', 'Delivered': 'green',
     'Not Started': 'gray', 'Accepted': 'green', 'Rejected': 'red',
     'Not Issued': 'gray', 'Quote Sent': 'blue', 'Invoice Sent': 'orange',
     'Partially Paid': 'yellow', 'Paid': 'green', 'Refunded': 'teal',
     'MSO Admin': 'red', 'MSO Coordinator': 'blue', 'Hospital User': 'green',
     'Supplier User': 'orange', 'Finance User': 'purple',
+    'Urgent': 'red', 'High': 'orange', 'Normal': 'gray',
   };
   if (!status) return '<span class="badge badge-gray">-</span>';
   var color = colorMap[status] || 'gray';
-  return '<span class="badge badge-' + color + '">' + status + '</span>';
+  return '<span class="badge badge-' + color + '">' + labelOf(status) + '</span>';
 }
 
 // ─── 초기화: window.load 이후에만 실행 ─────────────────────

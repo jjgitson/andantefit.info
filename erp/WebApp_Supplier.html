@@ -31,14 +31,19 @@ function getSupplierHTML(params) {
           <input type="text" id="orderSearch" placeholder="케이스 ID / 주문 ID" oninput="filterOrders()">
           <select id="orderStatusFilter" onchange="filterOrders()">
             <option value="">전체 상태</option>
-            <option>Not Requested</option><option>Requested</option>
-            <option>Confirmed</option><option>In Transit</option>
-            <option>Delivered</option><option>Closed</option>
+            <option value="Not Requested">미주문</option>
+            <option value="Requested">주문 완료</option>
+            <option value="Confirmed">확정</option>
+            <option value="In Transit">배송 중</option>
+            <option value="Delivered">출고 확정</option>
+            <option value="Closed">종료</option>
           </select>
           <select id="acceptanceFilter" onchange="filterOrders()">
             <option value="">검수 전체</option>
-            <option>Not Started</option><option>Pending</option>
-            <option>Accepted</option><option>Rejected</option>
+            <option value="Not Started">대기</option>
+            <option value="Pending">대기 중</option>
+            <option value="Accepted">승인</option>
+            <option value="Rejected">반려</option>
           </select>
         </div>
         <div class="table-wrap">

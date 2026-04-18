@@ -55,9 +55,12 @@ function getBillingHTML(params) {
           <input type="text" id="billSearch" placeholder="케이스 ID / Billing ID" oninput="filterBilling()">
           <select id="billStatusFilter" onchange="filterBilling()">
             <option value="">전체 상태</option>
-            <option>Not Issued</option><option>Quote Sent</option>
-            <option>Invoice Sent</option><option>Partially Paid</option>
-            <option>Paid</option><option>Refunded</option>
+            <option value="Not Issued">미발행</option>
+            <option value="Quote Sent">견적 발송</option>
+            <option value="Invoice Sent">청구서 발송</option>
+            <option value="Partially Paid">일부 납부</option>
+            <option value="Paid">납부 완료</option>
+            <option value="Refunded">환불</option>
           </select>
         </div>
         <div class="table-wrap">

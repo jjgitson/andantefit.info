@@ -1,0 +1,601 @@
+<script>
+// ─── 케이스 상세 ───────────────────────────────────────────────
+function getCaseDetailHTML(params) {
+  if (!params || !params.caseId) { showContent('<div class="alert alert-error">케이스 ID가 없습니다</div>'); return; }
+  showLoading(true);
+  callServer('case.get', { caseId: params.caseId }).then(data => {
+    const c = data.case;
+    const patient = data.patient;
+    const html = `
+      <!-- 헤더 -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="btn btn-secondary btn-sm" onclick="loadPage('cases')">← 목록</button>
+        <h2 style="font-size:18px;font-weight:700">${c.case_id}</h2>
+        ${statusBadge(c.case_status)}
+        ${c.priority ? `<span class="badge badge-${c.priority==='Urgent'?'red':c.priority==='High'?'orange':'gray'}">${c.priority}</span>` : ''}
+        <div style="margin-left:auto" class="btn-group">
+          ${renderCaseActionButtons_(c)}
+        </div>
+      </div>
+
+      <!-- 탭 -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(event,'tab-summary')">요약</div>
+        <div class="tab" onclick="switchTab(event,'tab-review')">병원 검토</div>
+        <div class="tab" onclick="switchTab(event,'tab-supplier')">공급/검수</div>
+        <div class="tab" onclick="switchTab(event,'tab-docs')">문서</div>
+        <div class="tab" onclick="switchTab(event,'tab-billing')">결제</div>
+        <div class="tab" onclick="switchTab(event,'tab-followup')">추적관찰</div>
+        <div class="tab" onclick="switchTab(event,'tab-log')">활동 로그</div>
+      </div>
+
+      <!-- 요약 탭 -->
+      <div class="tab-content active" id="tab-summary">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <div class="card">
+            <div class="card-header"><span class="card-title">케이스 정보</span></div>
+            <div class="card-body">
+              <div class="detail-grid">
+                <div class="detail-item"><label>케이스 ID</label><div class="value"><code>${c.case_id}</code></div></div>
+                <div class="detail-item"><label>상태</label><div class="value">${statusBadge(c.case_status)}</div></div>
+                <div class="detail-item"><label>병원</label><div class="value">${c.hospital_id || '-'}</div></div>
+                <div class="detail-item"><label>공급업체</label><div class="value">${c.supplier_id || '-'}</div></div>
+                <div class="detail-item"><label>적응증</label><div class="value">${c.target_indication || '-'}</div></div>
+                <div class="detail-item"><label>담당 코디</label><div class="value">${c.assigned_coordinator || '-'}</div></div>
+                <div class="detail-item"><label>시술일</label><div class="value">${c.treatment_date ? fmtDate(c.treatment_date) : '-'}</div></div>
+                <div class="detail-item"><label>등록일</label><div class="value">${fmtDate(c.case_opened_at)}</div></div>
+                ${c.drive_folder_url ? `<div class="detail-item full"><label>Drive 폴더</label><div class="value"><a href="${c.drive_folder_url}" target="_blank">📁 열기</a></div></div>` : ''}
+              </div>
+              ${c.remarks ? `<p style="margin-top:12px;color:var(--gray-700);font-size:13px">${c.remarks}</p>` : ''}
+            </div>
+          </div>
+
+          ${patient ? `
+          <div class="card">
+            <div class="card-header"><span class="card-title">환자 정보</span></div>
+            <div class="card-body">
+              <div class="detail-grid">
+                <div class="detail-item"><label>환자 코드</label><div class="value"><code>${patient.patient_code || '-'}</code></div></div>
+                ${patient.date_of_birth ? `<div class="detail-item"><label>생년월일</label><div class="value">${fmtDate(patient.date_of_birth)}</div></div>` : ''}
+                ${patient.sex ? `<div class="detail-item"><label>성별</label><div class="value">${patient.sex}</div></div>` : ''}
+                ${patient.nationality ? `<div class="detail-item"><label>국적</label><div class="value">${patient.nationality}</div></div>` : ''}
+                ${patient.preferred_language ? `<div class="detail-item"><label>선호 언어</label><div class="value">${patient.preferred_language}</div></div>` : ''}
+                ${patient.email && APP.role !== 'Hospital User' ? `<div class="detail-item"><label>이메일</label><div class="value">${patient.email}</div></div>` : ''}
+              </div>
+            </div>
+          </div>
+          ` : ''}
+        </div>
+
+        <!-- 일정 요약 -->
+        ${data.appointments && data.appointments.length > 0 ? `
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📅 일정</span>
+            <button class="btn btn-sm btn-secondary" onclick="showAddAppointmentModal('${c.case_id}')">+ 일정 추가</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>유형</th><th>날짜</th><th>장소</th><th>담당</th><th>상태</th></tr></thead>
+              <tbody>
+                ${data.appointments.map(a => `
+                  <tr>
+                    <td>${a.appointment_type}</td>
+                    <td>${fmtDate(a.scheduled_date)}</td>
+                    <td>${a.location || '-'}</td>
+                    <td>${a.responsible_party || '-'}</td>
+                    <td>${statusBadge(a.attendee_status)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        ` : ''}
+      </div>
+
+      <!-- 병원 검토 탭 -->
+      <div class="tab-content" id="tab-review">
+        ${renderReviewTab_(data.reviews, c, data)}
+      </div>
+
+      <!-- 공급/검수 탭 -->
+      <div class="tab-content" id="tab-supplier">
+        ${renderSupplierTab_(data.orders, c)}
+      </div>
+
+      <!-- 문서 탭 -->
+      <div class="tab-content" id="tab-docs">
+        ${renderDocsTab_(data.docs, c)}
+      </div>
+
+      <!-- 결제 탭 -->
+      <div class="tab-content" id="tab-billing">
+        ${renderBillingTab_(data.billing, c)}
+      </div>
+
+      <!-- 추적관찰 탭 -->
+      <div class="tab-content" id="tab-followup">
+        ${renderFollowupTab_(data.followups, c)}
+      </div>
+
+      <!-- 활동 로그 탭 -->
+      <div class="tab-content" id="tab-log">
+        <div class="card">
+          <div class="card-header"><span class="card-title">활동 로그</span></div>
+          <div class="card-body">
+            <div class="timeline">
+              ${(data.activities || []).map(a => `
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-date">${fmtDate(a.activity_date)} · ${a.actor_role} · ${a.actor_email}</div>
+                  <div class="timeline-content"><strong>${a.action_type}</strong> — ${a.summary}</div>
+                  ${a.next_action ? `<div class="timeline-content" style="color:var(--primary)">다음: ${a.next_action}</div>` : ''}
+                </div>
+              `).join('') || '<p>기록 없음</p>'}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    showContent(html);
+  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+}
+
+// ─── 탭 전환 ──────────────────────────────────────────────────
+function switchTab(event, tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// ─── 케이스 액션 버튼 ─────────────────────────────────────────
+function renderCaseActionButtons_(c) {
+  const role = APP.role;
+  const s = c.case_status;
+  const btns = [];
+
+  if (s === 'Draft' && ['MSO Admin','MSO Coordinator'].includes(role)) {
+    btns.push(`<button class="btn btn-primary btn-sm" onclick="requestHospitalReview('${c.case_id}')">병원 검토 요청</button>`);
+  }
+  if (s === 'Hospital Approved' && ['MSO Admin','MSO Coordinator'].includes(role)) {
+    btns.push(`<button class="btn btn-primary btn-sm" onclick="showSupplierOrderModal('${c.case_id}')">공급 요청</button>`);
+  }
+  if (s === 'Acceptance Confirmed' && ['MSO Admin','Hospital User'].includes(role)) {
+    btns.push(`<button class="btn btn-success btn-sm" onclick="showScheduleTreatmentModal('${c.case_id}')">시술 일정 확정</button>`);
+  }
+  if (s === 'Scheduled' && ['MSO Admin','Hospital User'].includes(role)) {
+    btns.push(`<button class="btn btn-success btn-sm" onclick="markTreatmentComplete('${c.case_id}')">시술 완료 처리</button>`);
+  }
+
+  return btns.join('');
+}
+
+// ─── 병원 검토 탭 렌더링 ─────────────────────────────────────
+function renderReviewTab_(reviews, c, data) {
+  const review = reviews && reviews[0];
+  const canSubmit = ['MSO Admin','Hospital User'].includes(APP.role);
+
+  if (!review) return `<div class="empty-state"><div class="empty-state-icon">🔬</div><h3>병원 검토 요청 전입니다</h3></div>`;
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">병원 검토 현황</span>
+        ${canSubmit && review.review_result === 'Pending' ? `<button class="btn btn-primary btn-sm" onclick="showReviewSubmitModal('${c.case_id}')">검토 결과 입력</button>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="detail-grid">
+          <div class="detail-item"><label>검토 요청일</label><div class="value">${fmtDate(review.review_request_date)}</div></div>
+          <div class="detail-item"><label>검토 완료일</label><div class="value">${fmtDate(review.review_completed_date)}</div></div>
+          <div class="detail-item"><label>담당 의사</label><div class="value">${review.hospital_user || '-'}</div></div>
+          <div class="detail-item"><label>검토 결과</label><div class="value">${statusBadge(review.review_result)}</div></div>
+          <div class="detail-item"><label>다음 의료 단계</label><div class="value">${review.next_medical_step || '-'}</div></div>
+          <div class="detail-item"><label>상담일</label><div class="value">${fmtDate(review.consultation_date)}</div></div>
+          <div class="detail-item"><label>추가 검사 필요</label><div class="value">${review.additional_test_required || '-'}</div></div>
+          ${review.medical_notes_link ? `<div class="detail-item full"><label>의료 기록</label><div class="value"><a href="${review.medical_notes_link}" target="_blank">🔗 열기</a></div></div>` : ''}
+        </div>
+        ${review.notes ? `<p style="margin-top:12px;color:var(--gray-700)">${review.notes}</p>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function showReviewSubmitModal(caseId) {
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">검토 결과</label>
+        <select id="revResult" required>
+          <option value="">선택</option>
+          <option value="Suitable">Suitable (진행 가능)</option>
+          <option value="Not Suitable">Not Suitable (진행 불가)</option>
+          <option value="Need More Information">Need More Information (추가 정보 필요)</option>
+          <option value="Deferred">Deferred (보류)</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>다음 의료 단계</label>
+        <input type="text" id="revNextStep" placeholder="예: 혈액 검사 추가 요청">
+      </div>
+      <div class="form-group">
+        <label>상담 예정일</label>
+        <input type="date" id="revConsDate">
+      </div>
+      <div class="form-group">
+        <label>추가 검사</label>
+        <input type="text" id="revAddTest" placeholder="예: MRI">
+      </div>
+      <div class="form-group full">
+        <label>의료 메모 링크 (Drive)</label>
+        <input type="url" id="revNotesLink" placeholder="https://drive.google.com/...">
+      </div>
+      <div class="form-group full">
+        <label>비고</label>
+        <textarea id="revNotes"></textarea>
+      </div>
+    </div>
+    <div class="alert alert-info" style="margin-top:12px">
+      ⚕️ 이 화면의 입력은 병원의 의학적 판단에 해당합니다. 의사가 직접 입력해야 합니다.
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitReview('${caseId}')">검토 결과 제출</button>
+  `;
+  showModal('병원 검토 결과 입력', body, footer);
+}
+
+function submitReview(caseId) {
+  const result = document.getElementById('revResult').value;
+  if (!result) { showAlert('검토 결과를 선택하세요', 'warning'); return; }
+  callServer('review.submit', {
+    case_id: caseId, review_result: result,
+    next_medical_step: document.getElementById('revNextStep').value,
+    consultation_date: document.getElementById('revConsDate').value,
+    additional_test_required: document.getElementById('revAddTest').value,
+    medical_notes_link: document.getElementById('revNotesLink').value,
+    notes: document.getElementById('revNotes').value,
+  }).then(() => {
+    closeModal();
+    showAlert('검토 결과 제출 완료', 'success');
+    loadPage('caseDetail', { caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+// ─── 공급/검수 탭 렌더링 ─────────────────────────────────────
+function renderSupplierTab_(orders, c) {
+  const canOrder = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  const canAccept = ['MSO Admin','Hospital User'].includes(APP.role);
+  const canShip = ['MSO Admin','Supplier User'].includes(APP.role);
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">공급 주문 목록</span>
+        ${canOrder && c.case_status === 'Hospital Approved' ? `<button class="btn btn-primary btn-sm" onclick="showSupplierOrderModal('${c.case_id}')">+ 공급 요청</button>` : ''}
+      </div>
+      ${!orders || orders.length === 0 ? `
+        <div class="empty-state"><div class="empty-state-icon">🏭</div><h3>공급 요청 없음</h3></div>
+      ` : `
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>주문 ID</th><th>요청 품목</th><th>예정 출고</th><th>배치번호</th><th>상태</th><th>검수</th><th></th></tr></thead>
+          <tbody>
+            ${orders.map(o => `
+              <tr>
+                <td><code>${o.supplier_order_id}</code></td>
+                <td>${o.requested_item || '-'}</td>
+                <td>${fmtDate(o.expected_ship_date)}</td>
+                <td>${o.lot_batch_no || '-'}</td>
+                <td>${statusBadge(o.supplier_status)}</td>
+                <td>${statusBadge(o.acceptance_check_status)}</td>
+                <td>
+                  ${canShip && o.supplier_status === 'Requested' ? `<button class="btn btn-sm btn-primary" onclick="showConfirmShipmentModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
+                  ${canAccept && o.supplier_status === 'Delivered' ? `<button class="btn btn-sm btn-success" onclick="showAcceptanceModal('${o.supplier_order_id}')">검수</button>` : ''}
+                  ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank">COA</a>` : ''}
+                  ${o.temp_log_link ? `<a class="btn btn-sm btn-secondary" href="${o.temp_log_link}" target="_blank">온도</a>` : ''}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      `}
+    </div>
+  `;
+}
+
+function showConfirmShipmentModal(orderId) {
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="shipDate" required></div>
+      <div class="form-group"><label class="required">배치번호</label><input type="text" id="lotNo" required placeholder="LOT-2026-001"></div>
+      <div class="form-group"><label>트래킹 번호</label><input type="text" id="trackNo" placeholder="FedEx 운송장번호"></div>
+      <div class="form-group full"><label>COA 링크</label><input type="url" id="coaLink" placeholder="https://drive.google.com/..."></div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitShipment('${orderId}')">출고 확정</button>
+  `;
+  showModal('출고 확정', body, footer);
+}
+
+function submitShipment(orderId) {
+  callServer('supplier.shipment.confirm', {
+    orderId, confirmedShipDate: document.getElementById('shipDate').value,
+    lotBatchNo: document.getElementById('lotNo').value,
+    trackingNo: document.getElementById('trackNo').value,
+    coaLink: document.getElementById('coaLink').value,
+  }).then(() => {
+    closeModal(); showAlert('출고 확정 완료', 'success');
+    loadPage('caseDetail', { caseId: APP.currentParams.caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+function showAcceptanceModal(orderId) {
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">검수 결과</label>
+        <select id="accResult" required>
+          <option value="">선택</option>
+          <option value="Accepted">Accepted (입고 승인)</option>
+          <option value="Rejected">Rejected (반려)</option>
+        </select>
+      </div>
+      <div class="form-group full"><label>검수 메모</label><textarea id="accNotes"></textarea></div>
+    </div>
+    <div class="alert alert-info" style="margin-top:8px">⚕️ 입고 검수는 병원 책임자가 수행합니다.</div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitAcceptance('${orderId}')">검수 결과 저장</button>
+  `;
+  showModal('입고 검수', body, footer);
+}
+
+function submitAcceptance(orderId) {
+  const result = document.getElementById('accResult').value;
+  if (!result) { showAlert('검수 결과를 선택하세요', 'warning'); return; }
+  callServer('supplier.acceptance.record', {
+    orderId, result, notes: document.getElementById('accNotes').value,
+  }).then(() => {
+    closeModal(); showAlert('검수 결과 저장 완료', 'success');
+    loadPage('caseDetail', { caseId: APP.currentParams.caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+// ─── 문서 탭 렌더링 ───────────────────────────────────────────
+function renderDocsTab_(docs, c) {
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">문서 목록 (최신본)</span>
+        <button class="btn btn-sm btn-secondary" onclick="showDocUploadModal('${c.case_id}')">+ 문서 등록</button>
+      </div>
+      ${!docs || docs.length === 0 ? `
+        <div class="empty-state"><div class="empty-state-icon">📄</div><h3>등록된 문서 없음</h3></div>
+      ` : `
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>유형</th><th>파일명</th><th>버전</th><th>검증 상태</th><th>만료일</th><th>업로드일</th><th></th></tr></thead>
+          <tbody>
+            ${docs.map(d => `
+              <tr>
+                <td>${d.document_type}</td>
+                <td>${d.file_name}</td>
+                <td>v${d.version_no}</td>
+                <td>${statusBadge(d.verification_status)}</td>
+                <td>${fmtDate(d.expiry_date)}</td>
+                <td>${fmtDate(d.upload_date)}</td>
+                <td>${d.drive_link ? `<a class="btn btn-sm btn-secondary" href="${d.drive_link}" target="_blank">열기</a>` : '-'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      `}
+    </div>
+  `;
+}
+
+function showDocUploadModal(caseId) {
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">문서 유형</label>
+        <select id="docType" required>
+          <option value="">선택</option>
+          <option>Passport / ID</option><option>Consent - Privacy</option>
+          <option>Consent - Data Transfer</option><option>Medical Record</option>
+          <option>Lab Result</option><option>Imaging</option>
+          <option>Hospital Review Note</option><option>Quote</option>
+          <option>Invoice</option><option>Payment Receipt</option>
+          <option>Supplier COA</option><option>Shipping Document</option>
+          <option>Temperature Log</option><option>Treatment Summary</option>
+          <option>Follow-up Report</option>
+        </select>
+      </div>
+      <div class="form-group full"><label class="required">파일명</label><input type="text" id="docFileName" required placeholder="혈액검사결과_2026-04.pdf"></div>
+      <div class="form-group full"><label class="required">Drive 링크</label><input type="url" id="docLink" required placeholder="https://drive.google.com/..."></div>
+      <div class="form-group"><label>만료일</label><input type="date" id="docExpiry"></div>
+      <div class="form-group"><label>메모</label><input type="text" id="docNotes"></div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitDocUpload('${caseId}')">등록</button>
+  `;
+  showModal('문서 등록', body, footer);
+}
+
+function submitDocUpload(caseId) {
+  const docType = document.getElementById('docType').value;
+  const fileName = document.getElementById('docFileName').value;
+  const link = document.getElementById('docLink').value;
+  if (!docType || !fileName || !link) { showAlert('필수 항목을 입력하세요', 'warning'); return; }
+  callServer('document.register', {
+    caseId, documentType: docType, fileName, driveLink: link,
+    expiryDate: document.getElementById('docExpiry').value,
+    notes: document.getElementById('docNotes').value,
+  }).then(() => {
+    closeModal(); showAlert('문서 등록 완료', 'success');
+    loadPage('caseDetail', { caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+// ─── 결제 탭 렌더링 ───────────────────────────────────────────
+function renderBillingTab_(billing, c) {
+  const canBill = ['MSO Admin','Finance User'].includes(APP.role);
+  const b = billing && billing[0];
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">결제/청구</span>
+        ${canBill && !b ? `<button class="btn btn-sm btn-primary" onclick="showBillingCreateModal('${c.case_id}')">+ 청구 생성</button>` : ''}
+      </div>
+      ${!b ? `<div class="empty-state"><div class="empty-state-icon">💳</div><h3>청구 내역 없음</h3></div>` : `
+      <div class="card-body">
+        <div class="detail-grid">
+          <div class="detail-item"><label>Billing ID</label><div class="value"><code>${b.billing_id}</code></div></div>
+          <div class="detail-item"><label>상태</label><div class="value">${statusBadge(b.payment_status)}</div></div>
+          <div class="detail-item"><label>통화</label><div class="value">${b.currency}</div></div>
+          <div class="detail-item"><label>견적액</label><div class="value">${fmtMoney(b.quote_amount)}</div></div>
+          <div class="detail-item"><label>청구액</label><div class="value">${fmtMoney(b.invoice_amount)}</div></div>
+          <div class="detail-item"><label>납입액</label><div class="value">${fmtMoney(b.paid_amount)}</div></div>
+          <div class="detail-item"><label>미수금</label><div class="value" style="color:var(--danger);font-weight:700">${fmtMoney(b.invoice_amount - b.paid_amount)}</div></div>
+          <div class="detail-item"><label>결제 마감</label><div class="value">${fmtDate(b.due_date)}</div></div>
+        </div>
+        ${canBill ? `
+        <div class="btn-group" style="margin-top:16px">
+          ${b.payment_status === 'Not Issued' ? `<button class="btn btn-primary btn-sm" onclick="showQuoteModal('${b.billing_id}')">견적 발행</button>` : ''}
+          ${b.payment_status === 'Quote Sent' ? `<button class="btn btn-primary btn-sm" onclick="showInvoiceModal('${b.billing_id}')">인보이스 발행</button>` : ''}
+          ${['Invoice Sent','Partially Paid'].includes(b.payment_status) ? `<button class="btn btn-success btn-sm" onclick="showPaymentModal('${b.billing_id}')">입금 기록</button>` : ''}
+        </div>
+        ` : ''}
+      </div>
+      `}
+    </div>
+  `;
+}
+
+// ─── 추적관찰 탭 렌더링 ──────────────────────────────────────
+function renderFollowupTab_(followups, c) {
+  const canComplete = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  return `
+    <div class="card">
+      <div class="card-header"><span class="card-title">추적관찰 일정</span></div>
+      ${!followups || followups.length === 0 ? `
+        <div class="empty-state"><div class="empty-state-icon">🔔</div><h3>추적관찰 일정 없음 (시술 완료 후 자동 생성)</h3></div>
+      ` : `
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>단계</th><th>마감일</th><th>완료일</th><th>담당</th><th>에스컬레이션</th><th></th></tr></thead>
+          <tbody>
+            ${followups.map(f => `
+              <tr style="${!f.completed_date && f.due_date && new Date(f.due_date)<new Date() ? 'background:#fff0f0' : ''}">
+                <td><strong>${f.followup_stage}</strong></td>
+                <td>${fmtDate(f.due_date)}</td>
+                <td>${f.completed_date ? fmtDate(f.completed_date) : '<span style="color:var(--gray-500)">미완료</span>'}</td>
+                <td>${f.responsible_party || '-'}</td>
+                <td>${f.escalation_required === 'TRUE' ? '<span class="badge badge-red">필요</span>' : '-'}</td>
+                <td>
+                  ${canComplete && !f.completed_date ? `<button class="btn btn-sm btn-success" onclick="showFollowupCompleteModal('${f.followup_id}','${f.followup_stage}')">완료 처리</button>` : ''}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      `}
+    </div>
+  `;
+}
+
+function showFollowupCompleteModal(followupId, stage) {
+  const body = `
+    <p style="margin-bottom:12px"><strong>${stage}</strong> 추적관찰 완료를 기록합니다.</p>
+    <div class="form-grid">
+      <div class="form-group full"><label>환자 반응</label><input type="text" id="fupResponse" placeholder="특이사항 없음"></div>
+      <div class="form-group full"><label>메모</label><textarea id="fupNotes"></textarea></div>
+      <div class="form-group full">
+        <label><input type="checkbox" id="fupEscalation"> 에스컬레이션 필요</label>
+      </div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-success" onclick="submitFollowupComplete('${followupId}')">완료 처리</button>
+  `;
+  showModal(`추적관찰 완료 - ${stage}`, body, footer);
+}
+
+function submitFollowupComplete(followupId) {
+  callServer('followup.complete', {
+    followupId,
+    patientResponse: document.getElementById('fupResponse').value,
+    notes: document.getElementById('fupNotes').value,
+    escalationRequired: document.getElementById('fupEscalation').checked,
+  }).then(() => {
+    closeModal(); showAlert('추적관찰 완료 처리됨', 'success');
+    loadPage('caseDetail', { caseId: APP.currentParams.caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+// ─── 케이스 액션 함수들 ───────────────────────────────────────
+function requestHospitalReview(caseId) {
+  if (!confirm(`${caseId}에 대해 병원 검토를 요청하시겠습니까?`)) return;
+  callServer('case.changeStatus', { caseId, targetStatus: 'Under Hospital Review' })
+    .then(() => { showAlert('병원 검토 요청 완료', 'success'); loadPage('caseDetail', { caseId }); })
+    .catch(err => showAlert(err.message, 'error'));
+}
+
+function markTreatmentComplete(caseId) {
+  if (!confirm('시술 완료 처리하시겠습니까? 추적관찰 일정이 자동 생성됩니다.')) return;
+  callServer('case.changeStatus', { caseId, targetStatus: 'Completed' })
+    .then(() => { showAlert('시술 완료 처리됨', 'success'); loadPage('caseDetail', { caseId }); })
+    .catch(err => showAlert(err.message, 'error'));
+}
+
+function showAddAppointmentModal(caseId) {
+  const body = `
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="required">유형</label>
+        <select id="aptType" required>
+          <option value="">선택</option>
+          <option>First Consultation</option><option>Hospital Consultation</option>
+          <option>Additional Test</option><option>Treatment Day</option>
+          <option>Acceptance Check</option><option>Follow-up Call</option>
+          <option>Follow-up Visit</option><option>Billing Review</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="required">날짜</label><input type="datetime-local" id="aptDate" required></div>
+      <div class="form-group"><label>장소</label><input type="text" id="aptLocation"></div>
+      <div class="form-group full"><label>메모</label><textarea id="aptNotes"></textarea></div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-primary" onclick="submitAppointment('${caseId}')">일정 저장</button>
+  `;
+  showModal('일정 추가', body, footer);
+}
+
+function submitAppointment(caseId) {
+  const type = document.getElementById('aptType').value;
+  const date = document.getElementById('aptDate').value;
+  if (!type || !date) { showAlert('필수 항목 입력', 'warning'); return; }
+  callServer('appointment.create', {
+    case_id: caseId, appointment_type: type, scheduled_date: date,
+    location: document.getElementById('aptLocation').value,
+    notes: document.getElementById('aptNotes').value,
+  }).then(() => {
+    closeModal(); showAlert('일정 추가 완료', 'success');
+    loadPage('caseDetail', { caseId });
+  }).catch(err => showAlert(err.message, 'error'));
+}
+</script>

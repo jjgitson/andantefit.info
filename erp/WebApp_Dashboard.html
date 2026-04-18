@@ -1,0 +1,130 @@
+<script>
+console.log('[MSO] dashboard include loaded');
+function getDashboardHTML(params) {
+  showLoading(true);
+
+  // Step A: callServer('ping') — 인증 흐름 전체(handleClientRequest + nonce) 테스트
+  // ping이 실패하면 인증 문제, ping이 성공하면 dashboard.summary 액션 매핑 문제
+  console.log('[MSO][dashboard] Step A: callServer ping test');
+  callServer('ping', {})
+    .then(function(r) {
+      console.log('[MSO][dashboard] Step A ping OK:', JSON.stringify(r));
+      // Step B: 실제 대시보드 데이터 요청
+      console.log('[MSO][dashboard] Step B: callServer dashboard.summary');
+      return callServer('dashboard.summary', {});
+    })
+    .then(function(data) {
+      console.log('[MSO][dashboard] Step B dashboard.summary OK');
+      renderDashboard_(data);
+    })
+    .catch(function(err) {
+      console.error('[MSO][dashboard] FAILED:', err.message);
+      renderDashboardFallback_(err.message);
+    });
+}
+
+function renderDashboard_(d) {
+  // 방어적 기본값: 서버 응답 구조가 불완전해도 렌더링
+  const treatments = Array.isArray(d.upcomingTreatments) ? d.upcomingTreatments : [];
+
+  const html = `
+    <div class="stat-grid">
+      <div class="stat-card primary" onclick="loadPage('leads', {status:'New'})">
+        <div class="stat-number">${d.newLeads || 0}</div>
+        <div class="stat-label">신규 리드</div>
+      </div>
+      <div class="stat-card blue" onclick="loadPage('cases', {status:'Under Hospital Review'})">
+        <div class="stat-number">${d.underReview || 0}</div>
+        <div class="stat-label">병원 검토 중</div>
+      </div>
+      <div class="stat-card success" onclick="loadPage('cases', {status:'Scheduled'})">
+        <div class="stat-number">${treatments.length}</div>
+        <div class="stat-label">시술 예정</div>
+      </div>
+      <div class="stat-card warning" onclick="loadPage('followup')">
+        <div class="stat-number">${d.overdueFollowups || 0}</div>
+        <div class="stat-label">추적관찰 지연</div>
+      </div>
+      <div class="stat-card danger" onclick="loadPage('billing')">
+        <div class="stat-number">${fmtMoney(d.outstandingAmount)}</div>
+        <div class="stat-label">미수금</div>
+      </div>
+      <div class="stat-card warning" onclick="loadPage('supplier')">
+        <div class="stat-number">${d.delayedOrders || 0}</div>
+        <div class="stat-label">납기 지연</div>
+      </div>
+      <div class="stat-card orange" onclick="loadPage('supplier')">
+        <div class="stat-number">${d.pendingAcceptance || 0}</div>
+        <div class="stat-label">검수 대기</div>
+      </div>
+    </div>
+
+    ${treatments.length > 0 ? `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">📅 시술 예정 케이스</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>케이스 ID</th><th>병원</th><th>시술일</th><th></th></tr></thead>
+          <tbody>
+            ${treatments.map(function(t) { return `
+              <tr class="clickable-row" onclick="loadPage('caseDetail', {caseId:'${t.caseId || t.case_id}'})">
+                <td><strong>${t.caseId || t.case_id || '-'}</strong></td>
+                <td>${t.hospital || t.hospital_id || '-'}</td>
+                <td>${fmtDate(t.date || t.treatment_date)}</td>
+                <td><button class="btn btn-sm btn-secondary">상세 보기</button></td>
+              </tr>
+            `; }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    ` : ''}
+
+    ${dashboardBottomCards_()}
+  `;
+  showContent(html);
+}
+
+function renderDashboardFallback_(errMsg) {
+  // 데이터 로드 실패 시에도 기본 UI 렌더링 (메뉴 접근은 항상 가능)
+  const html = `
+    <div class="alert alert-error" style="margin-bottom:16px">
+      대시보드 데이터를 불러오지 못했습니다: ${errMsg || '알 수 없는 오류'}
+    </div>
+    ${dashboardBottomCards_()}
+  `;
+  showContent(html);
+}
+
+function dashboardBottomCards_() {
+  return `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="card">
+        <div class="card-header"><span class="card-title">⚡ 빠른 작업</span></div>
+        <div class="card-body btn-group" style="flex-direction:column;align-items:flex-start">
+          ${APP.role !== 'Supplier User' && APP.role !== 'Hospital User' ? `
+            <button class="btn btn-primary" onclick="showNewLeadModal()">+ 신규 리드 등록</button>
+          ` : ''}
+          <button class="btn btn-secondary" onclick="loadPage('cases')">케이스 목록 보기</button>
+          <button class="btn btn-secondary" onclick="loadPage('followup')">추적관찰 현황</button>
+          ${APP.role === 'Finance User' || APP.role === 'MSO Admin' ? `
+            <button class="btn btn-secondary" onclick="loadPage('billing')">미수금 확인</button>
+          ` : ''}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">ℹ️ 내 정보</span></div>
+        <div class="card-body">
+          <div class="detail-grid">
+            <div class="detail-item"><label>이름</label><div class="value">${APP.name}</div></div>
+            <div class="detail-item"><label>역할</label><div class="value">${statusBadge(APP.role)}</div></div>
+            <div class="detail-item"><label>이메일</label><div class="value" style="font-size:12px">${APP.user}</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+</script>

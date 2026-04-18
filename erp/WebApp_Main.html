@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSO-ERP</title>
+  <?!= include_('WebApp_Styles'); ?>
+</head>
+<body>
+
+<!-- 네비게이션 사이드바 -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h1 class="logo">MSO-ERP</h1>
+    <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+  </div>
+  <div class="user-info">
+    <div class="user-avatar"><?= userName.charAt(0).toUpperCase() ?></div>
+    <div>
+      <div class="user-name"><?= userName ?></div>
+      <div class="user-role badge-<?= userRole.toLowerCase().replace(/\s/g, '-') ?>"><?= userRole ?></div>
+    </div>
+  </div>
+  <ul class="nav-menu">
+    <li class="nav-item <?= page==='dashboard'?'active':'' ?>" onclick="loadPage('dashboard')">
+      <span class="nav-icon">📊</span><span>대시보드</span>
+    </li>
+    <li class="nav-item <?= page==='leads'?'active':'' ?>" onclick="loadPage('leads')" id="nav-leads">
+      <span class="nav-icon">📋</span><span>리드 관리</span>
+    </li>
+    <li class="nav-item <?= page==='cases'?'active':'' ?>" onclick="loadPage('cases')">
+      <span class="nav-icon">🗂️</span><span>케이스</span>
+    </li>
+    <li class="nav-item" onclick="loadPage('supplier')" id="nav-supplier">
+      <span class="nav-icon">🏭</span><span>공급 관리</span>
+    </li>
+    <li class="nav-item" onclick="loadPage('billing')" id="nav-billing">
+      <span class="nav-icon">💳</span><span>결제/청구</span>
+    </li>
+    <li class="nav-item" onclick="loadPage('followup')">
+      <span class="nav-icon">🔔</span><span>추적관리</span>
+    </li>
+  </ul>
+</nav>
+
+<!-- 오버레이 (모바일) -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- 메인 컨텐츠 -->
+<div class="main-wrapper">
+  <header class="top-bar">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <h2 class="page-title" id="pageTitle">대시보드</h2>
+    <div class="header-actions">
+      <button class="btn btn-sm btn-primary" id="headerActionBtn" style="display:none"></button>
+    </div>
+  </header>
+  <div id="alertBox" class="alert" style="display:none"></div>
+  <main class="content" id="mainContent"></main>
+</div>
+
+<!-- 모달 -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" id="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="modalTitle"></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<!--
+  ★ 페이지별 스크립트를 메인 스크립트보다 먼저 include해야 한다.
+  이렇게 해야 getDashboardHTML 등 페이지 함수가 먼저 정의된 후
+  아래 메인 스크립트에서 PAGE_FN_MAP에 실제 함수 레퍼런스를 저장할 수 있다.
+  순서를 바꾸면 ReferenceError 또는 TDZ 에러가 발생한다.
+-->
+<?!= include_('WebApp_Dashboard'); ?>
+<?!= include_('WebApp_Leads'); ?>
+<?!= include_('WebApp_Cases'); ?>
+<?!= include_('WebApp_CaseDetail'); ?>
+<?!= include_('WebApp_Supplier'); ?>
+<?!= include_('WebApp_Billing'); ?>
+<?!= include_('WebApp_Followup'); ?>
+
+<!--
+  ★ 메인 스크립트는 항상 마지막에 위치.
+  이 시점에는 위의 모든 include 스크립트가 실행 완료된 상태이므로
+  getDashboardHTML 등 모든 페이지 함수가 전역(window)에 정의되어 있다.
+  var를 사용해 const/let의 TDZ(일시적 사각지대) 문제를 완전히 제거한다.
+-->
+<script>
+console.log('[MSO] main script loaded');
+console.log('[MSO] typeof getDashboardHTML =', typeof getDashboardHTML);
+
+// ─── 전역 상태 ──────────────────────────────────────────────
+// var 사용: const/let TDZ 방지 (OAuth 다이얼로그 등 이른 실행 환경 대응)
+var APP = {
+  user:         '<?= userEmail ?>',
+  role:         '<?= userRole ?>',
+  name:         '<?= userName ?>',
+  currentPage:  '<?= page ?>',
+  sessionNonce: '<?= sessionNonce ?>',
+};
+console.log('[MSO] APP initialized | user:', APP.user, '| role:', APP.role,
+  '| nonce:', APP.sessionNonce ? APP.sessionNonce.substring(0, 8) + '...' : '(none)');
+
+// ─── 역할별 메뉴 가시성 ─────────────────────────────────────
+(function() {
+  var role = APP.role;
+  if (role === 'Supplier User') {
+    document.getElementById('nav-leads').style.display = 'none';
+    document.getElementById('nav-billing').style.display = 'none';
+  }
+  if (role === 'Hospital User') {
+    document.getElementById('nav-billing').style.display = 'none';
+  }
+  if (role === 'Finance User') {
+    document.getElementById('nav-supplier').style.display = 'none';
+  }
+})();
+
+// ─── 페이지 라우터 ───────────────────────────────────────────
+// 문자열 기반 지연 조회: 초기화 시점 ReferenceError 완전 방지
+// loadPage() 호출 시 window[fnName]으로 실제 함수를 찾는다.
+console.log('[MSO] typeof getDashboardHTML before PAGE_FN_MAP =', typeof getDashboardHTML);
+var PAGE_FN_MAP = {
+  dashboard:  'getDashboardHTML',
+  leads:      'getLeadsHTML',
+  cases:      'getCasesHTML',
+  caseDetail: 'getCaseDetailHTML',
+  supplier:   'getSupplierHTML',
+  billing:    'getBillingHTML',
+  followup:   'getFollowupHTML',
+  calendar:   'getCalendarHTML',
+};
+console.log('[MSO] PAGE_FN_MAP built | keys:', Object.keys(PAGE_FN_MAP).join(', '));
+
+var PAGE_TITLES = {
+  dashboard:  '대시보드',
+  leads:      '리드 관리',
+  cases:      '케이스 목록',
+  caseDetail: '케이스 상세',
+  supplier:   '공급 관리',
+  billing:    '결제/청구',
+  followup:   '추적관리',
+  calendar:   '일정',
+};
+
+function loadPage(page, params) {
+  console.log('[MSO] renderPage called with page:', page,
+    '| params:', JSON.stringify(params || {}));
+  APP.currentPage   = page;
+  APP.currentParams = params || {};
+  document.getElementById('pageTitle').textContent = (PAGE_TITLES && PAGE_TITLES[page]) || page;
+  document.querySelectorAll('.nav-item').forEach(function(el) {
+    el.classList.remove('active');
+  });
+
+  showLoading(true);
+
+  var fnName   = PAGE_FN_MAP && PAGE_FN_MAP[page];
+  var renderFn = (typeof fnName === 'string') ? window[fnName] : fnName;
+  console.log('[MSO] loadPage resolve | page:', page, '| fnName:', fnName,
+    '| typeof window[fnName]:', typeof window[fnName]);
+  if (typeof renderFn === 'function') {
+    try {
+      renderFn(params);
+    } catch (err) {
+      console.error('[MSO] renderPage exception in', page, ':', err);
+      showContent('<div class="alert alert-error">페이지 렌더링 오류: ' + err.message + '</div>');
+    }
+  } else {
+    console.warn('[MSO] renderPage: no render function for page:', page,
+      '| window[fnName]:', typeof window[fnName]);
+    showContent('<div class="alert alert-warning">준비 중인 페이지입니다: ' + page + '</div>');
+  }
+
+  if (window.innerWidth <= 768) toggleSidebar(false);
+}
+
+function showContent(html) {
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function showLoading(show) {
+  if (show) {
+    document.getElementById('mainContent').innerHTML =
+      '<div class="loading-spinner" id="loadingSpinner" style="display:flex">' +
+      '<div class="spinner"></div><p>로딩 중...</p></div>';
+  }
+}
+
+// ─── 치명적 오류 표시 ────────────────────────────────────────
+function showFatalError_(msg) {
+  console.error('[MSO] showFatalError_:', msg);
+  var content = document.getElementById('mainContent');
+  if (!content) return;
+  content.innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:center;min-height:300px">' +
+    '<div style="max-width:520px;padding:28px 24px;background:#fff2f2;border:2px solid #ea4335;' +
+    'border-radius:12px;text-align:center">' +
+    '<div style="font-size:36px;margin-bottom:12px">⚠️</div>' +
+    '<h3 style="color:#c62828;margin:0 0 8px">서버 통신 오류</h3>' +
+    '<p style="color:#5f6368;font-size:13px;word-break:break-all;margin:0 0 16px">' + msg + '</p>' +
+    '<p style="color:#888;font-size:12px;margin:0 0 16px">브라우저 콘솔(F12)에서 [MSO] 로그를 확인하세요.</p>' +
+    '<button onclick="location.reload()" style="padding:8px 20px;background:#ea4335;color:#fff;' +
+    'border:none;border-radius:6px;cursor:pointer;font-size:14px">새로고침</button>' +
+    '</div></div>';
+}
+
+// ─── API 통신 ────────────────────────────────────────────────
+function callServer(action, data) {
+  console.log('[MSO] callServer called with action:', action,
+    '| nonce:', APP.sessionNonce ? APP.sessionNonce.substring(0, 8) + '...' : '(none)');
+  var payload = Object.assign({}, data || {});
+  if (APP.sessionNonce) payload.__nonce = APP.sessionNonce;
+
+  return new Promise(function(resolve, reject) {
+    google.script.run
+      .withSuccessHandler(function(raw) {
+        console.log('[MSO] success callback entered for action:', action,
+          '| raw preview:', (typeof raw === 'string' ? raw : JSON.stringify(raw)).substring(0, 120));
+        try {
+          var r = (typeof raw === 'string') ? JSON.parse(raw) : raw;
+          if (r && r.error) {
+            console.warn('[MSO] server returned error for action:', action, '|', r.error);
+            reject(new Error('[' + (r.code || 'ERR') + '] ' + r.error));
+          } else {
+            resolve(r);
+          }
+        } catch (e) {
+          console.error('[MSO] JSON parse error for action:', action, '|', e.message);
+          reject(new Error('응답 파싱 실패: ' + e.message));
+        }
+      })
+      .withFailureHandler(function(err) {
+        var msg = err && err.message ? err.message : String(err);
+        console.error('[MSO] failure callback entered for action:', action, '| err:', msg);
+        showFatalError_(action + ' 호출 실패: ' + msg);
+        reject(new Error(msg));
+      })
+      .handleClientRequest(action, payload);
+  });
+}
+
+// ─── 캘린더 페이지 스텁 ─────────────────────────────────────
+function getCalendarHTML() {
+  showContent(
+    '<div class="card"><div class="card-header"><span class="card-title">📅 일정</span></div>' +
+    '<div class="card-body"><p style="color:var(--gray-600);padding:24px 0">' +
+    '캘린더 뷰는 준비 중입니다.<br>케이스 상세 화면에서 개별 일정을 관리하세요.</p></div></div>'
+  );
+}
+
+// ─── UI 헬퍼 ────────────────────────────────────────────────
+function showAlert(msg, type) {
+  var box = document.getElementById('alertBox');
+  box.className = 'alert alert-' + (type || 'info');
+  box.textContent = msg;
+  box.style.display = 'block';
+  setTimeout(function() { box.style.display = 'none'; }, 4000);
+}
+
+function showModal(title, bodyHtml, footerHtml) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalFooter').innerHTML = footerHtml || '';
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+}
+
+function toggleSidebar(forceOpen) {
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('overlay');
+  var isOpen  = sidebar.classList.contains('open');
+  var shouldOpen = (forceOpen !== undefined) ? forceOpen : !isOpen;
+  sidebar.classList.toggle('open', shouldOpen);
+  overlay.classList.toggle('show', shouldOpen);
+}
+
+function fmtDate(iso) {
+  if (!iso) return '-';
+  var d = new Date(iso);
+  return isNaN(d.getTime()) ? String(iso).split('T')[0] : d.toLocaleDateString('ko-KR');
+}
+
+function fmtMoney(amount) {
+  var n = Number(amount);
+  if (!amount || isNaN(n)) return '-';
+  return n.toLocaleString('ko-KR') + '원';
+}
+
+function statusBadge(status) {
+  var colorMap = {
+    'Draft': 'gray', 'Under Hospital Review': 'blue', 'Hospital Approved': 'green',
+    'Supplier Coordination': 'orange', 'Shipment In Transit': 'purple',
+    'Acceptance Check Pending': 'yellow', 'Acceptance Confirmed': 'teal',
+    'Scheduled': 'blue', 'Completed': 'green', 'Follow-up Ongoing': 'orange',
+    'Closed': 'gray', 'Cancelled': 'red',
+    'New': 'blue', 'Contacted': 'teal', 'Awaiting Documents': 'orange',
+    'Ready for Hospital Review': 'green', 'Converted': 'green',
+    'Closed - No Progress': 'gray',
+    'Pending': 'yellow', 'In Review': 'blue',
+    'Suitable': 'green', 'Not Suitable': 'red', 'Deferred': 'orange',
+    'Need More Information': 'yellow',
+    'Requested': 'blue', 'Confirmed': 'teal', 'In Transit': 'purple',
+    'Delivered': 'green',
+    'Not Started': 'gray', 'Accepted': 'green', 'Rejected': 'red',
+    'Not Issued': 'gray', 'Quote Sent': 'blue', 'Invoice Sent': 'orange',
+    'Partially Paid': 'yellow', 'Paid': 'green', 'Refunded': 'teal',
+    'MSO Admin': 'red', 'MSO Coordinator': 'blue', 'Hospital User': 'green',
+    'Supplier User': 'orange', 'Finance User': 'purple',
+  };
+  if (!status) return '<span class="badge badge-gray">-</span>';
+  var color = colorMap[status] || 'gray';
+  return '<span class="badge badge-' + color + '">' + status + '</span>';
+}
+
+// ─── 초기화: window.load 이후에만 실행 ─────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('[MSO] DOMContentLoaded entered');
+});
+
+window.addEventListener('load', function() {
+  console.log('[MSO] window load entered');
+  initApp_();
+});
+
+function initApp_() {
+  console.log('[MSO] initApp started | page:', APP.currentPage,
+    '| typeof getDashboardHTML:', typeof getDashboardHTML,
+    '| typeof window.getDashboardHTML:', typeof window.getDashboardHTML,
+    '| PAGE_FN_MAP.dashboard:', PAGE_FN_MAP.dashboard);
+
+  // Step 1: ping() 직접 호출 — google.script.run 자체 동작 여부 확인 (인증 불필요)
+  console.log('[MSO] calling ping() directly (bypasses handleClientRequest)...');
+  google.script.run
+    .withSuccessHandler(function(raw) {
+      console.log('[MSO] ping() SUCCESS:', raw);
+    })
+    .withFailureHandler(function(err) {
+      var msg = err && err.message ? err.message : String(err);
+      console.error('[MSO] ping() FAILED — google.script.run not working:', msg);
+      showFatalError_('google.script.run 연결 실패 (ping): ' + msg);
+    })
+    .ping();
+
+  // Step 2: 첫 페이지 렌더링
+  loadPage(APP.currentPage);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<script>
+// ─── 추적관찰 화면 ─────────────────────────────────────────────
+function getFollowupHTML(params) {
+  showLoading(true);
+  callServer('followup.list', { onlyPending: false }).then(data => {
+    const followups = data.followups || [];
+    const today = new Date();
+    const overdue = followups.filter(f => f.due_date && !f.completed_date && new Date(f.due_date) < today);
+    const upcoming = followups.filter(f => {
+      if (f.completed_date) return false;
+      const d = new Date(f.due_date);
+      return d >= today && d <= new Date(today.getTime() + 7*24*60*60*1000);
+    });
+
+    const html = `
+      ${overdue.length > 0 ? `<div class="alert alert-error">🔔 기한 초과 추적관찰 ${overdue.length}건이 있습니다. 즉시 환자에게 연락하세요.</div>` : ''}
+
+      <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+        <div class="stat-card primary"><div class="stat-number">${followups.length}</div><div class="stat-label">전체</div></div>
+        <div class="stat-card danger"><div class="stat-number">${overdue.length}</div><div class="stat-label">기한 초과</div></div>
+        <div class="stat-card warning"><div class="stat-number">${upcoming.length}</div><div class="stat-label">7일 내 예정</div></div>
+        <div class="stat-card success"><div class="stat-number">${followups.filter(f=>f.completed_date).length}</div><div class="stat-label">완료</div></div>
+        <div class="stat-card orange"><div class="stat-number">${followups.filter(f=>f.escalation_required==='TRUE').length}</div><div class="stat-label">에스컬레이션</div></div>
+      </div>
+
+      <!-- 기한 초과 우선 표시 -->
+      ${overdue.length > 0 ? `
+      <div class="card">
+        <div class="card-header" style="border-left:4px solid var(--danger)">
+          <span class="card-title" style="color:var(--danger)">즉시 처리 필요</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>케이스</th><th>단계</th><th>마감일</th><th>D+</th><th>담당</th><th>에스컬레이션</th><th></th></tr></thead>
+            <tbody>
+              ${overdue.map(f => {
+                const daysOver = Math.floor((today - new Date(f.due_date)) / (1000*60*60*24));
+                return `
+                  <tr style="background:#fff0f0">
+                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})">${f.case_id}</a></td>
+                    <td><strong>${f.followup_stage}</strong></td>
+                    <td style="color:var(--danger)">${fmtDate(f.due_date)}</td>
+                    <td><span class="badge badge-red">+${daysOver}일</span></td>
+                    <td>${f.responsible_party||'-'}</td>
+                    <td>${f.escalation_required==='TRUE' ? '<span class="badge badge-red">필요</span>' : '-'}</td>
+                    <td><button class="btn btn-sm btn-primary" onclick="showFollowupModal('${f.followup_id}','${f.followup_stage}','${f.case_id}')">완료 처리</button></td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- 전체 목록 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">추적관찰 전체 목록</span>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="fupSearch" placeholder="케이스 ID 검색" oninput="filterFollowups()">
+          <select id="fupStageFilter" onchange="filterFollowups()">
+            <option value="">전체 단계</option>
+            <option>D7</option><option>D14</option><option>D30</option>
+            <option>D90</option><option>D180</option><option>Custom</option>
+          </select>
+          <select id="fupDoneFilter" onchange="filterFollowups()">
+            <option value="">전체</option>
+            <option value="pending">미완료</option>
+            <option value="done">완료</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>케이스</th><th>단계</th><th>마감일</th><th>완료일</th><th>담당</th><th>환자 반응</th><th>에스컬레이션</th><th></th></tr>
+            </thead>
+            <tbody>
+              ${followups.length === 0 ? `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">🔔</div><h3>추적관찰 없음</h3></div></td></tr>` :
+              followups.map(f => {
+                const isOver = f.due_date && !f.completed_date && new Date(f.due_date) < today;
+                const isDone = !!f.completed_date;
+                return `
+                  <tr class="fup-row" data-caseid="${f.case_id}" data-stage="${f.followup_stage}"
+                      data-done="${isDone ? 'done' : 'pending'}"
+                      style="${isOver ? 'background:#fff8f0' : isDone ? 'opacity:.7' : ''}">
+                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})">${f.case_id}</a></td>
+                    <td><strong>${f.followup_stage}</strong></td>
+                    <td style="${isOver ? 'color:var(--danger)' : ''}">${fmtDate(f.due_date)}</td>
+                    <td>${f.completed_date ? fmtDate(f.completed_date) : '<span style="color:var(--gray-500)">-</span>'}</td>
+                    <td>${f.responsible_party||'-'}</td>
+                    <td style="font-size:12px">${f.patient_response||'-'}</td>
+                    <td>${f.escalation_required==='TRUE' ? '<span class="badge badge-red">필요</span>' : '-'}</td>
+                    <td>
+                      ${!isDone ? `<button class="btn btn-sm btn-success" onclick="showFollowupModal('${f.followup_id}','${f.followup_stage}','${f.case_id}')">완료</button>` : '<span class="badge badge-green">✓ 완료</span>'}
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+    showContent(html);
+  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+}
+
+function filterFollowups() {
+  const search = document.getElementById('fupSearch').value.toLowerCase();
+  const stage = document.getElementById('fupStageFilter').value;
+  const done = document.getElementById('fupDoneFilter').value;
+  document.querySelectorAll('.fup-row').forEach(row => {
+    const ok = (!search || row.dataset.caseid.toLowerCase().includes(search)) &&
+               (!stage || row.dataset.stage === stage) &&
+               (!done || row.dataset.done === done);
+    row.style.display = ok ? '' : 'none';
+  });
+}
+
+// ─── 추적관찰 완료 모달 ──────────────────────────────────────
+function showFollowupModal(followupId, stage, caseId) {
+  const body = `
+    <p style="margin-bottom:16px">케이스 <strong>${caseId}</strong> - <strong>${stage}</strong> 추적관찰 완료를 기록합니다.</p>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>환자 반응 / 상태</label>
+        <input type="text" id="fupResponse" placeholder="특이사항 없음 / 통증 호전 등">
+      </div>
+      <div class="form-group full">
+        <label>상세 메모</label>
+        <textarea id="fupNotes" placeholder="환자와 통화 내용, 방문 결과 등"></textarea>
+      </div>
+      <div class="form-group full">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+          <input type="checkbox" id="fupEscalation" style="width:auto">
+          에스컬레이션 필요 (의료진 즉시 확인 요망)
+        </label>
+      </div>
+    </div>
+  `;
+  showModal(`추적관찰 완료 처리 - ${stage}`, body, `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-success" onclick="submitFollowupDone('${followupId}')">완료 처리</button>
+  `);
+}
+
+function submitFollowupDone(followupId) {
+  callServer('followup.complete', {
+    followupId,
+    patientResponse: document.getElementById('fupResponse').value,
+    notes: document.getElementById('fupNotes').value,
+    escalationRequired: document.getElementById('fupEscalation').checked,
+  }).then(() => {
+    closeModal();
+    showAlert('추적관찰 완료 처리됨', 'success');
+    loadPage('followup');
+  }).catch(err => showAlert(err.message, 'error'));
+}
+
+// ─── 달력 뷰 (간단) ─────────────────────────────────────────
+function getCalendarHTML(params) {
+  showLoading(true);
+  Promise.all([
+    callServer('followup.list', { onlyPending: true }),
+    callServer('appointment.list', {}),
+  ]).then(([fupData, aptData]) => {
+    const followups = fupData.followups || [];
+    const appointments = aptData.appointments || [];
+    const today = new Date();
+    const next30 = new Date(today.getTime() + 30*24*60*60*1000);
+
+    const upcomingFups = followups.filter(f =>
+      f.due_date && new Date(f.due_date) >= today && new Date(f.due_date) <= next30
+    ).sort((a,b) => new Date(a.due_date) - new Date(b.due_date));
+
+    const upcomingApts = appointments.filter(a =>
+      a.scheduled_date && new Date(a.scheduled_date) >= today && new Date(a.scheduled_date) <= next30
+    ).sort((a,b) => new Date(a.scheduled_date) - new Date(b.scheduled_date));
+
+    const allEvents = [
+      ...upcomingFups.map(f => ({ date: f.due_date, title: `[추적] ${f.case_id} - ${f.followup_stage}`, type: 'followup', obj: f })),
+      ...upcomingApts.map(a => ({ date: a.scheduled_date, title: `[${a.appointment_type}] ${a.case_id}`, type: 'appointment', obj: a })),
+    ].sort((a,b) => new Date(a.date) - new Date(b.date));
+
+    const html = `
+      <div class="card">
+        <div class="card-header"><span class="card-title">📅 향후 30일 일정</span></div>
+        ${allEvents.length === 0 ? `<div class="empty-state"><div class="empty-state-icon">📅</div><h3>예정된 일정 없음</h3></div>` : `
+        <div class="card-body">
+          <div class="timeline">
+            ${allEvents.map(ev => `
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background:${ev.type==='followup'?'var(--warning)':'var(--primary)'}"></div>
+                <div class="timeline-date">${fmtDate(ev.date)}</div>
+                <div class="timeline-content">
+                  <strong>${ev.title}</strong>
+                  ${ev.type==='appointment' && ev.obj.location ? `<br><span style="font-size:12px;color:var(--gray-700)">📍 ${ev.obj.location}</span>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        `}
+      </div>
+    `;
+    showContent(html);
+  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+}
+</script>

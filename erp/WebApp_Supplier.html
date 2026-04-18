@@ -142,6 +142,7 @@ function showShipModal(orderId, defaultDate, defaultLot) {
 function submitShipment(orderId) {
   const date = document.getElementById('shipDate').value;
   if (!date) { showAlert('확정 출고일은 필수입니다', 'warning'); return; }
+  const lot = document.getElementById('lotNo').value;
 
   callServer('supplier.shipment.confirm', {
     orderId, confirmedShipDate: date, lotBatchNo: lot,

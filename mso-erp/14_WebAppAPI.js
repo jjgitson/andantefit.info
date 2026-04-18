@@ -9,6 +9,8 @@
  * 대시보드 KPI 데이터 반환
  */
 function getDashboardData(user, role, profile) {
+  Logger.log(`[getDashboardData] 시작: user="${user}" role="${role}"`);
+  try {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   const today = new Date();
 
@@ -17,6 +19,7 @@ function getDashboardData(user, role, profile) {
   const followups= sheetToObjects_(ss, CONFIG.SHEETS.FOLLOWUPS);
   const billing  = sheetToObjects_(ss, CONFIG.SHEETS.BILLING);
   const orders   = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
+  Logger.log(`[getDashboardData] 시트 로드 완료: cases=${cases.length} leads=${leads.length} orders=${orders.length}`);
 
   const myCases = filterCasesByRole_(cases, user, role, profile);
 
@@ -50,6 +53,10 @@ function getDashboardData(user, role, profile) {
       return acc;
     }, {}),
   };
+  } catch (err) {
+    Logger.log(`[getDashboardData] 오류: ${err.stack || err.message}`);
+    throw err;
+  }
 }
 
 // ════════════════════════════════════════════════════════════

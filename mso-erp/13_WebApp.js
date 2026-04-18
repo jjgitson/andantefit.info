@@ -39,9 +39,16 @@ function doGet(e) {
     if (cached) email = cached;
   }
 
+  // _ownerBypass=1 일 때 nonce를 생성해 handleClientRequest에서도 email을 복원할 수 있게 함
+  let effectiveNonce = sessionNonce;
+  if (ownerBypass && email && !sessionNonce) {
+    effectiveNonce = Utilities.getUuid();
+    CacheService.getScriptCache().put('session_' + effectiveNonce, email, 21600);
+  }
+
   Logger.log(
     `[doGet] rawActive="${rawActive}" rawEffective="${rawEffective}" ` +
-    `resolved="${email}" ownerBypass=${ownerBypass} nonce="${sessionNonce}"`
+    `resolved="${email}" ownerBypass=${ownerBypass} nonce="${effectiveNonce}"`
   );
 
   // 이메일 미확인 → GSI 로그인 페이지
@@ -74,7 +81,7 @@ function doGet(e) {
   template.hospitalId   = profile.hospital_id  || '';
   template.supplierId   = profile.supplier_id  || '';
   template.page         = page;
-  template.sessionNonce = sessionNonce; // 클라이언트가 __nonce로 handleClientRequest에 전달
+  template.sessionNonce = effectiveNonce; // 클라이언트가 __nonce로 handleClientRequest에 전달
 
   return template.evaluate()
     .setTitle('MSO-ERP')

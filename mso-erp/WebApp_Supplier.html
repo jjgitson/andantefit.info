@@ -77,7 +77,7 @@ function renderOrderRows_(orders, isSupplier) {
       o.expected_ship_date && new Date(o.expected_ship_date) < today;
     const canShip = ['MSO Admin','Supplier User'].includes(APP.role) && o.supplier_status === 'Requested';
     const canAccept = ['MSO Admin','Hospital User'].includes(APP.role) && o.supplier_status === 'Delivered';
-    const incidentBadge = o.transport_incident_flag === 'TRUE'
+    const incidentBadge = (o.transport_incident_flag === true || o.transport_incident_flag === 'TRUE')
       ? '<span class="badge badge-red">이상</span>' : '';
 
     return `

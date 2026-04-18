@@ -40,9 +40,6 @@
     <li class="nav-item" onclick="loadPage('followup')">
       <span class="nav-icon">🔔</span><span>추적관리</span>
     </li>
-    <li class="nav-item" onclick="loadPage('calendar')">
-      <span class="nav-icon">📅</span><span>일정</span>
-    </li>
   </ul>
 </nav>
 
@@ -64,10 +61,7 @@
 
   <!-- 페이지 컨텐츠 -->
   <main class="content" id="mainContent">
-    <div class="loading-spinner" id="loadingSpinner">
-      <div class="spinner"></div>
-      <p>로딩 중...</p>
-    </div>
+    <!-- 초기 로딩 상태: JS가 로드되면 loadPage()가 대체함 -->
   </main>
 </div>
 
@@ -86,13 +80,14 @@
 <script>
 // ─── 전역 상태 ─────────────────────────────────────────────────
 const APP = {
-  user: '<?= userEmail ?>',
-  role: '<?= userRole ?>',
-  name: '<?= userName ?>',
-  currentPage: '<?= page ?>',
+  user:         '<?= userEmail ?>',
+  role:         '<?= userRole ?>',
+  name:         '<?= userName ?>',
+  currentPage:  '<?= page ?>',
+  sessionNonce: '<?= sessionNonce ?>',  // handleClientRequest 인증에 사용
 };
 
-// 역할별 메뉴 가시성 설정
+// 역할별 메뉴 가시성
 (function initNav() {
   const role = APP.role;
   if (role === 'Supplier User') {
@@ -108,100 +103,122 @@ const APP = {
 })();
 
 // ─── 페이지 라우터 ─────────────────────────────────────────────
-const PAGE_TEMPLATES = {
-  dashboard: getDashboardHTML,
-  leads: getLeadsHTML,
-  cases: getCasesHTML,
-  caseDetail: getCaseDetailHTML,
-  supplier: getSupplierHTML,
-  billing: getBillingHTML,
-  followup: getFollowupHTML,
-  calendar: getCalendarHTML,
+// PAGE_TEMPLATES는 window.load 이후에 초기화해야 함:
+// 각 페이지 함수들은 별도 <script> 블록에 있으므로
+// 이 블록이 실행되는 시점에는 아직 정의되지 않은 상태임.
+// loadPage()는 window[fnName]()으로 런타임에 함수를 조회함.
+const PAGE_FN_MAP = {
+  dashboard:  'getDashboardHTML',
+  leads:      'getLeadsHTML',
+  cases:      'getCasesHTML',
+  caseDetail: 'getCaseDetailHTML',
+  supplier:   'getSupplierHTML',
+  billing:    'getBillingHTML',
+  followup:   'getFollowupHTML',
+  calendar:   'getCalendarHTML',
 };
 
 const PAGE_TITLES = {
-  dashboard: '대시보드',
-  leads: '리드 관리',
-  cases: '케이스 목록',
+  dashboard:  '대시보드',
+  leads:      '리드 관리',
+  cases:      '케이스 목록',
   caseDetail: '케이스 상세',
-  supplier: '공급 관리',
-  billing: '결제/청구',
-  followup: '추적관리',
-  calendar: '일정',
+  supplier:   '공급 관리',
+  billing:    '결제/청구',
+  followup:   '추적관리',
+  calendar:   '일정',
 };
 
 function loadPage(page, params) {
-  APP.currentPage = page;
+  APP.currentPage  = page;
   APP.currentParams = params || {};
   document.getElementById('pageTitle').textContent = PAGE_TITLES[page] || page;
-
-  // 활성 메뉴 표시
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
   showLoading(true);
 
-  const renderFn = PAGE_TEMPLATES[page];
-  if (renderFn) {
-    renderFn(params);
+  const fnName = PAGE_FN_MAP[page];
+  const renderFn = fnName ? window[fnName] : null;
+
+  if (typeof renderFn === 'function') {
+    try {
+      renderFn(params);
+    } catch (err) {
+      showContent(`<div class="alert alert-error">페이지 렌더링 오류: ${err.message}</div>`);
+    }
   } else {
-    showContent('<p>페이지를 찾을 수 없습니다.</p>');
+    showContent(`<div class="alert alert-warning">준비 중인 페이지입니다: ${page}</div>`);
   }
 
-  // 모바일: 페이지 전환 시 사이드바 닫기
   if (window.innerWidth <= 768) toggleSidebar(false);
 }
 
 function showContent(html) {
-  showLoading(false);
-  document.getElementById('mainContent').innerHTML = html;
+  document.getElementById('mainContent').innerHTML =
+    '<div class="loading-spinner" id="loadingSpinner" style="display:none"><div class="spinner"></div><p>로딩 중...</p></div>' +
+    html;
 }
 
 function showLoading(show) {
-  const spinner = document.getElementById('loadingSpinner');
+  const content = document.getElementById('mainContent');
   if (show) {
-    document.getElementById('mainContent').innerHTML = '';
-    document.getElementById('mainContent').appendChild(spinner);
-    spinner.style.display = 'flex';
-  } else {
-    spinner.style.display = 'none';
+    content.innerHTML =
+      '<div class="loading-spinner" id="loadingSpinner" style="display:flex">' +
+      '<div class="spinner"></div><p>로딩 중...</p></div>';
   }
 }
 
 // ─── API 통신 ──────────────────────────────────────────────────
-function api(action, data) {
+/**
+ * 서버 handleClientRequest 호출.
+ * - APP.sessionNonce가 있으면 data.__nonce 에 포함 (GSI / _ownerBypass 세션)
+ * - 서버 응답이 {error: ...} 이면 Promise.reject
+ */
+function callServer(action, data) {
+  const payload = Object.assign({}, data || {});
+  if (APP.sessionNonce) payload.__nonce = APP.sessionNonce;
+
   return new Promise((resolve, reject) => {
     google.script.run
-      .withSuccessHandler(result => {
-        if (typeof result === 'string') result = JSON.parse(result);
-        if (result.error) reject(new Error(result.error));
-        else resolve(result);
+      .withSuccessHandler(function(raw) {
+        try {
+          const r = (typeof raw === 'string') ? JSON.parse(raw) : raw;
+          if (r && r.error) {
+            reject(new Error('[' + (r.code || 'ERR') + '] ' + r.error));
+          } else {
+            resolve(r);
+          }
+        } catch (e) {
+          reject(new Error('응답 파싱 실패: ' + e.message));
+        }
       })
-      .withFailureHandler(err => reject(err))
-      .doPost_({ action, data: data || {} });
+      .withFailureHandler(function(err) {
+        reject(new Error(err && err.message ? err.message : String(err)));
+      })
+      .handleClientRequest(action, payload);
   });
 }
 
-// Apps Script 서버 함수를 직접 호출하는 래퍼
-// (실제로는 doPost를 통해 action 기반으로 호출)
-function callServer(action, data) {
-  return new Promise((resolve, reject) => {
-    google.script.run
-      .withSuccessHandler(r => {
-        try { resolve(typeof r === 'string' ? JSON.parse(r) : r); }
-        catch(e) { resolve(r); }
-      })
-      .withFailureHandler(reject)
-      .handleClientRequest(action, data || {});
-  });
+// ─── 캘린더 페이지 스텁 ───────────────────────────────────────
+function getCalendarHTML() {
+  showContent(`
+    <div class="card">
+      <div class="card-header"><span class="card-title">📅 일정</span></div>
+      <div class="card-body">
+        <p style="color:var(--gray-600);padding:24px 0">캘린더 뷰는 준비 중입니다.<br>
+          케이스 상세 화면에서 개별 일정을 관리하세요.</p>
+      </div>
+    </div>
+  `);
 }
 
 // ─── UI 헬퍼 ──────────────────────────────────────────────────
 function showAlert(msg, type) {
   const box = document.getElementById('alertBox');
-  box.className = `alert alert-${type || 'info'}`;
+  box.className = 'alert alert-' + (type || 'info');
   box.textContent = msg;
   box.style.display = 'block';
-  setTimeout(() => { box.style.display = 'none'; }, 4000);
+  setTimeout(function() { box.style.display = 'none'; }, 4000);
 }
 
 function showModal(title, bodyHtml, footerHtml) {
@@ -218,20 +235,22 @@ function closeModal() {
 function toggleSidebar(forceOpen) {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
-  const isOpen = sidebar.classList.contains('open');
-  const shouldOpen = forceOpen !== undefined ? forceOpen : !isOpen;
+  const isOpen  = sidebar.classList.contains('open');
+  const shouldOpen = (forceOpen !== undefined) ? forceOpen : !isOpen;
   sidebar.classList.toggle('open', shouldOpen);
   overlay.classList.toggle('show', shouldOpen);
 }
 
 function fmtDate(iso) {
   if (!iso) return '-';
-  return new Date(iso).toLocaleDateString('ko-KR');
+  const d = new Date(iso);
+  return isNaN(d.getTime()) ? String(iso).split('T')[0] : d.toLocaleDateString('ko-KR');
 }
 
 function fmtMoney(amount) {
-  if (!amount) return '-';
-  return Number(amount).toLocaleString('ko-KR') + '원';
+  const n = Number(amount);
+  if (!amount || isNaN(n)) return '-';
+  return n.toLocaleString('ko-KR') + '원';
 }
 
 function statusBadge(status) {
@@ -242,14 +261,27 @@ function statusBadge(status) {
     'Scheduled': 'blue', 'Completed': 'green', 'Follow-up Ongoing': 'orange',
     'Closed': 'gray', 'Cancelled': 'red',
     'New': 'blue', 'Contacted': 'teal', 'Awaiting Documents': 'orange',
-    'Ready for Hospital Review': 'green', 'Closed - No Progress': 'gray',
+    'Ready for Hospital Review': 'green', 'Converted': 'green',
+    'Closed - No Progress': 'gray',
+    'Pending': 'yellow', 'In Review': 'blue',
+    'Suitable': 'green', 'Not Suitable': 'red', 'Deferred': 'orange',
+    'Need More Information': 'yellow',
+    'Requested': 'blue', 'Confirmed': 'teal', 'In Transit': 'purple',
+    'Delivered': 'green',
+    'Not Started': 'gray', 'Accepted': 'green', 'Rejected': 'red',
+    'Not Issued': 'gray', 'Quote Sent': 'blue', 'Invoice Sent': 'orange',
+    'Partially Paid': 'yellow', 'Paid': 'green', 'Refunded': 'teal',
+    'MSO Admin': 'red', 'MSO Coordinator': 'blue', 'Hospital User': 'green',
+    'Supplier User': 'orange', 'Finance User': 'purple',
   };
+  if (!status) return '<span class="badge badge-gray">-</span>';
   const color = colorMap[status] || 'gray';
   return `<span class="badge badge-${color}">${status}</span>`;
 }
 
 // ─── 초기 페이지 로드 ─────────────────────────────────────────
-window.addEventListener('load', () => {
+// window.load 이후에 실행: 이 시점에는 모든 include 스크립트가 로드됨
+window.addEventListener('load', function() {
   loadPage(APP.currentPage);
 });
 </script>

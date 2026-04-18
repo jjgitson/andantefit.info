@@ -4,10 +4,12 @@ function getCasesHTML(params) {
   showLoading(true);
   callServer('case.list', params || {}).then(data => {
     const cases = data.cases || [];
+    const canCreate = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
     const html = `
       <div class="card">
         <div class="card-header">
           <span class="card-title">케이스 목록 (${cases.length}건)</span>
+          ${canCreate ? `<button class="btn btn-primary btn-sm" onclick="showNewCaseModal()">+ 신규 케이스</button>` : ''}
         </div>
         <div class="filter-bar">
           <input type="text" id="caseSearch" placeholder="케이스 ID 검색" oninput="filterCases()">
@@ -84,6 +86,108 @@ function renderCaseRows_(cases) {
       <td><button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();loadPage('caseDetail',{caseId:'${c.case_id}'})">상세</button></td>
     </tr>
   `).join('');
+}
+
+// ─── 신규 케이스 생성 ─────────────────────────────────────────
+function showNewCaseModal() {
+  Promise.all([
+    callServer('hospital.list', {}),
+    callServer('coordinator.list', {}),
+  ]).then(([hospData, coordData]) => {
+    const hospitals    = hospData.hospitals    || [];
+    const coordinators = coordData.coordinators || [];
+
+    const hospOptions  = hospitals.map(h =>
+      `<option value="${h.id}">${h.name}</option>`).join('');
+    const coordOptions = coordinators.map(c =>
+      `<option value="${c.email}">${c.name}${c.role === 'MSO Admin' ? ' (Admin)' : ''}</option>`).join('');
+
+    const body = `
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="required">환자명</label>
+          <input type="text" id="ncName" required placeholder="홍길동">
+        </div>
+        <div class="form-group">
+          <label class="required">국적</label>
+          <input type="text" id="ncNationality" required placeholder="Korea">
+        </div>
+        <div class="form-group">
+          <label>연락처</label>
+          <input type="tel" id="ncPhone" placeholder="+82-10-0000-0000">
+        </div>
+        <div class="form-group full">
+          <label class="required">MSO 담당자</label>
+          <select id="ncCoordinator" required>
+            <option value="">담당자 선택</option>
+            ${coordOptions}
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="required">병원</label>
+          <select id="ncHospital" required>
+            <option value="">병원 선택</option>
+            ${hospOptions}
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="required">적응증</label>
+          <input type="text" id="ncIndication" required placeholder="예: 무릎 연골 재생">
+        </div>
+        <div class="form-group">
+          <label>우선순위</label>
+          <select id="ncPriority">
+            <option value="Normal">Normal</option>
+            <option value="High">High</option>
+            <option value="Urgent">Urgent</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>비고</label>
+          <input type="text" id="ncRemarks" placeholder="추가 메모">
+        </div>
+      </div>
+    `;
+    const footer = `
+      <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="submitNewCase()">케이스 생성</button>
+    `;
+    showModal('신규 케이스 생성', body, footer);
+  }).catch(err => showAlert('데이터 로드 실패: ' + err.message, 'error'));
+}
+
+function submitNewCase() {
+  const name        = document.getElementById('ncName').value.trim();
+  const nationality = document.getElementById('ncNationality').value.trim();
+  const phone       = document.getElementById('ncPhone').value.trim();
+  const coordinator = document.getElementById('ncCoordinator').value;
+  const hospitalId  = document.getElementById('ncHospital').value;
+  const indication  = document.getElementById('ncIndication').value.trim();
+  const priority    = document.getElementById('ncPriority').value;
+  const remarks     = document.getElementById('ncRemarks').value.trim();
+
+  if (!name)        { showAlert('환자명을 입력하세요', 'warning'); return; }
+  if (!nationality) { showAlert('국적을 입력하세요', 'warning'); return; }
+  if (!coordinator) { showAlert('MSO 담당자를 선택하세요', 'warning'); return; }
+  if (!hospitalId)  { showAlert('병원을 선택하세요', 'warning'); return; }
+  if (!indication)  { showAlert('적응증을 입력하세요', 'warning'); return; }
+
+  // 1단계: 환자 생성 → 2단계: 케이스 생성
+  callServer('patient.create', { full_name: name, nationality, phone })
+    .then(patResult => callServer('case.create', {
+      patient_id:           patResult.patientId,
+      hospital_id:          hospitalId,
+      target_indication:    indication,
+      assigned_coordinator: coordinator,
+      priority,
+      remarks,
+    }))
+    .then(caseResult => {
+      closeModal();
+      showAlert(`케이스 생성 완료: ${caseResult.caseId}`, 'success');
+      loadPage('caseDetail', { caseId: caseResult.caseId });
+    })
+    .catch(err => showAlert(err.message, 'error'));
 }
 
 function filterCases() {

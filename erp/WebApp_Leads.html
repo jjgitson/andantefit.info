@@ -184,7 +184,8 @@ function showLeadDetail(lead) {
       <textarea id="leadNotes">${lead.notes || ''}</textarea>
     </div>
   `;
-  const canConvert = canCreate && lead.lead_status === 'Ready for Hospital Review';
+  const TERMINATED = ['Converted', 'Closed - No Progress'];
+  const canConvert = canCreate && !TERMINATED.includes(lead.lead_status);
   const footer = `
     <button class="btn btn-secondary" onclick="closeModal()">닫기</button>
     ${canConvert ? `<button class="btn btn-primary" onclick="closeModal();convertToCase('${lead.lead_id}')">케이스로 전환 →</button>` : ''}

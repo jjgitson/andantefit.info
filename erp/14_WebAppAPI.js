@@ -237,15 +237,33 @@ function getCases(data, user, role, profile) {
 
 function createCase_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+
+  let patientId = data.patient_id || '';
+
+  // 리드 전환: 리드 정보로 환자 자동 생성 + 리드 상태 Converted 업데이트
+  if (!patientId && data.lead_id) {
+    const ss   = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+    const lead = sheetToObjects_(ss, CONFIG.SHEETS.LEADS).find(l => l.lead_id === data.lead_id);
+    if (lead) {
+      const patResult = createPatient(
+        { full_name: lead.patient_name, nationality: lead.country,
+          phone: lead.phone, email: lead.email },
+        user, role
+      );
+      patientId = patResult.patientId;
+      updateLead({ lead_id: data.lead_id, lead_status: CONFIG.LEAD_STATUS.CONVERTED }, user, role);
+    }
+  }
+
   const caseId = createCase({
-    patientId: data.patient_id,
-    leadId: data.lead_id || '',
-    hospitalId: data.hospital_id,
-    supplierId: data.supplier_id || '',
-    targetIndication: data.target_indication,
+    patientId,
+    leadId:              data.lead_id || '',
+    hospitalId:          data.hospital_id,
+    supplierId:          data.supplier_id || '',
+    targetIndication:    data.target_indication,
     assignedCoordinator: data.assigned_coordinator || user,
-    priority: data.priority || 'Normal',
-    remarks: data.remarks || '',
+    priority:            data.priority || 'Normal',
+    remarks:             data.remarks || '',
   });
   return { success: true, caseId };
 }

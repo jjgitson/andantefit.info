@@ -1,150 +1,230 @@
 <script>
-// ─── 팀 일정 ──────────────────────────────────────────────────
+// ─── 캘린더 (월간 그리드) ──────────────────────────────────────
+
+// 표시 중인 연/월 (오늘 기준 초기화)
+var _calYear  = new Date().getFullYear();
+var _calMonth = new Date().getMonth(); // 0-based
+var _calEvents = [];   // { date:'YYYY-MM-DD', type, title, caseId?, color }
+
+// 이벤트 유형별 색상
+var CAL_COLOR = {
+  treatment:   { bg: '#dcfce7', border: '#16a34a', text: '#15803d' },
+  followup:    { bg: '#fef9c3', border: '#ca8a04', text: '#a16207' },
+  shipment:    { bg: '#ede9fe', border: '#7c3aed', text: '#6d28d9' },
+  appointment: { bg: '#dbeafe', border: '#2563eb', text: '#1d4ed8' },
+  billing:     { bg: '#ffedd5', border: '#ea580c', text: '#c2410c' },
+};
+
+var CAL_TYPE_LABEL = {
+  treatment:   '수술/시술',
+  followup:    '팔로업',
+  shipment:    '출고 예정',
+  appointment: '일정',
+  billing:     '청구',
+};
+
+var APT_TYPE_KO = {
+  'First Consultation':   '초진 상담',
+  'Hospital Consultation':'병원 상담',
+  'Additional Test':      '추가 검사',
+  'Treatment Day':        '수술/시술일',
+  'Acceptance Check':     '수령 확인',
+  'Follow-up Call':       '팔로업 통화',
+  'Follow-up Visit':      '팔로업 방문',
+  'Billing Review':       '청구 검토',
+};
+
 function getScheduleHTML() {
   showLoading(true);
-  Promise.all([
-    callServer('appointment.list', {}),
-    callServer('hospital.list', {}),
-    callServer('coordinator.list', {}),
-  ]).then(([aptData, hospData, coordData]) => {
-    window._schedApts    = aptData.appointments || [];
-    window._schedHospMap = {};
-    (hospData.hospitals || []).forEach(h => { window._schedHospMap[h.id] = h.name; });
-
-    const hospOptions  = (hospData.hospitals  || []).map(h =>
-      `<option value="${h.id}">${h.name}</option>`).join('');
-    const coordOptions = (coordData.coordinators || []).map(c =>
-      `<option value="${c.email}">${c.name}</option>`).join('');
-
-    const html = `
-      <div class="card" style="margin-bottom:16px">
-        <div class="card-header">
-          <span class="card-title">팀 일정</span>
-          ${['MSO Admin','MSO Coordinator'].includes(APP.role)
-            ? `<button class="btn btn-primary btn-sm" onclick="showGlobalAppointmentModal()">+ 일정 추가</button>`
-            : ''}
-        </div>
-        <div class="card-body" style="padding-bottom:4px">
-          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-            <select id="schedCoord" onchange="applyScheduleFilter()" style="min-width:160px">
-              <option value="">전체 담당자</option>${coordOptions}
-            </select>
-            <select id="schedHosp" onchange="applyScheduleFilter()" style="min-width:160px">
-              <option value="">전체 병원</option>${hospOptions}
-            </select>
-            <div style="display:flex;align-items:center;gap:6px">
-              <input type="date" id="schedFrom" onchange="applyScheduleFilter()">
-              <span style="color:var(--gray-500)">~</span>
-              <input type="date" id="schedTo" onchange="applyScheduleFilter()">
-            </div>
-            <button class="btn btn-secondary btn-sm" onclick="clearScheduleFilter()">초기화</button>
-          </div>
-        </div>
-      </div>
-      <div id="scheduleTable"></div>
-    `;
-    showContent(html);
-    renderScheduleTable_(window._schedApts);
-  }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
+  callServer('calendar.events', {}).then(function(res) {
+    _calEvents = res.events || [];
+    _calYear   = new Date().getFullYear();
+    _calMonth  = new Date().getMonth();
+    renderCalendarPage_();
+  }).catch(function(err) {
+    showContent('<div class="alert alert-error">' + err.message + '</div>');
+  });
 }
 
-function renderScheduleTable_(apts) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+function renderCalendarPage_() {
+  var html = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="calNav(-1)">&#8249;</button>
+        <span id="calTitle" style="font-size:18px;font-weight:700;min-width:140px;text-align:center"></span>
+        <button class="btn btn-secondary btn-sm" onclick="calNav(1)">&#8250;</button>
+        <button class="btn btn-secondary btn-sm" onclick="calGoToday()" style="margin-left:4px">오늘</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        ${buildLegend_()}
+        ${['MSO Admin','MSO Coordinator'].includes(APP.role)
+          ? '<button class="btn btn-primary btn-sm" onclick="showGlobalAppointmentModal()">+ 일정 추가</button>'
+          : ''}
+      </div>
+    </div>
+    <div class="card">
+      <div id="calGrid" style="overflow:hidden"></div>
+    </div>
+    <div id="calEventList" style="margin-top:16px"></div>
+  `;
+  showContent(html);
+  renderCalGrid_();
+}
 
-  const el = document.getElementById('scheduleTable');
-  if (!el) return;
+function buildLegend_() {
+  return Object.keys(CAL_COLOR).map(function(t) {
+    var c = CAL_COLOR[t];
+    return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px">'
+      + '<span style="width:10px;height:10px;border-radius:2px;background:' + c.border + ';display:inline-block"></span>'
+      + CAL_TYPE_LABEL[t] + '</span>';
+  }).join('');
+}
 
-  if (!apts || apts.length === 0) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📅</div><h3>일정 없음</h3></div>`;
+function renderCalGrid_() {
+  var year  = _calYear;
+  var month = _calMonth; // 0-based
+  var title = document.getElementById('calTitle');
+  if (title) title.textContent = year + '년 ' + (month + 1) + '월';
+
+  // 이달 이벤트 인덱스 (날짜→배열)
+  var monthStr = year + '-' + String(month + 1).padStart(2, '0');
+  var evMap = {};
+  _calEvents.forEach(function(ev) {
+    if (!ev.date || ev.date.substring(0, 7) !== monthStr) return;
+    var d = ev.date.substring(8, 10);
+    if (!evMap[d]) evMap[d] = [];
+    evMap[d].push(ev);
+  });
+
+  var firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var todayStr = new Date().toISOString().substring(0, 10);
+
+  // 요일 헤더
+  var days = ['일', '월', '화', '수', '목', '금', '토'];
+  var headerHTML = days.map(function(d, i) {
+    var color = i === 0 ? '#dc2626' : i === 6 ? '#2563eb' : 'var(--gray-700)';
+    return '<div style="text-align:center;font-size:12px;font-weight:600;color:' + color + ';padding:8px 0;border-bottom:1px solid var(--gray-200)">' + d + '</div>';
+  }).join('');
+
+  // 날짜 셀
+  var cells = [];
+  // 빈 셀 (이전달)
+  for (var i = 0; i < firstDay; i++) {
+    cells.push('<div style="min-height:90px;background:var(--gray-50);border-bottom:1px solid var(--gray-100);border-right:1px solid var(--gray-100)"></div>');
+  }
+
+  for (var day = 1; day <= daysInMonth; day++) {
+    var dayStr = String(day).padStart(2, '0');
+    var dateStr = monthStr + '-' + dayStr;
+    var isToday = dateStr === todayStr;
+    var dow = (firstDay + day - 1) % 7;
+    var isWeekend = dow === 0 || dow === 6;
+    var numColor = dow === 0 ? '#dc2626' : dow === 6 ? '#2563eb' : 'var(--gray-800)';
+
+    var evList = evMap[dayStr] || [];
+    // 최대 3개 표시 후 +N more
+    var MAX_SHOW = 3;
+    var shown = evList.slice(0, MAX_SHOW);
+    var rest  = evList.length - MAX_SHOW;
+
+    var pillsHTML = shown.map(function(ev) {
+      var c = CAL_COLOR[ev.type] || { bg: '#f3f4f6', border: '#9ca3af', text: '#374151' };
+      var label = (ev.type === 'appointment' ? (APT_TYPE_KO[ev.title] || ev.title) : ev.title) || '';
+      if (label.length > 14) label = label.substring(0, 13) + '…';
+      var click = ev.caseId
+        ? 'onclick="loadPage(\'caseDetail\',{caseId:\'' + ev.caseId + '\'})" style="cursor:pointer"'
+        : '';
+      return '<div ' + click + ' title="' + ev.title + '"'
+        + ' style="font-size:10px;padding:1px 4px;margin:1px 0;border-radius:3px;border-left:3px solid ' + c.border + ';background:' + c.bg + ';color:' + c.text + ';overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'
+        + label + '</div>';
+    }).join('');
+
+    if (rest > 0) {
+      pillsHTML += '<div onclick="showDayEvents(\'' + dateStr + '\')" style="font-size:10px;color:var(--primary);cursor:pointer;padding:1px 4px">+' + rest + '개 더보기</div>';
+    }
+
+    cells.push(
+      '<div onclick="showDayEvents(\'' + dateStr + '\')" '
+      + 'style="min-height:90px;border-bottom:1px solid var(--gray-100);border-right:1px solid var(--gray-100);padding:4px;cursor:pointer;'
+      + (isToday ? 'background:#eff6ff;' : isWeekend ? 'background:var(--gray-50);' : '')
+      + '">'
+      + '<div style="font-size:12px;font-weight:' + (isToday ? '700' : '500') + ';color:' + (isToday ? '#fff' : numColor) + ';'
+      + (isToday ? 'background:#2563eb;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;' : 'margin-bottom:2px;')
+      + '">' + day + '</div>'
+      + pillsHTML
+      + '</div>'
+    );
+  }
+
+  // 나머지 빈 셀
+  var total = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+  for (var j = firstDay + daysInMonth; j < total; j++) {
+    cells.push('<div style="min-height:90px;background:var(--gray-50);border-bottom:1px solid var(--gray-100);border-right:1px solid var(--gray-100)"></div>');
+  }
+
+  var grid = document.getElementById('calGrid');
+  if (!grid) return;
+  grid.innerHTML =
+    '<div style="display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--gray-200);border-left:1px solid var(--gray-200)">'
+    + headerHTML + cells.join('')
+    + '</div>';
+
+  // 이달 이벤트 요약 목록 초기화
+  document.getElementById('calEventList').innerHTML = '';
+}
+
+function calNav(delta) {
+  _calMonth += delta;
+  if (_calMonth < 0)  { _calMonth = 11; _calYear--; }
+  if (_calMonth > 11) { _calMonth = 0;  _calYear++; }
+  renderCalGrid_();
+}
+
+function calGoToday() {
+  _calYear  = new Date().getFullYear();
+  _calMonth = new Date().getMonth();
+  renderCalGrid_();
+}
+
+function showDayEvents(dateStr) {
+  var evList = _calEvents.filter(function(ev) { return ev.date === dateStr; });
+  var listEl = document.getElementById('calEventList');
+  if (!listEl) return;
+
+  if (evList.length === 0) {
+    listEl.innerHTML = '';
     return;
   }
 
-  // 오늘 이후 / 이전 그룹 분리
-  const upcoming = apts.filter(a => !a.scheduled_date || new Date(a.scheduled_date) >= today);
-  const past     = apts.filter(a => a.scheduled_date && new Date(a.scheduled_date) < today);
+  var parts = dateStr.split('-');
+  var heading = parts[0] + '년 ' + parseInt(parts[1]) + '월 ' + parseInt(parts[2]) + '일 일정';
 
-  el.innerHTML = `
-    ${upcoming.length > 0 ? `
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-header"><span class="card-title">예정 일정 (${upcoming.length})</span></div>
-      <div class="table-wrap">${buildAptTable_(upcoming, false)}</div>
-    </div>` : ''}
-    ${past.length > 0 ? `
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title" style="color:var(--gray-500)">지난 일정 (${past.length})</span>
-      </div>
-      <div class="table-wrap">${buildAptTable_(past, true)}</div>
-    </div>` : ''}
-  `;
-}
-
-function buildAptTable_(apts, isPastSection) {
-  const rows = apts.map(a => {
-    const hospName = (window._schedHospMap || {})[a.hospital_id] || a.hospital_id || '-';
-    return `
-      <tr style="${isPastSection ? 'color:var(--gray-400)' : ''}">
-        <td style="white-space:nowrap;font-weight:${isPastSection?'normal':'600'}">
-          ${fmtDate(a.scheduled_date)}
-          ${a.scheduled_time ? `<br><span style="font-size:11px;font-weight:normal">${a.scheduled_time}</span>` : ''}
-        </td>
-        <td>${a.appointment_type || '-'}</td>
-        <td>
-          <a href="javascript:void(0)"
-             onclick="loadPage('caseDetail',{caseId:'${a.case_id}'})"
-             style="color:var(--primary)">${a.case_id}</a>
-        </td>
-        <td>${hospName}</td>
-        <td style="font-size:12px">${a.responsible_party || '-'}</td>
-        <td>${a.location || '-'}</td>
-        <td>${statusBadge(a.attendee_status)}</td>
-        <td style="max-width:180px;white-space:normal;font-size:12px;color:var(--gray-600)">${a.notes || '-'}</td>
-      </tr>
-    `;
+  var rows = evList.map(function(ev) {
+    var c = CAL_COLOR[ev.type] || { bg: '#f3f4f6', border: '#9ca3af', text: '#374151' };
+    var typeLabel = CAL_TYPE_LABEL[ev.type] || ev.type;
+    var displayTitle = ev.type === 'appointment' ? (APT_TYPE_KO[ev.title] || ev.title) : ev.title;
+    var caseLink = ev.caseId
+      ? '<a href="javascript:void(0)" onclick="loadPage(\'caseDetail\',{caseId:\'' + ev.caseId + '\'})" style="color:var(--primary);font-size:12px">' + ev.caseId + '</a>'
+      : '-';
+    return '<tr>'
+      + '<td><span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;background:' + c.bg + ';color:' + c.text + ';border:1px solid ' + c.border + '">' + typeLabel + '</span></td>'
+      + '<td style="font-weight:500">' + displayTitle + '</td>'
+      + '<td>' + caseLink + '</td>'
+      + '</tr>';
   }).join('');
 
-  return `
-    <table>
-      <thead>
-        <tr>
-          <th>날짜</th><th>유형</th><th>케이스</th>
-          <th>병원</th><th>담당자</th><th>장소</th>
-          <th>상태</th><th>메모</th>
-        </tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>
-  `;
-}
-
-function applyScheduleFilter() {
-  const coord = document.getElementById('schedCoord').value;
-  const hosp  = document.getElementById('schedHosp').value;
-  const from  = document.getElementById('schedFrom').value;
-  const to    = document.getElementById('schedTo').value;
-
-  const filtered = (window._schedApts || []).filter(a => {
-    if (coord && a.responsible_party !== coord && a.assigned_coordinator !== coord) return false;
-    if (hosp  && a.hospital_id !== hosp) return false;
-    if (from  && a.scheduled_date && a.scheduled_date.substring(0, 10) < from) return false;
-    if (to    && a.scheduled_date && a.scheduled_date.substring(0, 10) > to)   return false;
-    return true;
-  });
-
-  renderScheduleTable_(filtered);
-}
-
-function clearScheduleFilter() {
-  ['schedCoord','schedHosp','schedFrom','schedTo'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  renderScheduleTable_(window._schedApts || []);
+  listEl.innerHTML =
+    '<div class="card">'
+    + '<div class="card-header"><span class="card-title">' + heading + ' (' + evList.length + '건)</span>'
+    + '<button class="btn btn-secondary btn-sm" onclick="document.getElementById(\'calEventList\').innerHTML=\'\'">닫기</button></div>'
+    + '<div class="table-wrap"><table><thead><tr><th>유형</th><th>내용</th><th>케이스</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table></div></div>';
 }
 
 // ─── 팀 일정 추가 모달 ─────────────────────────────────────────
 function showGlobalAppointmentModal() {
-  const body = `
+  var body = `
     <div class="form-grid">
       <div class="form-group full">
         <label class="required">케이스 ID</label>
@@ -154,14 +234,14 @@ function showGlobalAppointmentModal() {
         <label class="required">일정 유형</label>
         <select id="gAptType" required>
           <option value="">선택</option>
-          <option>First Consultation</option>
-          <option>Hospital Consultation</option>
-          <option>Additional Test</option>
-          <option>Treatment Day</option>
-          <option>Acceptance Check</option>
-          <option>Follow-up Call</option>
-          <option>Follow-up Visit</option>
-          <option>Billing Review</option>
+          <option value="First Consultation">초진 상담</option>
+          <option value="Hospital Consultation">병원 상담</option>
+          <option value="Additional Test">추가 검사</option>
+          <option value="Treatment Day">수술/시술일</option>
+          <option value="Acceptance Check">수령 확인</option>
+          <option value="Follow-up Call">팔로업 통화</option>
+          <option value="Follow-up Visit">팔로업 방문</option>
+          <option value="Billing Review">청구 검토</option>
         </select>
       </div>
       <div class="form-group">
@@ -172,7 +252,7 @@ function showGlobalAppointmentModal() {
       <div class="form-group full"><label>메모</label><textarea id="gAptNotes"></textarea></div>
     </div>
   `;
-  const footer = `
+  var footer = `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
     <button class="btn btn-primary" onclick="submitGlobalAppointment()">저장</button>
   `;
@@ -180,18 +260,18 @@ function showGlobalAppointmentModal() {
 }
 
 function submitGlobalAppointment() {
-  const caseId = (document.getElementById('gAptCaseId').value || '').trim();
-  const type   = document.getElementById('gAptType').value;
-  const date   = document.getElementById('gAptDate').value;
+  var caseId = (document.getElementById('gAptCaseId').value || '').trim();
+  var type   = document.getElementById('gAptType').value;
+  var date   = document.getElementById('gAptDate').value;
   if (!caseId || !type || !date) { showAlert('케이스 ID, 유형, 날짜는 필수입니다', 'warning'); return; }
   callServer('appointment.create', {
     case_id: caseId, appointment_type: type, scheduled_date: date,
     location: document.getElementById('gAptLocation').value,
     notes:    document.getElementById('gAptNotes').value,
-  }).then(() => {
+  }).then(function() {
     closeModal();
     showAlert('일정 추가 완료', 'success');
     getScheduleHTML();
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(function(err) { closeModal(); showAlert(err.message, 'error'); });
 }
 </script>

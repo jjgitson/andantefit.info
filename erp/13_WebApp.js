@@ -72,7 +72,7 @@ function doGet(e) {
     );
   }
 
-  const page = (e && e.parameter.page) || 'dashboard';
+  const page = (e && e.parameter.page) || 'schedule';
 
   const template = HtmlService.createTemplateFromFile('WebApp_Main');
   template.userEmail    = email;
@@ -278,6 +278,7 @@ function dispatchAction_(action, data, user, role, profile) {
     // 일정
     'appointment.list':   () => getAppointments(data, user, role),
     'appointment.create': () => createAppointment_api(data, user, role),
+    'calendar.events':    () => getCalendarEvents(data, user, role, profile),
   };
 
   if (!A[action]) throw new Error(`알 수 없는 액션: ${action}`);

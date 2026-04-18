@@ -99,7 +99,7 @@ function renderOrderRows_(orders, isSupplier) {
           ${o.shipment_tracking_no ? `<span style="font-size:11px">${o.shipment_tracking_no}</span>` : ''}
         </td>
         <td>
-          ${canShip ? `<button class="btn btn-sm btn-primary" onclick="showShipModal('${o.supplier_order_id}')">출고확정</button>` : ''}
+          ${canShip ? `<button class="btn btn-sm btn-primary" onclick="showShipModal('${o.supplier_order_id}','${(o.expected_ship_date||'').toString().substring(0,10)}','${(o.lot_batch_no||'')}')">출고확정</button>` : ''}
           ${canAccept ? `<button class="btn btn-sm btn-success" onclick="showAcceptModal('${o.supplier_order_id}')">검수</button>` : ''}
           ${o.supplier_status === 'In Transit' && APP.role !== 'Supplier User' ? `<button class="btn btn-sm btn-secondary" onclick="showIncidentModal('${o.supplier_order_id}')">이상신고</button>` : ''}
         </td>
@@ -122,11 +122,11 @@ function filterOrders() {
 }
 
 // ─── 출고 확정 모달 ─────────────────────────────────────────
-function showShipModal(orderId) {
+function showShipModal(orderId, defaultDate, defaultLot) {
   const body = `
     <div class="form-grid">
-      <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="shipDate" required></div>
-      <div class="form-group"><label class="required">배치번호 (LOT)</label><input type="text" id="lotNo" required placeholder="LOT-2026-042"></div>
+      <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="shipDate" required value="${defaultDate || ''}"></div>
+      <div class="form-group"><label class="required">배치번호 (LOT)</label><input type="text" id="lotNo" required placeholder="LOT-2026-042" value="${defaultLot || ''}"></div>
       <div class="form-group"><label>운송장 번호</label><input type="text" id="trackNo" placeholder="FedEx-XXXX"></div>
       <div class="form-group full"><label>COA 파일 Drive 링크</label><input type="url" id="coaLink" placeholder="https://drive.google.com/..."></div>
       <div class="form-group"><label>보관 조건</label><input type="text" id="storeCond" placeholder="2-8°C"></div>

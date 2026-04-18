@@ -1,9 +1,8 @@
 <script>
 // ─── 케이스 목록 ───────────────────────────────────────────────
 function getCasesHTML(params) {
-  const showDeleted = !!(params && params.showDeleted);
   showLoading(true);
-  callServer('case.list', { showDeleted }).then(data => {
+  callServer('case.list', {}).then(data => {
     const cases = data.cases || [];
     const canCreate = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
     const html = `
@@ -36,10 +35,6 @@ function getCasesHTML(params) {
             <option>High</option>
             <option>Normal</option>
           </select>
-          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--gray-600);cursor:pointer">
-            <input type="checkbox" id="caseShowDeleted" onchange="getCasesHTML({showDeleted:this.checked})">
-            삭제 포함
-          </label>
         </div>
         <div class="table-wrap">
           <table>

@@ -19,14 +19,31 @@ function getDashboardData(user, role, profile) {
   const followups= sheetToObjects_(ss, CONFIG.SHEETS.FOLLOWUPS);
   const billing  = sheetToObjects_(ss, CONFIG.SHEETS.BILLING);
   const orders   = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
+  const reviews  = sheetToObjects_(ss, CONFIG.SHEETS.MEDICAL_REVIEWS);
   Logger.log(`[getDashboardData] 시트 로드 완료: cases=${cases.length} leads=${leads.length} orders=${orders.length}`);
 
-  const myCases = filterCasesByRole_(cases, user, role, profile);
+  // is_deleted 필터 적용
+  const allMyCases = filterCasesByRole_(cases, user, role, profile);
+  const myCases    = allMyCases.filter(c => !c.is_deleted || String(c.is_deleted).toLowerCase() === 'false');
+  const activeLeads= leads.filter(l => !l.is_deleted || String(l.is_deleted).toLowerCase() === 'false');
+
+  // 병원 검토 중 = 본인 케이스 중 Medical_Reviews Pending 건수
+  const myCaseIdSet = new Set(myCases.map(c => c.case_id));
+  const pendingReviews = reviews.filter(r =>
+    r.review_status === CONFIG.REVIEW_STATUS.PENDING && myCaseIdSet.has(r.case_id)
+  ).length;
+
+  // 활성 케이스 파이프라인 (Closed/Cancelled 제외)
+  const TERMINAL = [CONFIG.CASE_STATUS.CLOSED, CONFIG.CASE_STATUS.CANCELLED];
+  const casesByStatus = myCases.reduce((acc, c) => {
+    acc[c.case_status] = (acc[c.case_status] || 0) + 1;
+    return acc;
+  }, {});
+  const totalActiveCases = myCases.filter(c => !TERMINAL.includes(c.case_status)).length;
 
   return {
-    // 운영 KPI
-    newLeads: leads.filter(l => l.lead_status === CONFIG.LEAD_STATUS.NEW).length,
-    underReview: myCases.filter(c => c.case_status === CONFIG.CASE_STATUS.DRAFT).length,
+    newLeads:           activeLeads.filter(l => l.lead_status === CONFIG.LEAD_STATUS.NEW).length,
+    pendingReviews,
     upcomingTreatments: myCases
       .filter(c => c.treatment_date && new Date(c.treatment_date) >= today &&
         c.case_status === CONFIG.CASE_STATUS.SCHEDULED)
@@ -35,23 +52,18 @@ function getDashboardData(user, role, profile) {
     overdueFollowups: followups
       .filter(f => f.due_date && !f.completed_date && new Date(f.due_date) < today)
       .length,
-    // 재무 KPI
     outstandingAmount: billing
       .filter(b => [CONFIG.PAYMENT_STATUS.INVOICE_SENT, CONFIG.PAYMENT_STATUS.PARTIALLY_PAID]
         .includes(b.payment_status))
       .reduce((s, b) => s + (Number(b.invoice_amount||0) - Number(b.paid_amount||0)), 0),
-    // 공급 KPI
     delayedOrders: orders.filter(o =>
       [CONFIG.SUPPLIER_STATUS.REQUESTED, CONFIG.SUPPLIER_STATUS.CONFIRMED].includes(o.supplier_status) &&
       o.expected_ship_date && new Date(o.expected_ship_date) < today).length,
     pendingAcceptance: orders.filter(o =>
       o.supplier_status === CONFIG.SUPPLIER_STATUS.DELIVERED &&
       o.acceptance_check_status !== CONFIG.ACCEPTANCE_STATUS.ACCEPTED).length,
-    // 케이스 상태별 카운트
-    casesByStatus: myCases.reduce((acc, c) => {
-      acc[c.case_status] = (acc[c.case_status] || 0) + 1;
-      return acc;
-    }, {}),
+    casesByStatus,
+    totalActiveCases,
   };
   } catch (err) {
     Logger.log(`[getDashboardData] 오류: ${err.stack || err.message}`);

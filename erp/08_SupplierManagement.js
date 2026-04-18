@@ -104,15 +104,20 @@ function confirmShipment(orderId, params) {
   updateSupplierOrderField_(orderId, 'supplier_status',          CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
   updateSupplierOrderField_(orderId, 'acceptance_check_status',  CONFIG.ACCEPTANCE_STATUS.PENDING,  params.updatedBy);
 
-  // 케이스 상태는 자동 전환하지 않음 — MSO 담당자가 케이스 탭에서 수동으로 변경
+  // 케이스가 Supplier Coordination 상태이면 Shipment In Transit으로 자동 전환
+  const caseDataForShip = getCaseData_(order.case_id);
+  if (caseDataForShip && caseDataForShip.case_status === CONFIG.CASE_STATUS.SUPPLIER_COORDINATION) {
+    updateCaseField_(order.case_id, 'case_status', CONFIG.CASE_STATUS.SHIPMENT_IN_TRANSIT,
+      params.updatedBy || Session.getActiveUser().getEmail());
+  }
 
   addActivityLog({
     caseId: order.case_id,
     actorEmail: params.updatedBy,
     actorRole: 'MSO Coordinator',
     actionType: 'SHIPMENT_CONFIRMED',
-    summary: `출고 확정 기록: ${orderId}, 배치번호: ${params.lotBatchNo}, 트래킹: ${params.trackingNo}`,
-    nextAction: '케이스 상태를 "배송 중"으로 변경 후 수령 대기',
+    summary: `출고 확정 기록: ${orderId}, 배치번호: ${params.lotBatchNo}, 출고일: ${params.confirmedShipDate}`,
+    nextAction: '수령 후 입고 검수 진행',
   });
 }
 
@@ -163,9 +168,12 @@ function recordAcceptanceCheck(orderId, params) {
   updateSupplierOrderField_(orderId, 'acceptance_check_status', params.result, params.checkedBy);
   updateSupplierOrderField_(orderId, 'supplier_status', CONFIG.SUPPLIER_STATUS.DELIVERED, params.checkedBy);
 
-  // 3. 케이스 상태는 자동 전환하지 않음 — MSO 담당자가 케이스 탭에서 수동으로 변경
-  // 반려 시 담당 코디에게 이메일 알림만 발송
-  if (params.result === CONFIG.ACCEPTANCE_STATUS.REJECTED) {
+  // 3. 케이스 상태 자동 전환
+  const actor = params.checkedBy || Session.getActiveUser().getEmail();
+  if (params.result === CONFIG.ACCEPTANCE_STATUS.ACCEPTED) {
+    updateCaseField_(order.case_id, 'case_status', CONFIG.CASE_STATUS.ACCEPTANCE_CONFIRMED, actor);
+  } else if (params.result === CONFIG.ACCEPTANCE_STATUS.REJECTED) {
+    updateCaseField_(order.case_id, 'case_status', CONFIG.CASE_STATUS.SUPPLIER_COORDINATION, actor);
     notifyAcceptanceRejected_(order.case_id, orderId, params.notes);
   }
 

@@ -130,7 +130,6 @@ function showShipModal(orderId, defaultDate, defaultLot) {
       <div class="form-group"><label>운송장 번호</label><input type="text" id="trackNo" placeholder="FedEx-XXXX"></div>
       <div class="form-group full"><label>COA 파일 Drive 링크</label><input type="url" id="coaLink" placeholder="https://drive.google.com/..."></div>
       <div class="form-group"><label>보관 조건</label><input type="text" id="storeCond" placeholder="2-8°C"></div>
-      <div class="form-group"><label>온도 로그 링크</label><input type="url" id="tempLink" placeholder="https://drive.google.com/..."></div>
     </div>
   `;
   showModal('출고 확정 입력', body, `
@@ -149,9 +148,8 @@ function submitShipment(orderId) {
     trackingNo: document.getElementById('trackNo').value,
     coaLink: document.getElementById('coaLink').value,
     storageCondition: document.getElementById('storeCond').value,
-    tempLogLink: document.getElementById('tempLink').value,
   }).then(() => { closeModal(); showAlert('출고 확정 완료', 'success'); loadPage('supplier'); })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { closeModal(); showAlert(err.message, 'error'); });
 }
 
 // ─── 입고 검수 모달 ─────────────────────────────────────────
@@ -181,7 +179,7 @@ function submitAcceptance(orderId) {
   if (!result) { showAlert('검수 결과를 선택하세요', 'warning'); return; }
   callServer('supplier.acceptance.record', { orderId, result, notes: document.getElementById('accNotes').value })
     .then(() => { closeModal(); showAlert('검수 결과 저장 완료', 'success'); loadPage('supplier'); })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { closeModal(); showAlert(err.message, 'error'); });
 }
 
 // ─── 운송 이상 신고 모달 ─────────────────────────────────────

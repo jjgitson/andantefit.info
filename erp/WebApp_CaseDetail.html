@@ -532,7 +532,7 @@ function submitCaseShipment(orderId) {
   }).then(() => {
     closeModal(); showAlert('출고 확정 완료', 'success');
     loadPage('caseDetail', { caseId: APP.currentParams.caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { closeModal(); showAlert(err.message, 'error'); });
 }
 
 function showCaseAcceptModal(orderId) {
@@ -565,7 +565,7 @@ function submitCaseAcceptance(orderId) {
   }).then(() => {
     closeModal(); showAlert('검수 결과 저장 완료', 'success');
     loadPage('caseDetail', { caseId: APP.currentParams.caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { closeModal(); showAlert(err.message, 'error'); });
 }
 
 // ─── 문서 탭 렌더링 ───────────────────────────────────────────

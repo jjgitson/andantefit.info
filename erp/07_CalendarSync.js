@@ -141,44 +141,41 @@ function createFollowupEvent(caseId, followupStage, dueDate) {
 }
 
 /**
- * 결제 마감일 이벤트 생성
- * @param {string} caseId
- * @param {string} patientCode
- * @param {number} amount
- * @param {Date} dueDate
+ * 결제 마감일 이벤트 생성 → MSO_MASTER + BILLING_DEADLINE
  */
 function createBillingDueEvent(caseId, patientCode, amount, dueDate) {
   const title = `[미납] ${patientCode} - ${amount}`;
   const desc = `케이스 ID: ${caseId}\n환자 코드: ${patientCode}\n청구금액: ${amount}\n결제 마감일: ${Utilities.formatDate(new Date(dueDate), 'Asia/Seoul', 'yyyy-MM-dd')}`;
+  const d = new Date(dueDate);
 
-  return createCalendarEvent(CONFIG.CALENDAR_TYPES.BILLING_DEADLINE, title, new Date(dueDate), desc);
+  const msoEventId     = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER,       title, d, desc);
+  const billingEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.BILLING_DEADLINE,  title, d, desc);
+  return { msoEventId, billingEventId };
 }
 
 /**
- * 공급 출고 예정 이벤트 생성
- * @param {string} caseId
- * @param {string} supplierName
- * @param {Date} shipDate
+ * 공급 출고 예정 이벤트 생성 → MSO_MASTER + SUPPLIER_LOGISTICS
  */
 function createShipmentEtaEvent(caseId, supplierName, shipDate) {
   const title = `[출고] ${caseId} - ${supplierName}`;
   const desc = `케이스 ID: ${caseId}\n공급업체: ${supplierName}\n예상 출고일: ${Utilities.formatDate(new Date(shipDate), 'Asia/Seoul', 'yyyy-MM-dd')}`;
+  const d = new Date(shipDate);
 
-  return createCalendarEvent(CONFIG.CALENDAR_TYPES.SUPPLIER_LOGISTICS, title, new Date(shipDate), desc);
+  const msoEventId      = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER,          title, d, desc);
+  const logisticsEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.SUPPLIER_LOGISTICS,  title, d, desc);
+  return { msoEventId, logisticsEventId };
 }
 
 /**
- * 입고 검수 이벤트 생성
- * @param {string} caseId
- * @param {string} hospitalId
- * @param {Date} checkDate
+ * 입고 검수 이벤트 생성 → MSO_MASTER + SUPPLIER_LOGISTICS + HOSPITAL_COORD
  */
 function createAcceptanceCheckEvent(caseId, hospitalId, checkDate) {
   const title = `[검수] ${caseId} - ${hospitalId}`;
   const desc = `케이스 ID: ${caseId}\n병원: ${hospitalId}\n검수 예정일: ${Utilities.formatDate(new Date(checkDate), 'Asia/Seoul', 'yyyy-MM-dd')}`;
+  const d = new Date(checkDate);
 
-  const logisticsId = createCalendarEvent(CONFIG.CALENDAR_TYPES.SUPPLIER_LOGISTICS, title, new Date(checkDate), desc);
-  const hospId = createCalendarEvent(CONFIG.CALENDAR_TYPES.HOSPITAL_COORD, title, new Date(checkDate), desc);
-
-  return { logisticsId, hospId };
+  const msoEventId      = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER,          title, d, desc);
+  const logisticsId     = createCalendarEvent(CONFIG.CALENDAR_TYPES.SUPPLIER_LOGISTICS,   title, d, desc);
+  const hospId          = createCalendarEvent(CONFIG.CALENDAR_TYPES.HOSPITAL_COORD,       title, d, desc);
+  return { msoEventId, logisticsId, hospId };
 }

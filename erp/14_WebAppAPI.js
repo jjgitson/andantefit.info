@@ -701,14 +701,12 @@ function createAppointment_api(data, user, role) {
   const sheet = ss.getSheetByName(CONFIG.SHEETS.APPOINTMENTS);
   const aptId = generateCustomId(CONFIG.SHEETS.APPOINTMENTS, 'APT', 'appointment_id');
 
+  const aptTitle = `[${data.appointment_type}] ${data.case_id}`;
+  const aptDesc  = `케이스: ${data.case_id}\n유형: ${data.appointment_type}\n장소: ${data.location||'-'}`;
   let eventId = '';
   try {
-    eventId = createCalendarEvent(
-      CONFIG.CALENDAR_TYPES.HOSPITAL_COORD,
-      `[${data.appointment_type}] ${data.case_id}`,
-      new Date(data.scheduled_date),
-      `케이스: ${data.case_id}\n유형: ${data.appointment_type}\n장소: ${data.location||'-'}`
-    ) || '';
+    createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER, aptTitle, new Date(data.scheduled_date), aptDesc);
+    eventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.HOSPITAL_COORD, aptTitle, new Date(data.scheduled_date), aptDesc) || '';
   } catch (e) { Logger.log('캘린더 이벤트 생성 실패: ' + e.message); }
 
   sheet.appendRow([

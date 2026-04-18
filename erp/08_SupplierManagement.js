@@ -82,8 +82,8 @@ function createSupplierOrder(params) {
 }
 
 /**
- * 공급업체 출고 확정 입력
- * Supplier_Orders: supplier_status = In Transit, 출고 상세 필드 업데이트
+ * 배송 중 확인 - 공급업체 → MSO 배송 시작 기록
+ * Supplier_Orders: Requested → In Transit
  * @param {string} orderId
  * @param {Object} params
  */
@@ -92,21 +92,16 @@ function confirmShipment(orderId, params) {
   if (!order) throw new Error(`주문을 찾을 수 없습니다: ${orderId}`);
   if (order.supplier_status !== CONFIG.SUPPLIER_STATUS.REQUESTED &&
       order.supplier_status !== CONFIG.SUPPLIER_STATUS.CONFIRMED) {
-    throw new Error(`출고 확정은 Requested 또는 Confirmed 상태에서만 가능합니다. (현재: ${order.supplier_status})`);
+    throw new Error(`배송 중 확인은 주문 완료 상태에서만 가능합니다. (현재: ${order.supplier_status})`);
   }
 
-  updateSupplierOrderField_(orderId, 'confirmed_ship_date', params.confirmedShipDate, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'lot_batch_no',        params.lotBatchNo,        params.updatedBy);
-  updateSupplierOrderField_(orderId, 'coa_link',            params.coaLink || '',     params.updatedBy);
-  updateSupplierOrderField_(orderId, 'shipment_tracking_no', params.trackingNo || '', params.updatedBy);
-  updateSupplierOrderField_(orderId, 'temp_log_link',       params.tempLogLink || '', params.updatedBy);
-  updateSupplierOrderField_(orderId, 'storage_condition',   params.storageCondition || '', params.updatedBy);
-  updateSupplierOrderField_(orderId, 'supplier_status',          CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
-  updateSupplierOrderField_(orderId, 'acceptance_check_status',  CONFIG.ACCEPTANCE_STATUS.PENDING,  params.updatedBy);
+  if (params.lotBatchNo) updateSupplierOrderField_(orderId, 'lot_batch_no', params.lotBatchNo, params.updatedBy);
+  if (params.trackingNo) updateSupplierOrderField_(orderId, 'shipment_tracking_no', params.trackingNo, params.updatedBy);
+  updateSupplierOrderField_(orderId, 'supplier_status', CONFIG.SUPPLIER_STATUS.IN_TRANSIT, params.updatedBy);
 
-  // 케이스가 Supplier Coordination 상태이면 Shipment In Transit으로 자동 전환
-  const caseDataForShip = getCaseData_(order.case_id);
-  if (caseDataForShip && caseDataForShip.case_status === CONFIG.CASE_STATUS.SUPPLIER_COORDINATION) {
+  // 케이스 → Shipment In Transit
+  const caseData = getCaseData_(order.case_id);
+  if (caseData && caseData.case_status === CONFIG.CASE_STATUS.SUPPLIER_COORDINATION) {
     updateCaseField_(order.case_id, 'case_status', CONFIG.CASE_STATUS.SHIPMENT_IN_TRANSIT,
       params.updatedBy || Session.getActiveUser().getEmail());
   }
@@ -115,9 +110,44 @@ function confirmShipment(orderId, params) {
     caseId: order.case_id,
     actorEmail: params.updatedBy,
     actorRole: 'MSO Coordinator',
-    actionType: 'SHIPMENT_CONFIRMED',
-    summary: `출고 확정 기록: ${orderId}, 배치번호: ${params.lotBatchNo}, 출고일: ${params.confirmedShipDate}`,
-    nextAction: '수령 후 입고 검수 진행',
+    actionType: 'SHIPMENT_IN_TRANSIT',
+    summary: `배송 중 확인: ${orderId}${params.lotBatchNo ? ', LOT: ' + params.lotBatchNo : ''}${params.trackingNo ? ', 운송장: ' + params.trackingNo : ''}`,
+    nextAction: '수령 후 병원 전달 확정',
+  });
+}
+
+/**
+ * 출고 확정 - MSO → 병원 전달 완료
+ * Supplier_Orders: In Transit → Delivered
+ * @param {string} orderId
+ * @param {Object} params
+ */
+function confirmDelivery(orderId, params) {
+  const order = getSupplierOrderData_(orderId);
+  if (!order) throw new Error(`주문을 찾을 수 없습니다: ${orderId}`);
+  if (order.supplier_status !== CONFIG.SUPPLIER_STATUS.IN_TRANSIT) {
+    throw new Error(`출고 확정은 배송 중 상태에서만 가능합니다. (현재: ${order.supplier_status})`);
+  }
+
+  const deliveryDate = params.deliveryDate || Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  updateSupplierOrderField_(orderId, 'delivery_date',          deliveryDate,                            params.updatedBy);
+  updateSupplierOrderField_(orderId, 'supplier_status',         CONFIG.SUPPLIER_STATUS.DELIVERED,        params.updatedBy);
+  updateSupplierOrderField_(orderId, 'acceptance_check_status', CONFIG.ACCEPTANCE_STATUS.ACCEPTED,       params.updatedBy);
+
+  // 케이스 → Acceptance Confirmed
+  const caseData = getCaseData_(order.case_id);
+  if (caseData) {
+    updateCaseField_(order.case_id, 'case_status', CONFIG.CASE_STATUS.ACCEPTANCE_CONFIRMED,
+      params.updatedBy || Session.getActiveUser().getEmail());
+  }
+
+  addActivityLog({
+    caseId: order.case_id,
+    actorEmail: params.updatedBy,
+    actorRole: 'MSO Coordinator',
+    actionType: 'DELIVERY_CONFIRMED',
+    summary: `출고 확정(병원 전달 완료): ${orderId}, 전달일: ${deliveryDate}`,
+    nextAction: '시술 일정 확정',
   });
 }
 

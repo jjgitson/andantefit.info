@@ -9,7 +9,7 @@ function getSupplierHTML(params) {
     const canCreate = ['MSO Admin','MSO Coordinator'].includes(APP.role);
 
     const delayed = orders.filter(o =>
-      ['Requested','Confirmed'].includes(o.supplier_status) &&
+      o.supplier_status === 'Requested' &&
       o.expected_ship_date && new Date(o.expected_ship_date) < today
     ).length;
 
@@ -18,9 +18,9 @@ function getSupplierHTML(params) {
 
       <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
         <div class="stat-card primary"><div class="stat-number">${orders.length}</div><div class="stat-label">전체 주문</div></div>
-        <div class="stat-card warning"><div class="stat-number">${delayed}</div><div class="stat-label">납기 지연</div></div>
+        <div class="stat-card warning"><div class="stat-number">${orders.filter(o=>o.supplier_status==='Requested').length}</div><div class="stat-label">주문 완료</div></div>
         <div class="stat-card orange"><div class="stat-number">${orders.filter(o=>o.supplier_status==='In Transit').length}</div><div class="stat-label">배송 중</div></div>
-        <div class="stat-card success"><div class="stat-number">${orders.filter(o=>o.acceptance_check_status==='Accepted').length}</div><div class="stat-label">검수 완료</div></div>
+        <div class="stat-card success"><div class="stat-number">${orders.filter(o=>o.supplier_status==='Delivered').length}</div><div class="stat-label">출고 확정</div></div>
       </div>
 
       <div class="card">
@@ -51,9 +51,8 @@ function getSupplierHTML(params) {
                 <th>요청 품목</th>
                 <th>예정 출고</th>
                 <th>배치번호</th>
-                <th>공급 상태</th>
-                <th>검수 상태</th>
-                <th>콜드체인</th>
+                <th>상태</th>
+                <th>운송/문서</th>
                 <th>액션</th>
               </tr>
             </thead>
@@ -73,12 +72,10 @@ function renderOrderRows_(orders, isSupplier) {
   if (!orders.length) return `<tr><td colspan="10"><div class="empty-state"><div class="empty-state-icon">🏭</div><h3>주문 없음</h3></div></td></tr>`;
 
   return orders.map(o => {
-    const isDelayed = ['Requested','Confirmed'].includes(o.supplier_status) &&
+    const isDelayed = o.supplier_status === 'Requested' &&
       o.expected_ship_date && new Date(o.expected_ship_date) < today;
-    const canShip = ['MSO Admin','Supplier User'].includes(APP.role) && o.supplier_status === 'Requested';
-    const canAccept = ['MSO Admin','Hospital User'].includes(APP.role) && o.supplier_status === 'Delivered';
-    const incidentBadge = (o.transport_incident_flag === true || o.transport_incident_flag === 'TRUE')
-      ? '<span class="badge badge-red">이상</span>' : '';
+    const canMarkTransit   = ['MSO Admin','MSO Coordinator','Supplier User'].includes(APP.role) && o.supplier_status === 'Requested';
+    const canConfirmDelivery = ['MSO Admin','MSO Coordinator'].includes(APP.role) && o.supplier_status === 'In Transit';
 
     return `
       <tr class="order-row" data-id="${o.supplier_order_id}" data-caseid="${o.case_id}"
@@ -89,19 +86,15 @@ function renderOrderRows_(orders, isSupplier) {
         ${!isSupplier ? `<td>${o.supplier_id||'-'}</td>` : ''}
         <td>${o.requested_item||'-'}</td>
         <td style="${isDelayed ? 'color:var(--danger);font-weight:700' : ''}">${fmtDate(o.expected_ship_date)}</td>
-        <td>${o.lot_batch_no || '<span style="color:var(--gray-500)">미입력</span>'}</td>
+        <td>${o.lot_batch_no || '<span style="color:var(--gray-500)">-</span>'}</td>
         <td>${statusBadge(o.supplier_status)}</td>
-        <td>${statusBadge(o.acceptance_check_status)} ${o.acceptance_check_status==='Rejected'?'🔴':''}</td>
         <td>
-          ${incidentBadge}
-          ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank">COA</a>` : ''}
-          ${o.temp_log_link ? `<a class="btn btn-sm btn-secondary" href="${o.temp_log_link}" target="_blank">온도</a>` : ''}
-          ${o.shipment_tracking_no ? `<span style="font-size:11px">${o.shipment_tracking_no}</span>` : ''}
+          ${o.shipment_tracking_no ? `<span style="font-size:11px">${o.shipment_tracking_no}</span>` : '-'}
+          ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank" style="margin-left:4px">COA</a>` : ''}
         </td>
         <td>
-          ${canShip ? `<button class="btn btn-sm btn-primary" onclick="showShipModal('${o.supplier_order_id}','${(o.expected_ship_date||'').toString().substring(0,10)}','${(o.lot_batch_no||'')}')">출고확정</button>` : ''}
-          ${canAccept ? `<button class="btn btn-sm btn-success" onclick="showAcceptModal('${o.supplier_order_id}')">검수</button>` : ''}
-          ${o.supplier_status === 'In Transit' && APP.role !== 'Supplier User' ? `<button class="btn btn-sm btn-secondary" onclick="showIncidentModal('${o.supplier_order_id}')">이상신고</button>` : ''}
+          ${canMarkTransit ? `<button class="btn btn-sm btn-secondary" onclick="showShipModal('${o.supplier_order_id}','${(o.lot_batch_no||'')}')">배송 중</button>` : ''}
+          ${canConfirmDelivery ? `<button class="btn btn-sm btn-primary" onclick="showDeliveryModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
         </td>
       </tr>
     `;
@@ -121,69 +114,48 @@ function filterOrders() {
   });
 }
 
-// ─── 출고 확정 모달 ─────────────────────────────────────────
-function showShipModal(orderId, defaultDate, defaultLot) {
-  const body = `
+// ─── 배송 중 확인 모달 ─────────────────────────────────────
+function showShipModal(orderId, defaultLot) {
+  showModal('배송 중 확인', `
     <div class="form-grid">
-      <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="shipDate" required value="${defaultDate || ''}"></div>
       <div class="form-group"><label>배치번호 (LOT)</label><input type="text" id="lotNo" placeholder="LOT-2026-042" value="${defaultLot || ''}"></div>
-      <div class="form-group"><label>운송장 번호</label><input type="text" id="trackNo" placeholder="FedEx-XXXX"></div>
-      <div class="form-group full"><label>COA 파일 Drive 링크</label><input type="url" id="coaLink" placeholder="https://drive.google.com/..."></div>
-      <div class="form-group"><label>보관 조건</label><input type="text" id="storeCond" placeholder="2-8°C"></div>
+      <div class="form-group"><label>운송장 번호</label><input type="text" id="trackNo" placeholder="운송장 번호 (선택)"></div>
     </div>
-  `;
-  showModal('출고 확정 입력', body, `
+    <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">공급업체가 출발했음을 확인하는 단계입니다.</p>
+  `, `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitShipment('${orderId}')">출고 확정</button>
+    <button class="btn btn-primary" onclick="submitShipment('${orderId}')">배송 중 확인</button>
   `);
 }
 
 function submitShipment(orderId) {
-  const date = document.getElementById('shipDate').value;
-  if (!date) { showAlert('확정 출고일은 필수입니다', 'warning'); return; }
-  const lot = document.getElementById('lotNo').value;
-
   callServer('supplier.shipment.confirm', {
-    orderId, confirmedShipDate: date, lotBatchNo: lot,
+    orderId,
+    lotBatchNo: document.getElementById('lotNo').value,
     trackingNo: document.getElementById('trackNo').value,
-    coaLink: document.getElementById('coaLink').value,
-    storageCondition: document.getElementById('storeCond').value,
-  }).then(() => { closeModal(); showAlert('출고 확정 완료', 'success'); loadPage('supplier'); })
+  }).then(() => { closeModal(); showAlert('배송 중으로 변경되었습니다', 'success'); loadPage('supplier'); })
     .catch(err => { closeModal(); showAlert(err.message, 'error'); });
 }
 
-// ─── 입고 검수 모달 ─────────────────────────────────────────
-function showAcceptModal(orderId) {
-  const body = `
+// ─── 출고 확정 모달 (MSO → 병원 전달 완료) ──────────────────
+function showDeliveryModal(orderId) {
+  const today = new Date().toISOString().substring(0, 10);
+  showModal('출고 확정 — 병원 전달 완료', `
     <div class="form-grid">
-      <div class="form-group full">
-        <label class="required">검수 결과</label>
-        <select id="accResult" required>
-          <option value="">선택</option>
-          <option value="Accepted">✅ Accepted - 입고 승인</option>
-          <option value="Rejected">❌ Rejected - 반려</option>
-        </select>
-      </div>
-      <div class="form-group full"><label>검수 메모</label><textarea id="accNotes" placeholder="이상 없음 / 반려 사유 등"></textarea></div>
+      <div class="form-group full"><label class="required">병원 전달일</label><input type="date" id="deliveryDate" required value="${today}"></div>
     </div>
-    <p style="margin-top:12px;font-size:12px;color:var(--gray-700)">⚕️ 입고 검수는 병원 의료 책임자가 직접 수행해야 합니다.</p>
-  `;
-  showModal('입고 검수', body, `
+    <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">MSO가 병원에 제품을 전달 완료한 시점을 기록합니다.</p>
+  `, `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitAcceptance('${orderId}')">검수 결과 저장</button>
+    <button class="btn btn-primary" onclick="submitDelivery('${orderId}')">출고 확정</button>
   `);
 }
 
-function submitAcceptance(orderId) {
-  const result = document.getElementById('accResult').value;
-  if (!result) { showAlert('검수 결과를 선택하세요', 'warning'); return; }
-  callServer('supplier.acceptance.record', { orderId, result, notes: document.getElementById('accNotes').value })
-    .then(() => { closeModal(); showAlert('검수 결과 저장 완료', 'success'); loadPage('supplier'); })
+function submitDelivery(orderId) {
+  const date = document.getElementById('deliveryDate').value;
+  if (!date) { showAlert('병원 전달일을 입력하세요', 'warning'); return; }
+  callServer('supplier.delivery.confirm', { orderId, deliveryDate: date })
+    .then(() => { closeModal(); showAlert('출고 확정 완료 — 병원 전달이 기록되었습니다', 'success'); loadPage('supplier'); })
     .catch(err => { closeModal(); showAlert(err.message, 'error'); });
-}
-
-// ─── 운송 이상 신고 모달 ─────────────────────────────────────
-function showIncidentModal(orderId) {
-  showAlert('이상 신고 기능은 담당 코디에게 즉시 연락 후 케이스 상세에서 처리하세요', 'warning');
 }
 </script>

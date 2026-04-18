@@ -464,6 +464,12 @@ function confirmShipment_api(data, user, role) {
   return { success: true };
 }
 
+function confirmDelivery_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  confirmDelivery(data.orderId, { ...data, updatedBy: user });
+  return { success: true };
+}
+
 function recordAcceptanceCheck_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.HOSPITAL_USER].includes(role)) throw new Error('권한 없음');
   if (!data.result) throw new Error('검수 결과(result) 필드가 필요합니다');

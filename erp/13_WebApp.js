@@ -252,6 +252,7 @@ function dispatchAction_(action, data, user, role, profile) {
     'supplier.order.list':        () => getSupplierOrders(data, user, role, profile),
     'supplier.order.create':      () => createSupplierOrder_api(data, user, role),
     'supplier.shipment.confirm':  () => confirmShipment_api(data, user, role),
+    'supplier.delivery.confirm':  () => confirmDelivery_api(data, user, role),
     'supplier.acceptance.record': () => recordAcceptanceCheck_api(data, user, role),
 
     // 결제

@@ -25,6 +25,7 @@ const ROLE_PERMISSIONS = {
     'patient.get', 'patient.create',
     'review.get',
     'supplier.order.create', 'supplier.order.list',
+    'supplier.shipment.confirm', 'supplier.delivery.confirm',
     'billing.list', 'billing.save',
     'followup.list', 'followup.complete',
     'document.register', 'document.list',

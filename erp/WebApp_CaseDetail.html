@@ -453,10 +453,10 @@ function submitReview(reviewId, caseId) {
 
 // ─── 주문/배송 탭 렌더링 ─────────────────────────────────────
 function renderOrderTab_(orders, c) {
-  const canOrder  = ['MSO Admin','MSO Coordinator'].includes(APP.role);
-  const canAccept = ['MSO Admin','Hospital User'].includes(APP.role);
-  const canShip   = ['MSO Admin','Supplier User'].includes(APP.role);
-  const orderableStatus = ['Hospital Approved','Supplier Coordination'].includes(c.case_status);
+  const canOrder           = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  const canMarkTransit     = ['MSO Admin','MSO Coordinator','Supplier User'].includes(APP.role);
+  const canConfirmDelivery = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  const orderableStatus    = ['Hospital Approved','Supplier Coordination'].includes(c.case_status);
 
   return `
     <div class="card">
@@ -469,34 +469,24 @@ function renderOrderTab_(orders, c) {
       ` : `
       <div class="table-wrap">
         <table>
-          <thead><tr><th>주문 ID</th><th>요청 품목</th><th>예정 출고</th><th>배치번호</th><th>상태</th><th>검수</th><th>추가검토</th><th></th></tr></thead>
+          <thead><tr><th>주문 ID</th><th>요청 품목</th><th>예정 출고</th><th>배치번호</th><th>운송장</th><th>상태</th><th>전달일</th><th>액션</th></tr></thead>
           <tbody>
-            ${orders.map(o => {
-              const needsReview = o.requires_additional_review === true || o.requires_additional_review === 'TRUE';
-              const reviewCleared = o.additional_review_cleared === true || o.additional_review_cleared === 'TRUE';
-              const reviewBadge = needsReview
-                ? (reviewCleared
-                    ? '<span class="badge badge-green" style="font-size:11px">완료</span>'
-                    : `<span class="badge badge-orange" style="font-size:11px">대기중</span>
-                       ${canOrder ? `<button class="btn btn-xs btn-secondary" style="margin-left:4px" onclick="requestAdditionalReview('${c.case_id}','${o.supplier_order_id}')">검토요청</button>` : ''}`)
-                : '-';
-              return `
+            ${orders.map(o => `
               <tr>
                 <td><code>${o.supplier_order_id}</code></td>
                 <td>${o.requested_item || '-'}</td>
                 <td>${fmtDate(o.expected_ship_date)}</td>
                 <td>${o.lot_batch_no || '-'}</td>
+                <td>${o.shipment_tracking_no || '-'}</td>
                 <td>${statusBadge(o.supplier_status)}</td>
-                <td>${statusBadge(o.acceptance_check_status)}</td>
-                <td>${reviewBadge}</td>
+                <td>${o.delivery_date ? fmtDate(o.delivery_date) : '-'}</td>
                 <td>
-                  ${canShip && o.supplier_status === 'Requested' ? `<button class="btn btn-sm btn-primary" onclick="showCaseShipModal('${o.supplier_order_id}','${(o.expected_ship_date||'').substring(0,10)}','${(o.lot_batch_no||'')}')">출고 확정</button>` : ''}
-                  ${canAccept && o.supplier_status === 'Delivered' ? `<button class="btn btn-sm btn-success" onclick="showCaseAcceptModal('${o.supplier_order_id}')">검수</button>` : ''}
+                  ${canMarkTransit && o.supplier_status === 'Requested' ? `<button class="btn btn-sm btn-secondary" onclick="showCaseShipModal('${o.supplier_order_id}','${(o.lot_batch_no||'')}')">배송 중</button>` : ''}
+                  ${canConfirmDelivery && o.supplier_status === 'In Transit' ? `<button class="btn btn-sm btn-primary" onclick="showCaseDeliveryModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
                   ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank">COA</a>` : ''}
-                  ${o.temp_log_link ? `<a class="btn btn-sm btn-secondary" href="${o.temp_log_link}" target="_blank">온도</a>` : ''}
                 </td>
               </tr>
-            `}).join('')}
+            `).join('')}
           </tbody>
         </table>
       </div>
@@ -505,67 +495,51 @@ function renderOrderTab_(orders, c) {
   `;
 }
 
-function showCaseShipModal(orderId, defaultDate, defaultLot) {
-  const body = `
+function showCaseShipModal(orderId, defaultLot) {
+  showModal('배송 중 확인', `
     <div class="form-grid">
-      <div class="form-group full"><label class="required">확정 출고일</label><input type="date" id="caseShipDate" required value="${defaultDate || ''}"></div>
       <div class="form-group"><label>배치번호 (LOT)</label><input type="text" id="caseShipLot" placeholder="LOT-2026-001" value="${defaultLot || ''}"></div>
-      <div class="form-group"><label>운송장 번호</label><input type="text" id="caseShipTrack" placeholder="FedEx 운송장번호"></div>
-      <div class="form-group full"><label>COA Drive 링크</label><input type="url" id="caseShipCoa" placeholder="https://drive.google.com/..."></div>
+      <div class="form-group"><label>운송장 번호</label><input type="text" id="caseShipTrack" placeholder="운송장 번호 (선택)"></div>
     </div>
-  `;
-  const footer = `
+    <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">공급업체가 출발했음을 확인하는 단계입니다.</p>
+  `, `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitCaseShipment('${orderId}')">출고 확정</button>
-  `;
-  showModal('출고 확정', body, footer);
+    <button class="btn btn-primary" onclick="submitCaseShipment('${orderId}')">배송 중 확인</button>
+  `);
 }
 
 function submitCaseShipment(orderId) {
-  const date = document.getElementById('caseShipDate').value;
-  if (!date) { showAlert('확정 출고일은 필수입니다', 'warning'); return; }
-  const lot  = document.getElementById('caseShipLot').value;
   callServer('supplier.shipment.confirm', {
-    orderId, confirmedShipDate: date, lotBatchNo: lot,
+    orderId,
+    lotBatchNo: document.getElementById('caseShipLot').value,
     trackingNo: document.getElementById('caseShipTrack').value,
-    coaLink:    document.getElementById('caseShipCoa').value,
   }).then(() => {
-    closeModal(); showAlert('출고 확정 완료', 'success');
+    closeModal(); showAlert('배송 중으로 변경되었습니다', 'success');
     loadPage('caseDetail', { caseId: APP.currentParams.caseId });
   }).catch(err => { closeModal(); showAlert(err.message, 'error'); });
 }
 
-function showCaseAcceptModal(orderId) {
-  const body = `
+function showCaseDeliveryModal(orderId) {
+  const today = new Date().toISOString().substring(0, 10);
+  showModal('출고 확정 — 병원 전달 완료', `
     <div class="form-grid">
-      <div class="form-group full">
-        <label class="required">검수 결과</label>
-        <select id="caseAccResult" required>
-          <option value="">선택</option>
-          <option value="Accepted">Accepted (입고 승인)</option>
-          <option value="Rejected">Rejected (반려)</option>
-        </select>
-      </div>
-      <div class="form-group full"><label>검수 메모</label><textarea id="caseAccNotes"></textarea></div>
+      <div class="form-group full"><label class="required">병원 전달일</label><input type="date" id="caseDeliveryDate" required value="${today}"></div>
     </div>
-    <div class="alert alert-info" style="margin-top:8px">⚕️ 입고 검수는 병원 책임자가 수행합니다.</div>
-  `;
-  const footer = `
+    <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">MSO가 병원에 제품을 전달 완료한 시점을 기록합니다.</p>
+  `, `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitCaseAcceptance('${orderId}')">검수 결과 저장</button>
-  `;
-  showModal('입고 검수', body, footer);
+    <button class="btn btn-primary" onclick="submitCaseDelivery('${orderId}')">출고 확정</button>
+  `);
 }
 
-function submitCaseAcceptance(orderId) {
-  const result = document.getElementById('caseAccResult').value;
-  if (!result) { showAlert('검수 결과를 선택하세요', 'warning'); return; }
-  callServer('supplier.acceptance.record', {
-    orderId, result, notes: document.getElementById('caseAccNotes').value,
-  }).then(() => {
-    closeModal(); showAlert('검수 결과 저장 완료', 'success');
-    loadPage('caseDetail', { caseId: APP.currentParams.caseId });
-  }).catch(err => { closeModal(); showAlert(err.message, 'error'); });
+function submitCaseDelivery(orderId) {
+  const date = document.getElementById('caseDeliveryDate').value;
+  if (!date) { showAlert('병원 전달일을 입력하세요', 'warning'); return; }
+  callServer('supplier.delivery.confirm', { orderId, deliveryDate: date })
+    .then(() => {
+      closeModal(); showAlert('출고 확정 완료 — 병원 전달이 기록되었습니다', 'success');
+      loadPage('caseDetail', { caseId: APP.currentParams.caseId });
+    }).catch(err => { closeModal(); showAlert(err.message, 'error'); });
 }
 
 // ─── 문서 탭 렌더링 ───────────────────────────────────────────

@@ -264,6 +264,8 @@ function submitGlobalAppointment() {
   var type   = document.getElementById('gAptType').value;
   var date   = document.getElementById('gAptDate').value;
   if (!caseId || !type || !date) { showAlert('케이스 ID, 유형, 날짜는 필수입니다', 'warning'); return; }
+  var btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('appointment.create', {
     case_id: caseId, appointment_type: type, scheduled_date: date,
     location: document.getElementById('gAptLocation').value,
@@ -272,6 +274,6 @@ function submitGlobalAppointment() {
     closeModal();
     showAlert('일정 추가 완료', 'success');
     getScheduleHTML();
-  }).catch(function(err) { closeModal(); showAlert(err.message, 'error'); });
+  }).catch(function(err) { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 </script>

@@ -158,6 +158,8 @@ function showBillingCreateModal(caseId) {
 function submitBillingCreate() {
   const caseId = document.getElementById('billCaseId').value;
   if (!caseId) { showAlert('케이스 ID 필수', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('billing.save', {
     case_id: caseId,
     currency: document.getElementById('billCurrency').value,
@@ -165,8 +167,8 @@ function submitBillingCreate() {
     invoice_amount: document.getElementById('billInvAmt').value,
     due_date: document.getElementById('billDueDate').value,
     notes: document.getElementById('billNotes').value,
-  }).then(r => { closeModal(); showAlert('청구 생성 완료', 'success'); loadPage('billing'); })
-    .catch(err => showAlert(err.message, 'error'));
+  }).then(() => { closeModal(); showAlert('청구 생성 완료', 'success'); loadPage('billing'); })
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 견적 발행 ─────────────────────────────────────────────
@@ -187,9 +189,11 @@ function submitQuote(billingId) {
   const quoteNo = document.getElementById('quoteNo').value;
   const amt = document.getElementById('quoteAmt').value;
   if (!quoteNo || !amt) { showAlert('필수 항목 입력', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('billing.issueQuote', { billingId, quoteNo, quoteAmount: amt, dueDate: document.getElementById('quoteDue').value })
     .then(() => { closeModal(); showAlert('견적 발행 완료', 'success'); loadPage('billing'); })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 인보이스 발행 ────────────────────────────────────────
@@ -211,9 +215,11 @@ function submitInvoice(billingId) {
   const amt = document.getElementById('invAmt').value;
   const due = document.getElementById('invDue').value;
   if (!no || !amt || !due) { showAlert('필수 항목 입력', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('billing.issueInvoice', { billingId, invoiceNo: no, invoiceAmount: amt, dueDate: due })
     .then(() => { closeModal(); showAlert('인보이스 발행 완료', 'success'); loadPage('billing'); })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 입금 처리 ─────────────────────────────────────────────
@@ -232,8 +238,10 @@ function showPaymentModal(billingId) {
 function submitPayment(billingId) {
   const amt = document.getElementById('payAmt').value;
   if (!amt) { showAlert('입금액 필수', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-success');
+  setLoadingBtn(btn, true);
   callServer('billing.recordPayment', { billingId, paidAmount: Number(amt), paidDate: document.getElementById('payDate').value })
     .then(() => { closeModal(); showAlert('입금 처리 완료', 'success'); loadPage('billing'); })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 </script>

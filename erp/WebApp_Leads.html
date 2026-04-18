@@ -144,12 +144,13 @@ function submitNewLead() {
   const form = document.getElementById('newLeadForm');
   if (!form.reportValidity()) return;
   const data = Object.fromEntries(new FormData(form));
-
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('lead.create', data).then(result => {
     closeModal();
     showAlert(`리드 등록 완료: ${result.leadId}`, 'success');
     loadPage('leads');
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 리드 상세 모달 ───────────────────────────────────────────
@@ -214,19 +215,23 @@ function showDeleteLeadModal(leadId) {
 
 function confirmDeleteLead(leadId) {
   const reason = document.getElementById('leadDeleteReason').value;
+  const btn = document.querySelector('#modalFooter .btn-danger');
+  setLoadingBtn(btn, true);
   callServer('lead.delete', { leadId, reason })
     .then(() => { closeModal(); showAlert('리드가 삭제되었습니다', 'success'); loadPage('leads'); })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 function updateLead(leadId) {
   const status = document.getElementById('leadStatusChange').value;
   const notes = document.getElementById('leadNotes').value;
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('lead.update', { lead_id: leadId, lead_status: status, notes }).then(() => {
     closeModal();
     showAlert('리드 업데이트 완료', 'success');
     loadPage('leads');
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 케이스 전환 ──────────────────────────────────────────────
@@ -296,6 +301,8 @@ function submitConvertToCase(leadId) {
   if (!hospitalId)  { showAlert('병원을 선택하세요', 'warning'); return; }
   if (!indication)  { showAlert('적응증을 입력하세요', 'warning'); return; }
 
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('case.create', {
     lead_id:              leadId,
     hospital_id:          hospitalId,
@@ -307,6 +314,6 @@ function submitConvertToCase(leadId) {
     closeModal();
     showAlert(`케이스 생성 완료: ${result.caseId}`, 'success');
     loadPage('caseDetail', { caseId: result.caseId });
-  }).catch(err => showAlert(err.message, 'error'));
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 </script>

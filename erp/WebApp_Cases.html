@@ -179,6 +179,8 @@ function submitNewCase() {
   if (!indication)  { showAlert('적응증을 입력하세요', 'warning'); return; }
 
   // 1단계: 환자 생성 → 2단계: 케이스 생성
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('patient.create', { full_name: name, nationality, phone })
     .then(patResult => callServer('case.create', {
       patient_id:           patResult.patientId,
@@ -193,7 +195,7 @@ function submitNewCase() {
       showAlert(`케이스 생성 완료: ${caseResult.caseId}`, 'success');
       loadPage('caseDetail', { caseId: caseResult.caseId });
     })
-    .catch(err => showAlert(err.message, 'error'));
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 

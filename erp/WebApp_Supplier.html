@@ -134,12 +134,14 @@ function showShipModal(orderId, defaultLot) {
 }
 
 function submitShipment(orderId) {
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('supplier.shipment.confirm', {
     orderId,
     lotBatchNo: document.getElementById('lotNo').value,
     trackingNo: document.getElementById('trackNo').value,
   }).then(() => { closeModal(); showAlert('배송 중으로 변경되었습니다', 'success'); loadPage('supplier'); })
-    .catch(err => { closeModal(); showAlert(err.message, 'error'); });
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 // ─── 출고 확정 모달 (MSO → 병원 전달 완료) ──────────────────
@@ -159,8 +161,10 @@ function showDeliveryModal(orderId) {
 function submitDelivery(orderId) {
   const date = document.getElementById('deliveryDate').value;
   if (!date) { showAlert('병원 전달일을 입력하세요', 'warning'); return; }
+  const btn = document.querySelector('#modalFooter .btn-primary');
+  setLoadingBtn(btn, true);
   callServer('supplier.delivery.confirm', { orderId, deliveryDate: date })
     .then(() => { closeModal(); showAlert('출고 확정 완료 — 병원 전달이 기록되었습니다', 'success'); loadPage('supplier'); })
-    .catch(err => { closeModal(); showAlert(err.message, 'error'); });
+    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 </script>

@@ -92,7 +92,8 @@
   var를 사용해 const/let의 TDZ(일시적 사각지대) 문제를 완전히 제거한다.
 -->
 <script>
-console.log('[MSO] script block loaded');
+console.log('[MSO] main script loaded');
+console.log('[MSO] typeof getDashboardHTML =', typeof getDashboardHTML);
 
 // ─── 전역 상태 ──────────────────────────────────────────────
 // var 사용: const/let TDZ 방지 (OAuth 다이얼로그 등 이른 실행 환경 대응)
@@ -122,17 +123,18 @@ console.log('[MSO] APP initialized | user:', APP.user, '| role:', APP.role,
 })();
 
 // ─── 페이지 라우터 ───────────────────────────────────────────
-// includes가 이미 실행됐으므로 실제 함수 레퍼런스를 직접 저장한다.
-// 이로써 window[fnName] 런타임 조회 불필요 + undefined 참조 에러 없음.
+// 문자열 기반 지연 조회: 초기화 시점 ReferenceError 완전 방지
+// loadPage() 호출 시 window[fnName]으로 실제 함수를 찾는다.
+console.log('[MSO] typeof getDashboardHTML before PAGE_FN_MAP =', typeof getDashboardHTML);
 var PAGE_FN_MAP = {
-  dashboard:  getDashboardHTML,
-  leads:      getLeadsHTML,
-  cases:      getCasesHTML,
-  caseDetail: getCaseDetailHTML,
-  supplier:   getSupplierHTML,
-  billing:    getBillingHTML,
-  followup:   getFollowupHTML,
-  calendar:   getCalendarHTML,
+  dashboard:  'getDashboardHTML',
+  leads:      'getLeadsHTML',
+  cases:      'getCasesHTML',
+  caseDetail: 'getCaseDetailHTML',
+  supplier:   'getSupplierHTML',
+  billing:    'getBillingHTML',
+  followup:   'getFollowupHTML',
+  calendar:   'getCalendarHTML',
 };
 console.log('[MSO] PAGE_FN_MAP built | keys:', Object.keys(PAGE_FN_MAP).join(', '));
 
@@ -159,7 +161,10 @@ function loadPage(page, params) {
 
   showLoading(true);
 
-  var renderFn = PAGE_FN_MAP && PAGE_FN_MAP[page];
+  var fnName   = PAGE_FN_MAP && PAGE_FN_MAP[page];
+  var renderFn = (typeof fnName === 'string') ? window[fnName] : fnName;
+  console.log('[MSO] loadPage resolve | page:', page, '| fnName:', fnName,
+    '| typeof window[fnName]:', typeof window[fnName]);
   if (typeof renderFn === 'function') {
     try {
       renderFn(params);
@@ -168,7 +173,8 @@ function loadPage(page, params) {
       showContent('<div class="alert alert-error">페이지 렌더링 오류: ' + err.message + '</div>');
     }
   } else {
-    console.warn('[MSO] renderPage: no render function for page:', page);
+    console.warn('[MSO] renderPage: no render function for page:', page,
+      '| window[fnName]:', typeof window[fnName]);
     showContent('<div class="alert alert-warning">준비 중인 페이지입니다: ' + page + '</div>');
   }
 
@@ -328,8 +334,9 @@ window.addEventListener('load', function() {
 
 function initApp_() {
   console.log('[MSO] initApp started | page:', APP.currentPage,
-    '| getDashboardHTML defined:', typeof getDashboardHTML,
-    '| PAGE_FN_MAP.dashboard:', typeof PAGE_FN_MAP.dashboard);
+    '| typeof getDashboardHTML:', typeof getDashboardHTML,
+    '| typeof window.getDashboardHTML:', typeof window.getDashboardHTML,
+    '| PAGE_FN_MAP.dashboard:', PAGE_FN_MAP.dashboard);
 
   // Step 1: ping() 직접 호출 — google.script.run 자체 동작 여부 확인 (인증 불필요)
   console.log('[MSO] calling ping() directly (bypasses handleClientRequest)...');

@@ -18,7 +18,7 @@ var PHASE_TOTAL = 9; // 1~9 활성 단계
 // ─── 케이스 목록 ───────────────────────────────────────────────
 function getCasesHTML(params) {
   showLoading(true);
-  callServer('case.list', {}).then(data => {
+  callServer('case.list', { showDeleted: true }).then(data => {
     const cases = data.cases || [];
     const canCreate = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
 

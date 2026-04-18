@@ -67,6 +67,9 @@ function getLeads(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   let leads = sheetToObjects_(ss, CONFIG.SHEETS.LEADS);
 
+  if (!data.showDeleted) {
+    leads = leads.filter(l => !l.is_deleted || String(l.is_deleted).toLowerCase() === 'false');
+  }
   if (role === ROLES.MSO_COORDINATOR) {
     leads = leads.filter(l => l.assigned_coordinator === user);
   }
@@ -222,6 +225,9 @@ function getCases(data, user, role, profile) {
   let cases = sheetToObjects_(ss, CONFIG.SHEETS.CASES);
   cases = filterCasesByRole_(cases, user, role, profile);
 
+  if (!data.showDeleted) {
+    cases = cases.filter(c => !c.is_deleted || String(c.is_deleted).toLowerCase() === 'false');
+  }
   if (data.status) cases = cases.filter(c => c.case_status === data.status);
   if (data.search) {
     const q = data.search.toLowerCase();
@@ -311,13 +317,25 @@ function getCaseDetail(caseId, user, role, profile) {
     patient = p;
   }
 
+  // coordinator display_name 조인
+  const usersRows  = sheetToObjects_(ss, CONFIG.SHEETS.USERS);
+  const coordUser  = usersRows.find(u => u.user_email === caseData.assigned_coordinator);
+  const coordName  = coordUser ? (coordUser.display_name || caseData.assigned_coordinator) : caseData.assigned_coordinator;
+
+  // hospital_name 조인
+  const hospRows   = sheetToObjects_(ss, CONFIG.SHEETS.HOSPITALS);
+  const hospRecord = hospRows.find(h => h.hospital_id === caseData.hospital_id);
+  const hospName   = hospRecord ? (hospRecord.hospital_name || caseData.hospital_id) : caseData.hospital_id;
+
+  const enrichedCase = { ...caseData, coordinator_name: coordName, hospital_name: hospName };
+
   // Supplier는 자기 주문만
   const filteredOrders = role === ROLES.SUPPLIER_USER
     ? orders.filter(o => o.supplier_id === profile.supplier_id)
     : orders;
 
   return {
-    case: caseData, patient,
+    case: enrichedCase, patient,
     reviews, orders: filteredOrders, docs,
     billing: billing_, followups, activities, appointments, procedures,
   };
@@ -690,6 +708,67 @@ function sheetToObjects_(ss, sheetName) {
 // 참조 데이터 (케이스 전환 모달용)
 // ════════════════════════════════════════════════════════════
 
+function softDeleteLead_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.leadId) throw new Error('leadId가 필요합니다');
+
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.LEADS);
+  const rows = sheet.getDataRange().getValues();
+  const headers = rows[0];
+
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][headers.indexOf('lead_id')] !== data.leadId) continue;
+    if (role === ROLES.MSO_COORDINATOR &&
+        rows[i][headers.indexOf('assigned_coordinator')] !== user) {
+      throw new Error('본인 담당 리드만 삭제할 수 있습니다');
+    }
+    const set = (field, val) => {
+      const col = headers.indexOf(field);
+      if (col !== -1) sheet.getRange(i + 1, col + 1).setValue(val);
+    };
+    set('is_deleted',    true);
+    set('deleted_at',    new Date());
+    set('deleted_by',    user);
+    set('delete_reason', data.reason || '');
+    return { success: true };
+  }
+  throw new Error('리드를 찾을 수 없습니다');
+}
+
+function softDeleteCase_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.caseId) throw new Error('caseId가 필요합니다');
+
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.CASES);
+  const rows = sheet.getDataRange().getValues();
+  const headers = rows[0];
+
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][headers.indexOf('case_id')] !== data.caseId) continue;
+    if (role === ROLES.MSO_COORDINATOR &&
+        rows[i][headers.indexOf('assigned_coordinator')] !== user) {
+      throw new Error('본인 담당 케이스만 삭제할 수 있습니다');
+    }
+    const set = (field, val) => {
+      const col = headers.indexOf(field);
+      if (col !== -1) sheet.getRange(i + 1, col + 1).setValue(val);
+    };
+    set('is_deleted',    true);
+    set('deleted_at',    new Date());
+    set('deleted_by',    user);
+    set('delete_reason', data.reason || '');
+    addActivityLog({
+      caseId: data.caseId, actorEmail: user, actorRole: role,
+      actionType: 'CASE_DELETED',
+      summary: `케이스 소프트 삭제: ${data.caseId} (사유: ${data.reason || '미기재'})`,
+    });
+    return { success: true };
+  }
+  throw new Error('케이스를 찾을 수 없습니다');
+}
+
 /**
  * 케이스 전환 모달 - 병원 드롭다운 데이터
  */
@@ -699,6 +778,14 @@ function getHospitalList() {
     .filter(h => String(h.active).toLowerCase() !== 'no' && String(h.active).toLowerCase() !== 'false')
     .map(h => ({ id: h.hospital_id, name: h.hospital_name || h.hospital_id }));
   return { hospitals };
+}
+
+function getSupplierList() {
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const suppliers = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIERS)
+    .filter(s => String(s.active).toLowerCase() !== 'no' && String(s.active).toLowerCase() !== 'false')
+    .map(s => ({ id: s.supplier_id, name: s.supplier_name || s.supplier_id }));
+  return { suppliers };
 }
 
 /**

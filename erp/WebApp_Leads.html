@@ -187,12 +187,36 @@ function showLeadDetail(lead) {
   const TERMINATED = ['Converted', 'Closed - No Progress'];
   const canCreate  = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
   const canConvert = canCreate && !TERMINATED.includes(lead.lead_status);
+  const isDeleted  = lead.is_deleted === true || String(lead.is_deleted).toLowerCase() === 'true';
   const footer = `
     <button class="btn btn-secondary" onclick="closeModal()">닫기</button>
-    ${canConvert ? `<button class="btn btn-primary" onclick="closeModal();convertToCase('${lead.lead_id}')">케이스로 전환 →</button>` : ''}
-    <button class="btn btn-primary" onclick="updateLead('${lead.lead_id}')">저장</button>
+    ${canCreate && !isDeleted ? `<button class="btn btn-danger" style="margin-right:auto" onclick="showDeleteLeadModal('${lead.lead_id}')">삭제</button>` : ''}
+    ${canConvert && !isDeleted ? `<button class="btn btn-primary" onclick="closeModal();convertToCase('${lead.lead_id}')">케이스로 전환 →</button>` : ''}
+    ${!isDeleted ? `<button class="btn btn-primary" onclick="updateLead('${lead.lead_id}')">저장</button>` : ''}
   `;
   showModal(`리드 상세 - ${lead.lead_id}`, body, footer);
+}
+
+function showDeleteLeadModal(leadId) {
+  closeModal();
+  showModal('리드 삭제', `
+    <p style="margin-bottom:12px"><strong>${leadId}</strong> 리드를 삭제하시겠습니까?</p>
+    <div class="form-group">
+      <label>삭제 사유</label>
+      <input type="text" id="leadDeleteReason" placeholder="예: 중복 등록, 연락 두절">
+    </div>
+    <p style="font-size:12px;color:var(--gray-500);margin-top:8px">삭제 후 목록에서 숨겨집니다. 완전 삭제가 아닙니다.</p>
+  `, `
+    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+    <button class="btn btn-danger" onclick="confirmDeleteLead('${leadId}')">삭제</button>
+  `);
+}
+
+function confirmDeleteLead(leadId) {
+  const reason = document.getElementById('leadDeleteReason').value;
+  callServer('lead.delete', { leadId, reason })
+    .then(() => { closeModal(); showAlert('리드가 삭제되었습니다', 'success'); loadPage('leads'); })
+    .catch(err => showAlert(err.message, 'error'));
 }
 
 function updateLead(leadId) {

@@ -6,17 +6,28 @@ function getCaseDetailHTML(params) {
   callServer('case.get', { caseId: params.caseId }).then(data => {
     const c = data.case;
     const patient = data.patient;
+    const patientName  = patient ? (patient.full_name || patient.patient_code || '') : '';
+    const coordDisplay = c.coordinator_name || c.assigned_coordinator || '-';
+    const hospDisplay  = c.hospital_name   || c.hospital_id          || '-';
     const html = `
       <!-- 헤더 -->
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
         <button class="btn btn-secondary btn-sm" onclick="loadPage('cases')">← 목록</button>
-        <h2 style="font-size:18px;font-weight:700">${c.case_id}</h2>
+        <div>
+          <div style="font-size:18px;font-weight:700">
+            ${c.case_id}${patientName ? ` <span style="color:var(--gray-500);font-weight:500">| ${patientName}</span>` : ''}
+          </div>
+          <div style="font-size:12px;color:var(--gray-500);margin-top:3px">
+            🏥 ${hospDisplay} &nbsp;·&nbsp; 👤 ${coordDisplay}
+          </div>
+        </div>
         ${statusBadge(c.case_status)}
         ${c.priority ? `<span class="badge badge-${c.priority==='Urgent'?'red':c.priority==='High'?'orange':'gray'}">${c.priority}</span>` : ''}
         <div style="margin-left:auto" class="btn-group">
           ${renderCaseActionButtons_(c)}
         </div>
       </div>
+      ${renderPhaseIndicator_(c)}
 
       <!-- 탭 -->
       <div class="tabs">
@@ -154,6 +165,128 @@ function switchTab(event, tabId) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById(tabId).classList.add('active');
+}
+
+// ─── Phase 표시 ──────────────────────────────────────────────
+function renderPhaseIndicator_(c) {
+  const PHASE = {
+    'Draft':                    { label: '초안',          next: '병원 검토를 요청하세요',             condition: '병원 검토 탭 → + 검토 요청',                        owner: 'MSO 담당자' },
+    'Hospital Approved':        { label: '병원 승인',     next: '공급 주문 정보를 등록하세요',         condition: '공급업체·제품·배송 예정일·픽업 담당자 입력',          owner: 'MSO 담당자' },
+    'Supplier Coordination':    { label: '공급 조율',     next: '출고 확정 정보를 입력하세요',         condition: '출고일·배치번호 입력 후 케이스 상태 수동 변경',        owner: 'MSO/공급업체' },
+    'Shipment In Transit':      { label: '배송 중',       next: '수령 후 입고 검수를 진행하세요',      condition: '주문/배송 탭 → 검수 버튼',                          owner: '병원 담당자' },
+    'Acceptance Check Pending': { label: '입고 검수 대기',next: '입고 검수 결과를 입력하세요',         condition: '주문/배송 탭 → 검수 버튼',                          owner: '병원 담당자' },
+    'Acceptance Confirmed':     { label: '입고 확인',     next: '시술 일정을 확정하세요',              condition: '시술기록 탭 → 시술 일정 확정',                      owner: 'MSO/병원' },
+    'Scheduled':                { label: '시술 예정',     next: '시술 완료 처리를 해주세요',           condition: '상단 "시술 완료 처리" 버튼 클릭',                    owner: '병원 담당자' },
+    'Completed':                { label: '시술 완료',     next: '추적관찰 일정을 확인하세요',          condition: 'D7 추적관찰 기록 시작',                             owner: 'MSO 담당자' },
+    'Follow-up Ongoing':        { label: '추적관찰 중',   next: '단계별 추적관찰을 완료하세요',        condition: 'D7→D14→D30→D90→D180 완료 후 케이스 종료',           owner: 'MSO 담당자' },
+    'Closed':                   { label: '케이스 종료',   next: '완료된 케이스입니다',                 condition: '-',                                                owner: '-' },
+    'Cancelled':                { label: '취소됨',        next: '취소된 케이스입니다',                 condition: '-',                                                owner: '-' },
+  };
+  const p = PHASE[c.case_status];
+  if (!p) return '';
+  const isTerminal = ['Closed','Cancelled'].includes(c.case_status);
+  return `
+    <div style="background:${isTerminal?'var(--gray-100)':'#e8f4fd'};
+      border-left:4px solid ${isTerminal?'var(--gray-400)':'#1a73e8'};
+      border-radius:6px;padding:10px 14px;margin-bottom:12px;
+      display:flex;gap:20px;flex-wrap:wrap;font-size:13px">
+      <div><span style="color:var(--gray-500)">현재 단계</span>&nbsp;<strong>${p.label}</strong></div>
+      ${!isTerminal ? `
+      <div><span style="color:var(--gray-500)">다음 할 일</span>&nbsp;<strong style="color:#1a73e8">${p.next}</strong></div>
+      <div style="color:var(--gray-600)"><span style="color:var(--gray-500)">조건</span>&nbsp;${p.condition}</div>
+      <div style="color:var(--gray-600)"><span style="color:var(--gray-500)">담당</span>&nbsp;${p.owner}</div>
+      ` : ''}
+    </div>
+  `;
+}
+
+// ─── 공급 요청 모달 ──────────────────────────────────────────
+function showSupplierOrderModal(caseId) {
+  callServer('supplier.list', {}).then(sData => {
+    const suppliers  = sData.suppliers || [];
+    const suppOptions = suppliers.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+    const body = `
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="required">공급업체</label>
+          <select id="soSupplier" required>
+            <option value="">선택</option>${suppOptions}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>주문일</label>
+          <input type="date" id="soOrderDate">
+        </div>
+        <div class="form-group">
+          <label class="required">제품/세포 유형</label>
+          <input type="text" id="soItem" required placeholder="예: 자가 줄기세포 (PRP)">
+        </div>
+        <div class="form-group">
+          <label>수량</label>
+          <input type="number" id="soQty" value="1" min="1">
+        </div>
+        <div class="form-group">
+          <label>배송 예정일</label>
+          <input type="date" id="soExpShip">
+        </div>
+        <div class="form-group">
+          <label>실제 수령일</label>
+          <input type="date" id="soDelivery">
+        </div>
+        <div class="form-group">
+          <label>픽업 담당자</label>
+          <input type="text" id="soPickup" placeholder="이름 / 연락처">
+        </div>
+        <div class="form-group">
+          <label>인수 담당자 (병원)</label>
+          <input type="text" id="soAcceptance" placeholder="병원 수령 담당자">
+        </div>
+        <div class="form-group">
+          <label>보관 조건</label>
+          <input type="text" id="soStorage" placeholder="예: 2~8°C 냉장">
+        </div>
+        <div class="form-group full">
+          <label>유의사항</label>
+          <input type="text" id="soCautions" placeholder="예: 충격 주의, 직사광선 차단">
+        </div>
+        <div class="form-group full">
+          <label><input type="checkbox" id="soAddReview"> 추가 병원 검토 필요</label>
+        </div>
+        <div class="form-group full">
+          <label>MSO 협의 메모</label>
+          <textarea id="soMsoNotes" placeholder="공급업체와 협의한 내용, 특이사항 등"></textarea>
+        </div>
+      </div>
+    `;
+    const footer = `
+      <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="submitSupplierOrder('${caseId}')">공급 요청 등록</button>
+    `;
+    showModal('공급 요청 등록', body, footer);
+  }).catch(err => showAlert('공급업체 목록 로드 실패: ' + err.message, 'error'));
+}
+
+function submitSupplierOrder(caseId) {
+  const supplierId = document.getElementById('soSupplier').value;
+  const item       = document.getElementById('soItem').value.trim();
+  if (!supplierId) { showAlert('공급업체를 선택하세요', 'warning'); return; }
+  if (!item)       { showAlert('제품/세포 유형을 입력하세요', 'warning'); return; }
+  callServer('supplier.order.create', {
+    caseId, supplierId,
+    requestedItem:            item,
+    quantity:                 Number(document.getElementById('soQty').value) || 1,
+    expectedShipDate:         document.getElementById('soExpShip').value,
+    pickupPerson:             document.getElementById('soPickup').value,
+    acceptancePerson:         document.getElementById('soAcceptance').value,
+    storageCondition:         document.getElementById('soStorage').value,
+    cautions:                 document.getElementById('soCautions').value,
+    requiresAdditionalReview: document.getElementById('soAddReview').checked,
+    msoNotes:                 document.getElementById('soMsoNotes').value,
+  }).then(result => {
+    closeModal();
+    showAlert(`공급 요청 등록 완료: ${result.orderId}`, 'success');
+    loadPage('caseDetail', { caseId });
+  }).catch(err => showAlert(err.message, 'error'));
 }
 
 // ─── 케이스 액션 버튼 ─────────────────────────────────────────

@@ -225,19 +225,22 @@ function dispatchAction_(action, data, user, role, profile) {
     'lead.list':   () => getLeads(data, user, role, profile),
     'lead.create': () => createLead(data, user, role),
     'lead.update': () => updateLead(data, user, role),
+    'lead.delete': () => softDeleteLead_api(data, user, role),
 
     // 케이스
     'case.list':         () => getCases(data, user, role, profile),
     'case.get':          () => getCaseDetail(data.caseId, user, role, profile),
     'case.create':       () => createCase_api(data, user, role),
     'case.changeStatus': () => updateCaseStatus(data.caseId, data.targetStatus, user, role),
+    'case.delete':       () => softDeleteCase_api(data, user, role),
 
     // 환자
     'patient.get':    () => getPatient(data.patientId, user, role),
     'patient.create': () => createPatient(data, user, role),
 
-    // 참조 데이터 (케이스 전환 모달용)
+    // 참조 데이터
     'hospital.list':    () => getHospitalList(),
+    'supplier.list':    () => getSupplierList(),
     'coordinator.list': () => getCoordinatorList(user, role),
 
     // 병원 검토

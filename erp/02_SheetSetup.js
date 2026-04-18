@@ -35,6 +35,7 @@ const SHEET_HEADERS = {
     'lead_status',        // → Master_Status (lead_status)
     'patient_id', 'converted_to_case_id',
     'notes', 'created_at',
+    'is_deleted', 'deleted_at', 'deleted_by', 'delete_reason',
   ],
 
   // 4. 케이스 (patient_code 없음 — patient_id로 Patients 참조)
@@ -48,6 +49,7 @@ const SHEET_HEADERS = {
     'priority', 'remarks',
     'drive_folder_id', 'drive_folder_url',
     'case_opened_at', 'case_closed_at',
+    'is_deleted', 'deleted_at', 'deleted_by', 'delete_reason',
   ],
 
   // 5. 병원 마스터

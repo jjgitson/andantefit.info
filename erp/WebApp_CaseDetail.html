@@ -263,7 +263,7 @@ function renderPhaseIndicator_(c) {
 // ─── 공급 요청 모달 ──────────────────────────────────────────
 function showSupplierOrderModal(caseId) {
   callServer('supplier.list', {}).then(sData => {
-    const suppliers  = sData.suppliers || [];
+    const suppliers   = sData.suppliers || [];
     const suppOptions = suppliers.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
     const body = `
       <div class="form-grid">
@@ -273,11 +273,7 @@ function showSupplierOrderModal(caseId) {
             <option value="">선택</option>${suppOptions}
           </select>
         </div>
-        <div class="form-group">
-          <label>주문일</label>
-          <input type="date" id="soOrderDate">
-        </div>
-        <div class="form-group">
+        <div class="form-group full">
           <label class="required">제품/세포 유형</label>
           <input type="text" id="soItem" required placeholder="예: 자가 줄기세포 (PRP)">
         </div>
@@ -286,68 +282,43 @@ function showSupplierOrderModal(caseId) {
           <input type="number" id="soQty" value="1" min="1">
         </div>
         <div class="form-group">
-          <label>배송 예정일</label>
-          <input type="date" id="soExpShip">
-        </div>
-        <div class="form-group">
-          <label>실제 수령일</label>
-          <input type="date" id="soDelivery">
-        </div>
-        <div class="form-group">
-          <label>픽업 담당자</label>
-          <input type="text" id="soPickup" placeholder="이름 / 연락처">
-        </div>
-        <div class="form-group">
-          <label>인수 담당자 (병원)</label>
-          <input type="text" id="soAcceptance" placeholder="병원 수령 담당자">
-        </div>
-        <div class="form-group">
-          <label>보관 조건</label>
-          <input type="text" id="soStorage" placeholder="예: 2~8°C 냉장">
-        </div>
-        <div class="form-group full">
-          <label>유의사항</label>
-          <input type="text" id="soCautions" placeholder="예: 충격 주의, 직사광선 차단">
-        </div>
-        <div class="form-group full" style="display:flex;align-items:center;gap:8px">
-          <input type="checkbox" id="soAddReview" style="width:auto;margin:0">
-          <label style="margin:0;font-weight:normal">추가 병원 검토 필요</label>
+          <label class="required">병원 배송 예정일</label>
+          <input type="date" id="soExpShip" required>
         </div>
         <div class="form-group full">
           <label>MSO 협의 메모</label>
-          <textarea id="soMsoNotes" placeholder="공급업체와 협의한 내용, 특이사항 등"></textarea>
+          <textarea id="soMsoNotes" placeholder="공급업체와 협의한 내용, 보관 조건, 유의사항 등"></textarea>
         </div>
       </div>
+      <p style="font-size:12px;color:var(--primary);margin-top:4px">
+        ✔ 등록 즉시 배송 중 상태로 처리됩니다. 병원 전달 후 출고 확정을 눌러주세요.
+      </p>
     `;
-    const footer = `
+    showModal('공급 요청 등록', body, `
       <button class="btn btn-secondary" onclick="closeModal()">취소</button>
       <button class="btn btn-primary" onclick="submitSupplierOrder('${caseId}')">공급 요청 등록</button>
-    `;
-    showModal('공급 요청 등록', body, footer);
+    `);
   }).catch(err => showAlert('공급업체 목록 로드 실패: ' + err.message, 'error'));
 }
 
 function submitSupplierOrder(caseId) {
   const supplierId = document.getElementById('soSupplier').value;
   const item       = document.getElementById('soItem').value.trim();
+  const expShip    = document.getElementById('soExpShip').value;
   if (!supplierId) { showAlert('공급업체를 선택하세요', 'warning'); return; }
   if (!item)       { showAlert('제품/세포 유형을 입력하세요', 'warning'); return; }
+  if (!expShip)    { showAlert('병원 배송 예정일을 입력하세요', 'warning'); return; }
   const btn = document.querySelector('#modalFooter .btn-primary');
   setLoadingBtn(btn, true);
   callServer('supplier.order.create', {
     caseId, supplierId,
-    requestedItem:            item,
-    quantity:                 Number(document.getElementById('soQty').value) || 1,
-    expectedShipDate:         document.getElementById('soExpShip').value,
-    pickupPerson:             document.getElementById('soPickup').value,
-    acceptancePerson:         document.getElementById('soAcceptance').value,
-    storageCondition:         document.getElementById('soStorage').value,
-    cautions:                 document.getElementById('soCautions').value,
-    requiresAdditionalReview: document.getElementById('soAddReview').checked,
-    msoNotes:                 document.getElementById('soMsoNotes').value,
+    requestedItem:    item,
+    quantity:         Number(document.getElementById('soQty').value) || 1,
+    expectedShipDate: expShip,
+    msoNotes:         document.getElementById('soMsoNotes').value,
   }).then(result => {
     closeModal();
-    showAlert(`공급 요청 등록 완료: ${result.orderId}`, 'success');
+    showAlert(`공급 요청 등록 완료 (배송 중): ${result.orderId}`, 'success');
     loadPage('caseDetail', { caseId });
   }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
@@ -535,7 +506,6 @@ function submitReview(caseId, reviewId) {
 // ─── 주문/배송 탭 렌더링 ─────────────────────────────────────
 function renderOrderTab_(orders, c) {
   const canOrder           = ['MSO Admin','MSO Coordinator'].includes(APP.role);
-  const canMarkTransit     = ['MSO Admin','MSO Coordinator','Supplier User'].includes(APP.role);
   const canConfirmDelivery = ['MSO Admin','MSO Coordinator'].includes(APP.role);
   const orderableStatus    = ['Hospital Approved','Supplier Coordination'].includes(c.case_status);
 
@@ -550,20 +520,17 @@ function renderOrderTab_(orders, c) {
       ` : `
       <div class="table-wrap">
         <table>
-          <thead><tr><th>주문 ID</th><th>요청 품목</th><th>예정 출고</th><th>배치번호</th><th>운송장</th><th>상태</th><th>전달일</th><th>액션</th></tr></thead>
+          <thead><tr><th>주문 ID</th><th>요청 품목</th><th>배송 예정일</th><th>상태</th><th>전달일</th><th>액션</th></tr></thead>
           <tbody>
             ${orders.map(o => `
               <tr>
                 <td><code>${o.supplier_order_id}</code></td>
                 <td>${o.requested_item || '-'}</td>
                 <td>${fmtDate(o.expected_ship_date)}</td>
-                <td>${o.lot_batch_no || '-'}</td>
-                <td>${o.shipment_tracking_no || '-'}</td>
                 <td>${statusBadge(o.supplier_status)}</td>
                 <td>${o.delivery_date ? fmtDate(o.delivery_date) : '-'}</td>
                 <td>
-                  ${canMarkTransit && o.supplier_status === 'Requested' ? `<button class="btn btn-sm btn-secondary" onclick="showCaseShipModal('${o.supplier_order_id}','${(o.lot_batch_no||'')}')">배송 중</button>` : ''}
-                  ${canConfirmDelivery && o.supplier_status === 'In Transit' ? `<button class="btn btn-sm btn-primary" onclick="showCaseDeliveryModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
+                  ${canConfirmDelivery && ['Requested','In Transit'].includes(o.supplier_status) ? `<button class="btn btn-sm btn-primary" onclick="showCaseDeliveryModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
                   ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank">COA</a>` : ''}
                 </td>
               </tr>
@@ -574,32 +541,6 @@ function renderOrderTab_(orders, c) {
       `}
     </div>
   `;
-}
-
-function showCaseShipModal(orderId, defaultLot) {
-  showModal('배송 중 확인', `
-    <div class="form-grid">
-      <div class="form-group"><label>배치번호 (LOT)</label><input type="text" id="caseShipLot" placeholder="LOT-2026-001" value="${defaultLot || ''}"></div>
-      <div class="form-group"><label>운송장 번호</label><input type="text" id="caseShipTrack" placeholder="운송장 번호 (선택)"></div>
-    </div>
-    <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">공급업체가 출발했음을 확인하는 단계입니다.</p>
-  `, `
-    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitCaseShipment('${orderId}')">배송 중 확인</button>
-  `);
-}
-
-function submitCaseShipment(orderId) {
-  const btn = document.querySelector('#modalFooter .btn-primary');
-  setLoadingBtn(btn, true);
-  callServer('supplier.shipment.confirm', {
-    orderId,
-    lotBatchNo: document.getElementById('caseShipLot').value,
-    trackingNo: document.getElementById('caseShipTrack').value,
-  }).then(() => {
-    closeModal(); showAlert('배송 중으로 변경되었습니다', 'success');
-    loadPage('caseDetail', { caseId: APP.currentParams.caseId });
-  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 function showCaseDeliveryModal(orderId) {
@@ -720,33 +661,41 @@ function submitDocUpload(caseId) {
 function renderBillingTab_(billing, c) {
   const canBill = ['MSO Admin','Finance User','MSO Coordinator'].includes(APP.role);
   const b = billing && billing[0];
+  if (!b) return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">결제/청구</span>
+        ${canBill ? `<button class="btn btn-sm btn-primary" onclick="showBillingCreateModal('${c.case_id}')">+ 청구 생성</button>` : ''}
+      </div>
+      <div class="empty-state"><div class="empty-state-icon">💳</div><h3>청구 내역 없음</h3></div>
+    </div>
+  `;
+
+  const isPaid     = b.payment_status === 'Paid';
+  const isRefunded = b.payment_status === 'Refunded';
+  const isPartial  = b.payment_status === 'Partially Paid';
+  const owed = Math.max(0, Number(b.invoice_amount||0) - Number(b.paid_amount||0));
+
   return `
     <div class="card">
       <div class="card-header">
         <span class="card-title">결제/청구</span>
-        ${canBill && !b ? `<button class="btn btn-sm btn-primary" onclick="showBillingCreateModal('${c.case_id}')">+ 청구 생성</button>` : ''}
+        ${canBill && !isPaid && !isRefunded
+          ? `<button class="btn btn-sm btn-success" onclick="showPaymentModal('${b.billing_id}',${b.invoice_amount||0},${b.paid_amount||0})">납부 처리</button>`
+          : ''}
       </div>
-      ${!b ? `<div class="empty-state"><div class="empty-state-icon">💳</div><h3>청구 내역 없음</h3></div>` : `
       <div class="card-body">
         <div class="detail-grid">
           <div class="detail-item"><label>Billing ID</label><div class="value"><code>${b.billing_id}</code></div></div>
-          <div class="detail-item"><label>상태</label><div class="value">${statusBadge(b.payment_status)}</div></div>
-          <div class="detail-item"><label>통화</label><div class="value">${b.currency}</div></div>
-          <div class="detail-item"><label>견적액</label><div class="value">${fmtMoney(b.quote_amount)}</div></div>
+          <div class="detail-item"><label>납부 상태</label><div class="value">${statusBadge(b.payment_status)}</div></div>
+          <div class="detail-item"><label>통화</label><div class="value">${b.currency||'KRW'}</div></div>
           <div class="detail-item"><label>청구액</label><div class="value">${fmtMoney(b.invoice_amount)}</div></div>
-          <div class="detail-item"><label>납입액</label><div class="value">${fmtMoney(b.paid_amount)}</div></div>
-          <div class="detail-item"><label>미수금</label><div class="value" style="color:var(--danger);font-weight:700">${fmtMoney(b.invoice_amount - b.paid_amount)}</div></div>
-          <div class="detail-item"><label>결제 마감</label><div class="value">${fmtDate(b.due_date)}</div></div>
+          ${b.paid_amount ? `<div class="detail-item"><label>납입액</label><div class="value">${fmtMoney(b.paid_amount)}</div></div>` : ''}
+          ${owed > 0 && !isRefunded ? `<div class="detail-item"><label>미수금</label><div class="value" style="color:var(--danger);font-weight:700">${fmtMoney(owed)}</div></div>` : ''}
+          ${b.due_date ? `<div class="detail-item"><label>결제 마감</label><div class="value">${fmtDate(b.due_date)}</div></div>` : ''}
         </div>
-        ${canBill ? `
-        <div class="btn-group" style="margin-top:16px">
-          ${b.payment_status === 'Not Issued' ? `<button class="btn btn-primary btn-sm" onclick="showQuoteModal('${b.billing_id}')">견적 발행</button>` : ''}
-          ${b.payment_status === 'Quote Sent' ? `<button class="btn btn-primary btn-sm" onclick="showInvoiceModal('${b.billing_id}')">인보이스 발행</button>` : ''}
-          ${['Invoice Sent','Partially Paid'].includes(b.payment_status) ? `<button class="btn btn-success btn-sm" onclick="showPaymentModal('${b.billing_id}')">입금 기록</button>` : ''}
-        </div>
-        ` : ''}
+        ${b.notes ? `<p style="margin-top:10px;font-size:13px;color:var(--gray-700)">${b.notes}</p>` : ''}
       </div>
-      `}
     </div>
   `;
 }

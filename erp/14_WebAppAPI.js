@@ -615,6 +615,9 @@ function getSupplierOrders(data, user, role, profile) {
 function createSupplierOrder_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
   const orderId = createSupplierOrder({ ...data, requestedBy: user });
+  // 공급 요청 생성 즉시 배송 중으로 전환 (중간 확인 단계 생략)
+  confirmShipment(orderId, { updatedBy: user });
+  invalidateCache_(CONFIG.SHEETS.SUPPLIER_ORDERS, CONFIG.SHEETS.CASES);
   return { success: true, orderId };
 }
 
@@ -716,9 +719,25 @@ function issueInvoice_api(data, user, role) {
 }
 
 function recordPayment_api(data, user, role) {
-  if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER].includes(role)) throw new Error('권한 없음');
+  if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
   recordPayment(data.billingId, { paidAmount: data.paidAmount, paidDate: data.paidDate, processedBy: user });
   invalidateCache_(CONFIG.SHEETS.BILLING);
+  return { success: true };
+}
+
+function refundBilling_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.FINANCE_USER, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.billingId) throw new Error('billingId가 필요합니다');
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.BILLING);
+  const rows = sheetToObjects_(sheet);
+  const idx = rows.findIndex(r => r.billing_id === data.billingId);
+  if (idx < 0) throw new Error('청구 레코드를 찾을 수 없습니다');
+  const billing = rows[idx];
+  updateBillingField_(data.billingId, 'payment_status', 'Refunded', user);
+  if (data.refundAmount) updateBillingField_(data.billingId, 'paid_amount', -Number(data.refundAmount), user);
+  invalidateCache_(CONFIG.SHEETS.BILLING);
+  addActivityLog({ caseId: billing.case_id, actorEmail: user, actorRole: role, actionType: 'BILLING_REFUNDED', summary: `환불 처리: ${data.billingId}${data.notes ? ' — ' + data.notes : ''}` });
   return { success: true };
 }
 

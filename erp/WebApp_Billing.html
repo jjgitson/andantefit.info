@@ -5,18 +5,16 @@ function getBillingHTML(params) {
   callServer('billing.list', { onlyOutstanding: false }).then(data => {
     const billing = data.billing || [];
     const today = new Date();
-    const outstanding = billing.filter(b =>
-      ['Invoice Sent','Partially Paid'].includes(b.payment_status)
-    );
-    const overdue = outstanding.filter(b => b.due_date && new Date(b.due_date) < today);
-    const totalOut = outstanding.reduce((s,b) =>
-      s + (Number(b.invoice_amount||0) - Number(b.paid_amount||0)), 0);
+    const unpaid  = billing.filter(b => !['Paid','Refunded'].includes(b.payment_status));
+    const overdue = unpaid.filter(b => b.due_date && new Date(b.due_date) < today);
+    const totalOut = unpaid.reduce((s,b) =>
+      s + Math.max(0, Number(b.invoice_amount||0) - Number(b.paid_amount||0)), 0);
 
     const html = `
       <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
         <div class="stat-card primary"><div class="stat-number">${billing.length}</div><div class="stat-label">전체 청구</div></div>
-        <div class="stat-card danger"><div class="stat-number">${fmtMoney(totalOut)}</div><div class="stat-label">총 미수금</div></div>
-        <div class="stat-card warning"><div class="stat-number">${overdue.length}</div><div class="stat-label">결제 기한 초과</div></div>
+        <div class="stat-card ${totalOut>0?'danger':'success'}"><div class="stat-number" style="font-size:16px">${fmtMoney(totalOut)||'-'}</div><div class="stat-label">총 미수금</div></div>
+        <div class="stat-card ${overdue.length>0?'warning':'success'}"><div class="stat-number">${overdue.length}</div><div class="stat-label">결제 기한 초과</div></div>
         <div class="stat-card success"><div class="stat-number">${billing.filter(b=>b.payment_status==='Paid').length}</div><div class="stat-label">완납</div></div>
       </div>
 
@@ -24,24 +22,24 @@ function getBillingHTML(params) {
       ${overdue.length > 0 ? `
       <div class="card">
         <div class="card-header"><span class="card-title" style="color:var(--danger)">🔴 결제 기한 초과 (${overdue.length}건)</span></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th class="mobile-hide">Billing ID</th><th>케이스</th><th class="mobile-hide">청구액</th><th>미수금</th><th>만료일</th><th>상태</th><th></th></tr></thead>
-            <tbody>
-              ${overdue.map(b => `
+        <div class="table-wrap"><table>
+          <thead><tr><th>케이스/환자</th><th>청구액</th><th>미수금</th><th>마감일</th><th>납부 처리</th></tr></thead>
+          <tbody>
+            ${overdue.map(b => {
+              const caseNum = b.case_id ? b.case_id.split('-').pop() : '';
+              const displayName = b.patient_name ? `${b.patient_name}-${caseNum}` : b.case_id;
+              const owed = Math.max(0, Number(b.invoice_amount||0) - Number(b.paid_amount||0));
+              return `
                 <tr style="background:#fff0f0">
-                  <td class="mobile-hide"><code>${b.billing_id}</code></td>
-                  <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})"><strong>${b.patient_name||b.case_id}</strong><br><span style="font-size:11px;color:var(--gray-500)">${b.case_id}</span></a></td>
-                  <td class="mobile-hide">${fmtMoney(b.invoice_amount)}</td>
-                  <td style="color:var(--danger);font-weight:700">${fmtMoney(Number(b.invoice_amount||0)-Number(b.paid_amount||0))}</td>
+                  <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})"><strong>${displayName}</strong><br><span style="font-size:11px;color:var(--gray-500)">${b.billing_id}</span></a></td>
+                  <td>${fmtMoney(b.invoice_amount)}</td>
+                  <td style="color:var(--danger);font-weight:700">${fmtMoney(owed)}</td>
                   <td style="color:var(--danger)">${fmtDate(b.due_date)}</td>
-                  <td>${statusBadge(b.payment_status)}</td>
-                  <td><button class="btn btn-sm btn-success" onclick="showPaymentModal('${b.billing_id}')">입금 처리</button></td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
+                  <td><button class="btn btn-sm btn-success" onclick="showPaymentModal('${b.billing_id}',${b.invoice_amount||0},${b.paid_amount||0})">납부 처리</button></td>
+                </tr>`;
+            }).join('')}
+          </tbody>
+        </table></div>
       </div>
       ` : ''}
 
@@ -52,56 +50,63 @@ function getBillingHTML(params) {
           <button class="btn btn-primary btn-sm" onclick="showBillingCreateModal()">+ 청구 생성</button>
         </div>
         <div class="filter-bar">
-          <input type="text" id="billSearch" placeholder="케이스 ID / Billing ID" oninput="filterBilling()">
+          <input type="text" id="billSearch" placeholder="환자명 / Billing ID" oninput="filterBilling()">
           <select id="billStatusFilter" onchange="filterBilling()">
             <option value="">전체 상태</option>
-            <option value="Not Issued">미발행</option>
-            <option value="Quote Sent">견적 발송</option>
-            <option value="Invoice Sent">청구서 발송</option>
-            <option value="Partially Paid">일부 납부</option>
-            <option value="Paid">납부 완료</option>
+            <option value="Not Issued">미납</option>
+            <option value="Partially Paid">부분납부</option>
+            <option value="Paid">납부완료</option>
             <option value="Refunded">환불</option>
           </select>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th class="mobile-hide">Billing ID</th><th>케이스</th>
-                <th class="mobile-hide">통화</th><th class="mobile-hide">견적액</th>
-                <th class="mobile-hide">청구액</th><th class="mobile-hide">납입액</th>
-                <th>미수금</th><th>만료일</th><th>상태</th><th>액션</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${billing.length === 0 ? `<tr><td colspan="10"><div class="empty-state"><div class="empty-state-icon">💳</div><h3>청구 내역 없음</h3></div></td></tr>` :
-              billing.map(b => {
-                const outstanding_ = Number(b.invoice_amount||0) - Number(b.paid_amount||0);
-                const isOverdue = b.due_date && new Date(b.due_date) < today &&
-                  ['Invoice Sent','Partially Paid'].includes(b.payment_status);
+        <div class="table-wrap"><table>
+          <thead>
+            <tr>
+              <th>케이스/환자</th>
+              <th class="mobile-hide">통화</th>
+              <th class="mobile-hide">청구액</th>
+              <th class="mobile-hide">납입액</th>
+              <th>미수금</th>
+              <th class="mobile-hide">마감일</th>
+              <th>상태</th>
+              <th>납부</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${billing.length === 0
+              ? `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">💳</div><h3>청구 내역 없음</h3></div></td></tr>`
+              : billing.map(b => {
+                const caseNum = b.case_id ? b.case_id.split('-').pop() : '';
+                const displayName = b.patient_name ? `${b.patient_name}-${caseNum}` : b.case_id;
+                const owed = Math.max(0, Number(b.invoice_amount||0) - Number(b.paid_amount||0));
+                const isOverdue = b.due_date && new Date(b.due_date) < today && !['Paid','Refunded'].includes(b.payment_status);
+                const isPaid = b.payment_status === 'Paid';
+                const isRefunded = b.payment_status === 'Refunded';
+                const filterStatus = isPaid ? 'Paid' : isRefunded ? 'Refunded' : b.payment_status === 'Partially Paid' ? 'Partially Paid' : 'Not Issued';
                 return `
-                  <tr class="bill-row" data-id="${b.billing_id}" data-caseid="${b.case_id}" data-name="${b.patient_name||''}" data-status="${b.payment_status}"
+                  <tr class="bill-row" data-id="${b.billing_id}" data-caseid="${b.case_id}" data-name="${(b.patient_name||'').toLowerCase()}" data-status="${filterStatus}"
                     style="${isOverdue ? 'background:#fff8f0' : ''}">
-                    <td class="mobile-hide"><code>${b.billing_id}</code></td>
-                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})"><strong>${b.patient_name||b.case_id}</strong><br><span style="font-size:11px;color:var(--gray-500)">${b.case_id}</span></a></td>
+                    <td>
+                      <a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})">
+                        <strong>${displayName}</strong><br>
+                        <span style="font-size:11px;color:var(--gray-500)">${b.billing_id}</span>
+                      </a>
+                    </td>
                     <td class="mobile-hide">${b.currency||'KRW'}</td>
-                    <td class="mobile-hide">${fmtMoney(b.quote_amount)}</td>
                     <td class="mobile-hide">${fmtMoney(b.invoice_amount)}</td>
-                    <td class="mobile-hide">${fmtMoney(b.paid_amount)}</td>
-                    <td style="${outstanding_>0?'color:var(--danger);font-weight:700':''}">${outstanding_>0?fmtMoney(outstanding_):'-'}</td>
-                    <td style="${isOverdue?'color:var(--danger)':''}">${fmtDate(b.due_date)}</td>
+                    <td class="mobile-hide">${b.paid_amount ? fmtMoney(b.paid_amount) : '-'}</td>
+                    <td style="${owed>0&&!isRefunded?'color:var(--danger);font-weight:700':'color:var(--gray-400)'}">${owed>0&&!isRefunded?fmtMoney(owed):'-'}</td>
+                    <td class="mobile-hide" style="${isOverdue?'color:var(--danger)':''}">${fmtDate(b.due_date)}</td>
                     <td>${statusBadge(b.payment_status)}</td>
                     <td>
-                      ${b.payment_status==='Not Issued' ? `<button class="btn btn-sm btn-primary" onclick="showQuoteModal('${b.billing_id}')">견적</button>` : ''}
-                      ${b.payment_status==='Quote Sent' ? `<button class="btn btn-sm btn-primary" onclick="showInvoiceModal('${b.billing_id}')">인보이스</button>` : ''}
-                      ${['Invoice Sent','Partially Paid'].includes(b.payment_status) ? `<button class="btn btn-sm btn-success" onclick="showPaymentModal('${b.billing_id}')">입금</button>` : ''}
+                      ${!isPaid && !isRefunded
+                        ? `<button class="btn btn-sm btn-success" onclick="showPaymentModal('${b.billing_id}',${b.invoice_amount||0},${b.paid_amount||0})">납부</button>`
+                        : '-'}
                     </td>
-                  </tr>
-                `;
+                  </tr>`;
               }).join('')}
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table></div>
       </div>
     `;
     showContent(html);
@@ -113,139 +118,205 @@ function filterBilling() {
   const status = document.getElementById('billStatusFilter').value;
   document.querySelectorAll('.bill-row').forEach(row => {
     const id = (row.dataset.id + ' ' + row.dataset.caseid + ' ' + (row.dataset.name||'')).toLowerCase();
-    const ok = (!search || id.includes(search)) && (!status || row.dataset.status === status);
-    row.style.display = ok ? '' : 'none';
+    const rowStatus = row.dataset.status;
+    // 미납 필터는 Not Issued, Quote Sent, Invoice Sent 모두 포함
+    const statusOk = !status || rowStatus === status ||
+      (status === 'Not Issued' && !['Partially Paid','Paid','Refunded'].includes(rowStatus));
+    row.style.display = (!search || id.includes(search)) && statusOk ? '' : 'none';
   });
 }
 
-// ─── 청구 생성 모달 ───────────────────────────────────────────
-function showBillingCreateModal(caseId) {
-  const body = `
-    <div class="form-grid">
-      <div class="form-group full">
-        <label class="required">케이스 ID</label>
-        <input type="text" id="billCaseId" value="${caseId||''}" required placeholder="CASE-2026-001">
+// ─── 청구 생성 모달 (케이스 자동완성) ─────────────────────────
+function showBillingCreateModal(prefillCaseId) {
+  callServer('case.list', {}).then(data => {
+    const cases = data.cases || [];
+    // 자동완성용 데이터: { displayName, caseId }
+    window._billingCaseList = cases.map(c => ({
+      displayName: c.patient_name
+        ? `${c.patient_name}-${c.case_id.split('-').pop()}`
+        : c.case_id,
+      caseId: c.case_id,
+    }));
+
+    const prefill = prefillCaseId
+      ? (window._billingCaseList.find(x => x.caseId === prefillCaseId) || { displayName: prefillCaseId, caseId: prefillCaseId })
+      : null;
+
+    const body = `
+      <div class="form-grid">
+        <div class="form-group full" style="position:relative">
+          <label class="required">케이스 / 환자</label>
+          <input type="text" id="billCaseSearch" autocomplete="off"
+            placeholder="환자 이름 입력..."
+            value="${prefill ? prefill.displayName : ''}"
+            ${prefill ? 'readonly' : ''}
+            oninput="filterBillingCaseList(this.value)">
+          <input type="hidden" id="billCaseId" value="${prefill ? prefill.caseId : ''}">
+          <div id="billCaseDropdown" style="
+            position:absolute;top:100%;left:0;right:0;
+            background:#fff;border:1px solid var(--gray-200);
+            border-radius:6px;max-height:200px;overflow-y:auto;
+            box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:999;display:none">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>통화</label>
+          <select id="billCurrency">
+            <option value="KRW">KRW (원)</option>
+            <option value="USD">USD</option>
+            <option value="JPY">JPY</option>
+            <option value="CNY">CNY</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="required">청구액</label>
+          <input type="number" id="billInvAmt" required placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>결제 마감일</label>
+          <input type="date" id="billDueDate">
+        </div>
+        <div class="form-group full">
+          <label>메모</label>
+          <textarea id="billNotes" placeholder="패키지 구성, 특이사항 등"></textarea>
+        </div>
       </div>
-      <div class="form-group">
-        <label>통화</label>
-        <select id="billCurrency">
-          <option value="KRW">KRW (원)</option>
-          <option value="USD">USD</option>
-          <option value="JPY">JPY</option>
-          <option value="CNY">CNY</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>견적액</label>
-        <input type="number" id="billQuoteAmt" placeholder="0">
-      </div>
-      <div class="form-group">
-        <label>청구액</label>
-        <input type="number" id="billInvAmt" placeholder="0">
-      </div>
-      <div class="form-group">
-        <label>결제 마감일</label>
-        <input type="date" id="billDueDate">
-      </div>
-      <div class="form-group full">
-        <label>메모</label>
-        <textarea id="billNotes" placeholder="패키지 구성 등"></textarea>
-      </div>
+    `;
+    showModal('청구 생성', body, `
+      <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="submitBillingCreate()">생성</button>
+    `);
+  }).catch(err => showAlert('케이스 목록 로드 실패: ' + err.message, 'error'));
+}
+
+function filterBillingCaseList(query) {
+  const dropdown = document.getElementById('billCaseDropdown');
+  document.getElementById('billCaseId').value = '';
+  if (!query || query.length < 1) { dropdown.style.display = 'none'; return; }
+  const q = query.toLowerCase();
+  const matches = (window._billingCaseList || []).filter(c => c.displayName.toLowerCase().includes(q)).slice(0, 10);
+  if (matches.length === 0) { dropdown.style.display = 'none'; return; }
+  dropdown.innerHTML = matches.map(c => `
+    <div onclick="selectBillingCase('${c.caseId}','${c.displayName.replace(/'/g,"\\'")}')"
+      style="padding:10px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--gray-100)"
+      onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background=''">
+      <strong>${c.displayName}</strong>
+      <span style="font-size:11px;color:var(--gray-500);margin-left:6px">${c.caseId}</span>
     </div>
-  `;
-  showModal('청구 생성', body, `
-    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitBillingCreate()">생성</button>
-  `);
+  `).join('');
+  dropdown.style.display = 'block';
+}
+
+function selectBillingCase(caseId, displayName) {
+  document.getElementById('billCaseSearch').value = displayName;
+  document.getElementById('billCaseId').value = caseId;
+  document.getElementById('billCaseDropdown').style.display = 'none';
 }
 
 function submitBillingCreate() {
   const caseId = document.getElementById('billCaseId').value;
-  if (!caseId) { showAlert('케이스 ID 필수', 'warning'); return; }
+  const invAmt = document.getElementById('billInvAmt').value;
+  if (!caseId) { showAlert('케이스를 선택하세요', 'warning'); return; }
+  if (!invAmt) { showAlert('청구액을 입력하세요', 'warning'); return; }
   const btn = document.querySelector('#modalFooter .btn-primary');
   setLoadingBtn(btn, true);
   callServer('billing.save', {
     case_id: caseId,
     currency: document.getElementById('billCurrency').value,
-    quote_amount: document.getElementById('billQuoteAmt').value,
-    invoice_amount: document.getElementById('billInvAmt').value,
+    invoice_amount: invAmt,
     due_date: document.getElementById('billDueDate').value,
     notes: document.getElementById('billNotes').value,
-  }).then(() => { closeModal(); showAlert('청구 생성 완료', 'success'); loadPage('billing'); })
-    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
+  }).then(() => {
+    closeModal();
+    showAlert('청구 생성 완료', 'success');
+    if (APP.currentPage === 'billing') loadPage('billing');
+    else loadPage('caseDetail', { caseId });
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
-// ─── 견적 발행 ─────────────────────────────────────────────
-function showQuoteModal(billingId) {
+// ─── 납부 처리 모달 ───────────────────────────────────────────
+function showPaymentModal(billingId, invoiceAmt, paidAmt) {
+  const remaining = Math.max(0, Number(invoiceAmt||0) - Number(paidAmt||0));
   const body = `
     <div class="form-grid">
-      <div class="form-group"><label class="required">견적 번호</label><input type="text" id="quoteNo" required placeholder="Q-2026-001"></div>
-      <div class="form-group"><label class="required">견적액</label><input type="number" id="quoteAmt" required></div>
-      <div class="form-group"><label>결제 마감일</label><input type="date" id="quoteDue"></div>
+      <div class="form-group full">
+        <label class="required">납부 유형</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border:2px solid var(--gray-200);border-radius:8px;flex:1;min-width:100px" id="payType_full_lbl">
+            <input type="radio" name="payType" id="payType_full" value="full" onclick="onPayTypeChange('full',${remaining})" style="width:auto" ${remaining>0?'':'disabled'}> 일시납부
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border:2px solid var(--gray-200);border-radius:8px;flex:1;min-width:100px">
+            <input type="radio" name="payType" id="payType_partial" value="partial" onclick="onPayTypeChange('partial',${remaining})" style="width:auto"> 부분납부
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border:2px solid var(--gray-200);border-radius:8px;flex:1;min-width:100px">
+            <input type="radio" name="payType" id="payType_refund" value="refund" onclick="onPayTypeChange('refund',${remaining})" style="width:auto"> 환불
+          </label>
+        </div>
+      </div>
+      <div class="form-group" id="payAmtGroup" style="display:none">
+        <label id="payAmtLabel">납부액</label>
+        <input type="number" id="payAmt" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label>처리일</label>
+        <input type="date" id="payDate" value="${new Date().toISOString().split('T')[0]}">
+      </div>
+      <div class="form-group full" id="payNotesGroup" style="display:none">
+        <label>메모</label>
+        <input type="text" id="payNotes" placeholder="환불 사유 등">
+      </div>
     </div>
+    ${remaining > 0 ? `<p style="font-size:12px;color:var(--gray-500);margin-top:4px">미수금: <strong>${fmtMoney(remaining)}</strong></p>` : ''}
   `;
-  showModal('견적 발행', body, `
+  showModal('납부 처리', body, `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitQuote('${billingId}')">견적 발행</button>
+    <button class="btn btn-success" onclick="submitPayment('${billingId}',${remaining})">처리</button>
   `);
-}
-function submitQuote(billingId) {
-  const quoteNo = document.getElementById('quoteNo').value;
-  const amt = document.getElementById('quoteAmt').value;
-  if (!quoteNo || !amt) { showAlert('필수 항목 입력', 'warning'); return; }
-  const btn = document.querySelector('#modalFooter .btn-primary');
-  setLoadingBtn(btn, true);
-  callServer('billing.issueQuote', { billingId, quoteNo, quoteAmount: amt, dueDate: document.getElementById('quoteDue').value })
-    .then(() => { closeModal(); showAlert('견적 발행 완료', 'success'); loadPage('billing'); })
-    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
-// ─── 인보이스 발행 ────────────────────────────────────────
-function showInvoiceModal(billingId) {
-  const body = `
-    <div class="form-grid">
-      <div class="form-group"><label class="required">인보이스 번호</label><input type="text" id="invNo" required placeholder="INV-2026-001"></div>
-      <div class="form-group"><label class="required">청구액</label><input type="number" id="invAmt" required></div>
-      <div class="form-group"><label class="required">결제 마감일</label><input type="date" id="invDue" required></div>
-    </div>
-  `;
-  showModal('인보이스 발행', body, `
-    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitInvoice('${billingId}')">인보이스 발행</button>
-  `);
-}
-function submitInvoice(billingId) {
-  const no = document.getElementById('invNo').value;
-  const amt = document.getElementById('invAmt').value;
-  const due = document.getElementById('invDue').value;
-  if (!no || !amt || !due) { showAlert('필수 항목 입력', 'warning'); return; }
-  const btn = document.querySelector('#modalFooter .btn-primary');
-  setLoadingBtn(btn, true);
-  callServer('billing.issueInvoice', { billingId, invoiceNo: no, invoiceAmount: amt, dueDate: due })
-    .then(() => { closeModal(); showAlert('인보이스 발행 완료', 'success'); loadPage('billing'); })
-    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
+function onPayTypeChange(type, remaining) {
+  const amtGroup = document.getElementById('payAmtGroup');
+  const amtLabel = document.getElementById('payAmtLabel');
+  const notesGroup = document.getElementById('payNotesGroup');
+  const amtInput = document.getElementById('payAmt');
+  if (type === 'full') {
+    amtGroup.style.display = 'none';
+    notesGroup.style.display = 'none';
+    amtInput.value = remaining;
+  } else if (type === 'partial') {
+    amtGroup.style.display = '';
+    amtLabel.textContent = '납부액';
+    notesGroup.style.display = 'none';
+    amtInput.value = '';
+  } else {
+    amtGroup.style.display = '';
+    amtLabel.textContent = '환불액';
+    notesGroup.style.display = '';
+    amtInput.value = '';
+  }
 }
 
-// ─── 입금 처리 ─────────────────────────────────────────────
-function showPaymentModal(billingId) {
-  const body = `
-    <div class="form-grid">
-      <div class="form-group full"><label class="required">입금액</label><input type="number" id="payAmt" required placeholder="0"></div>
-      <div class="form-group"><label>입금일</label><input type="date" id="payDate" value="${new Date().toISOString().split('T')[0]}"></div>
-    </div>
-  `;
-  showModal('입금 처리', body, `
-    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-success" onclick="submitPayment('${billingId}')">입금 처리</button>
-  `);
-}
-function submitPayment(billingId) {
-  const amt = document.getElementById('payAmt').value;
-  if (!amt) { showAlert('입금액 필수', 'warning'); return; }
+function submitPayment(billingId, remaining) {
+  const payType = document.querySelector('input[name="payType"]:checked');
+  if (!payType) { showAlert('납부 유형을 선택하세요', 'warning'); return; }
   const btn = document.querySelector('#modalFooter .btn-success');
   setLoadingBtn(btn, true);
-  callServer('billing.recordPayment', { billingId, paidAmount: Number(amt), paidDate: document.getElementById('payDate').value })
-    .then(() => { closeModal(); showAlert('입금 처리 완료', 'success'); loadPage('billing'); })
-    .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
+  const payDate = document.getElementById('payDate').value;
+
+  if (payType.value === 'refund') {
+    const refundAmt = document.getElementById('payAmt').value;
+    const notes = document.getElementById('payNotes').value;
+    callServer('billing.refund', { billingId, refundAmount: refundAmt, notes })
+      .then(() => { closeModal(); showAlert('환불 처리 완료', 'success'); loadPage('billing'); })
+      .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
+  } else {
+    const amt = payType.value === 'full'
+      ? remaining
+      : Number(document.getElementById('payAmt').value);
+    if (!amt || amt <= 0) { setLoadingBtn(btn, false); showAlert('납부액을 입력하세요', 'warning'); return; }
+    callServer('billing.recordPayment', { billingId, paidAmount: amt, paidDate: payDate })
+      .then(() => { closeModal(); showAlert('납부 처리 완료', 'success'); loadPage('billing'); })
+      .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
+  }
 }
 </script>

@@ -264,6 +264,7 @@ function dispatchAction_(action, data, user, role, profile) {
     'billing.issueQuote':    () => issueQuote_api(data, user, role),
     'billing.issueInvoice':  () => issueInvoice_api(data, user, role),
     'billing.recordPayment': () => recordPayment_api(data, user, role),
+    'billing.refund':        () => refundBilling_api(data, user, role),
 
     // 추적관찰
     'followup.list':     () => getFollowups(data, user, role, profile),

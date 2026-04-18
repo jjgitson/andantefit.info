@@ -57,9 +57,6 @@ function renderCalendarPage_() {
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         ${buildLegend_()}
-        ${['MSO Admin','MSO Coordinator'].includes(APP.role)
-          ? '<button class="btn btn-primary btn-sm" onclick="showGlobalAppointmentModal()">+ 일정 추가</button>'
-          : ''}
       </div>
     </div>
     <div class="card">
@@ -222,58 +219,4 @@ function showDayEvents(dateStr) {
     + '<tbody>' + rows + '</tbody></table></div></div>';
 }
 
-// ─── 팀 일정 추가 모달 ─────────────────────────────────────────
-function showGlobalAppointmentModal() {
-  var body = `
-    <div class="form-grid">
-      <div class="form-group full">
-        <label class="required">케이스 ID</label>
-        <input type="text" id="gAptCaseId" required placeholder="CASE-2026-001">
-      </div>
-      <div class="form-group full">
-        <label class="required">일정 유형</label>
-        <select id="gAptType" required>
-          <option value="">선택</option>
-          <option value="First Consultation">초진 상담</option>
-          <option value="Hospital Consultation">병원 상담</option>
-          <option value="Additional Test">추가 검사</option>
-          <option value="Treatment Day">수술/시술일</option>
-          <option value="Acceptance Check">수령 확인</option>
-          <option value="Follow-up Call">팔로업 통화</option>
-          <option value="Follow-up Visit">팔로업 방문</option>
-          <option value="Billing Review">청구 검토</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="required">날짜/시간</label>
-        <input type="datetime-local" id="gAptDate" required>
-      </div>
-      <div class="form-group"><label>장소</label><input type="text" id="gAptLocation"></div>
-      <div class="form-group full"><label>메모</label><textarea id="gAptNotes"></textarea></div>
-    </div>
-  `;
-  var footer = `
-    <button class="btn btn-secondary" onclick="closeModal()">취소</button>
-    <button class="btn btn-primary" onclick="submitGlobalAppointment()">저장</button>
-  `;
-  showModal('일정 추가', body, footer);
-}
-
-function submitGlobalAppointment() {
-  var caseId = (document.getElementById('gAptCaseId').value || '').trim();
-  var type   = document.getElementById('gAptType').value;
-  var date   = document.getElementById('gAptDate').value;
-  if (!caseId || !type || !date) { showAlert('케이스 ID, 유형, 날짜는 필수입니다', 'warning'); return; }
-  var btn = document.querySelector('#modalFooter .btn-primary');
-  setLoadingBtn(btn, true);
-  callServer('appointment.create', {
-    case_id: caseId, appointment_type: type, scheduled_date: date,
-    location: document.getElementById('gAptLocation').value,
-    notes:    document.getElementById('gAptNotes').value,
-  }).then(function() {
-    closeModal();
-    showAlert('일정 추가 완료', 'success');
-    getScheduleHTML();
-  }).catch(function(err) { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
-}
 </script>

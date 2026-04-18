@@ -299,7 +299,7 @@ function updateCaseStatus(caseId, targetStatus, user, role) {
 }
 
 /**
- * 시술 일정 확정: treatment_date 기록 + 상태를 Scheduled로 변경
+ * 시술 일정 확정: treatment_date 기록 + Appointments 자동 생성 + Google Calendar 동기화
  */
 function scheduleTreatment_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.HOSPITAL_USER].includes(role)) throw new Error('권한 없음');
@@ -308,25 +308,50 @@ function scheduleTreatment_api(data, user, role) {
   if (!data.physician)     throw new Error('담당 의사를 입력하세요');
 
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  const sheet = ss.getSheetByName(CONFIG.SHEETS.CASES);
+  const caseSheet = ss.getSheetByName(CONFIG.SHEETS.CASES);
   const rows = sheetToObjects_(ss, CONFIG.SHEETS.CASES);
   const idx  = rows.findIndex(r => r.case_id === data.caseId);
   if (idx < 0) throw new Error('케이스를 찾을 수 없습니다');
 
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const caseRow = rows[idx];
+  const headers = caseSheet.getRange(1, 1, 1, caseSheet.getLastColumn()).getValues()[0];
   const rowNum  = idx + 2;
 
   function setCol_(name, val) {
     const c = headers.indexOf(name);
-    if (c >= 0) sheet.getRange(rowNum, c + 1).setValue(val);
+    if (c >= 0) caseSheet.getRange(rowNum, c + 1).setValue(val);
   }
 
   setCol_('treatment_date', data.treatmentDate);
   setCol_('physician',      data.physician);
   if (data.location) setCol_('treatment_location', data.location);
-
   invalidateCache_(CONFIG.SHEETS.CASES);
+
   changeCaseStatus(data.caseId, CONFIG.CASE_STATUS.SCHEDULED, user, role);
+
+  // Google Calendar 동기화 (MSO_MASTER + HOSPITAL_COORD)
+  const patientCode = caseRow.patient_code || data.caseId;
+  const coordName   = caseRow.assigned_coordinator || user;
+  let calIds = {};
+  try {
+    calIds = createTreatmentDayEvent(
+      data.caseId, new Date(data.treatmentDate),
+      patientCode, coordName, caseRow.hospital_id || '-'
+    ) || {};
+  } catch (e) { Logger.log('캘린더 이벤트 생성 실패: ' + e.message); }
+
+  // Appointments 시트 자동 등록
+  const aptSheet = ss.getSheetByName(CONFIG.SHEETS.APPOINTMENTS);
+  const aptId = generateCustomId(CONFIG.SHEETS.APPOINTMENTS, 'APT', 'appointment_id');
+  aptSheet.appendRow([
+    aptId, data.caseId, 'Treatment Day',
+    new Date(data.treatmentDate), '',
+    data.location || '', data.physician,
+    'Confirmed', false,
+    calIds.hospEventId || '',
+    data.notes || '',
+  ]);
+  invalidateCache_(CONFIG.SHEETS.APPOINTMENTS);
 
   addActivityLog({
     caseId: data.caseId, actorEmail: user, actorRole: role,

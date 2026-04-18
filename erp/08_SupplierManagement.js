@@ -15,35 +15,42 @@ function createSupplierOrder(params) {
     throw new Error(`공급 요청은 병원 승인 이후에만 가능합니다. (현재 상태: ${caseData.case_status})`);
   }
 
+  // 추가 병원 검토 미완료 주문이 있으면 신규 주문 차단
+  const block = checkAdditionalReviewBlock_(params.caseId);
+  if (block) {
+    throw new Error(`추가 병원 검토 미완료 주문(${block})이 있습니다. 검토 완료 후 신규 주문이 가능합니다.`);
+  }
+
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   const sheet = ss.getSheetByName(CONFIG.SHEETS.SUPPLIER_ORDERS);
 
-  // ID 접두사: CONFIG.ID_PREFIXES.SUPPLIER_ORDERS = 'ORD'
   const orderId = generateCustomId(CONFIG.SHEETS.SUPPLIER_ORDERS,
     CONFIG.ID_PREFIXES.SUPPLIER_ORDERS, 'supplier_order_id');
   const now = new Date();
 
-  // Supplier_Orders 헤더 (19컬럼, acceptance_check_status만 요약 참조)
+  // Supplier_Orders 헤더 (21컬럼)
   sheet.appendRow([
-    orderId,                                // supplier_order_id
-    params.caseId,                          // case_id
-    params.supplierId,                      // supplier_id
-    now,                                    // request_date
-    params.requestedItem || '',             // requested_item
-    params.quantity || 1,                   // quantity
-    params.expectedShipDate || '',          // expected_ship_date
-    '',                                     // confirmed_ship_date
-    '',                                     // delivery_date
-    '',                                     // lot_batch_no
-    '',                                     // coa_link
-    '',                                     // shipment_tracking_no
-    CONFIG.SUPPLIER_STATUS.REQUESTED,       // supplier_status
-    params.storageCondition || '',          // storage_condition
-    '',                                     // temp_log_link
-    false,                                  // transport_incident_flag (Boolean)
-    '',                                     // transport_incident_notes
-    CONFIG.ACCEPTANCE_STATUS.NOT_STARTED,   // acceptance_check_status (요약)
-    params.notes || '',                     // notes
+    orderId,                                      // supplier_order_id
+    params.caseId,                                // case_id
+    params.supplierId,                            // supplier_id
+    now,                                          // request_date
+    params.requestedItem || '',                   // requested_item
+    params.quantity || 1,                         // quantity
+    params.expectedShipDate || '',                // expected_ship_date
+    '',                                           // confirmed_ship_date
+    '',                                           // delivery_date
+    '',                                           // lot_batch_no
+    '',                                           // coa_link
+    '',                                           // shipment_tracking_no
+    CONFIG.SUPPLIER_STATUS.REQUESTED,             // supplier_status
+    params.storageCondition || '',                // storage_condition
+    '',                                           // temp_log_link
+    false,                                        // transport_incident_flag
+    '',                                           // transport_incident_notes
+    CONFIG.ACCEPTANCE_STATUS.NOT_STARTED,         // acceptance_check_status
+    !!params.requiresAdditionalReview,            // requires_additional_review
+    false,                                        // additional_review_cleared
+    params.notes || '',                           // notes
   ]);
 
   // 케이스 상태 → Supplier Coordination
@@ -264,4 +271,36 @@ function notifyAcceptanceRejected_(caseId, orderId, notes) {
     `[MSO-ERP] 입고 검수 반려 - ${caseId}`,
     `케이스 ${caseId}의 주문 ${orderId}이 입고 검수에서 반려되었습니다.\n\n사유: ${notes || '미기재'}\n\n재공급 요청을 진행해 주세요.`
   );
+}
+
+/**
+ * 추가 병원 검토 미완료 주문 확인
+ * requires_additional_review=true이고 additional_review_cleared=false인 주문 반환
+ * @param {string} caseId
+ * @returns {string|null} 차단 중인 supplier_order_id 또는 null
+ */
+function checkAdditionalReviewBlock_(caseId) {
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.SUPPLIER_ORDERS);
+  const data = sheet.getDataRange().getValues();
+  const headers = data[0];
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    if (row[headers.indexOf('case_id')] !== caseId) continue;
+    const reqReview = row[headers.indexOf('requires_additional_review')];
+    const cleared   = row[headers.indexOf('additional_review_cleared')];
+    if (reqReview === true && cleared !== true) {
+      return row[headers.indexOf('supplier_order_id')];
+    }
+  }
+  return null;
+}
+
+/**
+ * 추가 병원 검토 완료 처리 — Suitable 결과 수신 시 호출
+ * @param {string} orderId
+ */
+function clearAdditionalReview_(orderId) {
+  updateSupplierOrderField_(orderId, 'additional_review_cleared', true,
+    Session.getActiveUser().getEmail());
 }

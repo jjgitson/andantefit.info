@@ -64,7 +64,7 @@ const SHEET_HEADERS = {
     'active',            // Boolean
   ],
 
-  // 7. 병원 심사 (Medical_Reviews — singular Medical_Review와 통일)
+  // 7. 병원 심사 (복수형 Medical_Reviews로 통일)
   Medical_Reviews: [
     'review_id', 'case_id', 'hospital_id',
     'review_request_date', 'review_completed_date',

@@ -681,11 +681,10 @@ function getCalendarEvents(data, user, role, profile) {
   myCases.forEach(c => {
     if (!c.treatment_date) return;
     events.push({
-      date:    String(c.treatment_date).substring(0, 10),
-      type:    'treatment',
-      label:   '시술',
-      caseId:  c.case_id,
-      detail:  `${c.target_indication || ''} · ${c.hospital_id || ''}`,
+      date:   String(c.treatment_date).substring(0, 10),
+      type:   'treatment',
+      title:  `시술 · ${c.target_indication || ''}`.trim(),
+      caseId: c.case_id,
     });
   });
 
@@ -696,9 +695,8 @@ function getCalendarEvents(data, user, role, profile) {
       events.push({
         date:   String(f.due_date).substring(0, 10),
         type:   'followup',
-        label:  `추적 ${f.stage || ''}`.trim(),
+        title:  `추적 ${f.followup_stage || ''}`.trim(),
         caseId: f.case_id,
-        detail: f.notes || '',
       });
     });
 
@@ -710,15 +708,12 @@ function getCalendarEvents(data, user, role, profile) {
       events.push({
         date:   String(o.expected_ship_date).substring(0, 10),
         type:   'shipment',
-        label:  '예정 출고',
+        title:  o.requested_item || '예정 출고',
         caseId: o.case_id,
-        detail: o.requested_item || '',
       });
     });
 
   // 4. 팀 일정 (Appointments)
-  const aptCaseMap = {};
-  cachedRead_(ss, CONFIG.SHEETS.CASES).forEach(c => { aptCaseMap[c.case_id] = c; });
   cachedRead_(ss, CONFIG.SHEETS.APPOINTMENTS)
     .filter(a => caseIdSet.has(a.case_id))
     .forEach(a => {
@@ -726,9 +721,8 @@ function getCalendarEvents(data, user, role, profile) {
       events.push({
         date:   String(a.scheduled_date).substring(0, 10),
         type:   'appointment',
-        label:  a.appointment_type || '일정',
+        title:  a.appointment_type || '일정',
         caseId: a.case_id,
-        detail: a.location || a.notes || '',
       });
     });
 
@@ -741,9 +735,8 @@ function getCalendarEvents(data, user, role, profile) {
         events.push({
           date:   String(b.due_date).substring(0, 10),
           type:   'billing',
-          label:  '결제 마감',
+          title:  '결제 마감',
           caseId: b.case_id,
-          detail: b.invoice_amount ? b.invoice_amount + ' ' + (b.currency||'') : '',
         });
       });
   }
@@ -851,7 +844,7 @@ function cachedRead_(ss, sheetName) {
     if (hit) return JSON.parse(hit);
   } catch(e) {}
 
-  const rows = cachedRead_(ss, sheetName);
+  const rows = sheetToObjects_(ss, sheetName);
   try {
     const json = JSON.stringify(rows);
     if (json.length < 95000) {

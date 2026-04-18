@@ -185,6 +185,7 @@ function showLeadDetail(lead) {
     </div>
   `;
   const TERMINATED = ['Converted', 'Closed - No Progress'];
+  const canCreate  = ['MSO Admin', 'MSO Coordinator'].includes(APP.role);
   const canConvert = canCreate && !TERMINATED.includes(lead.lead_status);
   const footer = `
     <button class="btn btn-secondary" onclick="closeModal()">닫기</button>

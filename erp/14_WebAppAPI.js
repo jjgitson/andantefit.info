@@ -236,7 +236,6 @@ function createPatient(data, user, role) {
 
 function getCases(data, user, role, profile) {
   const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-  // 목록 조회는 항상 최신 데이터 (캐시 강제 무효화 후 재읽기)
   invalidateCache_(CONFIG.SHEETS.CASES);
   let cases = cachedRead_(ss, CONFIG.SHEETS.CASES);
   cases = filterCasesByRole_(cases, user, role, profile);
@@ -245,10 +244,15 @@ function getCases(data, user, role, profile) {
     cases = cases.filter(c => !c.is_deleted || String(c.is_deleted).toLowerCase() === 'false');
   }
   if (data.status) cases = cases.filter(c => c.case_status === data.status);
+
+  const patMap = buildPatientNameMap_(ss);
+  cases = cases.map(c => ({ ...c, patient_name: patMap[c.case_id] || '' }));
+
   if (data.search) {
     const q = data.search.toLowerCase();
     cases = cases.filter(c =>
       (c.case_id||'').toLowerCase().includes(q) ||
+      (c.patient_name||'').toLowerCase().includes(q) ||
       (c.hospital_id||'').toLowerCase().includes(q) ||
       (c.target_indication||'').toLowerCase().includes(q)
     );
@@ -519,6 +523,9 @@ function getSupplierOrders(data, user, role, profile) {
   if (data.caseId) orders = orders.filter(o => o.case_id === data.caseId);
   if (data.status) orders = orders.filter(o => o.supplier_status === data.status);
 
+  const patMap = buildPatientNameMap_(ss);
+  orders = orders.map(o => ({ ...o, patient_name: patMap[o.case_id] || '' }));
+
   return { orders };
 }
 
@@ -562,6 +569,8 @@ function getBilling(data, user, role) {
   if (data.onlyOutstanding) {
     rows = rows.filter(b => [CONFIG.PAYMENT_STATUS.INVOICE_SENT, CONFIG.PAYMENT_STATUS.PARTIALLY_PAID].includes(b.payment_status));
   }
+  const patMap = buildPatientNameMap_(ss);
+  rows = rows.map(b => ({ ...b, patient_name: patMap[b.case_id] || '' }));
   return { billing: rows };
 }
 
@@ -643,6 +652,9 @@ function getFollowups(data, user, role, profile) {
   }
   if (data.caseId) rows = rows.filter(f => f.case_id === data.caseId);
   if (data.onlyPending) rows = rows.filter(f => !f.completed_date);
+
+  const patMap = buildPatientNameMap_(ss);
+  rows = rows.map(f => ({ ...f, patient_name: patMap[f.case_id] || '' }));
 
   return { followups: rows };
 }
@@ -865,6 +877,20 @@ function createProcedure_api(data, user, role) {
 // ════════════════════════════════════════════════════════════
 // 공통 유틸
 // ════════════════════════════════════════════════════════════
+
+/**
+ * case_id → patient_name 맵 반환
+ * Cases + Patients 시트를 조인
+ */
+function buildPatientNameMap_(ss) {
+  const cases    = cachedRead_(ss, CONFIG.SHEETS.CASES);
+  const patients = cachedRead_(ss, CONFIG.SHEETS.PATIENTS);
+  const patMap   = {};
+  patients.forEach(p => { patMap[p.patient_id] = p.full_name || p.patient_code || ''; });
+  const caseMap  = {};
+  cases.forEach(c => { caseMap[c.case_id] = patMap[c.patient_id] || ''; });
+  return caseMap;
+}
 
 /**
  * 시트를 객체 배열로 변환

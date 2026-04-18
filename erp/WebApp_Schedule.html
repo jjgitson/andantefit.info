@@ -30,8 +30,12 @@ var CAL_TABS = [
 ];
 
 function getScheduleHTML(params) {
+  var activeTab = (params && params.tab) || 'mso';
+  var activeIdx = CAL_TABS.findIndex(t => t.id === activeTab);
+  if (activeIdx < 0) activeIdx = 0;
+
   var tabs = CAL_TABS.map((t, i) =>
-    `<div class="tab ${i===0?'active':''}" onclick="switchCalTab(this,'cal-${t.id}')">${t.label}</div>`
+    `<div class="tab ${i===activeIdx?'active':''}" onclick="switchCalTab(this,'cal-${t.id}')">${t.label}</div>`
   ).join('');
 
   var panes = CAL_TABS.map((t, i) => {
@@ -43,7 +47,7 @@ function getScheduleHTML(params) {
       + '&ctz=Asia%2FSeoul&hl=ko&mode=MONTH'
       + '&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0';
     return `
-      <div class="tab-content ${i===0?'active':''}" id="cal-${t.id}">
+      <div class="tab-content ${i===activeIdx?'active':''}" id="cal-${t.id}">
         <iframe src="${url}"
           style="border:0;width:100%;height:calc(100vh - 220px);min-height:520px;border-radius:var(--radius)"
           frameborder="0" scrolling="no" allowfullscreen></iframe>

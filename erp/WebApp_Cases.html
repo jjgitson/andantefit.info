@@ -102,13 +102,15 @@ function renderCaseRows_(cases) {
     return `
     <tr class="case-row clickable-row"
       data-id="${c.case_id}"
+      data-name="${c.patient_name || ''}"
       data-status="${c.case_status}"
       data-priority="${c.priority || ''}"
       onclick="loadPage('caseDetail', {caseId:'${c.case_id}'})"
       style="${isDeleted ? 'opacity:0.45;background:#fff5f5' : isUrgent ? 'background:#fff8f0' : ''}"
     >
       <td>
-        <div style="font-weight:600;font-size:13px">${c.case_id}${isDeleted ? ' <span class="badge badge-red" style="font-size:10px">삭제됨</span>' : ''}</div>
+        <div style="font-weight:600;font-size:13px">${c.patient_name || c.case_id}${isDeleted ? ' <span class="badge badge-red" style="font-size:10px">삭제됨</span>' : ''}</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-top:1px">${c.case_id}</div>
         <div class="mobile-only" style="font-size:11px;color:var(--gray-600);margin-top:2px">${c.hospital_id || '-'} · ${c.target_indication || '-'}</div>
       </td>
       <td class="mobile-hide">
@@ -137,7 +139,7 @@ function filterCases() {
   const status   = document.getElementById('caseStepFilter').value;
   const priority = document.getElementById('casePriorityFilter').value;
   document.querySelectorAll('.case-row').forEach(row => {
-    const id  = row.dataset.id.toLowerCase();
+    const id  = (row.dataset.id + ' ' + (row.dataset.name||'')).toLowerCase();
     const ok  = (!search   || id.includes(search)) &&
                 (!status   || row.dataset.status === status) &&
                 (!priority || row.dataset.priority === priority);

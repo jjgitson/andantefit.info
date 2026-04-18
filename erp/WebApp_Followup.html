@@ -37,7 +37,7 @@ function getFollowupHTML(params) {
                 const daysOver = Math.floor((today - new Date(f.due_date)) / (1000*60*60*24));
                 return `
                   <tr style="background:#fff0f0">
-                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})">${f.case_id}</a></td>
+                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})"><strong>${f.patient_name||f.case_id}</strong><br><span style="font-size:11px;color:var(--gray-500)">${f.case_id}</span></a></td>
                     <td><strong>${f.followup_stage}</strong></td>
                     <td style="color:var(--danger)">${fmtDate(f.due_date)}</td>
                     <td><span class="badge badge-red">+${daysOver}일</span></td>
@@ -82,10 +82,10 @@ function getFollowupHTML(params) {
                 const isOver = f.due_date && !f.completed_date && new Date(f.due_date) < today;
                 const isDone = !!f.completed_date;
                 return `
-                  <tr class="fup-row" data-caseid="${f.case_id}" data-stage="${f.followup_stage}"
+                  <tr class="fup-row" data-caseid="${f.case_id}" data-name="${f.patient_name||''}" data-stage="${f.followup_stage}"
                       data-done="${isDone ? 'done' : 'pending'}"
                       style="${isOver ? 'background:#fff8f0' : isDone ? 'opacity:.7' : ''}">
-                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})">${f.case_id}</a></td>
+                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})"><strong>${f.patient_name||f.case_id}</strong><br><span style="font-size:11px;color:var(--gray-500)">${f.case_id}</span></a></td>
                     <td><strong>${f.followup_stage}</strong></td>
                     <td style="${isOver ? 'color:var(--danger)' : ''}">${fmtDate(f.due_date)}</td>
                     <td class="mobile-hide">${f.completed_date ? fmtDate(f.completed_date) : '<span style="color:var(--gray-500)">-</span>'}</td>
@@ -112,7 +112,7 @@ function filterFollowups() {
   const stage = document.getElementById('fupStageFilter').value;
   const done = document.getElementById('fupDoneFilter').value;
   document.querySelectorAll('.fup-row').forEach(row => {
-    const ok = (!search || row.dataset.caseid.toLowerCase().includes(search)) &&
+    const ok = (!search || (row.dataset.caseid + ' ' + (row.dataset.name||'')).toLowerCase().includes(search)) &&
                (!stage || row.dataset.stage === stage) &&
                (!done || row.dataset.done === done);
     row.style.display = ok ? '' : 'none';

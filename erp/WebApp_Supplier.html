@@ -83,11 +83,11 @@ function renderOrderRows_(orders, isSupplier) {
     const canConfirmDelivery = ['MSO Admin','MSO Coordinator'].includes(APP.role) && o.supplier_status === 'In Transit';
 
     return `
-      <tr class="order-row" data-id="${o.supplier_order_id}" data-caseid="${o.case_id}"
+      <tr class="order-row" data-id="${o.supplier_order_id}" data-caseid="${o.case_id}" data-name="${o.patient_name||''}"
           data-status="${o.supplier_status}" data-acceptance="${o.acceptance_check_status}"
           style="${isDelayed ? 'background:#fff8e1' : ''}">
         <td class="mobile-hide"><code>${o.supplier_order_id}</code></td>
-        <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${o.case_id}'})">${o.case_id}</a></td>
+        <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${o.case_id}'})"><strong>${o.patient_name||o.case_id}</strong><br><span style="font-size:11px;color:var(--gray-500)">${o.case_id}</span></a></td>
         ${!isSupplier ? `<td class="mobile-hide">${o.supplier_id||'-'}</td>` : ''}
         <td class="mobile-hide">${o.requested_item||'-'}</td>
         <td style="${isDelayed ? 'color:var(--danger);font-weight:700' : ''}">${fmtDate(o.expected_ship_date)}</td>
@@ -111,7 +111,7 @@ function filterOrders() {
   const status = document.getElementById('orderStatusFilter').value;
   const acceptance = document.getElementById('acceptanceFilter').value;
   document.querySelectorAll('.order-row').forEach(row => {
-    const id = (row.dataset.id + row.dataset.caseid).toLowerCase();
+    const id = (row.dataset.id + ' ' + row.dataset.caseid + ' ' + (row.dataset.name||'')).toLowerCase();
     const ok = (!search || id.includes(search)) &&
                (!status || row.dataset.status === status) &&
                (!acceptance || row.dataset.acceptance === acceptance);

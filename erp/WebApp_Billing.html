@@ -31,7 +31,7 @@ function getBillingHTML(params) {
               ${overdue.map(b => `
                 <tr style="background:#fff0f0">
                   <td class="mobile-hide"><code>${b.billing_id}</code></td>
-                  <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})">${b.case_id}</a></td>
+                  <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})"><strong>${b.patient_name||b.case_id}</strong><br><span style="font-size:11px;color:var(--gray-500)">${b.case_id}</span></a></td>
                   <td class="mobile-hide">${fmtMoney(b.invoice_amount)}</td>
                   <td style="color:var(--danger);font-weight:700">${fmtMoney(Number(b.invoice_amount||0)-Number(b.paid_amount||0))}</td>
                   <td style="color:var(--danger)">${fmtDate(b.due_date)}</td>
@@ -80,10 +80,10 @@ function getBillingHTML(params) {
                 const isOverdue = b.due_date && new Date(b.due_date) < today &&
                   ['Invoice Sent','Partially Paid'].includes(b.payment_status);
                 return `
-                  <tr class="bill-row" data-id="${b.billing_id}" data-caseid="${b.case_id}" data-status="${b.payment_status}"
+                  <tr class="bill-row" data-id="${b.billing_id}" data-caseid="${b.case_id}" data-name="${b.patient_name||''}" data-status="${b.payment_status}"
                     style="${isOverdue ? 'background:#fff8f0' : ''}">
                     <td class="mobile-hide"><code>${b.billing_id}</code></td>
-                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})">${b.case_id}</a></td>
+                    <td><a href="#" onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})"><strong>${b.patient_name||b.case_id}</strong><br><span style="font-size:11px;color:var(--gray-500)">${b.case_id}</span></a></td>
                     <td class="mobile-hide">${b.currency||'KRW'}</td>
                     <td class="mobile-hide">${fmtMoney(b.quote_amount)}</td>
                     <td class="mobile-hide">${fmtMoney(b.invoice_amount)}</td>
@@ -112,7 +112,7 @@ function filterBilling() {
   const search = document.getElementById('billSearch').value.toLowerCase();
   const status = document.getElementById('billStatusFilter').value;
   document.querySelectorAll('.bill-row').forEach(row => {
-    const id = (row.dataset.id + row.dataset.caseid).toLowerCase();
+    const id = (row.dataset.id + ' ' + row.dataset.caseid + ' ' + (row.dataset.name||'')).toLowerCase();
     const ok = (!search || id.includes(search)) && (!status || row.dataset.status === status);
     row.style.display = ok ? '' : 'none';
   });

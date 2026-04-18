@@ -65,7 +65,7 @@ function issueQuote(billingId, params) {
     const caseData = getCaseData_(billing.case_id);
     const patientCode = caseData ? getPatientCode_(caseData.patient_id) : billing.case_id;
     const eventId = createBillingDueEvent(
-      billing.case_id, patientCode, params.quoteAmount, new Date(params.dueDate)
+      billing.case_id, patientCode, params.quoteAmount, new Date(params.dueDate), billingId
     );
     updateBillingField_(billingId, 'calendar_event_id', eventId, params.issuedBy);
   }

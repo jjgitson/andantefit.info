@@ -41,27 +41,66 @@ function getDashboardData(user, role, profile) {
   }, {});
   const totalActiveCases = myCases.filter(c => !TERMINAL.includes(c.case_status)).length;
 
+  const patMap = buildPatientNameMap_(ss);
+
+  // 환자명 보강 헬퍼
+  function withName(c) { return { ...c, patient_name: patMap[c.case_id] || '' }; }
+
+  const upcomingTreatments = myCases
+    .filter(c => c.treatment_date && new Date(c.treatment_date) >= today &&
+      c.case_status === CONFIG.CASE_STATUS.SCHEDULED)
+    .sort((a,b) => new Date(a.treatment_date) - new Date(b.treatment_date))
+    .slice(0, 7)
+    .map(withName);
+
+  // 기한 초과 추적관찰 — 최대 5건, 경과일 포함
+  const overdueFollowupsList = followups
+    .filter(f => f.due_date && !f.completed_date && new Date(f.due_date) < today &&
+      myCaseIdSet.has(f.case_id))
+    .sort((a,b) => new Date(a.due_date) - new Date(b.due_date))
+    .slice(0, 5)
+    .map(f => ({
+      ...f,
+      patient_name: patMap[f.case_id] || '',
+      days_overdue: Math.floor((today - new Date(f.due_date)) / (1000*60*60*24)),
+    }));
+
+  // 검수 대기 목록 — 최대 5건
+  const pendingAcceptanceList = orders
+    .filter(o => o.supplier_status === CONFIG.SUPPLIER_STATUS.DELIVERED &&
+      o.acceptance_check_status !== CONFIG.ACCEPTANCE_STATUS.ACCEPTED &&
+      myCaseIdSet.has(o.case_id))
+    .slice(0, 5)
+    .map(o => ({ ...o, patient_name: patMap[o.case_id] || '' }));
+
+  // 미수금 케이스 — 최대 5건
+  const outstandingBillingList = billing
+    .filter(b => [CONFIG.PAYMENT_STATUS.INVOICE_SENT, CONFIG.PAYMENT_STATUS.PARTIALLY_PAID]
+      .includes(b.payment_status) && myCaseIdSet.has(b.case_id))
+    .map(b => ({
+      ...b,
+      patient_name: patMap[b.case_id] || '',
+      outstanding: Number(b.invoice_amount||0) - Number(b.paid_amount||0),
+    }))
+    .sort((a,b) => b.outstanding - a.outstanding)
+    .slice(0, 5);
+
   return {
     newLeads:           activeLeads.filter(l => l.lead_status === CONFIG.LEAD_STATUS.NEW).length,
     pendingReviews,
-    upcomingTreatments: myCases
-      .filter(c => c.treatment_date && new Date(c.treatment_date) >= today &&
-        c.case_status === CONFIG.CASE_STATUS.SCHEDULED)
-      .sort((a,b) => new Date(a.treatment_date) - new Date(b.treatment_date))
-      .slice(0, 5),
-    overdueFollowups: followups
-      .filter(f => f.due_date && !f.completed_date && new Date(f.due_date) < today)
-      .length,
+    upcomingTreatments,
+    overdueFollowups:   overdueFollowupsList.length,
+    overdueFollowupsList,
     outstandingAmount: billing
       .filter(b => [CONFIG.PAYMENT_STATUS.INVOICE_SENT, CONFIG.PAYMENT_STATUS.PARTIALLY_PAID]
         .includes(b.payment_status))
       .reduce((s, b) => s + (Number(b.invoice_amount||0) - Number(b.paid_amount||0)), 0),
+    outstandingBillingList,
     delayedOrders: orders.filter(o =>
       [CONFIG.SUPPLIER_STATUS.REQUESTED, CONFIG.SUPPLIER_STATUS.CONFIRMED].includes(o.supplier_status) &&
       o.expected_ship_date && new Date(o.expected_ship_date) < today).length,
-    pendingAcceptance: orders.filter(o =>
-      o.supplier_status === CONFIG.SUPPLIER_STATUS.DELIVERED &&
-      o.acceptance_check_status !== CONFIG.ACCEPTANCE_STATUS.ACCEPTED).length,
+    pendingAcceptance: pendingAcceptanceList.length,
+    pendingAcceptanceList,
     casesByStatus,
     totalActiveCases,
   };

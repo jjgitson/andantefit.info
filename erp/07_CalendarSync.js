@@ -31,7 +31,11 @@ function getCalendarId_(calendarType) {
  * @param {Date} [endTime] - 생략 시 startTime + 1시간
  * @returns {string} 생성된 이벤트 ID
  */
-function createCalendarEvent(calendarType, title, startTime, description, endTime) {
+/**
+ * @param {Object} [erpMeta] - { entity: 'case'|'supplier_order'|'billing'|'followup', id: string, field: string }
+ *   When set, tags the event so syncCalendarChangesToERP can write back when event is moved.
+ */
+function createCalendarEvent(calendarType, title, startTime, description, endTime, erpMeta) {
   try {
     const calendarId = getCalendarId_(calendarType);
     const calendar = calendarId === 'primary'
@@ -50,11 +54,36 @@ function createCalendarEvent(calendarType, title, startTime, description, endTim
       description: description || '',
     });
 
+    if (erpMeta && erpMeta.entity) {
+      event.setTag('ERP_ENTITY', erpMeta.entity);
+      event.setTag('ERP_ID',     erpMeta.id     || '');
+      event.setTag('ERP_FIELD',  erpMeta.field  || '');
+    }
+
     Logger.log(`캘린더 이벤트 생성: [${calendarType}] ${title}`);
     return event.getId();
   } catch (err) {
     Logger.log(`캘린더 이벤트 생성 실패: ${err.message}`);
     return null;
+  }
+}
+
+/**
+ * 캘린더 이벤트 날짜 변경 (ERP에서 날짜를 수정할 때 호출)
+ */
+function rescheduleCalendarEvent(calendarType, eventId, newDate) {
+  try {
+    const calendarId = getCalendarId_(calendarType);
+    const calendar = calendarId === 'primary'
+      ? CalendarApp.getDefaultCalendar()
+      : CalendarApp.getCalendarById(calendarId);
+    const event = calendar.getEventById(eventId);
+    if (!event) return;
+    const start = new Date(newDate);
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+    event.setTime(start, end);
+  } catch (err) {
+    Logger.log(`캘린더 이벤트 날짜 변경 실패: ${err.message}`);
   }
 }
 
@@ -121,8 +150,9 @@ function createTreatmentDayEvent(caseId, treatmentDate, patientCode, coordinator
     `유형: 시술일`,
   ].join('\n');
 
-  const msoEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER, title, treatmentDate, desc);
-  const hospEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.HOSPITAL_COORD, title, treatmentDate, desc);
+  const erpMeta = { entity: 'case', id: caseId, field: 'treatment_date' };
+  const msoEventId  = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER,     title, treatmentDate, desc);
+  const hospEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.HOSPITAL_COORD, title, treatmentDate, desc, null, erpMeta);
 
   return { msoEventId, hospEventId };
 }
@@ -133,36 +163,36 @@ function createTreatmentDayEvent(caseId, treatmentDate, patientCode, coordinator
  * @param {string} followupStage - 'D7', 'D30', etc.
  * @param {Date} dueDate
  */
-function createFollowupEvent(caseId, followupStage, dueDate) {
+function createFollowupEvent(caseId, followupStage, dueDate, followupId) {
   const title = `[추적] ${caseId} - Follow-up ${followupStage}`;
   const desc = `케이스 ID: ${caseId}\n추적관찰 단계: ${followupStage}\n마감일: ${Utilities.formatDate(new Date(dueDate), 'Asia/Seoul', 'yyyy-MM-dd')}`;
-
-  return createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER, title, new Date(dueDate), desc);
+  const erpMeta = followupId ? { entity: 'followup', id: followupId, field: 'due_date' } : null;
+  return createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER, title, new Date(dueDate), desc, null, erpMeta);
 }
 
 /**
  * 결제 마감일 이벤트 생성 → MSO_MASTER + BILLING_DEADLINE
  */
-function createBillingDueEvent(caseId, patientCode, amount, dueDate) {
+function createBillingDueEvent(caseId, patientCode, amount, dueDate, billingId) {
   const title = `[미납] ${patientCode} - ${amount}`;
   const desc = `케이스 ID: ${caseId}\n환자 코드: ${patientCode}\n청구금액: ${amount}\n결제 마감일: ${Utilities.formatDate(new Date(dueDate), 'Asia/Seoul', 'yyyy-MM-dd')}`;
   const d = new Date(dueDate);
-
+  const erpMeta = billingId ? { entity: 'billing', id: billingId, field: 'due_date' } : null;
   const msoEventId     = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER,       title, d, desc);
-  const billingEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.BILLING_DEADLINE,  title, d, desc);
+  const billingEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.BILLING_DEADLINE,  title, d, desc, null, erpMeta);
   return { msoEventId, billingEventId };
 }
 
 /**
  * 공급 출고 예정 이벤트 생성 → MSO_MASTER + SUPPLIER_LOGISTICS
  */
-function createShipmentEtaEvent(caseId, supplierName, shipDate) {
+function createShipmentEtaEvent(caseId, supplierName, shipDate, orderId) {
   const title = `[출고] ${caseId} - ${supplierName}`;
   const desc = `케이스 ID: ${caseId}\n공급업체: ${supplierName}\n예상 출고일: ${Utilities.formatDate(new Date(shipDate), 'Asia/Seoul', 'yyyy-MM-dd')}`;
   const d = new Date(shipDate);
-
-  const msoEventId      = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER,          title, d, desc);
-  const logisticsEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.SUPPLIER_LOGISTICS,  title, d, desc);
+  const erpMeta = orderId ? { entity: 'supplier_order', id: orderId, field: 'expected_ship_date' } : null;
+  const msoEventId       = createCalendarEvent(CONFIG.CALENDAR_TYPES.MSO_MASTER,          title, d, desc);
+  const logisticsEventId = createCalendarEvent(CONFIG.CALENDAR_TYPES.SUPPLIER_LOGISTICS,   title, d, desc, null, erpMeta);
   return { msoEventId, logisticsEventId };
 }
 

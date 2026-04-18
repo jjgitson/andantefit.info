@@ -66,7 +66,7 @@ function createSupplierOrder(params) {
   const supplierName = getSupplierName_(params.supplierId);
 
   if (params.expectedShipDate) {
-    createShipmentEtaEvent(params.caseId, supplierName, new Date(params.expectedShipDate));
+    createShipmentEtaEvent(params.caseId, supplierName, new Date(params.expectedShipDate), orderId);
   }
 
   addActivityLog({

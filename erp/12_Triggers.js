@@ -31,8 +31,14 @@ function setupAllTriggers() {
     .inTimezone('Asia/Seoul')
     .create();
 
+  // 4. 15분마다 - 구글 캘린더 → ERP 역방향 동기화
+  ScriptApp.newTrigger('syncCalendarChangesToERP')
+    .timeBased()
+    .everyMinutes(15)
+    .create();
+
   Logger.log('트리거 설정 완료');
-  SpreadsheetApp.getUi().alert('트리거 설정이 완료되었습니다.\n- onEdit 감사 추적\n- 매일 09:00 리마인드\n- 매주 월요일 08:00 주간 요약');
+  SpreadsheetApp.getUi().alert('트리거 설정이 완료되었습니다.\n- onEdit 감사 추적\n- 매일 09:00 리마인드\n- 매주 월요일 08:00 주간 요약\n- 15분마다 캘린더 역동기화');
 }
 
 /**
@@ -107,5 +113,114 @@ function onOpen() {
     .addSeparator()
     .addItem('리마인드 즉시 실행', 'runDueDateReminderJob')
     .addItem('주간 요약 즉시 실행', 'runWeeklySummaryJob')
+    .addItem('캘린더 역동기화 즉시 실행', 'syncCalendarChangesToERP')
     .addToUi();
+}
+
+// ─── 캘린더 → ERP 역방향 동기화 ──────────────────────────────
+
+/**
+ * 구글 캘린더에서 이벤트를 이동하면 해당 ERP 레코드 날짜를 자동 업데이트.
+ * setupAllTriggers()로 15분마다 실행되도록 등록.
+ */
+function syncCalendarChangesToERP() {
+  const props = PropertiesService.getScriptProperties();
+  const lastSyncStr = props.getProperty('LAST_CAL_SYNC');
+  const lastSyncTime = lastSyncStr ? new Date(lastSyncStr) : new Date(Date.now() - 20 * 60 * 1000);
+  const now = new Date();
+
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+
+  // 과거 30일 ~ 미래 365일 범위 이벤트를 폴링 (Google Calendar에는 updatedMin API가 없어 날짜로 필터)
+  const searchStart = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const searchEnd   = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+
+  // MSO_MASTER는 집합 캘린더라 중복 처리되므로 개별 캘린더만 폴링
+  const calTypes = [
+    CONFIG.CALENDAR_TYPES.HOSPITAL_COORD,
+    CONFIG.CALENDAR_TYPES.SUPPLIER_LOGISTICS,
+    CONFIG.CALENDAR_TYPES.BILLING_DEADLINE,
+  ];
+
+  const processed = {};  // entity:id:field → true (중복 방지)
+
+  calTypes.forEach(calType => {
+    try {
+      const calId = getCalendarId_(calType);
+      const calendar = CalendarApp.getCalendarById(calId);
+      if (!calendar) return;
+
+      const events = calendar.getEvents(searchStart, searchEnd);
+      events.forEach(event => {
+        try {
+          if (event.getLastUpdated() <= lastSyncTime) return;
+
+          const entity = event.getTag('ERP_ENTITY');
+          const id     = event.getTag('ERP_ID');
+          const field  = event.getTag('ERP_FIELD');
+          if (!entity || !id || !field) return;
+
+          const key = `${entity}:${id}:${field}`;
+          if (processed[key]) return;
+          processed[key] = true;
+
+          updateErpFieldFromCalendar_(ss, entity, id, field, event.getStartTime());
+        } catch (eInner) {
+          Logger.log(`이벤트 처리 오류: ${eInner.message}`);
+        }
+      });
+    } catch (e) {
+      Logger.log(`캘린더 동기화 오류 [${calType}]: ${e.message}`);
+    }
+  });
+
+  props.setProperty('LAST_CAL_SYNC', now.toISOString());
+  Logger.log(`캘린더 역동기화 완료: ${now.toISOString()}`);
+}
+
+function updateErpFieldFromCalendar_(ss, entity, id, field, newDate) {
+  const entityMap = {
+    case:           { sheet: CONFIG.SHEETS.CASES,           idCol: 'case_id' },
+    supplier_order: { sheet: CONFIG.SHEETS.SUPPLIER_ORDERS, idCol: 'supplier_order_id' },
+    billing:        { sheet: CONFIG.SHEETS.BILLING,         idCol: 'billing_id' },
+    followup:       { sheet: CONFIG.SHEETS.FOLLOWUPS,       idCol: 'followup_id' },
+  };
+  const meta = entityMap[entity];
+  if (!meta) return;
+
+  const sheet = ss.getSheetByName(meta.sheet);
+  if (!sheet) return;
+
+  const rows = sheet.getDataRange().getValues();
+  const headers = rows[0];
+  const idIdx    = headers.indexOf(meta.idCol);
+  const fieldIdx = headers.indexOf(field);
+  if (idIdx < 0 || fieldIdx < 0) return;
+
+  for (let i = 1; i < rows.length; i++) {
+    if (String(rows[i][idIdx]) !== String(id)) continue;
+
+    const oldVal = rows[i][fieldIdx];
+    const newDateOnly = Utilities.formatDate(newDate, 'Asia/Seoul', 'yyyy-MM-dd');
+    const oldDateOnly = oldVal ? Utilities.formatDate(new Date(oldVal), 'Asia/Seoul', 'yyyy-MM-dd') : '';
+    if (newDateOnly === oldDateOnly) return;  // 변경 없음
+
+    sheet.getRange(i + 1, fieldIdx + 1).setValue(newDate);
+    invalidateCache_(meta.sheet);
+
+    const caseIdIdx = headers.indexOf('case_id');
+    const caseId = (caseIdIdx >= 0 ? rows[i][caseIdIdx] : '') || '';
+
+    createAuditLog(meta.sheet, id, field, oldVal, newDate, 'calendar-sync', 'Google Calendar');
+    addActivityLog({
+      caseId: entity === 'case' ? id : caseId,
+      actorEmail: 'calendar-sync@system',
+      actorRole: 'System',
+      actionType: 'CALENDAR_SYNC_UPDATE',
+      summary: `캘린더 이동 감지 → ${field}: ${oldDateOnly} → ${newDateOnly}`,
+    });
+
+    Logger.log(`캘린더 역동기화: ${entity} ${id}.${field} ${oldDateOnly} → ${newDateOnly}`);
+    return;
+  }
 }

@@ -2,87 +2,84 @@
 console.log('[MSO] dashboard include loaded');
 function getDashboardHTML(params) {
   showLoading(true);
-
-  // Step A: callServer('ping') — 인증 흐름 전체(handleClientRequest + nonce) 테스트
-  // ping이 실패하면 인증 문제, ping이 성공하면 dashboard.summary 액션 매핑 문제
-  console.log('[MSO][dashboard] Step A: callServer ping test');
   callServer('ping', {})
-    .then(function(r) {
-      console.log('[MSO][dashboard] Step A ping OK:', JSON.stringify(r));
-      // Step B: 실제 대시보드 데이터 요청
-      console.log('[MSO][dashboard] Step B: callServer dashboard.summary');
-      return callServer('dashboard.summary', {});
-    })
-    .then(function(data) {
-      console.log('[MSO][dashboard] Step B dashboard.summary OK');
-      renderDashboard_(data);
-    })
-    .catch(function(err) {
-      console.error('[MSO][dashboard] FAILED:', err.message);
-      renderDashboardFallback_(err.message);
-    });
+    .then(() => callServer('dashboard.summary', {}))
+    .then(data => renderDashboard_(data))
+    .catch(err => renderDashboardFallback_(err.message));
 }
 
 function renderDashboard_(d) {
-  const treatments   = Array.isArray(d.upcomingTreatments) ? d.upcomingTreatments : [];
-  const casesByStatus = d.casesByStatus || {};
+  const treatments       = Array.isArray(d.upcomingTreatments)    ? d.upcomingTreatments    : [];
+  const overdueList      = Array.isArray(d.overdueFollowupsList)   ? d.overdueFollowupsList   : [];
+  const acceptanceList   = Array.isArray(d.pendingAcceptanceList)  ? d.pendingAcceptanceList  : [];
+  const billingList      = Array.isArray(d.outstandingBillingList) ? d.outstandingBillingList : [];
+  const casesByStatus    = d.casesByStatus || {};
+  const criticalCount    = (d.overdueFollowups||0) + (d.delayedOrders||0) + (d.pendingAcceptance||0);
 
   const PIPELINE = [
-    ['Draft',                    '초안'],
-    ['Hospital Approved',        '병원 승인'],
-    ['Supplier Coordination',    '공급 조율'],
-    ['Shipment In Transit',      '배송 중'],
-    ['Acceptance Check Pending', '검수 대기'],
-    ['Acceptance Confirmed',     '입고 확인'],
-    ['Scheduled',                '시술 예정'],
-    ['Completed',                '시술 완료'],
-    ['Follow-up Ongoing',        '추적관찰 중'],
+    ['Draft',                    '초안',        'var(--gray-400)'],
+    ['Hospital Approved',        '병원 승인',   'var(--primary)'],
+    ['Supplier Coordination',    '공급 조율',   '#f59e0b'],
+    ['Shipment In Transit',      '배송 중',     '#f59e0b'],
+    ['Acceptance Check Pending', '검수 대기',   '#ef4444'],
+    ['Acceptance Confirmed',     '출고 확정',   'var(--primary)'],
+    ['Scheduled',                '시술 예정',   '#8b5cf6'],
+    ['Completed',                '시술 완료',   'var(--success)'],
+    ['Follow-up Ongoing',        '추적관찰 중', 'var(--success)'],
   ];
-  const pipelineHTML = PIPELINE.map(function(pair) {
-    const status = pair[0], label = pair[1];
+
+  const pipelineHTML = PIPELINE.map(([status, label, color]) => {
     const count = casesByStatus[status] || 0;
-    const active = count > 0;
-    return `<div onclick="loadPage('cases')" style="cursor:pointer;text-align:center;min-width:76px;padding:8px 10px;border-radius:6px;background:${active?'#e8f4fd':'var(--gray-100)'};border:1px solid ${active?'#1a73e8':'var(--gray-200)'}">
-      <div style="font-size:20px;font-weight:700;color:${active?'#1a73e8':'var(--gray-400)'}">${count}</div>
-      <div style="font-size:10px;color:var(--gray-600);margin-top:2px;line-height:1.3">${label}</div>
-    </div>`;
+    return `
+      <div onclick="loadPage('cases')" title="${label}" style="cursor:pointer;text-align:center;padding:8px 10px;min-width:68px;border-radius:8px;border:1px solid ${count>0?color:'var(--gray-200)'};background:${count>0?color+'18':'var(--gray-50)'}">
+        <div style="font-size:22px;font-weight:800;color:${count>0?color:'var(--gray-300)'}">${count}</div>
+        <div style="font-size:10px;color:var(--gray-600);margin-top:2px;line-height:1.3">${label}</div>
+      </div>
+    `;
   }).join('');
 
   const html = `
-    <div class="stat-grid">
-      <div class="stat-card primary" onclick="loadPage('leads')">
-        <div class="stat-number">${d.newLeads || 0}</div>
+    ${criticalCount > 0 ? `
+    <div class="alert alert-error" style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <strong>🔴 즉시 처리 필요</strong> &nbsp;
+      ${d.overdueFollowups > 0 ? `추적관찰 지연 <strong>${d.overdueFollowups}건</strong>` : ''}
+      ${d.delayedOrders > 0 ? `&nbsp;·&nbsp; 납기 지연 <strong>${d.delayedOrders}건</strong>` : ''}
+      ${d.pendingAcceptance > 0 ? `&nbsp;·&nbsp; 검수 대기 <strong>${d.pendingAcceptance}건</strong>` : ''}
+    </div>
+    ` : ''}
+
+    <!-- KPI 카드 -->
+    <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
+      <div class="stat-card blue" onclick="loadPage('cases')" style="cursor:pointer">
+        <div class="stat-number">${d.totalActiveCases||0}</div>
+        <div class="stat-label">진행 중 케이스</div>
+      </div>
+      <div class="stat-card primary" onclick="loadPage('leads')" style="cursor:pointer">
+        <div class="stat-number">${d.newLeads||0}</div>
         <div class="stat-label">신규 리드</div>
       </div>
-      <div class="stat-card blue" onclick="loadPage('cases')">
-        <div class="stat-number">${d.pendingReviews || 0}</div>
-        <div class="stat-label">병원 검토 중</div>
-      </div>
-      <div class="stat-card success" onclick="loadPage('schedule')">
-        <div class="stat-number">${treatments.length}</div>
-        <div class="stat-label">시술 예정</div>
-      </div>
-      <div class="stat-card warning" onclick="loadPage('followup')">
-        <div class="stat-number">${d.overdueFollowups || 0}</div>
+      <div class="stat-card ${d.overdueFollowups>0?'danger':'success'}" onclick="loadPage('followup')" style="cursor:pointer">
+        <div class="stat-number">${d.overdueFollowups||0}</div>
         <div class="stat-label">추적관찰 지연</div>
       </div>
-      <div class="stat-card danger" onclick="loadPage('billing')">
-        <div class="stat-number">${fmtMoney(d.outstandingAmount)}</div>
-        <div class="stat-label">미수금</div>
+      <div class="stat-card ${d.pendingAcceptance>0?'warning':'success'}" onclick="loadPage('supplier')" style="cursor:pointer">
+        <div class="stat-number">${d.pendingAcceptance||0}</div>
+        <div class="stat-label">검수 대기</div>
       </div>
-      <div class="stat-card warning" onclick="loadPage('supplier')">
-        <div class="stat-number">${d.delayedOrders || 0}</div>
+      <div class="stat-card ${d.delayedOrders>0?'warning':'success'}" onclick="loadPage('supplier')" style="cursor:pointer">
+        <div class="stat-number">${d.delayedOrders||0}</div>
         <div class="stat-label">납기 지연</div>
       </div>
-      <div class="stat-card orange" onclick="loadPage('supplier')">
-        <div class="stat-number">${d.pendingAcceptance || 0}</div>
-        <div class="stat-label">검수 대기</div>
+      <div class="stat-card ${d.outstandingAmount>0?'danger':'success'}" onclick="loadPage('billing')" style="cursor:pointer">
+        <div class="stat-number" style="font-size:16px">${fmtMoney(d.outstandingAmount)}</div>
+        <div class="stat-label">미수금</div>
       </div>
     </div>
 
+    <!-- 케이스 파이프라인 -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">📊 케이스 파이프라인 (활성 ${d.totalActiveCases || 0}건)</span>
+        <span class="card-title">케이스 파이프라인 (활성 ${d.totalActiveCases||0}건)</span>
         <button class="btn btn-sm btn-secondary" onclick="loadPage('cases')">전체 보기</button>
       </div>
       <div class="card-body" style="display:flex;gap:8px;flex-wrap:wrap;padding:12px">
@@ -90,26 +87,104 @@ function renderDashboard_(d) {
       </div>
     </div>
 
-    ${treatments.length > 0 ? `
-    <div class="card">
-      <div class="card-header"><span class="card-title">📅 시술 예정 케이스</span></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>케이스 ID</th><th>병원</th><th>시술일</th><th></th></tr></thead>
-          <tbody>
-            ${treatments.map(function(t) { return `
-              <tr class="clickable-row" onclick="loadPage('caseDetail', {caseId:'${t.caseId || t.case_id}'})">
-                <td><strong>${t.caseId || t.case_id || '-'}</strong></td>
-                <td>${t.hospital_name || t.hospital_id || '-'}</td>
-                <td>${fmtDate(t.treatment_date)}</td>
-                <td><button class="btn btn-sm btn-secondary">상세 보기</button></td>
-              </tr>
-            `; }).join('')}
-          </tbody>
-        </table>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+
+      <!-- 시술 예정 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🩺 시술 예정</span>
+          <button class="btn btn-sm btn-secondary" onclick="loadPage('schedule',{tab:'hospital'})">캘린더 보기</button>
+        </div>
+        ${treatments.length === 0
+          ? `<div class="empty-state" style="padding:20px"><h3 style="font-size:13px;color:var(--gray-400)">예정된 시술 없음</h3></div>`
+          : `<div>${treatments.map(t => {
+              const d2 = new Date(t.treatment_date); d2.setHours(0,0,0,0);
+              const today2 = new Date(); today2.setHours(0,0,0,0);
+              const diff = Math.round((d2 - today2) / (1000*60*60*24));
+              const diffLabel = diff === 0 ? '오늘' : diff === 1 ? '내일' : `D-${diff}`;
+              const diffColor = diff <= 1 ? 'var(--danger)' : diff <= 3 ? 'var(--warning)' : 'var(--primary)';
+              return `
+                <div onclick="loadPage('caseDetail',{caseId:'${t.case_id}'})" style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--gray-100);cursor:pointer"
+                     onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background=''">
+                  <div style="flex:1">
+                    <div style="font-weight:600;font-size:13px">${t.patient_name || t.case_id}</div>
+                    <div style="font-size:11px;color:var(--gray-500)">${t.case_id} · ${t.hospital_id||'-'}</div>
+                  </div>
+                  <div style="text-align:right">
+                    <div style="font-size:12px;font-weight:700;color:${diffColor}">${diffLabel}</div>
+                    <div style="font-size:11px;color:var(--gray-500)">${fmtDate(t.treatment_date)}</div>
+                  </div>
+                </div>
+              `;
+            }).join('')}</div>`
+        }
       </div>
+
+      <!-- 추적관찰 지연 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title ${overdueList.length>0?'style="color:var(--danger)"':''}">🔔 추적관찰 지연</span>
+          <button class="btn btn-sm btn-secondary" onclick="loadPage('followup')">전체 보기</button>
+        </div>
+        ${overdueList.length === 0
+          ? `<div class="empty-state" style="padding:20px"><h3 style="font-size:13px;color:var(--gray-400)">지연 없음</h3></div>`
+          : `<div>${overdueList.map(f => `
+              <div onclick="loadPage('caseDetail',{caseId:'${f.case_id}'})" style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--gray-100);cursor:pointer;background:#fff8f8"
+                   onmouseover="this.style.background='#fff0f0'" onmouseout="this.style.background='#fff8f8'">
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:13px">${f.patient_name || f.case_id}</div>
+                  <div style="font-size:11px;color:var(--gray-500)">${f.case_id} · ${f.followup_stage}</div>
+                </div>
+                <span class="badge badge-red">+${f.days_overdue}일</span>
+              </div>
+            `).join('')}</div>`
+        }
+      </div>
+
+      <!-- 검수 대기 -->
+      ${acceptanceList.length > 0 ? `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📦 검수 대기</span>
+          <button class="btn btn-sm btn-secondary" onclick="loadPage('supplier')">전체 보기</button>
+        </div>
+        <div>${acceptanceList.map(o => `
+          <div onclick="loadPage('caseDetail',{caseId:'${o.case_id}'})" style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--gray-100);cursor:pointer"
+               onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background=''">
+            <div style="flex:1">
+              <div style="font-weight:600;font-size:13px">${o.patient_name || o.case_id}</div>
+              <div style="font-size:11px;color:var(--gray-500)">${o.case_id} · ${o.requested_item||o.supplier_order_id}</div>
+            </div>
+            ${statusBadge(o.acceptance_check_status||'Pending')}
+          </div>
+        `).join('')}</div>
+      </div>
+      ` : ''}
+
+      <!-- 미수금 -->
+      ${billingList.length > 0 ? `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">💳 미수금</span>
+          <button class="btn btn-sm btn-secondary" onclick="loadPage('billing')">전체 보기</button>
+        </div>
+        <div>${billingList.map(b => `
+          <div onclick="loadPage('caseDetail',{caseId:'${b.case_id}'})" style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--gray-100);cursor:pointer"
+               onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background=''">
+            <div style="flex:1">
+              <div style="font-weight:600;font-size:13px">${b.patient_name || b.case_id}</div>
+              <div style="font-size:11px;color:var(--gray-500)">${b.case_id} · ${b.invoice_no||b.billing_id}</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:13px;font-weight:700;color:var(--danger)">${fmtMoney(b.outstanding)}</div>
+              ${b.due_date ? `<div style="font-size:11px;color:var(--gray-500)">${fmtDate(b.due_date)}</div>` : ''}
+            </div>
+          </div>
+        `).join('')}</div>
+      </div>
+      ` : ''}
+
     </div>
-    ` : ''}
 
     ${dashboardBottomCards_()}
   `;
@@ -117,7 +192,6 @@ function renderDashboard_(d) {
 }
 
 function renderDashboardFallback_(errMsg) {
-  // 데이터 로드 실패 시에도 기본 UI 렌더링 (메뉴 접근은 항상 가능)
   const html = `
     <div class="alert alert-error" style="margin-bottom:16px">
       대시보드 데이터를 불러오지 못했습니다: ${errMsg || '알 수 없는 오류'}
@@ -129,18 +203,16 @@ function renderDashboardFallback_(errMsg) {
 
 function dashboardBottomCards_() {
   return `
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px">
       <div class="card">
         <div class="card-header"><span class="card-title">⚡ 빠른 작업</span></div>
         <div class="card-body btn-group" style="flex-direction:column;align-items:flex-start">
           ${APP.role !== 'Supplier User' && APP.role !== 'Hospital User' ? `
             <button class="btn btn-primary" onclick="showNewLeadModal()">+ 신규 리드 등록</button>
+            <button class="btn btn-secondary" onclick="showNewCaseModal()">+ 신규 케이스 생성</button>
           ` : ''}
-          <button class="btn btn-secondary" onclick="loadPage('cases')">케이스 목록 보기</button>
-          <button class="btn btn-secondary" onclick="loadPage('followup')">추적관찰 현황</button>
-          ${APP.role === 'Finance User' || APP.role === 'MSO Admin' ? `
-            <button class="btn btn-secondary" onclick="loadPage('billing')">미수금 확인</button>
-          ` : ''}
+          <button class="btn btn-secondary" onclick="loadPage('cases')">케이스 목록</button>
+          <button class="btn btn-secondary" onclick="loadPage('schedule')">팀 일정 캘린더</button>
         </div>
       </div>
       <div class="card">

@@ -145,10 +145,16 @@ function switchTab(event, tabId) {
 function renderKeyEvents_(data, c) {
   const events = [];
 
-  // 시술 예정일
-  if (c.treatment_date) {
-    events.push({ date: c.treatment_date, label: '시술 예정일', icon: '🩺', calTab: 'hospital', color: 'var(--primary)' });
-  }
+  // 시술 예정일 — 미확정이어도 항상 표시
+  events.push({
+    date: c.treatment_date || null,
+    label: '시술 예정일',
+    icon: '🩺',
+    calTab: 'hospital',
+    color: c.treatment_date ? 'var(--primary)' : 'var(--gray-400)',
+    pending: !c.treatment_date,
+    pendingAction: `loadPage('caseDetail',{caseId:'${c.case_id}',_tab:'tab-orders'})`,
+  });
 
   // 예약/방문 일정 (appointments)
   (data.appointments || []).forEach(a => {
@@ -174,10 +180,28 @@ function renderKeyEvents_(data, c) {
     return `<div class="empty-state" style="padding:24px"><div class="empty-state-icon">📅</div><h3>등록된 일정 없음</h3></div>`;
   }
 
-  events.sort((a, b) => new Date(a.date) - new Date(b.date));
+  // pending items go to the bottom; within each group sort by date
+  events.sort((a, b) => {
+    if (a.pending && !b.pending) return 1;
+    if (!a.pending && b.pending) return -1;
+    return new Date(a.date) - new Date(b.date);
+  });
 
   const today = new Date(); today.setHours(0,0,0,0);
   const rows = events.map(ev => {
+    if (ev.pending) {
+      return `
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--gray-100);cursor:pointer;opacity:.6"
+             onclick="${ev.pendingAction || ''}">
+          <span style="font-size:18px">${ev.icon}</span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:600;color:var(--gray-400)">${ev.label}</div>
+            <div style="font-size:12px;color:var(--gray-400)">미확정 — 클릭하여 설정</div>
+          </div>
+          <span style="font-size:11px;color:var(--gray-300)">미정</span>
+        </div>
+      `;
+    }
     const d = new Date(ev.date); d.setHours(0,0,0,0);
     const isPast = d < today;
     const isToday = d.getTime() === today.getTime();

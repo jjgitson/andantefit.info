@@ -28,7 +28,7 @@ function createDefaultFollowups(caseId, treatmentDate) {
     });
 
     // 캘린더 이벤트
-    const eventId = createFollowupEvent(caseId, stage, dueDate);
+    const eventId = createFollowupEvent(caseId, stage, dueDate, followupId);
 
     // 캘린더 이벤트 ID를 Followups에 저장
     updateFollowupField_(followupId, 'calendar_event_id', eventId);

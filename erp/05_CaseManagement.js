@@ -99,47 +99,69 @@ function convertLeadToCase(leadId, caseParams) {
 }
 
 /**
- * 병원 검토 요청
+ * 병원 검토 요청 (반복 가능 — 케이스당 N건)
  * @param {string} caseId
  * @param {string} requestedBy
+ * @param {string} [linkedOrderId] - 추가 검토를 유발한 주문 ID (최초 검토는 생략)
+ * @returns {string} 생성된 review_id
  */
-function requestHospitalReview(caseId, requestedBy) {
-  const now = new Date();
+function requestHospitalReview(caseId, requestedBy, linkedOrderId) {
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
 
-  updateCaseField_(caseId, 'hospital_review_requested_at', now);
+  // 이미 Pending 검토가 있으면 중복 방지
+  const reviewSheet = ss.getSheetByName(CONFIG.SHEETS.MEDICAL_REVIEWS);
+  const reviewData  = reviewSheet.getDataRange().getValues();
+  const reviewHdrs  = reviewData[0];
+  const hasPending  = reviewData.slice(1).some(r =>
+    r[reviewHdrs.indexOf('case_id')]      === caseId &&
+    r[reviewHdrs.indexOf('review_status')] === CONFIG.REVIEW_STATUS.PENDING
+  );
+  if (hasPending) throw new Error('이미 진행 중인 병원 검토가 있습니다. 완료 후 다시 요청해 주세요.');
 
-  // Medical Review 레코드 생성
   const caseData = getCaseData_(caseId);
-  if (caseData) {
-    const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-    const reviewSheet = ss.getSheetByName(CONFIG.SHEETS.MEDICAL_REVIEWS);
-    const reviewId = generateCustomId(CONFIG.SHEETS.MEDICAL_REVIEWS, 'REV', 'review_id');
+  if (!caseData) throw new Error(`케이스를 찾을 수 없습니다: ${caseId}`);
 
-    reviewSheet.appendRow([
-      reviewId,
-      caseId,
-      caseData.hospital_id,
-      now,                            // review_request_date
-      '',                             // review_completed_date
-      '',                             // hospital_user
-      CONFIG.REVIEW_STATUS.PENDING,   // review_status
-      '',                             // review_result (비어있음 — 심사 완료 후 입력)
-      '',                             // next_medical_step
-      '',                             // consultation_date
-      '',                             // additional_test_required
-      '',                             // medical_notes_link
-      '',                             // notes
-    ]);
-
-    addActivityLog({
-      caseId,
-      actorEmail: requestedBy,
-      actorRole: 'MSO Coordinator',
-      actionType: 'HOSPITAL_REVIEW_REQUESTED',
-      summary: `병원 검토 요청: ${caseData.hospital_id}에 검토 요청`,
-      nextAction: '병원 검토 결과 대기',
-    });
+  // 최초 요청 시에만 hospital_review_requested_at 업데이트
+  if (!caseData.hospital_review_requested_at) {
+    updateCaseField_(caseId, 'hospital_review_requested_at', new Date());
   }
+
+  const reviewId = generateCustomId(CONFIG.SHEETS.MEDICAL_REVIEWS, 'REV', 'review_id');
+  const now      = new Date();
+
+  // Medical_Reviews 헤더 순서: review_id, case_id, hospital_id, linked_order_id,
+  //   review_request_date, review_completed_date, hospital_user,
+  //   review_status, review_result, next_medical_step,
+  //   consultation_date, additional_test_required, medical_notes_link, notes
+  reviewSheet.appendRow([
+    reviewId,
+    caseId,
+    caseData.hospital_id,
+    linkedOrderId || '',            // linked_order_id
+    now,                            // review_request_date
+    '',                             // review_completed_date
+    '',                             // hospital_user
+    CONFIG.REVIEW_STATUS.PENDING,   // review_status
+    '',                             // review_result
+    '',                             // next_medical_step
+    '',                             // consultation_date
+    '',                             // additional_test_required
+    '',                             // medical_notes_link
+    '',                             // notes
+  ]);
+
+  addActivityLog({
+    caseId,
+    actorEmail: requestedBy,
+    actorRole: 'MSO Coordinator',
+    actionType: linkedOrderId ? 'ADDITIONAL_REVIEW_REQUESTED' : 'HOSPITAL_REVIEW_REQUESTED',
+    summary: linkedOrderId
+      ? `추가 병원 검토 요청 (주문: ${linkedOrderId})`
+      : `병원 검토 요청: ${caseData.hospital_id}`,
+    nextAction: '병원 검토 결과 대기',
+  });
+
+  return reviewId;
 }
 
 /**

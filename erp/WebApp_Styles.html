@@ -345,10 +345,71 @@ textarea { resize: vertical; min-height: 80px; }
   gap: 12px 24px;
 }
 .detail-item label {
-  font-size: 11px; font-weight: 700; color: var(--gray-600);
+  font-size: 11px; font-weight: 600; color: var(--gray-500);
   text-transform: uppercase; letter-spacing: .5px;
 }
 .detail-item .value { margin-top: 3px; font-size: 14px; }
+.detail-item.full { grid-column: 1 / -1; }
+
+/* ─── 정보 카드 (Google Material style) ──────────────────── */
+.ic-section-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 2px;
+}
+.ic-section-title {
+  font-size: 10px; font-weight: 700; color: var(--gray-400);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.ic-edit-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: none; border: none; cursor: pointer;
+  color: var(--primary); font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: var(--radius); font-family: inherit;
+  transition: background var(--t); letter-spacing: .01em;
+}
+.ic-edit-btn:hover { background: var(--primary-light); }
+.ic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  padding: 6px 12px 16px; gap: 0;
+}
+.ic-field {
+  padding: 10px 8px; border-radius: 6px;
+  min-width: 0; cursor: default;
+  transition: background .12s ease;
+}
+.ic-field:hover { background: var(--gray-50); }
+.ic-field.full { grid-column: 1 / -1; }
+.ic-field.span2 { grid-column: span 2; }
+.ic-label {
+  font-size: 11px; color: var(--gray-500); font-weight: 500;
+  display: block; margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ic-value {
+  font-size: 14px; color: var(--gray-900); font-weight: 400;
+  line-height: 1.45; word-break: break-word;
+}
+.ic-value.empty { color: var(--gray-400); font-size: 13px; font-style: italic; }
+.ic-value code {
+  font-size: 12px; background: var(--gray-100); padding: 2px 7px;
+  border-radius: 4px; color: var(--gray-700); letter-spacing: .03em;
+}
+.ic-divider {
+  height: 8px; background: var(--gray-50);
+  border-top: 1px solid var(--gray-100);
+  border-bottom: 1px solid var(--gray-100);
+}
+.ic-edit-panel {
+  padding: 16px 20px 20px;
+  background: #fafbff;
+  border-top: 2px solid var(--primary-light);
+  animation: icSlideIn .15s ease;
+}
+@keyframes icSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ─── 타임라인 ───────────────────────────────────────────── */
 .timeline { position: relative; padding-left: 24px; }

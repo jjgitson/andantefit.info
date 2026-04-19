@@ -850,21 +850,44 @@ function showDocUploadModal(caseId) {
         <label class="required">문서 유형</label>
         <select id="docType" required>
           <option value="">선택</option>
-          <option value="Passport / ID">여권 / 신분증</option>
-          <option value="Consent - Privacy">개인정보 동의서</option>
-          <option value="Consent - Data Transfer">정보이전 동의서</option>
-          <option value="Medical Record">의료 기록</option>
-          <option value="Lab Result">검사 결과</option>
-          <option value="Imaging">영상 자료</option>
-          <option value="Hospital Review Note">병원 검토 메모</option>
-          <option value="Quote">견적서</option>
-          <option value="Invoice">청구서</option>
-          <option value="Payment Receipt">영수증</option>
-          <option value="Supplier COA">공급업체 CoA</option>
-          <option value="Shipping Document">배송 서류</option>
-          <option value="Temperature Log">온도 로그</option>
-          <option value="Treatment Summary">시술 요약</option>
-          <option value="Follow-up Report">추적관찰 보고서</option>
+          <optgroup label="── 동의 / 신원 서류 ──">
+            <option value="Passport / ID">여권 / 신분증</option>
+            <option value="Consent - Privacy">개인정보 동의서</option>
+            <option value="Consent - Data Transfer">정보이전 동의서</option>
+            <option value="Consent - Treatment">시술 동의서</option>
+          </optgroup>
+          <optgroup label="── 세포 관련 ──">
+            <option value="Cell QC Report">세포 QC 리포트</option>
+            <option value="Cell Delivery Record">수령 기록지</option>
+            <option value="Temperature Log">온도 기록지</option>
+          </optgroup>
+          <optgroup label="── 진단 / 검사 ──">
+            <option value="Imaging - MRI/CT">MRI / CT</option>
+            <option value="Imaging - X-ray">X-ray</option>
+            <option value="Imaging - Ultrasound">초음파 영상</option>
+            <option value="Lab - Blood Panel">혈액 검사</option>
+            <option value="Lab - ECG">심전도</option>
+            <option value="Lab - Other">기타 검사 결과</option>
+          </optgroup>
+          <optgroup label="── 시술 기록 ──">
+            <option value="Baseline Assessment">기준선 평가 (안단테핏)</option>
+            <option value="Treatment Record">시술 기록지</option>
+            <option value="Vital Signs Record">활력징후 기록</option>
+          </optgroup>
+          <optgroup label="── 사후 관리 ──">
+            <option value="Follow-up Assessment">추적 평가 결과</option>
+            <option value="Adverse Reaction Report">이상반응 보고서</option>
+          </optgroup>
+          <optgroup label="── 진료과별 평가 ──">
+            <option value="Assessment - VAS/ODI">통증 평가 (VAS / ODI)</option>
+            <option value="Assessment - KOOS/WOMAC">관절 기능 평가 (KOOS / WOMAC)</option>
+            <option value="Assessment - Skin">피부 상태 기록</option>
+            <option value="Assessment - Fatigue">피로도 평가</option>
+          </optgroup>
+          <optgroup label="── 행정 ──">
+            <option value="Hospital Review Note">병원 검토 메모</option>
+            <option value="Payment Receipt">영수증</option>
+          </optgroup>
         </select>
       </div>
       <div class="form-group full"><label class="required">파일명</label><input type="text" id="docFileName" required placeholder="혈액검사결과_2026-04.pdf"></div>

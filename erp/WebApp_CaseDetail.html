@@ -592,7 +592,17 @@ function showCaseDeliveryModal(orderId) {
     <div class="form-grid">
       <div class="form-group full"><label class="required">병원 전달일</label><input type="date" id="caseDeliveryDate" required value="${today}"></div>
     </div>
-    <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">MSO가 병원에 제품을 전달 완료한 시점을 기록합니다.</p>
+    <div style="margin-top:14px;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
+      <div style="font-size:13px;font-weight:600;color:#166534;margin-bottom:10px">출고 전 확인 사항 (필수)</div>
+      <label style="display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:pointer;font-size:13px">
+        <input type="checkbox" id="chkQcPassed" style="width:16px;height:16px">
+        QC 합격 확인 — 세포 품질 검사 통과
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px">
+        <input type="checkbox" id="chkTempOk" style="width:16px;height:16px">
+        배송 온도 이탈 없음 확인
+      </label>
+    </div>
   `, `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
     <button class="btn btn-primary" onclick="submitCaseDelivery('${orderId}')">출고 확정</button>
@@ -600,11 +610,15 @@ function showCaseDeliveryModal(orderId) {
 }
 
 function submitCaseDelivery(orderId) {
-  const date = document.getElementById('caseDeliveryDate').value;
-  if (!date) { showAlert('병원 전달일을 입력하세요', 'warning'); return; }
+  const date    = document.getElementById('caseDeliveryDate').value;
+  const qcPassed = document.getElementById('chkQcPassed').checked;
+  const tempOk   = document.getElementById('chkTempOk').checked;
+  if (!date)    { showAlert('병원 전달일을 입력하세요', 'warning'); return; }
+  if (!qcPassed){ showAlert('QC 합격 여부를 확인하세요', 'warning'); return; }
+  if (!tempOk)  { showAlert('배송 온도 이탈 없음을 확인하세요', 'warning'); return; }
   const btn = document.querySelector('#modalFooter .btn-primary');
   setLoadingBtn(btn, true);
-  callServer('supplier.delivery.confirm', { orderId, deliveryDate: date })
+  callServer('supplier.delivery.confirm', { orderId, deliveryDate: date, qcPassed, tempOk })
     .then(() => {
       closeModal(); showAlert('출고 확정 완료 — 병원 전달이 기록되었습니다', 'success');
       loadPage('caseDetail', { caseId: APP.currentParams.caseId });
@@ -1031,8 +1045,16 @@ function _doRequestAdditionalReview(caseId, orderId) {
 
 function markTreatmentComplete(caseId) {
   showModal('시술 완료 처리', `
-    <p style="margin-bottom:8px">케이스 <strong>${caseId}</strong> 시술 완료 처리를 진행합니다.</p>
-    <p style="font-size:13px;color:var(--gray-600)">시술 완료 후 D7·D14·D30·D90·D180 추적관찰 일정이 자동 생성됩니다.</p>
+    <p style="margin-bottom:12px">케이스 <strong>${caseId}</strong> 시술 완료 처리를 진행합니다.</p>
+    <div style="padding:12px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px">
+      <div style="font-size:13px;font-weight:600;color:#9a3412;margin-bottom:10px">이상반응 여부 (필수 선택)</div>
+      ${[['none','없음'],['mild','경증'],['moderate','중등증'],['severe','중증']].map(([val,label],i) => `
+        <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;font-size:13px">
+          <input type="radio" name="adverseReaction" value="${val}" ${i===0?'checked':''} style="width:15px;height:15px">
+          ${label}
+        </label>`).join('')}
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--gray-500)">시술 완료 후 D7·D14·D30·D90·D180 추적관찰 일정이 자동 생성됩니다.</p>
   `, `
     <button class="btn btn-secondary" onclick="closeModal()">취소</button>
     <button class="btn btn-success" onclick="_doMarkComplete('${caseId}')">완료 처리</button>
@@ -1040,8 +1062,9 @@ function markTreatmentComplete(caseId) {
 }
 function _doMarkComplete(caseId) {
   const btn = document.querySelector('#modalFooter .btn-success');
+  const adverseReaction = document.querySelector('input[name="adverseReaction"]:checked')?.value || 'none';
   setLoadingBtn(btn, true);
-  callServer('case.changeStatus', { caseId, targetStatus: 'Completed' })
+  callServer('case.changeStatus', { caseId, targetStatus: 'Completed', adverseReaction })
     .then(() => { closeModal(); showAlert('시술 완료 처리됨', 'success'); loadPage('caseDetail', { caseId }); })
     .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }

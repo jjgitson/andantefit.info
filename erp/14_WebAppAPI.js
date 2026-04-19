@@ -338,9 +338,19 @@ function createCase_api(data, user, role) {
 /**
  * 케이스 상태 변경 (검증 포함)
  */
-function updateCaseStatus(caseId, targetStatus, user, role) {
+function updateCaseStatus(caseId, targetStatus, user, role, extraData) {
   // 검증 후 변경 (03_StateTransition.js)
   changeCaseStatus(caseId, targetStatus, user, role);
+  if (targetStatus === 'Completed' && extraData && extraData.adverseReaction) {
+    const labelMap = { none: '없음', mild: '경증', moderate: '중등증', severe: '중증' };
+    const label = labelMap[extraData.adverseReaction] || extraData.adverseReaction;
+    addActivityLog({
+      caseId, actorEmail: user, actorRole: role,
+      actionType: 'ADVERSE_REACTION_RECORDED',
+      summary: `이상반응 기록: ${label}`,
+      nextAction: extraData.adverseReaction === 'none' ? '추적관찰 진행' : '이상반응 모니터링 및 추적관찰 진행',
+    });
+  }
   return { success: true, caseId, newStatus: targetStatus };
 }
 
@@ -630,7 +640,7 @@ function confirmShipment_api(data, user, role) {
 
 function confirmDelivery_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
-  confirmDelivery(data.orderId, { ...data, updatedBy: user });
+  confirmDelivery(data.orderId, { ...data, updatedBy: user, qcPassed: data.qcPassed, tempOk: data.tempOk });
   invalidateCache_(CONFIG.SHEETS.SUPPLIER_ORDERS, CONFIG.SHEETS.CASES);
   return { success: true };
 }

@@ -144,12 +144,15 @@ function confirmDelivery(orderId, params) {
       params.updatedBy || Session.getActiveUser().getEmail());
   }
 
+  const qcNote   = params.qcPassed === true  ? 'QC합격✓' : (params.qcPassed === false ? 'QC미확인⚠' : '');
+  const tempNote = params.tempOk   === true  ? '온도이탈없음✓' : (params.tempOk === false ? '온도이탈의심⚠' : '');
+  const checks   = [qcNote, tempNote].filter(Boolean).join(', ');
   addActivityLog({
     caseId: order.case_id,
     actorEmail: params.updatedBy,
     actorRole: 'MSO Coordinator',
     actionType: 'DELIVERY_CONFIRMED',
-    summary: `출고 확정(병원 전달 완료): ${orderId}, 전달일: ${deliveryDate}`,
+    summary: `출고 확정(병원 전달 완료): ${orderId}, 전달일: ${deliveryDate}${checks ? ' [' + checks + ']' : ''}`,
     nextAction: '시술 일정 확정',
   });
 }

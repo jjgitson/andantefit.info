@@ -77,7 +77,7 @@ function getCaseDetailHTML(params) {
 }
 
 // ─── 공통 유틸 ───────────────────────────────────────────────
-function esc_(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function esc_(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
 function cdReload(caseId, section) {
   loadPage('caseDetail', { caseId, _section: section });
 }

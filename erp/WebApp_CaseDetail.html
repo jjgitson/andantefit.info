@@ -1,147 +1,182 @@
 <script>
-// ─── 케이스 상세 ───────────────────────────────────────────────
+// ─── 케이스 상세 (단일 페이지, 탭 없음) ──────────────────────
 function getCaseDetailHTML(params) {
   if (!params || !params.caseId) { showContent('<div class="alert alert-error">케이스 ID가 없습니다</div>'); return; }
   showLoading(true);
   callServer('case.get', { caseId: params.caseId }).then(data => {
     const c = data.case;
     const patient = data.patient;
-    const patientName  = patient ? (patient.full_name || patient.patient_code || '') : '';
+    const patientName = patient ? (patient.full_name || patient.patient_code || '') : '';
+    const caseNum     = c.case_id.split('-').pop();
+    const displayTitle = patientName ? `${patientName}-${caseNum}` : c.case_id;
+    const hospDisplay  = c.hospital_name || c.hospital_id || '-';
     const coordDisplay = c.coordinator_name || c.assigned_coordinator || '-';
-    const hospDisplay  = c.hospital_name   || c.hospital_id          || '-';
+
     const html = `
-      <!-- 헤더 -->
+      <!-- ① 헤더 -->
       <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
         <button class="btn btn-secondary btn-sm" onclick="loadPage('cases')">← 목록</button>
-        <div>
-          <div style="font-size:18px;font-weight:700">
-            ${c.case_id}${patientName ? ` <span style="color:var(--gray-500);font-weight:500">| ${patientName}</span>` : ''}
-          </div>
-          <div style="font-size:12px;color:var(--gray-500);margin-top:3px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:20px;font-weight:700">${displayTitle}</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-top:2px">
             🏥 ${hospDisplay} &nbsp;·&nbsp; 👤 ${coordDisplay}
+            &nbsp;·&nbsp; <code style="font-size:11px">${c.case_id}</code>
           </div>
         </div>
-        ${statusBadge(c.case_status)}
-        ${c.priority ? statusBadge(c.priority) : ''}
-        <div style="margin-left:auto" class="btn-group">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          ${statusBadge(c.case_status)}
+          ${c.priority ? statusBadge(c.priority) : ''}
           ${renderCaseActionButtons_(c)}
         </div>
       </div>
+
+      <!-- ② 단계 표시 -->
       ${renderPhaseIndicator_(c)}
 
-      <!-- 탭 -->
-      <div class="tabs">
-        <div class="tab active" onclick="switchTab(event,'tab-summary')">요약</div>
-        <div class="tab" onclick="switchTab(event,'tab-review')">병원 검토</div>
-        <div class="tab" onclick="switchTab(event,'tab-orders')">주문/배송</div>
-        <div class="tab" onclick="switchTab(event,'tab-billing')">결제/청구</div>
-        <div class="tab" onclick="switchTab(event,'tab-followup')">추적관리</div>
-        <div class="tab" onclick="switchTab(event,'tab-archive')" style="color:var(--gray-500)">아카이브 ▾</div>
+      <!-- ③ 케이스 정보 + 환자 정보 (인라인 수정 가능) -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:16px">
+        ${renderCaseInfoCard_(c)}
+        ${patient ? renderPatientCard_(patient) : ''}
       </div>
 
-      <!-- 요약 탭 -->
-      <div class="tab-content active" id="tab-summary">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-          <div class="card">
-            <div class="card-header"><span class="card-title">케이스 정보</span></div>
-            <div class="card-body">
-              <div class="detail-grid">
-                <div class="detail-item"><label>케이스 ID</label><div class="value"><code>${c.case_id}</code></div></div>
-                <div class="detail-item"><label>상태</label><div class="value">${statusBadge(c.case_status)}</div></div>
-                <div class="detail-item"><label>병원</label><div class="value">${c.hospital_id || '-'}</div></div>
-                <div class="detail-item"><label>공급업체</label><div class="value">${c.supplier_id || '-'}</div></div>
-                <div class="detail-item"><label>적응증</label><div class="value">${c.target_indication || '-'}</div></div>
-                <div class="detail-item"><label>담당 코디</label><div class="value">${c.assigned_coordinator || '-'}</div></div>
-                <div class="detail-item"><label>시술일</label><div class="value">${c.treatment_date ? fmtDate(c.treatment_date) : '-'}</div></div>
-                <div class="detail-item"><label>등록일</label><div class="value">${fmtDate(c.case_opened_at)}</div></div>
-                ${c.drive_folder_url ? `<div class="detail-item full"><label>Drive 폴더</label><div class="value"><a href="${c.drive_folder_url}" target="_blank">📁 열기</a></div></div>` : ''}
-              </div>
-              ${c.remarks ? `<p style="margin-top:12px;color:var(--gray-700);font-size:13px">${c.remarks}</p>` : ''}
-            </div>
-          </div>
-
-          ${patient ? `
-          <div class="card">
-            <div class="card-header"><span class="card-title">환자 정보</span></div>
-            <div class="card-body">
-              <div class="detail-grid">
-                <div class="detail-item"><label>환자 코드</label><div class="value"><code>${patient.patient_code || '-'}</code></div></div>
-                ${patient.date_of_birth ? `<div class="detail-item"><label>생년월일</label><div class="value">${fmtDate(patient.date_of_birth)}</div></div>` : ''}
-                ${patient.sex ? `<div class="detail-item"><label>성별</label><div class="value">${patient.sex}</div></div>` : ''}
-                ${patient.nationality ? `<div class="detail-item"><label>국적</label><div class="value">${patient.nationality}</div></div>` : ''}
-                ${patient.preferred_language ? `<div class="detail-item"><label>선호 언어</label><div class="value">${patient.preferred_language}</div></div>` : ''}
-                ${patient.email && APP.role !== 'Hospital User' ? `<div class="detail-item"><label>이메일</label><div class="value">${patient.email}</div></div>` : ''}
-              </div>
-            </div>
-          </div>
-          ` : ''}
-        </div>
-
-        <!-- 일정 요약 -->
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">📅 주요 일정</span>
-          </div>
-          ${renderKeyEvents_(data, c)}
-        </div>
+      <!-- ④ 병원 검토 -->
+      <div id="cd-review" style="margin-bottom:16px">
+        ${renderReviewSection_(data.reviews, c)}
       </div>
 
-      <!-- 병원 검토 탭 -->
-      <div class="tab-content" id="tab-review">
-        ${renderReviewTab_(data.reviews, c)}
+      <!-- ⑤ 주문/배송 -->
+      <div id="cd-orders" style="margin-bottom:16px">
+        ${renderOrderSection_(data.orders, c)}
       </div>
 
-      <!-- 주문/배송 탭 -->
-      <div class="tab-content" id="tab-orders">
-        ${renderOrderTab_(data.orders, c)}
-        ${renderDocsTab_(data.docs, c, '배송 관련 문서')}
+      <!-- ⑥ 결제/청구 -->
+      <div id="cd-billing" style="margin-bottom:16px">
+        ${renderBillingSection_(data.billing, c)}
       </div>
 
-      <!-- 결제/청구 탭 -->
-      <div class="tab-content" id="tab-billing">
-        ${renderBillingTab_(data.billing, c)}
-        ${renderDocsTab_(data.docs, c, '결제 관련 문서')}
+      <!-- ⑦ 추적관리 -->
+      <div id="cd-followup" style="margin-bottom:16px">
+        ${renderFollowupSection_(data.followups, c)}
       </div>
 
-      <!-- 추적관리 탭 -->
-      <div class="tab-content" id="tab-followup">
-        ${renderFollowupTab_(data.followups, c)}
-      </div>
-
-      <!-- 아카이브 탭 (시술기록·문서·활동로그) -->
-      <div class="tab-content" id="tab-archive">
-        ${renderProcedureTab_(data.procedures, c)}
-        ${renderDocsTab_(data.docs, c, '전체 문서')}
-        <div class="card">
-          <div class="card-header"><span class="card-title">활동 로그</span></div>
-          <div class="card-body">
-            <div class="timeline">
-              ${(data.activities || []).map(a => `
-                <div class="timeline-item">
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-date">${fmtDate(a.activity_date)} · ${a.actor_role}</div>
-                  <div class="timeline-content"><strong>${a.action_type}</strong> — ${a.summary}</div>
-                  ${a.next_action ? `<div class="timeline-content" style="color:var(--primary)">다음: ${a.next_action}</div>` : ''}
-                </div>
-              `).join('') || '<p style="padding:16px;color:var(--gray-500)">기록 없음</p>'}
-            </div>
-          </div>
-        </div>
+      <!-- ⑧ 아카이브 (문서 + 활동 로그) -->
+      <div id="cd-archive">
+        ${renderDocsSection_(data.docs, c)}
+        ${renderActivityLog_(data.activities)}
       </div>
     `;
     showContent(html);
+
+    // _section 파라미터로 특정 섹션 스크롤
+    if (params._section) {
+      setTimeout(() => {
+        const el = document.getElementById('cd-' + params._section);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    }
   }).catch(err => showContent(`<div class="alert alert-error">${err.message}</div>`));
 }
 
-// ─── 탭 전환 ──────────────────────────────────────────────────
-function switchTab(event, tabId) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById(tabId).classList.add('active');
+// ─── 공통 유틸 ───────────────────────────────────────────────
+function esc_(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function cdReload(caseId, section) {
+  loadPage('caseDetail', { caseId, _section: section });
 }
 
-// ─── 주요 일정 목록 ──────────────────────────────────────────
+// ─── 케이스 정보 카드 (인라인 수정) ──────────────────────────
+function renderCaseInfoCard_(c) {
+  const canEdit = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">케이스 정보</span>
+        ${canEdit ? `<button class="btn btn-sm btn-secondary" onclick="toggleCaseEdit()">수정</button>` : ''}
+      </div>
+      <!-- 보기 모드 -->
+      <div id="cdInfoView" class="card-body">
+        <div class="detail-grid">
+          <div class="detail-item"><label>케이스 ID</label><div class="value"><code>${c.case_id}</code></div></div>
+          <div class="detail-item"><label>상태</label><div class="value">${statusBadge(c.case_status)}</div></div>
+          <div class="detail-item"><label>병원</label><div class="value">${c.hospital_id || '-'}</div></div>
+          <div class="detail-item"><label>적응증</label><div class="value">${c.target_indication || '-'}</div></div>
+          <div class="detail-item"><label>담당 코디</label><div class="value">${c.assigned_coordinator || '-'}</div></div>
+          <div class="detail-item"><label>시술 예정일</label><div class="value">${c.treatment_date ? fmtDate(c.treatment_date) : '<span style="color:var(--gray-400)">미확정</span>'}</div></div>
+          <div class="detail-item"><label>등록일</label><div class="value">${fmtDate(c.case_opened_at)}</div></div>
+          ${c.remarks ? `<div class="detail-item full"><label>비고</label><div class="value">${c.remarks}</div></div>` : ''}
+        </div>
+      </div>
+      <!-- 수정 모드 -->
+      <div id="cdInfoEdit" class="card-body" style="display:none">
+        <div class="form-grid">
+          <div class="form-group full"><label>적응증</label>
+            <input type="text" id="ci_indication" value="${esc_(c.target_indication)}">
+          </div>
+          <div class="form-group"><label>우선순위</label>
+            <select id="ci_priority">
+              <option value="Normal" ${c.priority==='Normal'?'selected':''}>보통</option>
+              <option value="High"   ${c.priority==='High'?'selected':''}>높음</option>
+              <option value="Urgent" ${c.priority==='Urgent'?'selected':''}>긴급</option>
+            </select>
+          </div>
+          <div class="form-group"><label>시술 예정일</label>
+            <input type="date" id="ci_treatDate" value="${c.treatment_date || ''}">
+          </div>
+          <div class="form-group full"><label>비고</label>
+            <textarea id="ci_remarks">${esc_(c.remarks)}</textarea>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-top:12px">
+          <button class="btn btn-primary btn-sm" id="ciSaveBtn" onclick="saveCaseInfo('${c.case_id}')">저장</button>
+          <button class="btn btn-secondary btn-sm" onclick="toggleCaseEdit()">취소</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleCaseEdit() {
+  const view = document.getElementById('cdInfoView');
+  const edit = document.getElementById('cdInfoEdit');
+  const isEditing = edit.style.display !== 'none';
+  view.style.display = isEditing ? '' : 'none';
+  edit.style.display = isEditing ? 'none' : '';
+}
+
+function saveCaseInfo(caseId) {
+  const btn = document.getElementById('ciSaveBtn');
+  setLoadingBtn(btn, true);
+  callServer('case.update', {
+    caseId,
+    target_indication: document.getElementById('ci_indication').value,
+    priority:          document.getElementById('ci_priority').value,
+    treatment_date:    document.getElementById('ci_treatDate').value,
+    remarks:           document.getElementById('ci_remarks').value,
+  }).then(() => {
+    showAlert('저장 완료', 'success');
+    cdReload(caseId);
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
+}
+
+// ─── 환자 정보 카드 ───────────────────────────────────────────
+function renderPatientCard_(patient) {
+  return `
+    <div class="card">
+      <div class="card-header"><span class="card-title">환자 정보</span></div>
+      <div class="card-body">
+        <div class="detail-grid">
+          <div class="detail-item"><label>환자 코드</label><div class="value"><code>${patient.patient_code || '-'}</code></div></div>
+          ${patient.date_of_birth ? `<div class="detail-item"><label>생년월일</label><div class="value">${fmtDate(patient.date_of_birth)}</div></div>` : ''}
+          ${patient.sex ? `<div class="detail-item"><label>성별</label><div class="value">${patient.sex}</div></div>` : ''}
+          ${patient.nationality ? `<div class="detail-item"><label>국적</label><div class="value">${patient.nationality}</div></div>` : ''}
+          ${patient.preferred_language ? `<div class="detail-item"><label>언어</label><div class="value">${patient.preferred_language}</div></div>` : ''}
+          ${patient.email && APP.role !== 'Hospital User' ? `<div class="detail-item"><label>이메일</label><div class="value">${patient.email}</div></div>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ─── (더 이상 사용 안 함, 하위 호환) ─────────────────────────
 function renderKeyEvents_(data, c) {
   const events = [];
 
@@ -365,7 +400,11 @@ function confirmCaseDelete(caseId) {
     .catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
-// ─── 병원 검토 탭 렌더링 (MSO 담당자가 협의 결과를 버튼 클릭으로 기록) ─────
+// ─── 병원 검토 섹션 ─────────────────────────────────────────
+function renderReviewSection_(reviews, c) {
+  return renderReviewTab_(reviews, c);   // 기존 구현 재사용
+}
+
 function renderReviewTab_(reviews, c) {
   const canManage = ['MSO Admin','MSO Coordinator'].includes(APP.role);
   const needsAction = canManage && ['Draft','Under Hospital Review'].includes(c.case_status);
@@ -503,7 +542,11 @@ function submitReview(caseId, reviewId) {
   }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
-// ─── 주문/배송 탭 렌더링 ─────────────────────────────────────
+// ─── 주문/배송 섹션 ──────────────────────────────────────────
+function renderOrderSection_(orders, c) {
+  return renderOrderTab_(orders, c);    // 기존 구현 재사용
+}
+
 function renderOrderTab_(orders, c) {
   const canOrder           = ['MSO Admin','MSO Coordinator'].includes(APP.role);
   const canConfirmDelivery = ['MSO Admin','MSO Coordinator'].includes(APP.role);
@@ -657,7 +700,11 @@ function submitDocUpload(caseId) {
   }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
-// ─── 결제 탭 렌더링 ───────────────────────────────────────────
+// ─── 결제/청구 섹션 ──────────────────────────────────────────
+function renderBillingSection_(billing, c) {
+  return renderBillingTab_(billing, c); // 기존 구현 재사용
+}
+
 function renderBillingTab_(billing, c) {
   const canBill = ['MSO Admin','Finance User','MSO Coordinator'].includes(APP.role);
   const b = billing && billing[0];
@@ -695,6 +742,37 @@ function renderBillingTab_(billing, c) {
           ${b.due_date ? `<div class="detail-item"><label>결제 마감</label><div class="value">${fmtDate(b.due_date)}</div></div>` : ''}
         </div>
         ${b.notes ? `<p style="margin-top:10px;font-size:13px;color:var(--gray-700)">${b.notes}</p>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+// ─── 추적관리 섹션 ───────────────────────────────────────────
+function renderFollowupSection_(followups, c) {
+  return renderFollowupTab_(followups, c); // 기존 구현 재사용
+}
+
+// ─── 문서 섹션 ───────────────────────────────────────────────
+function renderDocsSection_(docs, c) {
+  return renderDocsTab_(docs, c, '📄 문서');
+}
+
+// ─── 활동 로그 섹션 ──────────────────────────────────────────
+function renderActivityLog_(activities) {
+  return `
+    <div class="card" style="margin-top:16px">
+      <div class="card-header"><span class="card-title">📋 활동 로그</span></div>
+      <div class="card-body">
+        <div class="timeline">
+          ${(activities || []).map(a => `
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">${fmtDate(a.activity_date)} · ${a.actor_role}</div>
+              <div class="timeline-content"><strong>${a.action_type}</strong> — ${a.summary}</div>
+              ${a.next_action ? `<div class="timeline-content" style="color:var(--primary)">다음: ${a.next_action}</div>` : ''}
+            </div>
+          `).join('') || '<p style="padding:16px;color:var(--gray-500)">기록 없음</p>'}
+        </div>
       </div>
     </div>
   `;

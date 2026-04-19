@@ -1106,6 +1106,25 @@ function softDeleteLead_api(data, user, role) {
   throw new Error('리드를 찾을 수 없습니다');
 }
 
+function updateCase_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.caseId) throw new Error('caseId가 필요합니다');
+  const EDITABLE = ['target_indication', 'assigned_coordinator', 'priority', 'remarks', 'treatment_date'];
+  const updated = [];
+  EDITABLE.forEach(f => {
+    if (data[f] !== undefined && data[f] !== null) {
+      updateCaseField_(data.caseId, f, data[f], user);
+      updated.push(f);
+    }
+  });
+  if (updated.length > 0) {
+    invalidateCache_(CONFIG.SHEETS.CASES);
+    addActivityLog({ caseId: data.caseId, actorEmail: user, actorRole: role,
+      actionType: 'CASE_UPDATED', summary: `케이스 정보 수정: ${updated.join(', ')}` });
+  }
+  return { success: true };
+}
+
 function softDeleteCase_api(data, user, role) {
   if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
   if (!data.caseId) throw new Error('caseId가 필요합니다');

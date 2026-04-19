@@ -239,6 +239,7 @@ function dispatchAction_(action, data, user, role, profile) {
     // 환자
     'patient.get':    () => getPatient(data.patientId, user, role),
     'patient.create': () => createPatient(data, user, role),
+    'patient.update': () => updatePatient_api(data, user, role),
 
     // 참조 데이터
     'hospital.list':    () => getHospitalList(),
@@ -256,6 +257,7 @@ function dispatchAction_(action, data, user, role, profile) {
     'supplier.order.create':      () => createSupplierOrder_api(data, user, role),
     'supplier.shipment.confirm':  () => confirmShipment_api(data, user, role),
     'supplier.delivery.confirm':  () => confirmDelivery_api(data, user, role),
+    'supplier.order.update':      () => updateSupplierOrder_api(data, user, role),
     'supplier.acceptance.record': () => recordAcceptanceCheck_api(data, user, role),
 
     // 결제

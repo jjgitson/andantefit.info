@@ -33,10 +33,9 @@ function getCaseDetailHTML(params) {
       <!-- ② 단계 표시 -->
       ${renderPhaseIndicator_(c)}
 
-      <!-- ③ 케이스 정보 + 환자 정보 (인라인 수정 가능) -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:16px">
-        ${renderCaseInfoCard_(c)}
-        ${patient ? renderPatientCard_(patient) : ''}
+      <!-- ③ 케이스 / 환자 통합 정보 -->
+      <div style="margin-bottom:16px">
+        ${renderInfoCard_(c, patient)}
       </div>
 
       <!-- ④ 병원 검토 -->
@@ -83,63 +82,149 @@ function cdReload(caseId, section) {
   loadPage('caseDetail', { caseId, _section: section });
 }
 
-// ─── 케이스 정보 카드 (인라인 수정) ──────────────────────────
-function renderCaseInfoCard_(c) {
+// ─── 케이스 / 환자 통합 정보 카드 ────────────────────────────
+function renderInfoCard_(c, patient) {
   const canEdit = ['MSO Admin','MSO Coordinator'].includes(APP.role);
+  const pat = patient || {};
+
   return `
     <div class="card">
-      <div class="card-header">
-        <span class="card-title">케이스 정보</span>
-        ${canEdit ? `<button class="btn btn-sm btn-secondary" onclick="toggleCaseEdit()">수정</button>` : ''}
-      </div>
-      <!-- 보기 모드 -->
-      <div id="cdInfoView" class="card-body">
-        <div class="detail-grid">
-          <div class="detail-item"><label>케이스 ID</label><div class="value"><code>${c.case_id}</code></div></div>
-          <div class="detail-item"><label>상태</label><div class="value">${statusBadge(c.case_status)}</div></div>
-          <div class="detail-item"><label>병원</label><div class="value">${c.hospital_id || '-'}</div></div>
-          <div class="detail-item"><label>적응증</label><div class="value">${c.target_indication || '-'}</div></div>
-          <div class="detail-item"><label>담당 코디</label><div class="value">${c.assigned_coordinator || '-'}</div></div>
-          <div class="detail-item"><label>시술 예정일</label><div class="value">${c.treatment_date ? fmtDate(c.treatment_date) : '<span style="color:var(--gray-400)">미확정</span>'}</div></div>
-          <div class="detail-item"><label>등록일</label><div class="value">${fmtDate(c.case_opened_at)}</div></div>
-          ${c.remarks ? `<div class="detail-item full"><label>비고</label><div class="value">${c.remarks}</div></div>` : ''}
+      <div class="card-header"><span class="card-title">케이스 / 환자 정보</span></div>
+
+      <!-- ── 케이스 기본정보 섹션 ── -->
+      <div style="border-bottom:2px solid var(--gray-100)">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px">
+          <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-400)">케이스 기본정보</span>
+          ${canEdit ? `<button class="btn btn-sm btn-secondary" onclick="toggleCaseEdit()">수정</button>` : ''}
         </div>
-      </div>
-      <!-- 수정 모드 -->
-      <div id="cdInfoEdit" class="card-body" style="display:none">
-        <div class="form-grid">
-          <div class="form-group full"><label>적응증</label>
-            <input type="text" id="ci_indication" value="${esc_(c.target_indication)}">
-          </div>
-          <div class="form-group"><label>우선순위</label>
-            <select id="ci_priority">
-              <option value="Normal" ${c.priority==='Normal'?'selected':''}>보통</option>
-              <option value="High"   ${c.priority==='High'?'selected':''}>높음</option>
-              <option value="Urgent" ${c.priority==='Urgent'?'selected':''}>긴급</option>
-            </select>
-          </div>
-          <div class="form-group"><label>시술 예정일</label>
-            <input type="date" id="ci_treatDate" value="${c.treatment_date || ''}">
-          </div>
-          <div class="form-group full"><label>비고</label>
-            <textarea id="ci_remarks">${esc_(c.remarks)}</textarea>
+        <div id="cdCaseView" class="card-body" style="padding-top:4px">
+          <div class="detail-grid">
+            <div class="detail-item"><label>케이스 ID</label><div class="value"><code>${c.case_id}</code></div></div>
+            <div class="detail-item"><label>상태</label><div class="value">${statusBadge(c.case_status)}</div></div>
+            <div class="detail-item"><label>병원</label><div class="value">${c.hospital_name || c.hospital_id || '-'}</div></div>
+            <div class="detail-item"><label>적응증</label><div class="value">${c.target_indication || '-'}</div></div>
+            <div class="detail-item"><label>담당 코디</label><div class="value">${c.coordinator_name || c.assigned_coordinator || '-'}</div></div>
+            <div class="detail-item"><label>시술 예정일</label><div class="value">${c.treatment_date ? fmtDate(c.treatment_date) : '<span style="color:var(--gray-400)">미확정</span>'}</div></div>
+            <div class="detail-item"><label>우선순위</label><div class="value">${c.priority || 'Normal'}</div></div>
+            <div class="detail-item"><label>등록일</label><div class="value">${fmtDate(c.case_opened_at)}</div></div>
+            ${c.remarks ? `<div class="detail-item full"><label>비고</label><div class="value">${c.remarks}</div></div>` : ''}
           </div>
         </div>
-        <div class="btn-group" style="margin-top:12px">
-          <button class="btn btn-primary btn-sm" id="ciSaveBtn" onclick="saveCaseInfo('${c.case_id}')">저장</button>
-          <button class="btn btn-secondary btn-sm" onclick="toggleCaseEdit()">취소</button>
+        <div id="cdCaseEdit" class="card-body" style="display:none;padding-top:4px">
+          <div class="form-grid">
+            <div class="form-group full"><label>적응증</label>
+              <input type="text" id="ci_indication" value="${esc_(c.target_indication)}">
+            </div>
+            <div class="form-group"><label>우선순위</label>
+              <select id="ci_priority">
+                <option value="Normal" ${c.priority==='Normal'?'selected':''}>보통</option>
+                <option value="High"   ${c.priority==='High'?'selected':''}>높음</option>
+                <option value="Urgent" ${c.priority==='Urgent'?'selected':''}>긴급</option>
+              </select>
+            </div>
+            <div class="form-group"><label>시술 예정일</label>
+              <input type="date" id="ci_treatDate" value="${c.treatment_date || ''}">
+            </div>
+            <div class="form-group full"><label>비고</label>
+              <textarea id="ci_remarks">${esc_(c.remarks)}</textarea>
+            </div>
+          </div>
+          <div class="btn-group" style="margin-top:12px">
+            <button class="btn btn-primary btn-sm" id="ciSaveBtn" onclick="saveCaseInfo('${c.case_id}')">저장</button>
+            <button class="btn btn-secondary btn-sm" onclick="toggleCaseEdit()">취소</button>
+          </div>
         </div>
       </div>
+
+      <!-- ── 환자 정보 섹션 ── -->
+      ${patient ? `
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px">
+          <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-400)">환자 정보</span>
+          ${canEdit ? `<button class="btn btn-sm btn-secondary" onclick="togglePatientEdit()">수정</button>` : ''}
+        </div>
+        <div id="cdPatView" class="card-body" style="padding-top:4px">
+          <div class="detail-grid">
+            <div class="detail-item"><label>환자 코드</label><div class="value"><code>${pat.patient_code || '<span style=\'color:var(--gray-400)\'>미입력</span>'}</code></div></div>
+            <div class="detail-item"><label>이름</label><div class="value">${pat.full_name || pat.english_name || '-'}</div></div>
+            <div class="detail-item"><label>연락처</label><div class="value">${pat.phone || '<span style=\'color:var(--gray-400)\'>미입력</span>'}</div></div>
+            ${APP.role !== 'Hospital User' && pat.email ? `<div class="detail-item"><label>이메일</label><div class="value">${pat.email}</div></div>` : ''}
+            <div class="detail-item"><label>국적</label><div class="value">${pat.nationality || '-'}</div></div>
+            ${pat.date_of_birth ? `<div class="detail-item"><label>생년월일</label><div class="value">${fmtDate(pat.date_of_birth)}</div></div>` : ''}
+            ${pat.sex ? `<div class="detail-item"><label>성별</label><div class="value">${pat.sex}</div></div>` : ''}
+            ${pat.preferred_language ? `<div class="detail-item"><label>언어</label><div class="value">${pat.preferred_language}</div></div>` : ''}
+          </div>
+        </div>
+        <div id="cdPatEdit" class="card-body" style="display:none;padding-top:4px">
+          <div class="form-grid">
+            <div class="form-group"><label>환자 코드 (병원 부여)</label>
+              <input type="text" id="pi_code" value="${esc_(pat.patient_code)}" placeholder="병원에서 부여한 코드">
+            </div>
+            <div class="form-group"><label>연락처 (휴대전화)</label>
+              <input type="text" id="pi_phone" value="${esc_(pat.phone)}" placeholder="+81-XX-XXXX-XXXX">
+            </div>
+            <div class="form-group"><label>이메일</label>
+              <input type="email" id="pi_email" value="${esc_(pat.email)}">
+            </div>
+            <div class="form-group"><label>국적</label>
+              <input type="text" id="pi_nationality" value="${esc_(pat.nationality)}">
+            </div>
+            <div class="form-group"><label>생년월일</label>
+              <input type="date" id="pi_dob" value="${pat.date_of_birth ? new Date(pat.date_of_birth).toISOString().substring(0,10) : ''}">
+            </div>
+            <div class="form-group"><label>성별</label>
+              <select id="pi_sex">
+                <option value="">미입력</option>
+                <option value="Male"   ${pat.sex==='Male'?'selected':''}>Male</option>
+                <option value="Female" ${pat.sex==='Female'?'selected':''}>Female</option>
+              </select>
+            </div>
+            <div class="form-group"><label>언어</label>
+              <input type="text" id="pi_lang" value="${esc_(pat.preferred_language)}" placeholder="예: Japanese, English">
+            </div>
+          </div>
+          <div class="btn-group" style="margin-top:12px">
+            <button class="btn btn-primary btn-sm" id="piSaveBtn" onclick="savePatientInfo('${pat.patient_id}')">저장</button>
+            <button class="btn btn-secondary btn-sm" onclick="togglePatientEdit()">취소</button>
+          </div>
+        </div>
+      </div>` : ''}
     </div>
   `;
 }
 
 function toggleCaseEdit() {
-  const view = document.getElementById('cdInfoView');
-  const edit = document.getElementById('cdInfoEdit');
+  const view = document.getElementById('cdCaseView');
+  const edit = document.getElementById('cdCaseEdit');
   const isEditing = edit.style.display !== 'none';
   view.style.display = isEditing ? '' : 'none';
   edit.style.display = isEditing ? 'none' : '';
+}
+
+function togglePatientEdit() {
+  const view = document.getElementById('cdPatView');
+  const edit = document.getElementById('cdPatEdit');
+  const isEditing = edit.style.display !== 'none';
+  view.style.display = isEditing ? '' : 'none';
+  edit.style.display = isEditing ? 'none' : '';
+}
+
+function savePatientInfo(patientId) {
+  const btn = document.getElementById('piSaveBtn');
+  setLoadingBtn(btn, true);
+  callServer('patient.update', {
+    patientId,
+    patient_code:       document.getElementById('pi_code').value,
+    phone:              document.getElementById('pi_phone').value,
+    email:              document.getElementById('pi_email').value,
+    nationality:        document.getElementById('pi_nationality').value,
+    date_of_birth:      document.getElementById('pi_dob').value,
+    sex:                document.getElementById('pi_sex').value,
+    preferred_language: document.getElementById('pi_lang').value,
+  }).then(() => {
+    showAlert('환자 정보 저장 완료', 'success');
+    cdReload(APP.currentParams.caseId);
+  }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
 function saveCaseInfo(caseId) {
@@ -157,24 +242,7 @@ function saveCaseInfo(caseId) {
   }).catch(err => { setLoadingBtn(btn, false); showAlert(err.message, 'error'); });
 }
 
-// ─── 환자 정보 카드 ───────────────────────────────────────────
-function renderPatientCard_(patient) {
-  return `
-    <div class="card">
-      <div class="card-header"><span class="card-title">환자 정보</span></div>
-      <div class="card-body">
-        <div class="detail-grid">
-          <div class="detail-item"><label>환자 코드</label><div class="value"><code>${patient.patient_code || '-'}</code></div></div>
-          ${patient.date_of_birth ? `<div class="detail-item"><label>생년월일</label><div class="value">${fmtDate(patient.date_of_birth)}</div></div>` : ''}
-          ${patient.sex ? `<div class="detail-item"><label>성별</label><div class="value">${patient.sex}</div></div>` : ''}
-          ${patient.nationality ? `<div class="detail-item"><label>국적</label><div class="value">${patient.nationality}</div></div>` : ''}
-          ${patient.preferred_language ? `<div class="detail-item"><label>언어</label><div class="value">${patient.preferred_language}</div></div>` : ''}
-          ${patient.email && APP.role !== 'Hospital User' ? `<div class="detail-item"><label>이메일</label><div class="value">${patient.email}</div></div>` : ''}
-        </div>
-      </div>
-    </div>
-  `;
-}
+// renderPatientCard_ → renderInfoCard_ 로 통합됨
 
 // ─── (더 이상 사용 안 함, 하위 호환) ─────────────────────────
 function renderKeyEvents_(data, c) {
@@ -565,25 +633,64 @@ function renderOrderTab_(orders, c) {
         <table>
           <thead><tr><th>주문 ID</th><th>요청 품목</th><th>배송 예정일</th><th>상태</th><th>전달일</th><th>액션</th></tr></thead>
           <tbody>
-            ${orders.map(o => `
+            ${orders.map(o => {
+              const eid = o.supplier_order_id.replace(/[^a-z0-9]/gi,'_');
+              const canEdit = canOrder && ['Requested','In Transit'].includes(o.supplier_status);
+              return `
               <tr>
                 <td><code>${o.supplier_order_id}</code></td>
                 <td>${o.requested_item || '-'}</td>
                 <td>${fmtDate(o.expected_ship_date)}</td>
                 <td>${statusBadge(o.supplier_status)}</td>
                 <td>${o.delivery_date ? fmtDate(o.delivery_date) : '-'}</td>
-                <td>
-                  ${canConfirmDelivery && ['Requested','In Transit'].includes(o.supplier_status) ? `<button class="btn btn-sm btn-primary" onclick="showCaseDeliveryModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
+                <td style="white-space:nowrap">
+                  ${canEdit ? `<button class="btn btn-sm btn-secondary" onclick="toggleOrderEdit('${eid}')">수정</button>` : ''}
+                  ${canConfirmDelivery && ['Requested','In Transit'].includes(o.supplier_status) ? `<button class="btn btn-sm btn-primary" style="margin-left:4px" onclick="showCaseDeliveryModal('${o.supplier_order_id}')">출고 확정</button>` : ''}
                   ${o.coa_link ? `<a class="btn btn-sm btn-secondary" href="${o.coa_link}" target="_blank">COA</a>` : ''}
                 </td>
               </tr>
-            `).join('')}
+              ${canEdit ? `
+              <tr id="ord-edit-${eid}" style="display:none;background:#f8fafc">
+                <td colspan="6" style="padding:14px 16px">
+                  <div class="form-grid" style="margin-bottom:10px">
+                    <div class="form-group">
+                      <label>배송 예정일</label>
+                      <input type="date" id="ord_ship_${eid}" value="${o.expected_ship_date ? new Date(o.expected_ship_date).toISOString().substring(0,10) : ''}">
+                    </div>
+                    <div class="form-group">
+                      <label>비고</label>
+                      <input type="text" id="ord_notes_${eid}" value="${esc_(o.mso_notes)}" placeholder="내부 메모">
+                    </div>
+                  </div>
+                  <div class="btn-group">
+                    <button class="btn btn-primary btn-sm" onclick="saveOrderInfo('${c.case_id}','${o.supplier_order_id}','${eid}')">저장</button>
+                    <button class="btn btn-secondary btn-sm" onclick="toggleOrderEdit('${eid}')">취소</button>
+                  </div>
+                </td>
+              </tr>` : ''}
+            `}).join('')}
           </tbody>
         </table>
       </div>
       `}
     </div>
   `;
+}
+
+function toggleOrderEdit(eid) {
+  const row = document.getElementById('ord-edit-' + eid);
+  if (row) row.style.display = row.style.display === 'none' ? '' : 'none';
+}
+
+function saveOrderInfo(caseId, orderId, eid) {
+  callServer('supplier.order.update', {
+    orderId,
+    expected_ship_date: document.getElementById('ord_ship_' + eid).value,
+    mso_notes:          document.getElementById('ord_notes_' + eid).value,
+  }).then(() => {
+    showAlert('저장 완료', 'success');
+    cdReload(caseId, 'orders');
+  }).catch(err => showAlert(err.message, 'error'));
 }
 
 function showCaseDeliveryModal(orderId) {

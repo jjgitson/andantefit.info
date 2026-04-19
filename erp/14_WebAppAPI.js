@@ -269,6 +269,48 @@ function createPatient(data, user, role) {
   return { success: true, patientId, patientCode };
 }
 
+function updatePatient_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.patientId) throw new Error('patientId가 필요합니다');
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.PATIENTS);
+  const rows = sheetToObjects_(ss, CONFIG.SHEETS.PATIENTS);
+  const idx = rows.findIndex(p => p.patient_id === data.patientId);
+  if (idx < 0) throw new Error('환자를 찾을 수 없습니다');
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const rowNum = idx + 2;
+  const EDITABLE = ['patient_code','phone','email','date_of_birth','sex','nationality','preferred_language'];
+  EDITABLE.forEach(f => {
+    if (data[f] !== undefined) {
+      const col = headers.indexOf(f);
+      if (col >= 0) sheet.getRange(rowNum, col + 1).setValue(data[f]);
+    }
+  });
+  invalidateCache_(CONFIG.SHEETS.PATIENTS);
+  return { success: true };
+}
+
+function updateSupplierOrder_api(data, user, role) {
+  if (![ROLES.MSO_ADMIN, ROLES.MSO_COORDINATOR].includes(role)) throw new Error('권한 없음');
+  if (!data.orderId) throw new Error('orderId가 필요합니다');
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(CONFIG.SHEETS.SUPPLIER_ORDERS);
+  const rows = sheetToObjects_(ss, CONFIG.SHEETS.SUPPLIER_ORDERS);
+  const idx = rows.findIndex(o => o.supplier_order_id === data.orderId);
+  if (idx < 0) throw new Error('주문을 찾을 수 없습니다');
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const rowNum = idx + 2;
+  const EDITABLE = ['expected_ship_date','mso_notes'];
+  EDITABLE.forEach(f => {
+    if (data[f] !== undefined) {
+      const col = headers.indexOf(f);
+      if (col >= 0) sheet.getRange(rowNum, col + 1).setValue(data[f]);
+    }
+  });
+  invalidateCache_(CONFIG.SHEETS.SUPPLIER_ORDERS, CONFIG.SHEETS.CASES);
+  return { success: true };
+}
+
 // ════════════════════════════════════════════════════════════
 // CASES
 // ════════════════════════════════════════════════════════════

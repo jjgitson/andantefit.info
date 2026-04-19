@@ -31,7 +31,7 @@ const CONFIG = {
   ID_PREFIXES: {
     PATIENTS:          'PAT',
     LEADS:             'LEAD',
-    CASES:             'CASE',
+    CASES:             'C',
     MEDICAL_REVIEWS:   'REV',
     SUPPLIER_ORDERS:   'ORD',
     ACCEPTANCE_CHECKS: 'ACC',

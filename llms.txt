@@ -1,0 +1,59 @@
+# AndanteFit
+
+AndanteFit automates the Short Physical Performance Battery (SPPB) — the internationally endorsed gold standard for measuring physical function in older adults. The device uses LiDAR-based continuous measurement to administer all three SPPB subtests (static balance, gait speed, chair stand) in under 3 minutes without wearables, disposables, or manual timing.
+
+Target users: geriatricians, orthopedic surgeons, physical therapists, clinical researchers, pharmaceutical companies running frailty or sarcopenia trials.
+
+## Getting Started
+
+- [Homepage — What AndanteFit does and why it matters](https://andantefit.info/) (~5,700 tokens)
+  Overview of automated SPPB, key differentiators vs. manual assessment, clinical use cases.
+
+- [What is SPPB? — Complete clinical reference](https://andantefit.info/what-is-sppb.html) (~8,000 tokens)
+  SPPB definition, three subtests explained, scoring system (0–12), clinical cut-off thresholds, international guideline endorsements (EWGSOP2, ESCEO, FNIH), mortality and disability predictive value.
+
+- [Product — Device specifications and SPPB protocol](https://andantefit.info/product.html) (~4,700 tokens)
+  LiDAR sensor details, automated administration flow, data output format, deployment requirements, contact/inquiry form.
+
+## Evidence & Validation
+
+- [Clinical Validation — Peer-reviewed evidence](https://andantefit.info/validation.html) (~5,400 tokens)
+  Published studies from Korea and Singapore validating AndanteFit automated SPPB against manual gold standard; concordance data, research collaborators including original SPPB development group (U.S.).
+
+- [References — Institutional clients and deployments](https://andantefit.info/references.html) (~15,750 tokens)
+  List of hospitals, research institutions, and pharmaceutical companies using AndanteFit; organized by country and deployment context.
+
+## Case Studies
+
+- [Case Studies — Index of all clinical and research deployments](https://andantefit.info/case-studies.html) (~2,500 tokens)
+  Filterable list linking to individual case study reports.
+
+Selected case studies (each ~3,000–5,000 tokens):
+- [Common Operational Language Strategy](https://andantefit.info/case-studies/2026-01-20-Common-Operational-Language-Strategy-EN.html)
+- [SPPB in Occupational Health](https://andantefit.info/case-studies/2026-02-07-SPPB-Occupational-Health-EN.html)
+- [PRO-SPPB Linking Study](https://andantefit.info/case-studies/2026-02-08-PRO-SPPB-Linking-Study-EN.html)
+- [Digital Care Platform Integration](https://andantefit.info/case-studies/2026-02-09-Digital-Care-Platform-EN.html)
+- [Oncology SPPB](https://andantefit.info/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-EN.html)
+
+## Interactive Tools
+
+- [SPPB Self-Assessment Test](https://andantefit.info/sppb-test.html)
+  Web-based SPPB scoring guide for clinicians; not a replacement for validated assessment.
+
+## Language Versions
+
+This site is fully available in four languages:
+- English: https://andantefit.info/
+- Korean (한국어): https://andantefit.info/ko/
+- Spanish (Español): https://andantefit.info/es/
+- Japanese (日本語): https://andantefit.info/jp/
+
+Each language version mirrors the English structure with equivalent pages.
+
+## Key Facts for AI Agents
+
+- AndanteFit is a hardware device (LiDAR sensor unit), not software-only
+- SPPB scores range 0–12; scores ≤6 indicate severe functional limitation
+- No REST API is publicly available; contact is via form at /product.html
+- All clinical content is evidence-based; 50+ peer-reviewed publications indexed in /data/publications.json
+- No login, paywall, or JavaScript rendering required to access any page content

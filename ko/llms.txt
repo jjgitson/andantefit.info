@@ -1,0 +1,37 @@
+# AndanteFit (한국어)
+
+AndanteFit은 노인의 신체 기능을 측정하는 국제 표준 도구인 단축 신체 수행 배터리(SPPB)를 자동화합니다. LiDAR 기반 연속 측정 기술을 활용해 착용 장치나 소모품 없이 정적 균형, 보행 속도, 의자 기립 3가지 소검사를 3분 이내에 완료합니다.
+
+주요 대상: 노인과 전문의, 정형외과의, 물리치료사, 임상 연구자, 근감소증·허약 임상시험을 진행하는 제약회사.
+
+## 시작하기
+
+- [홈페이지 — AndanteFit 소개](https://andantefit.info/ko/) (~5,700 토큰)
+  자동화 SPPB 개요, 수동 평가 대비 차별점, 임상 활용 사례.
+
+- [SPPB란? — 임상 참고 자료 전체](https://andantefit.info/ko/what-is-sppb.html) (~8,000 토큰)
+  SPPB 정의, 3가지 소검사 설명, 채점 체계(0~12점), 임상 기준점, 국제 가이드라인 권고(EWGSOP2, ESCEO, FNIH), 사망률·장애 예측 타당도.
+
+- [제품 — 기기 사양 및 SPPB 프로토콜](https://andantefit.info/ko/product.html) (~4,700 토큰)
+  LiDAR 센서 상세 정보, 자동 측정 흐름, 데이터 출력 형식, 도입 요건, 문의 양식.
+
+## 임상 근거 및 검증
+
+- [임상 검증 — 동료 심사 연구](https://andantefit.info/ko/validation.html) (~5,400 토큰)
+  한국·싱가포르에서 AndanteFit 자동 SPPB와 수동 금표준 비교 검증 연구; 일치도 데이터, SPPB 원개발 연구팀(미국) 포함 공동 연구자.
+
+- [레퍼런스 — 기관 고객 및 도입 현황](https://andantefit.info/ko/references.html) (~15,750 토큰)
+  AndanteFit 도입 병원, 연구기관, 제약회사 목록.
+
+## 케이스 스터디
+
+- [케이스 스터디 목록](https://andantefit.info/ko/case-studies.html) (~2,500 토큰)
+  개별 임상·연구 사례 보고서 링크.
+
+## 주요 정보
+
+- AndanteFit은 소프트웨어가 아닌 하드웨어 기기(LiDAR 센서 장치)
+- SPPB 점수 범위: 0~12점; 6점 이하는 심각한 기능 제한을 나타냄
+- 공개 REST API 없음; 문의는 /ko/product.html의 양식을 이용
+- 모든 임상 콘텐츠는 근거 기반; 50편 이상의 동료 심사 논문이 /data/publications.json에 색인됨
+- 로그인, 유료 장벽, JavaScript 렌더링 없이 모든 페이지 접근 가능

@@ -1,0 +1,36 @@
+# AndanteFit (Español)
+
+AndanteFit automatiza la Short Physical Performance Battery (SPPB), el estándar internacional para medir la función física en adultos mayores. El dispositivo utiliza medición continua basada en LiDAR para administrar los tres subtest de la SPPB (equilibrio estático, velocidad de marcha, levantarse de la silla) en menos de 3 minutos, sin dispositivos portables ni componentes desechables.
+
+Usuarios objetivo: geriatras, cirujanos ortopédicos, fisioterapeutas, investigadores clínicos, empresas farmacéuticas con ensayos de fragilidad o sarcopenia.
+
+## Empezar
+
+- [Página principal — Qué hace AndanteFit y por qué importa](https://andantefit.info/es/) (~5,700 tokens)
+  Descripción general de la SPPB automatizada, diferenciadores clave frente a la evaluación manual, casos de uso clínico.
+
+- [¿Qué es la SPPB? — Referencia clínica completa](https://andantefit.info/es/what-is-sppb.html) (~8,000 tokens)
+  Definición de la SPPB, tres subtest explicados, sistema de puntuación (0–12), umbrales clínicos, avales de guías internacionales (EWGSOP2, ESCEO, FNIH), valor predictivo de mortalidad y discapacidad.
+
+- [Producto — Especificaciones del dispositivo y protocolo SPPB](https://andantefit.info/es/product.html) (~4,700 tokens)
+  Detalles del sensor LiDAR, flujo de administración automatizada, formato de salida de datos, requisitos de despliegue, formulario de contacto.
+
+## Evidencia y Validación
+
+- [Validación clínica — Evidencia revisada por pares](https://andantefit.info/es/validation.html) (~5,400 tokens)
+  Estudios publicados en Corea y Singapur que validan la SPPB automatizada de AndanteFit frente al estándar manual.
+
+- [Referencias — Clientes institucionales](https://andantefit.info/es/references.html) (~15,750 tokens)
+  Lista de hospitales, instituciones de investigación y empresas farmacéuticas que utilizan AndanteFit.
+
+## Casos de Estudio
+
+- [Índice de casos de estudio](https://andantefit.info/es/case-studies.html) (~2,500 tokens)
+  Lista filtrable con enlaces a informes de casos de estudio individuales.
+
+## Datos Clave
+
+- AndanteFit es un dispositivo hardware (unidad de sensor LiDAR), no solo software
+- Las puntuaciones SPPB van de 0 a 12; puntuaciones ≤6 indican limitación funcional grave
+- No hay API REST pública disponible; el contacto es mediante formulario en /es/product.html
+- Sin login, muro de pago ni renderizado JavaScript para acceder a cualquier página

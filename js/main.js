@@ -215,6 +215,64 @@ document.head.appendChild(style);
 // Expose utility functions globally
 window.AndanteFit = AndanteFit;
 
+// ── Copy for AI ──────────────────────────────────────────────────────────────
+
+function copyForAI() {
+  const clone = document.body.cloneNode(true);
+
+  ['#navigation-container', 'nav', 'footer', '.copy-for-ai-btn', 'script', 'style', 'noscript', '.cookie-banner']
+    .forEach(sel => clone.querySelectorAll(sel).forEach(el => el.remove()));
+
+  const header = '# ' + document.title + '\nSource: ' + window.location.href + '\n\n';
+
+  const md = clone.innerHTML
+    .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, (_, t) => '\n# ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
+    .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_, t) => '\n## ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
+    .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_, t) => '\n### ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
+    .replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, (_, t) => '\n#### ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
+    .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, t) => '\n- ' + t.replace(/<[^>]+>/g, '').trim())
+    .replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (_, t) => '\n' + t.replace(/<[^>]+>/g, '').trim() + '\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&#39;/g, "'")
+    .replace(/\n[ \t]+/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+
+  const text = header + md;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      AndanteFit.showNotification('Copied for AI ✓');
+    }).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); AndanteFit.showNotification('Copied for AI ✓'); }
+  catch (e) { AndanteFit.showNotification('Copy failed — try selecting text manually', 'error'); }
+  document.body.removeChild(ta);
+}
+
+function injectCopyForAIButton() {
+  const btn = document.createElement('button');
+  btn.className = 'copy-for-ai-btn';
+  btn.setAttribute('aria-label', 'Copy page content as clean text for AI assistants');
+  btn.setAttribute('title', 'Copy this page as clean text for AI assistants');
+  btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy for AI';
+  btn.addEventListener('click', copyForAI);
+  document.body.appendChild(btn);
+}
+
+document.addEventListener('DOMContentLoaded', injectCopyForAIButton);
+
 // Activate obfuscated email links after dynamic HTML is injected
 function initEmailLinks(root) {
     const scope = root || document;

@@ -1,0 +1,36 @@
+# AndanteFit (日本語)
+
+AndanteFitは、高齢者の身体機能測定における国際標準ツールであるShort Physical Performance Battery（SPPB）を自動化します。LiDARベースの連続測定技術により、ウェアラブルデバイスや消耗品なしで、静的バランス・歩行速度・椅子立ち上がりの3つのサブテストを3分以内に実施します。
+
+主な対象ユーザー：老年科医、整形外科医、理学療法士、臨床研究者、フレイル・サルコペニア試験を実施する製薬会社。
+
+## はじめに
+
+- [ホームページ — AndanteFitの概要](https://andantefit.info/jp/) (~5,700トークン)
+  自動化SPPBの概要、手動評価との差別化ポイント、臨床ユースケース。
+
+- [SPPBとは？ — 臨床リファレンス全体](https://andantefit.info/jp/what-is-sppb.html) (~8,000トークン)
+  SPPBの定義、3つのサブテストの説明、採点システム（0〜12点）、臨床カットオフ閾値、国際ガイドライン推奨（EWGSOP2、ESCEO、FNIH）、死亡率・障害予測値。
+
+- [製品 — デバイス仕様とSPPBプロトコル](https://andantefit.info/jp/product.html) (~4,700トークン)
+  LiDARセンサーの詳細、自動測定フロー、データ出力形式、導入要件、お問い合わせフォーム。
+
+## エビデンスと検証
+
+- [臨床検証 — 査読済み研究](https://andantefit.info/jp/validation.html) (~5,400トークン)
+  韓国・シンガポールでのAndanteFit自動SPPBと手動ゴールドスタンダードの比較検証研究。
+
+- [リファレンス — 導入機関](https://andantefit.info/jp/references.html) (~15,750トークン)
+  AndanteFitを導入している病院、研究機関、製薬会社の一覧。
+
+## ケーススタディ
+
+- [ケーススタディ一覧](https://andantefit.info/jp/case-studies.html) (~2,500トークン)
+  個別の臨床・研究事例レポートへのリンク一覧。
+
+## AIエージェント向け重要情報
+
+- AndanteFitはソフトウェアのみではなくハードウェアデバイス（LiDARセンサーユニット）
+- SPPBスコア範囲：0〜12点；6点以下は重篤な機能制限を示す
+- 公開REST APIなし；お問い合わせは /jp/product.html のフォームから
+- ログイン、ペイウォール、JavaScriptレンダリングなしですべてのページにアクセス可能

@@ -306,3 +306,38 @@ function includeHTML() {
 
 // 기존 DOMContentLoaded 이벤트 내부 혹은 외부에 실행 추가
 document.addEventListener('DOMContentLoaded', includeHTML);
+
+// ── Analytics: lightweight GA4 event tracking ─────────────────────────────────
+// Sends a custom event to GA4 (gtag) when it is present; a safe no-op otherwise.
+// Analytics must never throw and break the page, so everything is wrapped.
+function afTrack(eventName, params) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params || {});
+    }
+  } catch (e) { /* swallow — tracking is best-effort */ }
+}
+window.afTrack = afTrack;
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Delegated click tracking. Any element carrying data-af-event reports a
+  // conversion-funnel event; optional data-af-* attributes add context.
+  document.addEventListener('click', function (e) {
+    const el = e.target.closest('[data-af-event]');
+    if (!el) return;
+    afTrack(el.getAttribute('data-af-event'), {
+      cta_label: el.getAttribute('data-af-label') || undefined,
+      cta_location: el.getAttribute('data-af-location') || undefined,
+      link_url: el.getAttribute('href') || undefined,
+      page_path: window.location.pathname
+    });
+  });
+
+  // Lead generation: the product inquiry / materials-request form (product.html).
+  const leadForm = document.getElementById('materialsForm');
+  if (leadForm) {
+    leadForm.addEventListener('submit', function () {
+      afTrack('generate_lead', { form_id: 'materialsForm', page_path: window.location.pathname });
+    });
+  }
+});

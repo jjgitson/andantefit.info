@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 현재 페이지 파일명 추출 — 알려진 페이지면 유지, 아니면 index.html로 폴백
-    const KNOWN_PAGES = ['index.html', 'product.html', 'case-studies.html', 'validation.html', 'references.html'];
+    const KNOWN_PAGES = ['index.html', 'product.html', 'case-studies.html', 'validation.html', 'references.html', 'sppb-test.html', 'sppb.html'];
     const segments = path.split('/').filter(Boolean);
     const lastSegment = segments[segments.length - 1] || 'index.html';
     const currentPage = KNOWN_PAGES.indexOf(lastSegment) !== -1 ? lastSegment : 'index.html';
@@ -105,12 +105,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 언어별 메뉴 라벨
    const labels = isKO ?
-    { home: '홈', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
+    { home: '홈', test: 'SPPB 검사', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
     isES ?
-    { home: 'Inicio', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
+    { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
     isJP ?
-    { home: 'ホーム', product: '製品', validation: '検証', cases: 'ケーススタディ', refs: '導入事例' } :
-    { home: 'Home', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
+    { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '検証', cases: 'ケーススタディ', refs: '導入事例' } :
+    { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
 
     // 언어 링크 생성 — 현재 페이지 경로 기반, 현재 언어에 aria-current 부여
     function langLink(lang, label) {
@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 내비게이션 링크 배열 (데스크톱 메뉴 + 모바일 오버레이 공유)
     const navItems = [
         { href: rootPath + langPrefix + 'index.html',        label: labels.home },
+        { href: rootPath + langPrefix + 'sppb-test.html',    label: labels.test },
         { href: rootPath + langPrefix + 'product.html',      label: labels.product },
         { href: rootPath + langPrefix + 'validation.html',   label: labels.validation },
         { href: rootPath + langPrefix + 'case-studies.html', label: labels.cases },

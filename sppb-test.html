@@ -107,6 +107,32 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to administer the SPPB",
+    "description": "Procedure for the three Short Physical Performance Battery (SPPB) subtests: standing balance, gait speed, and chair stand.",
+    "totalTime": "PT15M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Balance test", "text": "Assess the ability to hold three progressively harder standing positions — side-by-side, semi-tandem, and tandem — for up to 10 seconds each.", "url": "https://andantefit.info/sppb-test.html#balance" },
+      { "@type": "HowToStep", "position": 2, "name": "Gait speed test", "text": "Time the person walking a 4-meter course at their usual pace. The faster of two trials is used for scoring.", "url": "https://andantefit.info/sppb-test.html#gait-speed" },
+      { "@type": "HowToStep", "position": 3, "name": "Chair stand test", "text": "Time the person rising from a chair five times in a row without using the arms.", "url": "https://andantefit.info/sppb-test.html#chair-stand" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is SPPB gait speed measured over 4 meters or 6 meters?", "acceptedAnswer": { "@type": "Answer", "text": "The SPPB standard is a 4-meter walk. The person starts from a standstill and walks at their usual pace while the time is recorded. Some research protocols use a 6-meter variant, but SPPB scoring is based on the 4-meter walk." } },
+      { "@type": "Question", "name": "What kind of chair is used for the chair stand test?", "acceptedAnswer": { "@type": "Answer", "text": "A firm, straight-backed chair with a seat height of about 43–45 cm is used, ideally without armrests. With arms folded across the chest and without using the arms, the person rises and sits five times as quickly as possible while the time is recorded." } },
+      { "@type": "Question", "name": "What is a normal SPPB score?", "acceptedAnswer": { "@type": "Answer", "text": "The total ranges from 0 to 12; higher is better. Generally 10–12 is normal to good, 7–9 indicates moderate limitation, and 0–6 indicates severe limitation. A change of 1 point or more is considered clinically meaningful." } },
+      { "@type": "Question", "name": "How long does the SPPB take?", "acceptedAnswer": { "@type": "Answer", "text": "Performed manually it takes about 10–15 minutes. With AndanteFit, all three subtests are completed in under 3 minutes." } }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="navigation-container"></div>
@@ -124,6 +150,7 @@
       </p>
 
       <div class="test-nav" style="margin-top: 32px;">
+        <a href="#sppb-calc">🧮 Calculate score</a>
         <a href="#balance">⚖️ Balance Test</a>
         <a href="#gait-speed">🚶 Gait Speed Test</a>
         <a href="#chair-stand">🪑 Chair Stand Test</a>
@@ -144,6 +171,67 @@
       </div>
     </div>
   </div>
+
+  <!-- Interactive score calculator -->
+  <section id="sppb-calc" class="section" style="background-color: var(--color-soft-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Score Calculator</span>
+        <h2>Calculate the SPPB Score</h2>
+        <p>Select each of the three subtest scores (0–4) to see the total score, functional level, and clinical interpretation automatically. Scoring criteria for each subtest are in the steps below.</p>
+      </div>
+      <div class="sppb-calc" id="sppbCalc">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <span class="calc-field-label">1. Balance<span class="calc-field-hint">Side-by-side · semi-tandem · tandem</span></span>
+            <div class="calc-seg" data-calc-input="balance" role="group" aria-label="Balance score">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">2. Gait speed<span class="calc-field-hint">4-meter walk time</span></span>
+            <div class="calc-seg" data-calc-input="gait" role="group" aria-label="Gait speed score">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">3. Chair stand<span class="calc-field-hint">Five-rise time</span></span>
+            <div class="calc-seg" data-calc-input="chair" role="group" aria-label="Chair stand score">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+        </div>
+        <div class="calc-result" id="calcResult" hidden>
+          <div><span class="calc-total-num" id="calcTotal">–</span><span class="calc-total-den">/ 12</span></div>
+          <span class="calc-band" id="calcBand"></span>
+          <p class="calc-interp" id="calcInterp"></p>
+          <div class="calc-cta">
+            <p class="calc-cta-text"><strong>Spending time on manual timing and recording?</strong><br>AndanteFit automates this scoring in under 3 minutes.</p>
+            <a href="./product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="calc_result" data-af-label="en_calc">See how it's automated →</a>
+          </div>
+        </div>
+      </div>
+      <script type="application/json" id="calcBands">
+      [
+        {"max":6,"tone":"high","label":"Severe limitation (0–6)","interp":"High-risk group. A priority for preventive and rehabilitative intervention."},
+        {"max":9,"tone":"mid","label":"Moderate limitation (7–9)","interp":"Intermediate-risk group, where exercise intervention tends to have the greatest effect."},
+        {"max":12,"tone":"low","label":"Normal to good (10–12)","interp":"Low-risk group. Useful for longitudinal monitoring to detect early functional decline."}
+      ]
+      </script>
+    </div>
+  </section>
 
   <!-- Balance Test -->
   <section id="balance" class="test-section section" style="background-color: var(--color-white);">
@@ -374,6 +462,34 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">FAQ</span>
+        <h2>SPPB Test — Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Is SPPB gait speed measured over 4 meters or 6 meters?</summary>
+          <div class="faq-answer"><p>The SPPB standard is a 4-meter walk. The person starts from a standstill and walks at their usual pace while the time is recorded. Some research protocols use a 6-meter variant, but SPPB scoring is based on the 4-meter walk.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What kind of chair is used for the chair stand test?</summary>
+          <div class="faq-answer"><p>A firm, straight-backed chair with a seat height of about 43–45 cm is used, ideally without armrests. With arms folded across the chest and without using the arms, the person rises and sits five times as quickly as possible while the time is recorded.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What is a normal SPPB score?</summary>
+          <div class="faq-answer"><p>The total ranges from 0 to 12; higher is better. Generally 10–12 is normal to good, 7–9 indicates moderate limitation, and 0–6 indicates severe limitation (higher risk of death, hospitalization, and disability). A change of 1 point or more is considered clinically meaningful.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How long does the SPPB take?</summary>
+          <div class="faq-answer"><p>Performed manually, it takes about 10–15 minutes including setup and recording. With AndanteFit, all three subtests are completed in under 3 minutes with timing and recording automated.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- AndanteFit -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">
@@ -406,5 +522,6 @@
   <div data-include="./includes/footer.html"></div>
   <script src="./js/main.js"></script>
   <script src="./js/navigation.js"></script>
+  <script src="./js/sppb-calculator.js"></script>
 </body>
 </html>

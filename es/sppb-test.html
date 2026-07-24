@@ -95,6 +95,32 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Cómo administrar el SPPB",
+    "description": "Procedimiento de las tres subpruebas de la Batería Corta de Rendimiento Físico (SPPB): equilibrio, velocidad de la marcha y levantarse de la silla.",
+    "totalTime": "PT15M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Prueba de equilibrio", "text": "Evalúe la capacidad de mantener tres posiciones de pie progresivamente más difíciles —juntos, semitándem y tándem— hasta 10 segundos cada una.", "url": "https://andantefit.info/es/sppb-test.html#balance" },
+      { "@type": "HowToStep", "position": 2, "name": "Prueba de velocidad de la marcha", "text": "Cronometre a la persona caminando un recorrido de 4 metros a su ritmo habitual. Se usa el mejor de dos intentos para la puntuación.", "url": "https://andantefit.info/es/sppb-test.html#gait-speed" },
+      { "@type": "HowToStep", "position": 3, "name": "Prueba de levantarse de la silla", "text": "Cronometre a la persona levantándose de una silla cinco veces seguidas sin usar los brazos.", "url": "https://andantefit.info/es/sppb-test.html#chair-stand" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "¿La velocidad de la marcha del SPPB se mide en 4 o en 6 metros?", "acceptedAnswer": { "@type": "Answer", "text": "El estándar del SPPB es una marcha de 4 metros. La persona parte desde parada y camina a su ritmo habitual mientras se registra el tiempo. Algunos protocolos usan una variante de 6 metros, pero la puntuación del SPPB se basa en la marcha de 4 metros." } },
+      { "@type": "Question", "name": "¿Qué tipo de silla se usa en la prueba de levantarse?", "acceptedAnswer": { "@type": "Answer", "text": "Se usa una silla firme con respaldo y una altura de asiento de unos 43–45 cm, sin reposabrazos preferiblemente, con los brazos cruzados sobre el pecho y sin usarlos durante cinco repeticiones." } },
+      { "@type": "Question", "name": "¿Cuál es una puntuación SPPB normal?", "acceptedAnswer": { "@type": "Answer", "text": "El total va de 0 a 12: 10–12 es normal a bueno, 7–9 indica limitación moderada y 0–6 indica limitación grave. Un cambio de 1 punto o más se considera clínicamente relevante." } },
+      { "@type": "Question", "name": "¿Cuánto dura el SPPB?", "acceptedAnswer": { "@type": "Answer", "text": "Manualmente toma unos 10–15 minutos. Con AndanteFit, las tres subpruebas se completan en menos de 3 minutos." } }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="navigation-container"></div>
@@ -111,6 +137,7 @@
         El SPPB fue desarrollado originalmente por Guralnik y colaboradores y ha sido ampliamente utilizado en estudios epidemiológicos y clínicos del envejecimiento. En la actualidad se utiliza habitualmente como medida estandarizada de la función de las extremidades inferiores tanto en la práctica clínica como en la investigación.
       </p>
       <div class="test-nav" style="margin-top: 32px;">
+        <a href="#sppb-calc">🧮 Calcular puntuación</a>
         <a href="#balance">⚖️ Prueba de equilibrio</a>
         <a href="#gait-speed">🚶 Velocidad de la marcha</a>
         <a href="#chair-stand">🪑 Levantarse de la silla</a>
@@ -131,6 +158,67 @@
       </div>
     </div>
   </div>
+
+  <!-- Interactive score calculator -->
+  <section id="sppb-calc" class="section" style="background-color: var(--color-soft-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Calculadora de puntuación</span>
+        <h2>Calcular la puntuación SPPB</h2>
+        <p>Seleccione la puntuación de cada una de las tres subpruebas (0–4) para ver automáticamente la puntuación total, el nivel funcional y la interpretación clínica. Los criterios de puntuación de cada subprueba están en los pasos siguientes.</p>
+      </div>
+      <div class="sppb-calc" id="sppbCalc">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <span class="calc-field-label">1. Equilibrio<span class="calc-field-hint">Juntos · semitándem · tándem</span></span>
+            <div class="calc-seg" data-calc-input="balance" role="group" aria-label="Puntuación de equilibrio">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">2. Velocidad de la marcha<span class="calc-field-hint">Tiempo en 4 metros</span></span>
+            <div class="calc-seg" data-calc-input="gait" role="group" aria-label="Puntuación de velocidad de la marcha">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">3. Levantarse de la silla<span class="calc-field-hint">Tiempo de cinco repeticiones</span></span>
+            <div class="calc-seg" data-calc-input="chair" role="group" aria-label="Puntuación de levantarse de la silla">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+        </div>
+        <div class="calc-result" id="calcResult" hidden>
+          <div><span class="calc-total-num" id="calcTotal">–</span><span class="calc-total-den">/ 12</span></div>
+          <span class="calc-band" id="calcBand"></span>
+          <p class="calc-interp" id="calcInterp"></p>
+          <div class="calc-cta">
+            <p class="calc-cta-text"><strong>¿Dedica tiempo a cronometrar y registrar manualmente?</strong><br>AndanteFit automatiza esta puntuación en menos de 3 minutos.</p>
+            <a href="./product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="calc_result" data-af-label="es_calc">Ver cómo se automatiza →</a>
+          </div>
+        </div>
+      </div>
+      <script type="application/json" id="calcBands">
+      [
+        {"max":6,"tone":"high","label":"Limitación grave (0–6)","interp":"Grupo de alto riesgo. Prioridad para intervención preventiva y de rehabilitación."},
+        {"max":9,"tone":"mid","label":"Limitación moderada (7–9)","interp":"Grupo de riesgo intermedio, donde la intervención con ejercicio suele tener el mayor efecto."},
+        {"max":12,"tone":"low","label":"Normal a bueno (10–12)","interp":"Grupo de bajo riesgo. Útil para la monitorización longitudinal y la detección temprana del deterioro funcional."}
+      ]
+      </script>
+    </div>
+  </section>
 
   <!-- Balance -->
   <section id="balance" class="test-section section" style="background-color: var(--color-white);">
@@ -351,6 +439,34 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Preguntas frecuentes</span>
+        <h2>Prueba SPPB — Preguntas frecuentes</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>¿La velocidad de la marcha del SPPB se mide en 4 o en 6 metros?</summary>
+          <div class="faq-answer"><p>El estándar del SPPB es una marcha de 4 metros. La persona parte desde parada y camina a su ritmo habitual mientras se registra el tiempo. Algunos protocolos de investigación usan una variante de 6 metros, pero la puntuación del SPPB se basa en la marcha de 4 metros.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué tipo de silla se usa en la prueba de levantarse?</summary>
+          <div class="faq-answer"><p>Se usa una silla firme con respaldo y una altura de asiento de unos 43–45 cm, preferiblemente sin reposabrazos. Con los brazos cruzados sobre el pecho y sin usarlos, la persona se levanta y se sienta cinco veces lo más rápido posible mientras se registra el tiempo.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuál es una puntuación SPPB normal?</summary>
+          <div class="faq-answer"><p>El total va de 0 a 12; cuanto más alto, mejor. En general, 10–12 es normal a bueno, 7–9 indica limitación moderada y 0–6 indica limitación grave (mayor riesgo de muerte, hospitalización y discapacidad). Un cambio de 1 punto o más se considera clínicamente relevante.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto dura el SPPB?</summary>
+          <div class="faq-answer"><p>Realizado manualmente, toma unos 10–15 minutos incluyendo preparación y registro. Con AndanteFit, las tres subpruebas se completan en menos de 3 minutos con el cronometraje y el registro automatizados.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- AndanteFit -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">
@@ -383,5 +499,6 @@
   <div data-include="../includes/footer.html"></div>
   <script src="../js/main.js"></script>
   <script src="../js/navigation.js"></script>
+  <script src="../js/sppb-calculator.js"></script>
 </body>
 </html>

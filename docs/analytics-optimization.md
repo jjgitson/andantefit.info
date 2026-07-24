@@ -28,6 +28,22 @@ Shared styles live in `css/style.css` (`.cta-band`, `.print-kit`, `.pro-cta`,
 `.btn-accent`, `.btn-on-dark`), so the same components can be reused on other
 content pages (e.g. `sppb.html`) later without new CSS.
 
+### Top procedure page reframed from reference → tool (`sppb-test.html`, all 4 languages)
+The #1-traffic page (`/jp/sppb-test.html`) was consumed as a quick reference and
+bounced in ~32 s. To match the visiting clinician's actual job (scoring a
+patient) and create a natural conversion moment:
+
+- **Interactive SPPB score calculator** (`js/sppb-calculator.js`, styled in
+  `css/style.css`) placed high on the page, linked from the hero. The clinician
+  picks the three subtest scores (0–4) and instantly gets the total (0–12),
+  functional band, and clinical interpretation — then a result-panel CTA
+  ("automate this scoring") into `product.html`. Emits `calc_complete`.
+  Progressive enhancement: the static scoring tables remain the no-JS fallback.
+- **FAQ section** answering the real search queries (4 m vs 6 m gait, chair
+  type, normal score, test duration).
+- **Structured data**: `HowTo` (the 3-step protocol) and `FAQPage` JSON-LD added
+  to each language's `<head>` for richer search results on procedure queries.
+
 ### Print / PDF pages upgraded (all 4 languages)
 `sppb-test-print.html` (en / ko / jp / es):
 
@@ -42,9 +58,10 @@ A small, safe `afTrack()` helper sends GA4 events (no-op if gtag is absent):
 
 | Event            | Fires when                                              |
 |------------------|----------------------------------------------------------|
-| `cta_click`      | any CTA with `data-af-event` is clicked (band, bottom)   |
+| `cta_click`      | any CTA with `data-af-event` is clicked (band, bottom, calculator result) |
 | `pdf_download`   | "Download PDF" is clicked                                 |
 | `print_view`     | "Print-friendly version" is clicked                      |
+| `calc_complete`  | all three subtests are entered in the SPPB calculator (carries `sppb_total`, `sppb_band`) |
 | `generate_lead`  | the product inquiry form (`#materialsForm`) is submitted  |
 
 Each event carries `cta_location`, `cta_label`, `link_url`, and `page_path` so
@@ -59,7 +76,10 @@ These are Admin-panel settings on the GA4 property (`G-0L4ENVHFYP`).
 
 ### 2a. Mark the new events as key events (conversions)
 **Admin → Events → Key events** (or Events, toggle "Mark as key event") for:
-`generate_lead`, `pdf_download`, `cta_click`.
+`generate_lead`, `pdf_download`, `cta_click`, `calc_complete`.
+`calc_complete` is a strong engagement signal on the top procedure page — track
+it to confirm the interactive calculator lifts engagement, and watch the
+`calc_complete → cta_click(calc_result)` step as the new micro-funnel.
 Until this is done, GA4 records the events but does not report them as
 conversions — so we still can't see which content actually produces leads.
 Give it 24–48 h after the first events arrive for them to appear in the list.

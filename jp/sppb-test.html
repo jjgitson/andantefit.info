@@ -95,6 +95,32 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "SPPB検査の実施方法",
+    "description": "簡易身体能力バッテリー（SPPB）の3つのサブテスト（静的バランス・歩行速度・椅子立ち上がり）の実施手順。",
+    "totalTime": "PT15M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "静的バランス検査", "text": "両足並べ・半タンデム・タンデムの3姿勢で、それぞれ最大10秒のバランス保持能力を評価します。", "url": "https://andantefit.info/jp/sppb-test.html#balance" },
+      { "@type": "HowToStep", "position": 2, "name": "歩行速度検査", "text": "4mの直線をいつも通りの速さで歩いた時間を計測します。2試行のうち速い記録を採点に使用します。", "url": "https://andantefit.info/jp/sppb-test.html#gait-speed" },
+      { "@type": "HowToStep", "position": 3, "name": "椅子立ち上がり検査", "text": "腕を使わずに5回連続で立ち座りを行った時間を計測します。", "url": "https://andantefit.info/jp/sppb-test.html#chair-stand" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "SPPBの歩行速度は4mと6mのどちらで測定しますか？", "acceptedAnswer": { "@type": "Answer", "text": "SPPBの標準は4m歩行です。静止状態から開始し、いつも通りの速さで歩いた時間を計測します。一部の研究では6m変法も用いられますが、SPPBの採点基準は4m歩行に基づきます。" } },
+      { "@type": "Question", "name": "椅子立ち上がり検査ではどのような椅子を使いますか？", "acceptedAnswer": { "@type": "Answer", "text": "座面高さ約43〜45cmの固い椅子（肘かけなし推奨）を使用し、腕を胸の前で交差して腕を使わずに5回立ち座りを繰り返した時間を計測します。" } },
+      { "@type": "Question", "name": "SPPBの合計スコアは何点が基準になりますか？", "acceptedAnswer": { "@type": "Answer", "text": "合計は0〜12点で、10〜12点は正常〜良好、7〜9点は中等度の機能低下、0〜6点は重度の機能低下と解釈されます。1点以上の変化が臨床的に意味を持ちます。" } },
+      { "@type": "Question", "name": "SPPB検査にはどれくらい時間がかかりますか？", "acceptedAnswer": { "@type": "Answer", "text": "手動では約10〜15分が目安です。AndanteFit使用時は3つのサブテストが3分以内に完了します。" } }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="navigation-container"></div>
@@ -111,6 +137,7 @@
         SPPBはもともとGuralnikらによって開発され、加齢に関する疫学・臨床研究において広く用いられてきました。現在では臨床現場および研究において、下肢機能の標準化された評価指標として一般的に使用されています。
       </p>
       <div class="test-nav" style="margin-top: 32px;">
+        <a href="#sppb-calc">🧮 スコアを計算する</a>
         <a href="#balance">⚖️ 静的バランス検査</a>
         <a href="#gait-speed">🚶 歩行速度検査</a>
         <a href="#chair-stand">🪑 椅子立ち上がり検査</a>
@@ -131,6 +158,67 @@
       </div>
     </div>
   </div>
+
+  <!-- Interactive score calculator -->
+  <section id="sppb-calc" class="section" style="background-color: var(--color-soft-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">スコア計算ツール</span>
+        <h2>SPPBスコアを計算する</h2>
+        <p>3つのサブテストのスコア（各0〜4点）を選ぶと、合計スコアと機能レベル・臨床的解釈が自動で表示されます。各スコアの判定基準は下記の検査手順をご参照ください。</p>
+      </div>
+      <div class="sppb-calc" id="sppbCalc">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <span class="calc-field-label">① 静的バランス<span class="calc-field-hint">両足並べ・半タンデム・タンデム</span></span>
+            <div class="calc-seg" data-calc-input="balance" role="group" aria-label="静的バランスのスコア">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">② 歩行速度<span class="calc-field-hint">4m歩行時間</span></span>
+            <div class="calc-seg" data-calc-input="gait" role="group" aria-label="歩行速度のスコア">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">③ 椅子立ち上がり<span class="calc-field-hint">5回立ち上がり時間</span></span>
+            <div class="calc-seg" data-calc-input="chair" role="group" aria-label="椅子立ち上がりのスコア">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+        </div>
+        <div class="calc-result" id="calcResult" hidden>
+          <div><span class="calc-total-num" id="calcTotal">–</span><span class="calc-total-den">/ 12点</span></div>
+          <span class="calc-band" id="calcBand"></span>
+          <p class="calc-interp" id="calcInterp"></p>
+          <div class="calc-cta">
+            <p class="calc-cta-text"><strong>手動での計時・記録に時間がかかっていませんか？</strong><br>AndanteFitはこのスコアリングを3分以内に自動化します。</p>
+            <a href="./product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="calc_result" data-af-label="jp_calc">自動化について →</a>
+          </div>
+        </div>
+      </div>
+      <script type="application/json" id="calcBands">
+      [
+        {"max":6,"tone":"high","label":"重度の機能低下（0〜6点）","interp":"リスクが高い群です。予防・リハビリ介入の優先対象と考えられます。"},
+        {"max":9,"tone":"mid","label":"中等度の機能低下（7〜9点）","interp":"中間リスク群です。運動介入の効果が最も大きく現れる層とされています。"},
+        {"max":12,"tone":"low","label":"正常〜良好（10〜12点）","interp":"リスクが低い群です。初期機能低下の検出のため縦断的モニタリングに活用できます。"}
+      ]
+      </script>
+    </div>
+  </section>
 
   <!-- Balance -->
   <section id="balance" class="test-section section" style="background-color: var(--color-white);">
@@ -351,6 +439,34 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">よくある質問</span>
+        <h2>SPPB検査に関するFAQ</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>SPPBの歩行速度は4mと6mのどちらで測定しますか？</summary>
+          <div class="faq-answer"><p>SPPBの標準は4m歩行です。静止状態から開始し、いつも通りの速さで歩いた時間を計測します。一部の研究プロトコルでは6m変法も用いられますが、SPPBの採点基準は4m歩行に基づきます。</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>椅子立ち上がり検査ではどのような椅子を使いますか？</summary>
+          <div class="faq-answer"><p>座面高さ約43〜45cmの背もたれ付きで固い椅子を使用し、肘かけなしが推奨されます。腕を胸の前で交差し、腕を使わずにできるだけ速く5回立ち座りを繰り返した時間を計測します。</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>SPPBの合計スコアは何点が基準になりますか？</summary>
+          <div class="faq-answer"><p>合計は0〜12点で、点数が高いほど身体機能が良好です。一般に10〜12点は正常〜良好、7〜9点は中等度の機能低下、0〜6点は重度の機能低下（死亡・入院・機能障害のリスクが高い）と解釈されます。1点以上の変化は臨床的に意味のある変化とみなされます。</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>SPPB検査にはどれくらい時間がかかりますか？</summary>
+          <div class="faq-answer"><p>手動での実施は準備・記録を含めて約10〜15分が目安です。AndanteFitを使用する場合、3つのサブテストが3分以内に完了し、計時や記録が自動化されます。</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- AndanteFit -->
   <section class="section" style="background-color: var(--color-white);">
     <div class="container">
@@ -383,5 +499,6 @@
   <div data-include="/includes/footer.html"></div>
   <script src="/js/main.js"></script>
   <script src="/js/navigation.js"></script>
+  <script src="/js/sppb-calculator.js"></script>
 </body>
 </html>

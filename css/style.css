@@ -164,8 +164,12 @@ a:hover {
 
 .nav-menu {
   display: flex;
-  gap: calc(var(--spacing-unit) * 5);
+  gap: calc(var(--spacing-unit) * 4);
   list-style: none;
+}
+
+.nav-menu li a {
+  white-space: nowrap;
 }
 
 .nav-link {
@@ -192,8 +196,10 @@ a:hover {
   line-height: 1;
 }
 
-@media (max-width: 768px) {
-  /* Desktop nav elements stay hidden on mobile — overlay handles navigation */
+@media (max-width: 992px) {
+  /* Desktop nav elements stay hidden on mobile/tablet — overlay handles navigation.
+     Breakpoint raised to 992px so the 6-item menu (with wide CJK labels) collapses
+     to the hamburger before it gets cramped, instead of wrapping. */
   .nav-menu,
   .nav-menu.active {
     display: none !important;
@@ -332,8 +338,8 @@ a:hover {
   to   { opacity: 1; }
 }
 
-@media (min-width: 769px) {
-  /* Overlay only for mobile — never shown on desktop */
+@media (min-width: 993px) {
+  /* Overlay only for mobile/tablet — never shown on desktop */
   .nav-overlay { display: none !important; }
 }
 
@@ -682,7 +688,7 @@ a:hover {
 
 .nav-lang .sep{ opacity:0.6; }
 
-@media (max-width:768px){
+@media (max-width:992px){
   .nav-lang{ display:none; }
 }
 

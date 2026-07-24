@@ -14,7 +14,8 @@
       background: #fff;
     }
     @media screen {
-      body { max-width: 210mm; margin: 0 auto; padding: 12mm; }
+      html { background: #eef2f7; }
+      body { max-width: 210mm; margin: 24px auto; padding: 14mm; background: #fff; box-shadow: 0 6px 28px rgba(15, 76, 129, 0.10); border-radius: 8px; }
     }
 
     .print-header {
@@ -91,10 +92,23 @@
 
     .print-footer { text-align: center; font-size: 7pt; color: #bbb; margin-top: 10px; border-top: 1px solid #eee; padding-top: 6px; }
 
+    .print-header .wordmark { font-weight: 800; color: #0f4c81; }
+    /* Print-visible brand / value strip */
+    .print-cta { margin-top: 12px; border: 1px solid #d0d8e4; border-radius: 7px; background: #f7f9fc; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; break-inside: avoid; }
+    .print-cta .msg { font-size: 8pt; color: #334155; line-height: 1.4; }
+    .print-cta .msg strong { color: #0f4c81; }
+    .print-cta .url { font-size: 9pt; font-weight: 800; color: #0f4c81; white-space: nowrap; text-decoration: none; }
+    /* Screen-only toolbar */
+    .screen-toolbar { display: none; }
     @media screen {
-      .back-btn { display: inline-block; margin-bottom: 16px; padding: 8px 18px; background: #0f4c81; color: #fff; border: none; border-radius: 6px; font-size: 9pt; cursor: pointer; text-decoration: none; }
+      .screen-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+      .sb-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 9.5pt; font-weight: 700; cursor: pointer; text-decoration: none; border: 1.5px solid #0f4c81; }
+      .sb-btn.primary { background: #0f4c81; color: #fff; }
+      .sb-btn.ghost { background: #fff; color: #0f4c81; }
+      .sb-btn:hover { opacity: 0.9; }
+      .sb-hint { font-size: 8.5pt; color: #64748b; margin-left: auto; }
     }
-    @media print { .back-btn { display: none; } }
+    @media print { .screen-toolbar { display: none !important; } }
   </style>
 </head>
 <body>
@@ -104,12 +118,16 @@
     }
   </script>
 
-  <a href="./sppb-test.html" class="back-btn">← SPPB 검사 페이지로 돌아가기</a>
+  <div class="screen-toolbar">
+    <a href="./sppb-test.html" class="sb-btn ghost">← SPPB 검사 페이지로 돌아가기</a>
+    <button type="button" class="sb-btn primary" onclick="window.print()">🖨️ 인쇄 / PDF 저장</button>
+    <span class="sb-hint">A4 · 1페이지에 최적화되어 있습니다</span>
+  </div>
 
   <div class="print-header">
     <h1>SPPB 검사 방법</h1>
     <p class="test-order">검사 순서: 정적균형 → 보행속도 → 일어서기 &nbsp;|&nbsp; 소요 시간: 수동 약 10–15분 / AndanteFit 사용 시 3분 미만</p>
-    <p class="brand">andantefit.info</p>
+    <p class="brand"><span class="wordmark">AndanteFit</span> &nbsp;·&nbsp; andantefit.info</p>
   </div>
 
   <div class="test-cards">
@@ -244,7 +262,12 @@
     </div>
   </div>
 
-  <div class="print-footer">andantefit.info &nbsp;|&nbsp; SPPB 검사 방법 – 현장 참고 자료</div>
+  <div class="print-cta">
+    <div class="msg">수동 SPPB는 <strong>약 10~15분</strong>, 검사자 간 편차가 발생합니다. <strong>AndanteFit</strong>은 LiDAR로 3개 항목을 <strong>3분 미만</strong>에 자동 측정·자동 채점합니다.</div>
+    <a href="https://andantefit.info/ko/product.html" class="url">andantefit.info →</a>
+  </div>
+
+  <div class="print-footer">SPPB 검사 방법 – 현장 참고 자료</div>
 
 </body>
 </html>

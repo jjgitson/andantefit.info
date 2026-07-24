@@ -95,6 +95,32 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "SPPB 검사 시행 방법",
+    "description": "간편신체기능검사(SPPB)의 3가지 하위검사(정적균형·보행속도·일어서기) 시행 절차.",
+    "totalTime": "PT15M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "정적균형 검사", "text": "양발 모으기·세미탠덤·탠덤 3자세에서 각각 최대 10초의 균형 유지 능력을 평가합니다.", "url": "https://andantefit.info/ko/sppb-test.html#balance" },
+      { "@type": "HowToStep", "position": 2, "name": "보행속도 검사", "text": "4m 직선 구간을 평소 속도로 걸은 시간을 측정합니다. 2회 시행 중 빠른 기록을 채점에 사용합니다.", "url": "https://andantefit.info/ko/sppb-test.html#gait-speed" },
+      { "@type": "HowToStep", "position": 3, "name": "일어서기 검사", "text": "팔을 사용하지 않고 5회 연속으로 앉았다 일어선 시간을 측정합니다.", "url": "https://andantefit.info/ko/sppb-test.html#chair-stand" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "SPPB 보행속도는 4m와 6m 중 무엇으로 측정하나요?", "acceptedAnswer": { "@type": "Answer", "text": "SPPB 표준은 4m 보행입니다. 정지 상태에서 출발해 평소 속도로 걸은 시간을 측정합니다. 일부 연구에서는 6m 변형을 쓰기도 하지만 SPPB 채점 기준은 4m 보행을 따릅니다." } },
+      { "@type": "Question", "name": "일어서기 검사에는 어떤 의자를 사용하나요?", "acceptedAnswer": { "@type": "Answer", "text": "좌면 높이 약 43~45cm의 단단한 의자(팔걸이 없음 권장)를 사용하며, 팔을 가슴 앞에 교차하고 팔을 쓰지 않은 채 5회 앉았다 일어선 시간을 측정합니다." } },
+      { "@type": "Question", "name": "SPPB 총점은 몇 점이 기준인가요?", "acceptedAnswer": { "@type": "Answer", "text": "총점은 0~12점이며, 10~12점은 정상~양호, 7~9점은 중등도 기능저하, 0~6점은 중증 기능저하로 해석됩니다. 1점 이상의 변화가 임상적으로 의미를 가집니다." } },
+      { "@type": "Question", "name": "SPPB 검사는 시간이 얼마나 걸리나요?", "acceptedAnswer": { "@type": "Answer", "text": "수동 시행은 약 10~15분이 소요됩니다. AndanteFit 사용 시 3가지 하위검사가 3분 이내에 완료됩니다." } }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="navigation-container"></div>
@@ -111,10 +137,86 @@
         SPPB는 원래 Guralnik 등에 의해 개발되었으며, 노화 관련 역학 및 임상 연구에서 널리 활용되어 왔습니다. 현재는 임상 현장과 연구 모두에서 하지 기능의 표준화된 평가 지표로 사용되고 있습니다.
       </p>
       <div class="test-nav" style="margin-top: 32px;">
+        <a href="#sppb-calc">🧮 점수 계산하기</a>
         <a href="#balance">⚖️ 정적균형 검사</a>
         <a href="#gait-speed">🚶 보행속도 검사</a>
         <a href="#chair-stand">🪑 일어서기 검사</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Inline conversion band -->
+  <div class="container">
+    <div class="cta-band">
+      <div class="cta-band-text">
+        <span class="cta-band-eyebrow">SPPB 자동화</span>
+        <p class="cta-band-title">이 세 가지 검사를 3분 이내에 자동으로.</p>
+        <p class="cta-band-sub">AndanteFit은 스톱워치도, 바닥 표시도 필요 없습니다. LiDAR 센서가 SPPB 3개 항목을 측정하고 검사자 간 편차 없이 자동 채점합니다.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="./product.html" class="btn btn-accent" data-af-event="cta_click" data-af-location="test_hero_band" data-af-label="ko_product">제품 살펴보기 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive score calculator -->
+  <section id="sppb-calc" class="section" style="background-color: var(--color-soft-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">점수 계산 도구</span>
+        <h2>SPPB 점수 계산하기</h2>
+        <p>3가지 하위검사 점수(각 0~4점)를 선택하면 총점과 기능 수준·임상 해석이 자동으로 표시됩니다. 각 점수의 판정 기준은 아래 검사 절차를 참고하세요.</p>
+      </div>
+      <div class="sppb-calc" id="sppbCalc">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <span class="calc-field-label">① 정적균형<span class="calc-field-hint">양발 모으기·세미탠덤·탠덤</span></span>
+            <div class="calc-seg" data-calc-input="balance" role="group" aria-label="정적균형 점수">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">② 보행속도<span class="calc-field-hint">4m 보행 시간</span></span>
+            <div class="calc-seg" data-calc-input="gait" role="group" aria-label="보행속도 점수">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">③ 일어서기<span class="calc-field-hint">5회 일어서기 시간</span></span>
+            <div class="calc-seg" data-calc-input="chair" role="group" aria-label="일어서기 점수">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+        </div>
+        <div class="calc-result" id="calcResult" hidden>
+          <div><span class="calc-total-num" id="calcTotal">–</span><span class="calc-total-den">/ 12점</span></div>
+          <span class="calc-band" id="calcBand"></span>
+          <p class="calc-interp" id="calcInterp"></p>
+          <div class="calc-cta">
+            <p class="calc-cta-text"><strong>수동 계측·기록에 시간이 많이 드시나요?</strong><br>AndanteFit은 이 채점을 3분 이내에 자동화합니다.</p>
+            <a href="./product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="calc_result" data-af-label="ko_calc">자동화 알아보기 →</a>
+          </div>
+        </div>
+      </div>
+      <script type="application/json" id="calcBands">
+      [
+        {"max":6,"tone":"high","label":"중증 기능저하 (0~6점)","interp":"고위험군입니다. 예방·재활 중재의 우선 대상으로 간주됩니다."},
+        {"max":9,"tone":"mid","label":"중등도 기능저하 (7~9점)","interp":"중간 위험군입니다. 운동 중재의 효과가 가장 크게 나타나는 층으로 알려져 있습니다."},
+        {"max":12,"tone":"low","label":"정상~양호 (10~12점)","interp":"저위험군입니다. 초기 기능저하 감지를 위한 종단 모니터링에 활용할 수 있습니다."}
+      ]
+      </script>
     </div>
   </section>
 
@@ -326,9 +428,41 @@
           점수 변화가 1점 이상인 경우 임상적으로 의미 있는 변화로 볼 수 있습니다. 총점과 함께 하위 검사별 점수 프로파일을 해석하면 더 효과적인 중재 계획을 수립할 수 있습니다.
         </p>
       </div>
-      <div class="print-btns">
-        <a href="./sppb-test-print.html" target="_blank" class="btn btn-secondary">🖨️ 인쇄용 버전</a>
-        <a href="./sppb-test-print.html?print=1" target="_blank" class="btn btn-primary">⬇️ PDF 다운로드</a>
+      <div class="print-kit">
+        <p class="print-kit-title">현장용 참고자료 (A4 · 1장)</p>
+        <p class="print-kit-sub">3개 항목의 절차·채점 기준·기록란을 한 장에 정리했습니다. 인쇄하여 검사 현장에서 바로 사용하실 수 있습니다.</p>
+        <div class="print-btns" style="margin-top: 0;">
+          <a href="./sppb-test-print.html" target="_blank" class="btn btn-secondary" data-af-event="print_view" data-af-location="test_scoring" data-af-label="ko">🖨️ 인쇄용 버전</a>
+          <a href="./sppb-test-print.html?print=1" target="_blank" class="btn btn-primary" data-af-event="pdf_download" data-af-location="test_scoring" data-af-label="ko">⬇️ PDF 다운로드</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">자주 묻는 질문</span>
+        <h2>SPPB 검사 FAQ</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>SPPB 보행속도는 4m와 6m 중 무엇으로 측정하나요?</summary>
+          <div class="faq-answer"><p>SPPB 표준은 4m 보행입니다. 정지 상태에서 출발해 평소 속도로 걸은 시간을 측정합니다. 일부 연구 프로토콜에서는 6m 변형을 쓰기도 하지만, SPPB 채점 기준은 4m 보행을 따릅니다.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>일어서기 검사에는 어떤 의자를 사용하나요?</summary>
+          <div class="faq-answer"><p>좌면 높이 약 43~45cm의 등받이가 있는 단단한 의자를 사용하며, 팔걸이가 없는 것이 권장됩니다. 팔을 가슴 앞에 교차하고 팔을 쓰지 않은 채 최대한 빠르게 5회 앉았다 일어선 시간을 측정합니다.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>SPPB 총점은 몇 점이 기준인가요?</summary>
+          <div class="faq-answer"><p>총점은 0~12점이며 높을수록 신체기능이 양호합니다. 일반적으로 10~12점은 정상~양호, 7~9점은 중등도 기능저하, 0~6점은 중증 기능저하(사망·입원·기능장애 위험이 높음)로 해석됩니다. 1점 이상의 변화는 임상적으로 의미 있는 변화로 간주됩니다.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>SPPB 검사는 시간이 얼마나 걸리나요?</summary>
+          <div class="faq-answer"><p>수동 시행은 준비·기록을 포함해 약 10~15분이 소요됩니다. AndanteFit을 사용하면 3가지 하위검사가 3분 이내에 완료되고 계측·기록이 자동화됩니다.</p></div>
+        </details>
       </div>
     </div>
   </section>
@@ -347,10 +481,17 @@
           세 가지 하위 검사가 3분 이내에 완료되며, 매 검사마다 전문 인력이 필요하지 않습니다.
         </p>
       </div>
-      <div style="text-align: center;">
-        <a href="./sppb.html" class="btn btn-secondary" style="margin-right: 12px;">SPPB란?</a>
-        <a href="./validation.html" class="btn btn-primary" style="margin-right: 12px;">검증 논문 보기</a>
-        <a href="./product.html" class="btn btn-secondary">AndanteFit 소개</a>
+      <div class="pro-cta">
+        <div class="pro-cta-stats">
+          <div class="pro-cta-stat"><span class="v">3분 미만</span><span class="l">전체 3항목 검사 시간</span></div>
+          <div class="pro-cta-stat"><span class="v">웨어러블 불필요</span><span class="l">착용·소모품 없음</span></div>
+          <div class="pro-cta-stat"><span class="v">자동 채점</span><span class="l">검사자 간 편차 감소</span></div>
+        </div>
+        <div class="pro-cta-actions">
+          <a href="./product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="test_bottom" data-af-label="ko_demo">데모·문의하기 →</a>
+          <a href="./sppb.html" class="btn btn-secondary">SPPB란?</a>
+          <a href="./validation.html" class="btn btn-secondary">검증 논문 보기</a>
+        </div>
       </div>
     </div>
   </section>
@@ -358,5 +499,6 @@
   <div data-include="../includes/footer.html"></div>
   <script src="../js/main.js"></script>
   <script src="../js/navigation.js"></script>
+  <script src="../js/sppb-calculator.js"></script>
 </body>
 </html>

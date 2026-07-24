@@ -14,18 +14,20 @@
       background: #fff;
     }
     @media screen {
-      body { max-width: 210mm; margin: 0 auto; padding: 12mm; }
+      html { background: #eef2f7; }
+      body { max-width: 210mm; margin: 24px auto; padding: 14mm; background: #fff; box-shadow: 0 6px 28px rgba(15, 76, 129, 0.10); border-radius: 8px; }
     }
 
     .print-header {
       text-align: center;
       border-bottom: 2px solid #0f4c81;
-      padding-bottom: 8px;
+      padding-bottom: 10px;
       margin-bottom: 14px;
     }
     .print-header h1 { font-size: 16pt; font-weight: 800; color: #0f4c81; letter-spacing: -0.02em; }
-    .print-header .test-order { font-size: 9pt; color: #555; margin-top: 4px; }
-    .print-header .brand { font-size: 8pt; color: #aaa; margin-top: 2px; }
+    .print-header .test-order { font-size: 9pt; color: #555; margin-top: 5px; }
+    .print-header .brand { font-size: 8pt; color: #94a3b8; margin-top: 3px; letter-spacing: 0.04em; }
+    .print-header .wordmark { font-weight: 800; color: #0f4c81; letter-spacing: 0; }
 
     .test-cards {
       display: grid;
@@ -77,12 +79,35 @@
     .record-notes { margin-top: 10px; }
     .record-notes label { font-size: 7pt; color: #888; display: block; border-bottom: 1px solid #b0bac8; padding-bottom: 1px; margin-bottom: 18px; }
 
-    .print-footer { text-align: center; font-size: 7pt; color: #bbb; margin-top: 10px; border-top: 1px solid #eee; padding-top: 6px; }
-
-    @media screen {
-      .back-btn { display: inline-block; margin-bottom: 16px; padding: 8px 18px; background: #0f4c81; color: #fff; border: none; border-radius: 6px; font-size: 9pt; cursor: pointer; text-decoration: none; }
+    /* Print-visible brand / value strip */
+    .print-cta {
+      margin-top: 12px;
+      border: 1px solid #d0d8e4;
+      border-radius: 7px;
+      background: #f7f9fc;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      break-inside: avoid;
     }
-    @media print { .back-btn { display: none; } }
+    .print-cta .msg { font-size: 8pt; color: #334155; line-height: 1.4; }
+    .print-cta .msg strong { color: #0f4c81; }
+    .print-cta .url { font-size: 9pt; font-weight: 800; color: #0f4c81; white-space: nowrap; text-decoration: none; }
+    .print-footer { text-align: center; font-size: 7pt; color: #bbb; margin-top: 8px; }
+
+    /* Screen-only toolbar */
+    .screen-toolbar { display: none; }
+    @media screen {
+      .screen-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+      .sb-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 9.5pt; font-weight: 700; cursor: pointer; text-decoration: none; border: 1.5px solid #0f4c81; }
+      .sb-btn.primary { background: #0f4c81; color: #fff; }
+      .sb-btn.ghost { background: #fff; color: #0f4c81; }
+      .sb-btn:hover { opacity: 0.9; }
+      .sb-hint { font-size: 8.5pt; color: #64748b; margin-left: auto; }
+    }
+    @media print { .screen-toolbar { display: none !important; } }
   </style>
 </head>
 <body>
@@ -92,12 +117,16 @@
     }
   </script>
 
-  <a href="./sppb-test.html" class="back-btn">← SPPB検査ページに戻る</a>
+  <div class="screen-toolbar">
+    <a href="./sppb-test.html" class="sb-btn ghost">← SPPB検査ページに戻る</a>
+    <button type="button" class="sb-btn primary" onclick="window.print()">🖨️ 印刷 / PDF保存</button>
+    <span class="sb-hint">A4・1ページに最適化されています</span>
+  </div>
 
   <div class="print-header">
     <h1>SPPB検査方法</h1>
     <p class="test-order">実施順序：静的バランス → 歩行速度 → 椅子立ち上がり &nbsp;|&nbsp; 所要時間：手動 約10〜15分 / AndanteFit使用時 3分未満</p>
-    <p class="brand">andantefit.info</p>
+    <p class="brand"><span class="wordmark">AndanteFit</span> &nbsp;·&nbsp; andantefit.info</p>
   </div>
 
   <div class="test-cards">
@@ -232,7 +261,12 @@
     </div>
   </div>
 
-  <div class="print-footer">andantefit.info &nbsp;|&nbsp; SPPB検査方法 – 現場参照用</div>
+  <div class="print-cta">
+    <div class="msg">手動SPPBは <strong>約10〜15分</strong>・検査者間のばらつきあり。<strong>AndanteFit</strong> はLiDARで全3項目を <strong>3分未満</strong> に自動測定・自動採点します。</div>
+    <a href="https://andantefit.info/jp/product.html" class="url">andantefit.info →</a>
+  </div>
+
+  <div class="print-footer">SPPB検査方法 – 現場参照用</div>
 
 </body>
 </html>

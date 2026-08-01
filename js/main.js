@@ -341,3 +341,110 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+// ── Sitewide post-reading journey for Korean case studies ────────────────────
+// Reading → related evidence → solution understanding.
+(function () {
+  const path = window.location.pathname;
+  const isKoreanCaseStudy = /^\/ko\/case-studies\/[^/]+\.html$/.test(path);
+  if (!isKoreanCaseStudy) return;
+
+  const library = {
+    oncology: [
+      { href: '/ko/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-KR.html', kicker: '암 환자 기능평가', title: '항암 환자에서 신체기능평가(SPPB)가 중요한 이유' },
+      { href: '/ko/case-studies/2026-08-02-Perioperative-Prehabilitation-Early-Exercise-SPPB-KR.html', kicker: '수술 전후 회복', title: '수술 전부터 회복을 설계해야 하는 이유' }
+    ],
+    sarcopenia: [
+      { href: '/ko/case-studies/2026-04-06-Sarcopenia-Management-Korea-KR.html', kicker: '근감소증 관리', title: '근감소증 관리의 전환과 한국의 적용' },
+      { href: '/ko/case-studies/2026-07-11-Sarcopenia-Drug-Development-SPPB-KR.html', kicker: '임상 결과평가', title: '근육량보다 신체기능이 중요한 이유' }
+    ],
+    cardiopulmonary: [
+      { href: '/ko/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html', kicker: '심폐재활', title: '심부전·심폐재활에서의 SPPB 활용' },
+      { href: '/ko/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-KR.html', kicker: '만성질환 관리', title: '내분비 클리닉의 SPPB 도입 전략' }
+    ],
+    community: [
+      { href: '/ko/case-studies/2026-02-18-Community-Frailty-Prevention-Program-KR.html', kicker: '지역사회 노쇠예방', title: '지역사회 노쇠예방 프로그램의 설계' },
+      { href: '/ko/case-studies/2026-02-18-Checkup-Event-Community-CSR-KR.html', kicker: '커뮤니티 체크업', title: '신체나이 체크업 이벤트 운영 사례' }
+    ],
+    occupational: [
+      { href: '/ko/case-studies/2026-04-04-SPPB-Occupational-Health-KR.html', kicker: '산업보건', title: '산업보건 현장에서의 SPPB 활용' },
+      { href: '/ko/case-studies/2026-04-05-Pain-To-Function-Paradigm-Shift-KR.html', kicker: '기능 중심 관리', title: '통증 중심에서 기능 중심으로의 전환' }
+    ],
+    default: [
+      { href: '/ko/case-studies/2026-07-11-Sarcopenia-Drug-Development-SPPB-KR.html', kicker: '임상 결과평가', title: '근육량보다 신체기능이 중요한 이유' },
+      { href: '/ko/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-KR.html', kicker: '임상 적용', title: '항암 환자에서 SPPB가 중요한 이유' }
+    ]
+  };
+
+  function getTopicKey() {
+    const text = [
+      document.title,
+      document.querySelector('meta[name="keywords"]')?.content || '',
+      document.querySelector('meta[name="description"]')?.content || '',
+      document.querySelector('h1')?.textContent || ''
+    ].join(' ').toLowerCase();
+
+    if (/암|oncolog|cancer|수술|prehabilitation|eras/.test(text)) return 'oncology';
+    if (/근감소|sarcopen|glp-1|근육|frailty|노쇠/.test(text)) return 'sarcopenia';
+    if (/심부전|심폐|cardiac|heart failure|pulmonary/.test(text)) return 'cardiopulmonary';
+    if (/지역사회|community|csr|체크업|예방프로그램/.test(text)) return 'community';
+    if (/산업보건|occupational|근로자|작업/.test(text)) return 'occupational';
+    return 'default';
+  }
+
+  function injectJourney() {
+    if (document.querySelector('.post-reading, .af-post-reading')) return;
+
+    const article = document.querySelector('main .article-body, main .body, main article, main');
+    if (!article) return;
+
+    const topicKey = getTopicKey();
+    const currentPath = window.location.pathname;
+    const related = (library[topicKey] || library.default)
+      .filter(item => item.href !== currentPath)
+      .slice(0, 2);
+
+    const section = document.createElement('section');
+    section.className = 'af-post-reading';
+    section.setAttribute('aria-labelledby', 'af-continue-reading-title');
+    section.innerHTML = `
+      <div class="af-journey-steps" aria-label="콘텐츠 탐색 단계">
+        <span class="is-current">1. 읽기 완료</span><span aria-hidden="true">→</span><span>2. 관련 근거</span><span aria-hidden="true">→</span><span>3. 솔루션 이해</span>
+      </div>
+      <h2 id="af-continue-reading-title">다음 단계로 이어서 살펴보세요</h2>
+      <p class="af-post-reading-intro">관련 연구와 적용 사례를 확인한 뒤, SPPB와 자동화 신체기능평가가 임상 현장에서 어떻게 활용되는지 살펴볼 수 있습니다.</p>
+      <div class="af-related-grid">
+        ${related.map(item => `<a class="af-related-card" href="${item.href}" data-af-event="select_related_content" data-af-label="${item.title}" data-af-location="post_reading"><span class="af-related-kicker">${item.kicker}</span><span class="af-related-title">${item.title}</span><span class="af-related-more">관련 근거 읽기 →</span></a>`).join('')}
+      </div>
+      <nav class="af-next-actions" aria-label="글을 읽은 뒤 이동">
+        <a class="af-back-link" href="/ko/case-studies.html" data-af-event="return_to_case_studies" data-af-label="케이스 스터디 목록" data-af-location="post_reading">← 케이스 스터디 목록</a>
+        <a class="af-solution-link" href="/ko/sppb.html" data-af-event="view_solution" data-af-label="SPPB와 자동화 평가" data-af-location="post_reading">SPPB와 자동화 평가 알아보기 →</a>
+      </nav>`;
+
+    article.appendChild(section);
+  }
+
+  const journeyStyle = document.createElement('style');
+  journeyStyle.textContent = `
+    .af-post-reading{margin-top:56px;padding-top:34px;border-top:1px solid #e2e8f0}
+    .af-post-reading h2{margin:16px 0 8px!important;font-size:1.28rem!important;color:#0f172a!important}
+    .af-post-reading-intro{margin:0 0 22px!important;color:#64748b!important;font-size:.95rem!important;line-height:1.75!important}
+    .af-journey-steps{display:flex;align-items:center;flex-wrap:wrap;gap:8px;color:#64748b;font-size:.78rem;font-weight:700}
+    .af-journey-steps .is-current{color:#0f766e}
+    .af-related-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .af-related-card{display:flex;flex-direction:column;padding:20px;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;background:#fff;transition:border-color .2s,box-shadow .2s,transform .2s}
+    .af-related-card:hover,.af-related-card:focus-visible{border-color:#5eead4;box-shadow:0 8px 22px rgba(15,23,42,.07);transform:translateY(-2px);outline:none}
+    .af-related-kicker{display:block;margin-bottom:8px;color:#0d9488;font-size:.78rem;font-weight:700}
+    .af-related-title{display:block;color:#0f172a;font-size:1rem;font-weight:700;line-height:1.55}
+    .af-related-more{display:block;margin-top:auto;padding-top:14px;color:#0f766e;font-size:.82rem;font-weight:700}
+    .af-next-actions{display:flex;align-items:stretch;gap:12px;margin-top:24px}
+    .af-next-actions a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;line-height:1.4}
+    .af-back-link{flex:1;color:#0f766e;border:1px solid #99f6e4;background:#f0fdfa}
+    .af-solution-link{flex:1;color:#fff;background:#0f766e;border:1px solid #0f766e}
+    .af-back-link:hover,.af-back-link:focus-visible{background:#ccfbf1}.af-solution-link:hover,.af-solution-link:focus-visible{background:#115e59}
+    .af-back-link:focus-visible,.af-solution-link:focus-visible{outline:3px solid rgba(13,148,136,.22);outline-offset:2px}
+    @media(max-width:640px){.af-related-grid{grid-template-columns:1fr}.af-next-actions{flex-direction:column}.af-next-actions a{width:100%}.af-journey-steps{font-size:.74rem}}
+  `;
+  document.head.appendChild(journeyStyle);
+  document.addEventListener('DOMContentLoaded', injectJourney);
+})();

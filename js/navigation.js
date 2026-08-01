@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const CASE_STUDY_SUFFIX = /-(EN|KR|ES|JP)\.html$/;
 
     // Static availability map: slug → { lang: actual-filename }
-    // Absent lang key = no translation exists → fall back to /<lang>/case-studies.html
-    // ES note: 4 legacy files have no -ES suffix; encoded as actual filenames below.
     const CASE_STUDY_MAP = {
         '2026-01-20-Common-Operational-Language-Strategy': {
             en: '2026-01-20-Common-Operational-Language-Strategy-EN.html',
@@ -42,12 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
             es: '2026-02-07-SPPB-Occupational-Health.html',
             jp: '2026-02-07-SPPB-Occupational-Health-JP.html'
         },
-        '2026-02-08-PRO-SPPB-Linking-Study': {
-            ko: '2026-02-08-PRO-SPPB-Linking-Study-KR.html'
-        },
-        '2026-02-09-Digital-Care-Platform': {
-            ko: '2026-02-09-Digital-Care-Platform-KR.html'
-        },
+        '2026-02-08-PRO-SPPB-Linking-Study': { ko: '2026-02-08-PRO-SPPB-Linking-Study-KR.html' },
+        '2026-02-09-Digital-Care-Platform': { ko: '2026-02-09-Digital-Care-Platform-KR.html' },
         '2026-02-11-Pain-To-Function-Paradigm-Shift': {
             en: '2026-02-11-Pain-To-Function-Paradigm-Shift-EN.html',
             ko: '2026-02-11-Pain-To-Function-Paradigm-Shift-KR.html',
@@ -60,21 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
             es: '2026-02-13-CIBERFES-Consensus-Frailty-Screening.html',
             jp: '2026-02-13-CIBERFES-Consensus-Frailty-Screening-JP.html'
         },
-        '2026-02-16-SPPB-Utilization-Spain': {
-            es: '2026-02-16-SPPB-Utilization-Spain-ES.html'
-        },
-        '2026-02-18-Checkup-Event-Community-CSR': {
-            ko: '2026-02-18-Checkup-Event-Community-CSR-KR.html'
-        },
-        '2026-02-18-Community-Frailty-Prevention-Program': {
-            ko: '2026-02-18-Community-Frailty-Prevention-Program-KR.html'
-        },
-        '2026-02-20-Oncology-SPPB-AndanteFit': {
-            ko: '2026-02-20-Oncology-SPPB-AndanteFit-KR.html'
-        },
-        '2026-02-21-Endocrinology-SPPB-Strategy': {
-            ko: '2026-02-21-Endocrinology-SPPB-Strategy-KR.html'
-        },
+        '2026-02-16-SPPB-Utilization-Spain': { es: '2026-02-16-SPPB-Utilization-Spain-ES.html' },
+        '2026-02-18-Checkup-Event-Community-CSR': { ko: '2026-02-18-Checkup-Event-Community-CSR-KR.html' },
+        '2026-02-18-Community-Frailty-Prevention-Program': { ko: '2026-02-18-Community-Frailty-Prevention-Program-KR.html' },
+        '2026-02-20-Oncology-SPPB-AndanteFit': { ko: '2026-02-20-Oncology-SPPB-AndanteFit-KR.html' },
+        '2026-02-21-Endocrinology-SPPB-Strategy': { ko: '2026-02-21-Endocrinology-SPPB-Strategy-KR.html' },
         '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB': {
             en: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-EN.html',
             ko: '2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-KR.html',
@@ -95,141 +79,85 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // slug 추출: 접미사(-EN/-KR/-ES/-JP) 있으면 제거; ES 무접미사 파일도 지원
     const _csBase = lastSegment.endsWith('.html') ? lastSegment.slice(0, -5) : lastSegment;
     const caseStudySlug = CASE_STUDY_SUFFIX.test(lastSegment)
         ? _csBase.replace(/-(EN|KR|ES|JP)$/, '')
         : _csBase;
-    // Map-keyed detection: covers both suffixed and ES no-suffix detail pages
-    const isCaseStudyDetail = path.includes('/case-studies/') && !!CASE_STUDY_MAP[caseStudySlug];
+    const isCaseStudyDetail = path.includes('/case-studies/') && path.endsWith('.html');
 
-    // 언어별 메뉴 라벨
-   const labels = isKO ?
-    { home: '홈', test: 'SPPB 검사', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
-    isES ?
-    { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
-    isJP ?
-    { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '検証', cases: 'ケーススタディ', refs: '導入事例' } :
-    { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
+    const labels = isKO ?
+      { home: '홈', test: 'SPPB 검사', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
+      isES ?
+      { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
+      isJP ?
+      { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '検証', cases: 'ケーススタディ', refs: '導入事例' } :
+      { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
 
-    // 언어 링크 생성 — 현재 페이지 경로 기반, 현재 언어에 aria-current 부여
     function langLink(lang, label) {
         let href;
-        if (isCaseStudyDetail) {
+        if (isCaseStudyDetail && CASE_STUDY_MAP[caseStudySlug]) {
             const entry = CASE_STUDY_MAP[caseStudySlug];
-            const file  = entry && entry[lang];
-            if (file) {
-                href = lang === 'en' ? '/case-studies/' + file : '/' + lang + '/case-studies/' + file;
-            } else {
-                href = lang === 'en' ? '/case-studies.html' : '/' + lang + '/case-studies.html';
-            }
+            const file = entry && entry[lang];
+            href = file ? (lang === 'en' ? '/case-studies/' + file : '/' + lang + '/case-studies/' + file)
+                        : (lang === 'en' ? '/case-studies.html' : '/' + lang + '/case-studies.html');
         } else {
             href = lang === 'en' ? '/' + currentPage : '/' + lang + '/' + currentPage;
         }
         const isCurrent = lang === activeLang;
-        return '<a href="' + href + '" data-lang="' + lang + '"' +
-               (isCurrent ? ' aria-current="page"' : '') + '>' + label + '</a>';
+        return '<a href="' + href + '" data-lang="' + lang + '"' + (isCurrent ? ' aria-current="page"' : '') + '>' + label + '</a>';
     }
 
-    const langHtml =
-        langLink('en', 'EN') +
-        ' <span class="sep">|</span> ' +
-        langLink('ko', 'KO') +
-        ' <span class="sep">|</span> ' +
-        langLink('es', 'ES') +
-        ' <span class="sep">|</span> ' +
-        langLink('jp', 'JP');
-
+    const langHtml = langLink('en', 'EN') + ' <span class="sep">|</span> ' + langLink('ko', 'KO') + ' <span class="sep">|</span> ' + langLink('es', 'ES') + ' <span class="sep">|</span> ' + langLink('jp', 'JP');
     const langPrefix = isKO ? 'ko/' : isES ? 'es/' : isJP ? 'jp/' : '';
-
-    // 내비게이션 링크 배열 (데스크톱 메뉴 + 모바일 오버레이 공유)
     const navItems = [
-        { href: rootPath + langPrefix + 'index.html',        label: labels.home },
-        { href: rootPath + langPrefix + 'sppb-test.html',    label: labels.test },
-        { href: rootPath + langPrefix + 'product.html',      label: labels.product },
-        { href: rootPath + langPrefix + 'validation.html',   label: labels.validation },
+        { href: rootPath + langPrefix + 'index.html', label: labels.home },
+        { href: rootPath + langPrefix + 'sppb-test.html', label: labels.test },
+        { href: rootPath + langPrefix + 'product.html', label: labels.product },
+        { href: rootPath + langPrefix + 'validation.html', label: labels.validation },
         { href: rootPath + langPrefix + 'case-studies.html', label: labels.cases },
-        { href: rootPath + langPrefix + 'references.html',   label: labels.refs },
+        { href: rootPath + langPrefix + 'references.html', label: labels.refs }
     ];
-
-    const navLinksHtml = navItems.map(function(item) {
-        return '<li><a href="' + item.href + '">' + item.label + '</a></li>';
-    }).join('');
-
-    const closeLabel  = isKO ? '메뉴 닫기'      : isES ? 'Cerrar menú'       : 'Close menu';
-    const panelLabel  = isKO ? '모바일 내비게이션' : isES ? 'Navegación móvil'  : 'Mobile navigation';
+    const navLinksHtml = navItems.map(function(item) { return '<li><a href="' + item.href + '">' + item.label + '</a></li>'; }).join('');
+    const closeLabel = isKO ? '메뉴 닫기' : isES ? 'Cerrar menú' : 'Close menu';
+    const panelLabel = isKO ? '모바일 내비게이션' : isES ? 'Navegación móvil' : 'Mobile navigation';
 
     navContainer.innerHTML = `
-    <nav class="nav">
-      <div class="nav-container">
-        <a href="${rootPath}${langPrefix}index.html" class="nav-logo">
-          <img src="${rootPath}assets/andantefit-logo.png" alt="AndanteFit">
-        </a>
-        <!-- Desktop: always-visible nav links and lang switcher -->
-        <ul class="nav-menu" id="navMenu">${navLinksHtml}</ul>
-        <div class="nav-lang">${langHtml}</div>
-        <!-- Mobile: hamburger toggle -->
-        <button class="nav-toggle" id="navToggle"
-                aria-label="Open navigation menu"
-                aria-expanded="false"
-                aria-controls="navOverlay">&#9776;</button>
-      </div>
-    </nav>
-
-    <!-- Mobile overlay panel (fixed, outside nav bar flow) -->
+    <nav class="nav"><div class="nav-container">
+      <a href="${rootPath}${langPrefix}index.html" class="nav-logo"><img src="${rootPath}assets/andantefit-logo.png" alt="AndanteFit"></a>
+      <ul class="nav-menu" id="navMenu">${navLinksHtml}</ul>
+      <div class="nav-lang">${langHtml}</div>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navOverlay">&#9776;</button>
+    </div></nav>
     <div class="nav-overlay" id="navOverlay" aria-hidden="true">
       <div class="nav-overlay-dim" id="navOverlayDim"></div>
       <nav class="nav-overlay-panel" aria-label="${panelLabel}">
-        <button class="nav-overlay-close" id="navOverlayClose"
-                aria-label="${closeLabel}">&#x2715;</button>
-        <ul class="nav-overlay-links">${navLinksHtml}</ul>
-        <div class="nav-overlay-lang">${langHtml}</div>
+        <button class="nav-overlay-close" id="navOverlayClose" aria-label="${closeLabel}">&#x2715;</button>
+        <ul class="nav-overlay-links">${navLinksHtml}</ul><div class="nav-overlay-lang">${langHtml}</div>
       </nav>
     </div>`;
 
-    // 언어 선택 클릭 시 lang_preference 저장 (href는 CASE_STUDY_MAP 기반으로 이미 결정됨)
     navContainer.querySelectorAll('[data-lang]').forEach(function(link) {
-        link.addEventListener('click', function() {
-            localStorage.setItem('lang_preference', this.getAttribute('data-lang'));
-        });
+        link.addEventListener('click', function() { localStorage.setItem('lang_preference', this.getAttribute('data-lang')); });
     });
 
-    // 오버레이 열기 / 닫기
-    const toggle  = document.getElementById('navToggle');
+    const toggle = document.getElementById('navToggle');
     const overlay = document.getElementById('navOverlay');
-    const dim     = document.getElementById('navOverlayDim');
+    const dim = document.getElementById('navOverlayDim');
     const closeBtn = document.getElementById('navOverlayClose');
-
-    function openMenu() {
-        overlay.classList.add('open');
-        overlay.setAttribute('aria-hidden', 'false');
-        toggle.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeMenu() {
-        overlay.classList.remove('open');
-        overlay.setAttribute('aria-hidden', 'true');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-    }
-
-    if (toggle)   toggle.addEventListener('click', openMenu);
+    function openMenu() { overlay.classList.add('open'); overlay.setAttribute('aria-hidden', 'false'); toggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true'); toggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    if (toggle) toggle.addEventListener('click', openMenu);
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-    if (dim)      dim.addEventListener('click', closeMenu);
+    if (dim) dim.addEventListener('click', closeMenu);
+    if (overlay) overlay.querySelectorAll('a').forEach(function(link) { link.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) { closeMenu(); if (toggle) toggle.focus(); } });
 
-    // 오버레이 내 링크(nav + 언어) 클릭 시 즉시 닫기
-    if (overlay) {
-        overlay.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', closeMenu);
-        });
+    // Every case-study detail page receives the same post-reading journey.
+    if (isCaseStudyDetail && !document.querySelector('script[data-af-post-reading]')) {
+        const script = document.createElement('script');
+        script.src = rootPath + 'js/post-reading.js';
+        script.defer = true;
+        script.dataset.afPostReading = 'true';
+        document.body.appendChild(script);
     }
-
-    // Escape 키로 닫기
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) {
-            closeMenu();
-            if (toggle) toggle.focus();
-        }
-    });
 });

@@ -39,91 +39,16 @@
 </head>
 <body>
   <div id="navigation-container"></div>
-  <section class="hero">
-    <div class="container hero-content">
-      <span class="section-label">연구 리포트</span>
-      <h1 class="hero-headline">Case Studies</h1>
-      <p class="hero-subtitle">임상 및 연구 현장에서의 AndanteFit 실제 적용 사례를 정리했습니다.</p>
-    </div>
-  </section>
-  <section class="section">
-    <div class="container">
-      <div id="caseStudiesContainer" class="report-list">
-        <p style="text-align: center; color: var(--color-text-muted); padding: 40px;">리포트를 불러오는 중입니다...</p>
-      </div>
-    </div>
-  </section>
+  <section class="hero"><div class="container hero-content"><span class="section-label">연구 리포트</span><h1 class="hero-headline">Case Studies</h1><p class="hero-subtitle">임상 및 연구 현장에서의 AndanteFit 실제 적용 사례를 정리했습니다.</p></div></section>
+  <section class="section"><div class="container"><div id="caseStudiesContainer" class="report-list"><p style="text-align:center;color:var(--color-text-muted);padding:40px;">리포트를 불러오는 중입니다...</p></div></div></section>
   <div data-include="../includes/footer.html"></div>
 <script>
-(function() {
-  'use strict';
-  const GITHUB_CONFIG = { owner: 'jjgitson', repo: 'andantefit.info', folder: 'ko/case-studies', branch: 'main' };
-  const ALLOWED_LANGS = ['KR', 'EN'];
-  const customTitles = {
-    'Checkup-Event-Community-CSR': '신체나이 체크업 이벤트',
-    'Community-Frailty-Prevention-Program': '지역사회 노쇠예방프로그램',
-    'Oncology-SPPB-AndanteFit': '항암 환자에서 신체기능평가(SPPB)가 중요한 이유',
-    'Heart-Failure-Cardiopulmonary-Rehab-SPPB': '심부전·심폐재활에서의 SPPB 활용',
-    'CIBERFES-Consensus-Frailty-Screening': 'CIBERFES 컨센서스: 노쇠 스크리닝 표준화',
-    'PRO-SPPB-Linking-Study': 'PRO-SPPB 연계 연구',
-    'Digital-Care-Platform': '디지털 케어 플랫폼',
-    'Endocrinology-SPPB-Strategy': '내분비 클리닉 SPPB 도입 전략',
-    'Common-Operational-Language-Strategy': '통합 노인 케어를 위한 공통 운영 언어 전략',
-    'SPPB-Occupational-Health': '산업보건 현장에서의 SPPB 활용',
-    'Pain-To-Function-Paradigm-Shift': '통증 중심에서 기능 중심으로: 패러다임 전환',
-    'Sarcopenia-Management-Korea': '근감소증 관리의 전환과 한국의 적용',
-    'BNR17-Muscle-Function-Older-Adults': 'AceBiome BNR17 파일럿 연구: 고령자 신체기능 및 체성분 개선 가능성',
-    'Sarcopenia-Drug-Development-SPPB': '역노화 치료제가 넘어야 할 진짜 관문은 근육량이 아니라 신체 기능이다',
-    'ADA2026-GLP1-Muscle-Loss-Debate': 'GLP-1 체중감량에서 근육 손실은 실제 위험인가'
-  };
-  const CACHE_VERSION = 'v2';
-  const CACHE_KEY = 'case_studies_cache_' + CACHE_VERSION + '_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
-  const CACHE_TIME_KEY = CACHE_KEY + '_time';
-  const CACHE_DURATION = 60 * 60 * 1000;
-  function parseFilename(filename) {
-    const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);
-    if (!match) return null;
-    const [, year, month, day, fileKey] = match;
-    const langMatch = fileKey.match(/-(EN|KR|ES|JP)$/);
-    const lang = langMatch ? langMatch[1] : null;
-    const titleKey = lang ? fileKey.slice(0, -('-' + lang).length) : fileKey;
-    return { date: new Date(Number(year), Number(month)-1, Number(day)), dateStr: `${year}.${month}.${day}`, title: customTitles[titleKey] || titleKey.replace(/-/g, ' '), lang, filename, fileKey };
-  }
-  function renderCaseStudies(container, caseStudies) {
-    container.innerHTML = caseStudies.map(function(study) {
-      const badge = study.lang === 'EN' ? '<span class="lang-badge">EN</span>' : '';
-      return `<div class="report-item"><div class="report-date">${study.dateStr}</div><div class="report-main"><h3 class="report-title"><a href="${study.url}" class="title-link">${study.title}</a>${badge}</h3></div><div class="report-link"><a href="${study.url}" class="btn btn-primary btn-small">보고서 보기 →</a></div></div>`;
-    }).join('');
-  }
-  function showError(container, message) {
-    container.innerHTML = `<div style="color:#dc2626;padding:20px;background:#fee2e2;border-radius:8px;"><div style="font-weight:700;">보고서를 불러오는 중 오류 발생</div><div style="margin-top:6px;">${message}</div><div style="margin-top:8px;font-size:12px;">잠시 후 다시 시도해 주세요.</div></div>`;
-  }
-  function showCacheWarning(container) {
-    container.insertAdjacentHTML('afterbegin','<div style="background:#fef3c7;padding:12px;border-radius:8px;margin-bottom:20px;border-left:4px solid #f59e0b;">캐시된 데이터를 표시하고 있습니다.</div>');
-  }
-  async function loadCaseStudies() {
-    const container = document.getElementById('caseStudiesContainer');
-    if (!container) return;
-    const forceNoCache = new URLSearchParams(window.location.search).get('nocache') === '1';
-    try {
-      const cached = localStorage.getItem(CACHE_KEY);
-      const cacheTime = localStorage.getItem(CACHE_TIME_KEY);
-      if (!forceNoCache && cached && cacheTime && (Date.now()-Number(cacheTime)) < CACHE_DURATION) { renderCaseStudies(container, JSON.parse(cached)); return; }
-      const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${encodeURIComponent(GITHUB_CONFIG.branch)}`;
-      const response = await fetch(apiUrl);
-      if (!response.ok) { if (cached) { renderCaseStudies(container, JSON.parse(cached)); showCacheWarning(container); return; } throw new Error('API 요청 실패: '+response.status); }
-      const data = await response.json();
-      if (!Array.isArray(data)) throw new Error('잘못된 API 응답');
-      const caseStudies = data.filter(f => f.type === 'file' && f.name.endsWith('.html')).map(function(f) { const parsed=parseFilename(f.name); if (!parsed || (ALLOWED_LANGS.length && !ALLOWED_LANGS.includes(parsed.lang))) return null; parsed.url='/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name); return parsed; }).filter(Boolean).sort((a,b)=>b.date-a.date);
-      localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
-      localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
-      renderCaseStudies(container, caseStudies);
-    } catch(error) { console.error(error); showError(container,error.message||String(error)); }
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',loadCaseStudies); else loadCaseStudies();
-})();
-</script>
-  <script src="../js/main.js"></script>
-  <script src="../js/navigation.js"></script>
-</body>
-</html>
+(function(){'use strict';
+const GITHUB_CONFIG={owner:'jjgitson',repo:'andantefit.info',folder:'ko/case-studies',branch:'main'};const ALLOWED_LANGS=['KR','EN'];
+const customTitles={'Checkup-Event-Community-CSR':'신체나이 체크업 이벤트','Community-Frailty-Prevention-Program':'지역사회 노쇠예방프로그램','Oncology-SPPB-AndanteFit':'항암 환자에서 신체기능평가(SPPB)가 중요한 이유','Heart-Failure-Cardiopulmonary-Rehab-SPPB':'심부전·심폐재활에서의 SPPB 활용','CIBERFES-Consensus-Frailty-Screening':'CIBERFES 컨센서스: 노쇠 스크리닝 표준화','PRO-SPPB-Linking-Study':'PRO-SPPB 연계 연구','Digital-Care-Platform':'디지털 케어 플랫폼','Endocrinology-SPPB-Strategy':'내분비 클리닉 SPPB 도입 전략','Common-Operational-Language-Strategy':'통합 노인 케어를 위한 공통 운영 언어 전략','SPPB-Occupational-Health':'산업보건 현장에서의 SPPB 활용','Pain-To-Function-Paradigm-Shift':'통증 중심에서 기능 중심으로: 패러다임 전환','Sarcopenia-Management-Korea':'근감소증 관리의 전환과 한국의 적용','BNR17-Muscle-Function-Older-Adults':'AceBiome BNR17 파일럿 연구: 고령자 신체기능 및 체성분 개선 가능성','Sarcopenia-Drug-Development-SPPB':'역노화 치료제가 넘어야 할 진짜 관문은 근육량이 아니라 신체 기능이다','ADA2026-GLP1-Muscle-Loss-Debate':'GLP-1 체중감량에서 근육 손실은 실제 위험인가','Perioperative-Prehabilitation-Early-Exercise-SPPB':'수술 전부터 회복을 설계해야 한다: Prehabilitation·조기 운동·SPPB'};
+const CACHE_VERSION='v3',CACHE_KEY='case_studies_cache_'+CACHE_VERSION+'_'+GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi,'_'),CACHE_TIME_KEY=CACHE_KEY+'_time',CACHE_DURATION=60*60*1000;
+function parseFilename(filename){const m=filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.html$/);if(!m)return null;const[,y,mo,d,fileKey]=m,langMatch=fileKey.match(/-(EN|KR|ES|JP)$/),lang=langMatch?langMatch[1]:null,titleKey=lang?fileKey.slice(0,-('-'+lang).length):fileKey;return{date:new Date(Number(y),Number(mo)-1,Number(d)),dateStr:`${y}.${mo}.${d}`,title:customTitles[titleKey]||titleKey.replace(/-/g,' '),lang,filename,fileKey}}
+function render(c,items){c.innerHTML=items.map(s=>{const badge=s.lang==='EN'?'<span class="lang-badge">EN</span>':'';return `<div class="report-item"><div class="report-date">${s.dateStr}</div><div class="report-main"><h3 class="report-title"><a href="${s.url}" class="title-link">${s.title}</a>${badge}</h3></div><div class="report-link"><a href="${s.url}" class="btn btn-primary btn-small">보고서 보기 →</a></div></div>`}).join('')}
+async function load(){const c=document.getElementById('caseStudiesContainer');if(!c)return;try{const api=`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${GITHUB_CONFIG.branch}`,r=await fetch(api),data=await r.json();if(!r.ok||!Array.isArray(data))throw new Error('목록을 불러오지 못했습니다.');const items=data.filter(f=>f.type==='file'&&f.name.endsWith('.html')).map(f=>{const p=parseFilename(f.name);if(!p||!ALLOWED_LANGS.includes(p.lang))return null;p.url='/'+GITHUB_CONFIG.folder+'/'+encodeURIComponent(f.name);return p}).filter(Boolean).sort((a,b)=>b.date-a.date);localStorage.setItem(CACHE_KEY,JSON.stringify(items));localStorage.setItem(CACHE_TIME_KEY,String(Date.now()));render(c,items)}catch(e){const cached=localStorage.getItem(CACHE_KEY);if(cached)render(c,JSON.parse(cached));else c.innerHTML='<p style="padding:30px;color:#dc2626">리포트 목록을 불러오지 못했습니다.</p>'}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load()})();
+</script><script src="../js/main.js"></script><script src="../js/navigation.js"></script></body></html>

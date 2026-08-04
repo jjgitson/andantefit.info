@@ -1,70 +1,78 @@
-# Kordy — Two-Panel Fold Brochure (editable)
+# Kordy — Two-Panel Fold Brochure
 
-An editable, print-ready two-panel (bi-fold) brochure introducing **Kordy**, the
-medical-connection platform operated by **DYPHI** that helps international patients
-access hospitals, specialist pathways, and guided care coordination in Korea.
+Marketing brochure for **Kordy**, the medical-connection platform operated by
+**DYPHI** that helps international patients access hospitals, specialist pathways,
+and guided care coordination in Korea.
 
-The deliverable is a fully editable **PowerPoint** file — every title, paragraph,
-hospital name, description, URL, card, colour block, divider and icon is an
-individual object. Only the line icons are images (placed inside editable circles);
-no page is a flattened picture.
+Three formats, one design:
 
-## Files
+| File | Use |
+|------|-----|
+| **`index.html`** | Web version — open in any browser. When the site is deployed it is live at `https://andantefit.info/brochure/kordy/`. Self-contained (fonts + icons inlined), works offline. Has **Print** and **download** buttons. |
+| **`Kordy_Brochure_print.pdf`** | **Print-ready file for the print shop (인쇄소).** Vector text, embedded fonts, 2 mm bleed, crop marks + fold marks. |
+| **`Kordy_Brochure.pptx`** | Editable master (PowerPoint). Every title, paragraph, card, URL, divider and colour block is an individual object. |
+| `preview/*.png` | Reference images of each side. |
+| `src/` | Generator scripts + subset fonts, to rebuild any format. |
 
-| File | Purpose |
-|------|---------|
-| `Kordy_Brochure.pptx` | The editable brochure. Open in PowerPoint / Keynote / Google Slides. |
-| `preview/outside-p4-p1.png` | Approx render of the outside side (left = p4 back cover, right = p1 cover). |
-| `preview/inside-p2-p3.png` | Approx render of the inside side (left = p2 hospitals, right = p3 pathways). |
-| `preview/style-edit-guide.png` | Approx render of the style & edit-guide reference slide. |
-| `build.js`, `icons.js` | Generator scripts (pptxgenjs + react-icons) used to produce the `.pptx`. |
+## For the print shop (인쇄소)
 
-> Preview PNGs are approximate renders for reference only. Font substitution and
-> spacing in the actual PowerPoint may differ slightly; the `.pptx` is the source of truth.
+`Kordy_Brochure_print.pdf` — **2 pages**:
 
-## Print specification
+1. **Outside** — left = back cover (p4), right = front cover (p1)
+2. **Inside** — left = p2 (hospitals), right = p3 (pathways)
 
-- **Format:** vertical two-panel fold (bi-fold)
-- **Finished / trim size:** 200 × 210 mm (two 100 × 210 mm panels)
-- **Working size (with bleed):** 204 × 214 mm — 2 mm bleed on all sides
-- **Safety margin:** 3 mm inside the trim line
-- **Fold:** the dashed centre line marks the fold; keep logos and key text inside the safe area
+| Spec | Value |
+|------|-------|
+| Format | vertical two-panel bi-fold |
+| Finished / trim size | **200 × 210 mm** (two 100 × 210 mm panels) |
+| Bleed | **2 mm** all sides (artwork extends to 204 × 214 mm) |
+| Safety margin | 3 mm inside trim |
+| PDF page size | 210 × 220 mm — includes bleed + crop/fold marks |
+| Marks | crop marks at the four trim corners; fold ticks at top & bottom centre |
+| Fonts | embedded (vector text, not outlined — text stays selectable) |
+| Colour | **RGB**. Most digital print houses accept this and convert. If your shop needs **CMYK**, ask them to convert on import, or request a CMYK export. |
 
-### Page layout (matches the print imposition)
-
-- **Slide 1 — Outside:** left panel = **page 4 (back cover)**, right panel = **page 1 (front cover)**
-- **Slide 2 — Inside:** left panel = **page 2**, right panel = **page 3**
-- **Slide 3 — Style & Edit Guide:** reference only. **Delete before sending to print.**
+The fold is the vertical centre; the printed artwork carries no fold line, only the
+corner crop marks and the two fold ticks in the margin.
 
 ## Design system
 
 | Role | Value |
 |------|-------|
-| Navy (primary) | `#0E3A5F` |
-| Teal (accent) | `#18BFBF` |
+| Navy (primary) | `#0E3A5F` (darker base `#0A2C48`) |
+| Teal (accent) | `#18BFBF` (deep `#0E9C9C`) |
 | Light gray (cards) | `#F1F5F9` |
 | Border | `#D8E1E8` |
 | White | `#FFFFFF` |
-| Headings | Cambria (clean professional serif — swap for a brand serif) |
-| Body | Calibri (modern sans-serif — swap for a brand sans) |
+| Headings | serif (PPTX: Cambria · web/PDF: Liberation Serif — swap for a brand serif) |
+| Body | sans-serif (PPTX: Calibri · web/PDF: Liberation Sans — swap for a brand sans) |
+
+## Logo — placeholder
+
+The wordmark is a **placeholder**: a location-pin-with-medical-plus symbol plus
+the word **“kordy.”** The official kordy.kr wordmark could not be pulled into this
+build (the domain is not reachable from the build environment). To finalise, drop in
+the real kordy.kr logo:
+
+- **PPTX:** replace the pin image + “kordy” text on the cover (slide 1, right panel).
+- **Web / PDF:** edit the `.logo` block in `index.html` (or `src/web-build.js`, then rebuild).
 
 ## Editing / handoff notes
 
-- All titles, body copy, hospital names, descriptions, URLs and contact lines are **live text** — edit directly.
-- **QR box** (back cover) is a placeholder: drop a real QR image over the inner square, keep the frame.
+- All titles, body copy, hospital names, descriptions, URLs and contact lines are **live text**.
+- **QR box** (back cover) is a placeholder — drop a real QR image over the inner square, keep the frame.
 - **Contact lines** (WhatsApp / Email) are placeholders — replace with real details.
-- **Hospital & pathway cards** are shape + text groups: duplicate a card to add one, or replace the plus icon with an official hospital logo (keep or remove the circle).
-- Colour blocks are shapes; dividers are line objects — recolour via *Shape Fill* / *Line Color*.
-- Text boxes are deliberately roomy so **Korean / Chinese** translations can replace the English without reflowing the layout.
+- Hospital & pathway **cards** are shape/text groups: duplicate to add one, or replace the plus icon with an official hospital logo.
+- Text boxes are deliberately roomy so **Korean / Chinese** translations can replace the English without reflowing.
+- Hospitals are shown “for informational purposes,” with the disclaimer on the inside panel — Kordy is positioned as a care-coordination platform, not a hospital advertiser.
 
-## Regenerating the file
+## Regenerating
 
 ```bash
-cd brochure/kordy
-npm install pptxgenjs react react-dom react-icons sharp
-node build.js          # writes Kordy_Brochure.pptx
-```
+cd src
+npm install pptxgenjs react react-dom react-icons sharp playwright   # playwright uses the preinstalled browser
 
-Positioning is angled toward **Kordy as a care-coordination platform**, not a hospital
-advertiser — hospital names are shown for informational purposes only, with the
-matching disclaimer on the inside panel.
+node pptx-build.js     # -> Kordy_Brochure.pptx   (editable master)
+node web-build.js      # -> index.html            (web + PDF source)
+node web-pdf.js        # -> Kordy_Brochure_print.pdf
+```

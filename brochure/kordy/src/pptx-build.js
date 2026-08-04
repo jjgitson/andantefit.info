@@ -55,6 +55,15 @@ async function main() {
     globeW:  [Fi.FiGlobe, WHITE],
   });
 
+  // Logo symbol: location pin containing a medical plus (place + care), teal
+  const sharp = require("sharp");
+  const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 48" width="220" height="264">
+    <path d="M20 2C11.2 2 4 9.1 4 17.8C4 29 20 46 20 46S36 29 36 17.8C36 9.1 28.8 2 20 2Z" fill="#${TEAL}"/>
+    <path d="M20 10.5V25M12.8 17.8H27.2" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/></svg>`;
+  const logoPng = "image/png;base64," + (await sharp(Buffer.from(logoSvg))
+    .resize(220, 264, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png().toBuffer()).toString("base64");
+
   const p = new pptxgen();
   p.defineLayout({ name: "FOLD", width: W, height: H });
   p.layout = "FOLD";
@@ -112,11 +121,9 @@ async function main() {
   });
   hline(s1, R.x0, skyBase, R.w, "17517A", 1);
 
-  // Wordmark
-  s1.addText(
-    [{ text: "Kordy", options: { color: WHITE, bold: true } }, { text: ".", options: { color: TEAL, bold: true } }],
-    { x: R.x0, y: 0.62, w: R.w, h: 0.85, fontFace: HFONT, fontSize: 46, align: "left", margin: 0 }
-  );
+  // Wordmark: symbol + "kordy" (placeholder — replace with the official kordy.kr logo)
+  s1.addImage({ data: logoPng, x: R.x0, y: 0.56, w: 0.56, h: 0.67 });
+  s1.addText("kordy", { x: R.x0 + 0.72, y: 0.58, w: R.w - 0.72, h: 0.72, fontFace: HFONT, fontSize: 40, bold: true, color: WHITE, align: "left", valign: "middle", margin: 0 });
   s1.addText("MEDICAL ACCESS IN KOREA", { x: R.x0 + 0.03, y: 1.5, w: R.w, h: 0.3, fontFace: BFONT, fontSize: 10.5, color: TEAL, charSpacing: 3, bold: true, align: "left", margin: 0 });
   hline(s1, R.x0 + 0.03, 1.92, 0.9, TEAL, 1.5);
 

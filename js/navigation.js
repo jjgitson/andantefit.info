@@ -76,6 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
             ko: '2026-04-08-BNR17-Muscle-Function-Older-Adults-KR.html',
             es: '2026-04-08-BNR17-Muscle-Function-Older-Adults-ES.html',
             jp: '2026-04-08-BNR17-Muscle-Function-Older-Adults-JP.html'
+        },
+        '2026-08-06-SPPB-Community-Frailty-Management': {
+            en: '2026-08-06-SPPB-Community-Frailty-Management-EN.html',
+            es: '2026-08-06-SPPB-Community-Frailty-Management-ES.html'
         }
     };
 

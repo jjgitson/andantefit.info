@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="canonical" href="https://andantefit.info/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-EN.html" />
   <title>Why Physical Function Assessment (SPPB) Matters in Oncology Patients | AndanteFit</title>
-  <meta name="description" content="A summary of how physical function (particularly SPPB) relates to treatment toxicity, complications, and prognosis in oncology, and why standardized measurement is needed in clinical practice and research."/>
+  <meta name="description" content="A summary of how physical function (particularly SPPB) relates to treatment toxicity, complications, and prognosis in oncology, and why standardized measurement is needed in research and functional assessment."/>
   <link rel="stylesheet" href="/css/style.css">
 
   <!-- Google Analytics -->
@@ -162,13 +162,13 @@ const App = () => {
 
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 pl-5">
               Cancer treatment outcomes are influenced not only by tumor characteristics but also by the patient's functional reserve.<br/>
-              SPPB quantifies function through balance, gait, and lower-extremity muscle performance, and can inform clinical decision-making before, during, and after treatment.
+              SPPB quantifies function through balance, gait, and lower-extremity muscle performance, and can inform decision-making before, during, and after treatment.
             </p>
 
             <div className="grid grid-cols-3 gap-4 pl-5">
               {[
                 { val: "Screening", label: "Identifying high-risk patients before treatment" },
-                { val: "Monitoring", label: "Tracking functional changes during treatment" },
+                { val: "Tracking", label: "Tracking functional changes during treatment" },
                 { val: "Survivorship", label: "Managing falls and function in survivors" },
               ].map((s, i) => (
                 <div key={i} className="bg-white/80 border border-blue-100 rounded-2xl p-4 text-center shadow-sm">
@@ -198,7 +198,7 @@ const App = () => {
               <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Association between SPPB scores and mortality risk (summary data)</li>
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Pathways by which aging, cancer, and treatment accelerate functional decline</li>
-                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>SPPB components and clinical application scenarios</li>
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>SPPB components and application scenarios</li>
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>The need for standardized measurement and AndanteFit application</li>
               </ul>
             </div>
@@ -209,7 +209,7 @@ const App = () => {
 
     /* ── Slide 2: Why Does Function Matter? ── */
     (
-      <SlideLayout title="Clinical Background" headline="Why Does 'Function' Matter in Oncology Patients?">
+      <SlideLayout title="Functional Background" headline="Why Does 'Function' Matter in Oncology Patients?">
         <div className="flex flex-col lg:flex-row gap-8 h-full items-center">
           <div className="flex-1 space-y-5">
             <div className="bg-blue-50 border-l-4 border-blue-700 p-5 rounded-r-2xl">
@@ -224,7 +224,7 @@ const App = () => {
               {[
                 { icon: "alert-triangle", title: "Limitations of ECOG Alone", desc: "Age and ECOG performance status alone are insufficient to fully explain treatment toxicity and prognosis." },
                 { icon: "trending-down",  title: "Accelerated Muscle Loss",   desc: "Cancer and its treatment can accelerate loss of muscle mass and function, increasing functional vulnerability." },
-                { icon: "activity",       title: "Linked to Clinical Events",   desc: "Functional decline can be associated with treatment discontinuation risk, increased toxicity, hospitalization, and falls." },
+                { icon: "activity",       title: "Linked to Functional Events",   desc: "Functional decline can be associated with treatment discontinuation risk, increased toxicity, hospitalization, and falls." },
                 { icon: "target",         title: "Functional Reserve",desc: "Treatment tolerance and resilience may depend on functional reserve." },
               ].map((item, i) => (
                 <div key={i} className="flex gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
@@ -268,7 +268,7 @@ const App = () => {
 
             <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4">
               <p className="text-sm text-blue-900 leading-relaxed">
-                Clinical Significance — SPPB can serve as an independent prognostic indicator, not merely a functional score.
+                Functional significance — SPPB can serve as an independent prognostic indicator, not merely a functional score.
               </p>
             </div>
           </div>
@@ -324,7 +324,7 @@ const App = () => {
 
             <div className="bg-blue-50 border-l-4 border-blue-700 p-4 rounded-r-xl">
               <p className="text-sm text-blue-900 leading-relaxed">
-                Key Message — Frailty assessment is a core element not only for pre-treatment screening but also for monitoring during treatment.
+                Key Message — Frailty assessment is a core element not only for pre-treatment screening but also for tracking during treatment.
               </p>
             </div>
           </div>
@@ -357,7 +357,7 @@ const App = () => {
               {[
                 { icon: "check-circle", label: "Objective score with high reproducibility" },
                 { icon: "bar-chart-2",  label: "Associated with prognosis and treatment tolerance" },
-                { icon: "refresh-cw",   label: "Monitoring intervention effects" },
+                { icon: "refresh-cw",   label: "Tracking intervention effects" },
                 { icon: "users",        label: "Core component of geriatric assessment (GA)" },
               ].map((b, i) => (
                 <div key={i} className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-xl p-3">
@@ -380,9 +380,9 @@ const App = () => {
       </SlideLayout>
     ),
 
-    /* ── Slide 6: Clinical Application ── */
+    /* ── Slide 6: Application ── */
     (
-      <SlideLayout title="Clinical Application" headline="Clinical Application in Oncology">
+      <SlideLayout title="Application" headline="Application in Oncology">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full content-start">
           {[
             {
@@ -399,7 +399,7 @@ const App = () => {
               color: "bg-indigo-600",
               bg: "bg-indigo-50 border-indigo-200",
               text: "text-indigo-800",
-              items: ["Repeated tracking of functional changes", "Early detection of decline signals", "Connecting and monitoring interventions"],
+              items: ["Repeated tracking of functional changes", "Early detection of decline signals", "Connecting and tracking interventions"],
             },
             {
               phase: "Survivorship Care",
@@ -431,7 +431,7 @@ const App = () => {
           <div className="col-span-1 lg:col-span-3 bg-slate-50 border border-slate-200 rounded-2xl p-5 flex gap-3 items-start">
             <LucideIcon name="info" className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-slate-600 leading-relaxed">
-              SPPB provides consistent functional data across all phases — pre-treatment screening, treatment monitoring, and survivorship care.
+              SPPB provides consistent functional data across all phases — pre-treatment screening, treatment tracking, and survivorship care.
               Standardized processes and workflow integration are critical for repeated measurement.
             </p>
           </div>
@@ -446,15 +446,15 @@ const App = () => {
           <div className="flex-1 space-y-5">
             <div className="bg-blue-50 border-l-4 border-blue-700 p-5 rounded-r-2xl">
               <p className="text-slate-700 text-base leading-relaxed">
-                SPPB is a powerful tool, but consistent and standardized measurement is required for sustained clinical use.
-                AndanteFit automates physical function assessment (SPPB) to make it operationally viable, supporting the acquisition of standardized functional data in both clinical and research settings.
+                SPPB is a powerful tool, but consistent and standardized measurement is required for sustained professional use.
+                AndanteFit automates physical function assessment (SPPB) to make it operationally viable, supporting the acquisition of standardized functional data in both research and professional settings.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { icon: "sliders", title: "Minimizing Inter-Rater Variability", desc: "Automated measurement workflows reduce dependence on individual assessors." },
-                { icon: "clock",   title: "Improved Time Efficiency",      desc: "Standardized processes make it easy to integrate into clinical workflows." },
+                { icon: "clock",   title: "Improved Time Efficiency",      desc: "Standardized processes make it easy to integrate into professional workflows." },
                 { icon: "users",   title: "Large-Scale Screening",        desc: "Applicable for screening and follow-up of large numbers of oncology patients." },
                 { icon: "globe",   title: "Research Setting Application",         desc: "Facilitates consistent data collection in cohort and multi-center studies." },
               ].map((item, i) => (
@@ -478,7 +478,7 @@ const App = () => {
               <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Reduced burden of assessor training</li>
                 <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Consistency across repeated measurement data</li>
-                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Same protocol applied to both clinical and research settings</li>
+                <li className="flex items-start gap-2"><span className="font-bold mt-0.5">•</span>Same protocol applied to both research and professional settings</li>
               </ul>
             </div>
           </div>
@@ -506,7 +506,7 @@ const App = () => {
               {[
                 { icon: "trending-up", title: "Prognostic Prediction",   desc: "Assessment of sarcopenia and frailty can be a key factor in predicting prognosis and managing toxicity in oncology patients." },
                 { icon: "bar-chart-2", title: "SPPB Utilization",   desc: "SPPB is an objective functional indicator that can be measured repeatedly across all phases — before, during, and after treatment." },
-                { icon: "cpu",         title: "AndanteFit", desc: "A solution that enables standardized SPPB measurement to be operationalized in clinical settings." },
+                { icon: "cpu",         title: "AndanteFit", desc: "A solution that enables standardized SPPB measurement to be operationalized in professional settings." },
               ].map((e, i) => (
                 <div key={i} className="flex gap-4 items-start">
                   <div className="w-10 h-10 bg-blue-500/20 border border-blue-500/40 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -532,14 +532,14 @@ const App = () => {
           <ol className="space-y-1.5 text-xs text-slate-600 leading-snug list-none">
             {[
               {
-                text: "Ferrara, M. C., et al. (2024). Effects of an individualised exercise program in hospitalised older adults with cancer: A randomised clinical trial. ",
+                text: "Ferrara, M. C., et al. (2024). Effects of an individualised exercise program in hospitalised older adults with cancer: A randomised research study. ",
                 journal: "Journal of Nutrition, Health & Aging.",
                 doi: "https://doi.org/10.1016/j.jnha.2024.100424",
                 doiLabel: "https://doi.org/10.1016/j.jnha.2024.100424",
               },
               {
-                text: "Goede, V. (2023). Frailty and cancer: Current perspectives on assessment and monitoring. ",
-                journal: "Clinical Interventions in Aging, 18,",
+                text: "Goede, V. (2023). Frailty and cancer: Current perspectives on assessment and tracking. ",
+                journal: "Interventions in Aging, 18,",
                 tail: " 505–521.",
                 doi: "https://doi.org/10.2147/CIA.S365494",
                 doiLabel: "https://doi.org/10.2147/CIA.S365494",
@@ -551,7 +551,7 @@ const App = () => {
               },
               {
                 text: "Lee, S., et al. (2024). Association of preoperative sarcopenia with long-term prognosis in bladder cancer. ",
-                journal: "Journal of Cancer Research and Clinical Oncology, 150,",
+                journal: "Journal of Cancer Research and Functional Oncology, 150,",
                 tail: " 173.",
                 doi: "https://doi.org/10.1007/s00432-024-05705-6",
                 doiLabel: "https://doi.org/10.1007/s00432-024-05705-6",

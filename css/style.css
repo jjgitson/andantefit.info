@@ -656,6 +656,7 @@ a:hover {
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:clamp(20px, 2.5vw, 44px);
 }
 
 .nav-menu{
@@ -663,6 +664,7 @@ a:hover {
   display:flex;
   justify-content:center;
   align-items:center;
+  gap:clamp(14px, 1.6vw, 32px);
 }
 
 .nav-lang{

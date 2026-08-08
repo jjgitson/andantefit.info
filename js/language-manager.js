@@ -14,13 +14,13 @@
   // 홈페이지에서만 실행 — 콘텐츠 페이지(product, validation, references, case-studies 등)에서는 리다이렉트 없음
   if (path !== '/' && path !== '/index.html') return;
 
-  var SUPPORTED_LANGS = ['en', 'ko', 'es'];
+  var SUPPORTED_LANGS = ['en', 'ko', 'es', 'ru'];
   var KNOWN_PAGES = ['index.html', 'product.html', 'case-studies.html', 'validation.html', 'references.html'];
 
   // ── 1. localStorage 저장된 설정 확인 ─────────────────────────────
   var saved = localStorage.getItem('lang_preference');
   if (saved === 'en') return;                        // 영어 명시 선택 → 리다이렉트 안 함
-  if (saved === 'ko' || saved === 'es') {
+  if (saved === 'ko' || saved === 'es' || saved === 'ru') {
     redirect(saved);
     return;
   }
@@ -37,6 +37,7 @@
     var code = langs[i].toLowerCase();
     if (code === 'ko' || code.startsWith('ko-')) { redirect('ko'); return; }
     if (code === 'es' || code.startsWith('es-')) { redirect('es'); return; }
+    if (code === 'ru' || code.startsWith('ru-')) { redirect('ru'); return; }
     // 영어 계열이 먼저 나오면 리다이렉트 안 함
     if (code === 'en' || code.startsWith('en-')) return;
   }

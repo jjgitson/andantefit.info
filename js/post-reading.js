@@ -5,14 +5,15 @@
   const pathname = window.location.pathname;
   if (!pathname.includes('/case-studies/') || !pathname.endsWith('.html')) return;
 
-  const lang = pathname.startsWith('/ko/') ? 'ko' : pathname.startsWith('/es/') ? 'es' : pathname.startsWith('/jp/') ? 'jp' : 'en';
+  const lang = pathname.startsWith('/ko/') ? 'ko' : pathname.startsWith('/es/') ? 'es' : pathname.startsWith('/jp/') ? 'jp' : pathname.startsWith('/ru/') ? 'ru' : 'en';
   const filename = pathname.split('/').pop();
 
   const text = {
     ko: { heading:'이어서 살펴볼 내용', intro:'관련 근거를 더 살펴본 뒤, AndanteFit이 신체기능 평가를 어떻게 표준화하는지 확인할 수 있습니다.', evidence:'관련 근거', list:'← 케이스 스터디 목록으로', solution:'AndanteFit 솔루션 이해하기 →', listUrl:'/ko/case-studies.html', solutionUrl:'/ko/product.html' },
     en: { heading:'Continue exploring', intro:'Review related evidence, then see how AndanteFit standardizes physical-function assessment.', evidence:'Related evidence', list:'← Back to case studies', solution:'Understand the AndanteFit solution →', listUrl:'/case-studies.html', solutionUrl:'/product.html' },
     es: { heading:'Seguir explorando', intro:'Revise la evidencia relacionada y descubra cómo AndanteFit estandariza la evaluación de la función física.', evidence:'Evidencia relacionada', list:'← Volver a casos de estudio', solution:'Conocer la solución AndanteFit →', listUrl:'/es/case-studies.html', solutionUrl:'/es/product.html' },
-    jp: { heading:'続けて読む', intro:'関連エビデンスを確認した後、AndanteFitによる身体機能評価の標準化をご覧いただけます。', evidence:'関連エビデンス', list:'← ケーススタディ一覧へ', solution:'AndanteFitのソリューションを見る →', listUrl:'/jp/case-studies.html', solutionUrl:'/jp/product.html' }
+    jp: { heading:'続けて読む', intro:'関連エビデンスを確認した後、AndanteFitによる身体機能評価の標準化をご覧いただけます。', evidence:'関連エビデンス', list:'← ケーススタディ一覧へ', solution:'AndanteFitのソリューションを見る →', listUrl:'/jp/case-studies.html', solutionUrl:'/jp/product.html' },
+    ru: { heading:'Продолжить изучение', intro:'Ознакомьтесь со связанными материалами и узнайте, как AndanteFit стандартизирует оценку физической функции.', evidence:'Связанные материалы', list:'← Ко всем практическим примерам', solution:'Узнать о решении AndanteFit →', listUrl:'/ru/case-studies.html', solutionUrl:'/ru/product.html' }
   }[lang];
 
   const koGroups = [

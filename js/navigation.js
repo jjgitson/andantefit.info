@@ -6,14 +6,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const isKO = path.includes('/ko/');
     const isES = path.includes('/es/');
     const isJP = path.includes('/jp/');
+    const isRU = path.includes('/ru/');
 
-    const activeLang = isKO ? 'ko' : isES ? 'es' : isJP ? 'jp' : 'en';
+    const activeLang = isKO ? 'ko' : isES ? 'es' : isJP ? 'jp' : isRU ? 'ru' : 'en';
 
     // 폴더 깊이에 따른 루트 경로 계산
     let rootPath = './';
     if (path.includes('case-studies/')) {
         rootPath = '../../';
-    } else if (isKO || isES || isJP) {
+    } else if (isKO || isES || isJP || isRU) {
         rootPath = '../';
     }
 
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentPage = KNOWN_PAGES.indexOf(lastSegment) !== -1 ? lastSegment : 'index.html';
 
     // Case-study detail page detection (isCaseStudyDetail computed after CASE_STUDY_MAP below)
-    const CASE_STUDY_SUFFIX = /-(EN|KR|ES|JP)\.html$/;
+    const CASE_STUDY_SUFFIX = /-(EN|KR|ES|JP|RU)\.html$/;
 
     // Static availability map: slug → { lang: actual-filename }
     const CASE_STUDY_MAP = {
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const _csBase = lastSegment.endsWith('.html') ? lastSegment.slice(0, -5) : lastSegment;
     const caseStudySlug = CASE_STUDY_SUFFIX.test(lastSegment)
-        ? _csBase.replace(/-(EN|KR|ES|JP)$/, '')
+        ? _csBase.replace(/-(EN|KR|ES|JP|RU)$/, '')
         : _csBase;
     const isCaseStudyDetail = path.includes('/case-studies/') && path.endsWith('.html');
 
@@ -95,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
       { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
       isJP ?
       { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '検証', cases: 'ケーススタディ', refs: '導入事例' } :
+      isRU ?
+      { home: 'Главная', test: 'Проведение SPPB', product: 'Система', validation: 'Валидация', cases: 'Практические примеры', refs: 'Организации' } :
       { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
 
     function langLink(lang, label) {
@@ -111,8 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return '<a href="' + href + '" data-lang="' + lang + '"' + (isCurrent ? ' aria-current="page"' : '') + '>' + label + '</a>';
     }
 
-    const langHtml = langLink('en', 'EN') + ' <span class="sep">|</span> ' + langLink('ko', 'KO') + ' <span class="sep">|</span> ' + langLink('es', 'ES') + ' <span class="sep">|</span> ' + langLink('jp', 'JP');
-    const langPrefix = isKO ? 'ko/' : isES ? 'es/' : isJP ? 'jp/' : '';
+    const langHtml = langLink('en', 'EN') + ' <span class="sep">|</span> ' + langLink('ko', 'KO') + ' <span class="sep">|</span> ' + langLink('es', 'ES') + ' <span class="sep">|</span> ' + langLink('jp', 'JP') + ' <span class="sep">|</span> ' + langLink('ru', 'RU');
+    const langPrefix = isKO ? 'ko/' : isES ? 'es/' : isJP ? 'jp/' : isRU ? 'ru/' : '';
     const navItems = [
         { href: rootPath + langPrefix + 'index.html', label: labels.home },
         { href: rootPath + langPrefix + 'sppb-test.html', label: labels.test },
@@ -122,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { href: rootPath + langPrefix + 'references.html', label: labels.refs }
     ];
     const navLinksHtml = navItems.map(function(item) { return '<li><a href="' + item.href + '">' + item.label + '</a></li>'; }).join('');
-    const closeLabel = isKO ? '메뉴 닫기' : isES ? 'Cerrar menú' : 'Close menu';
-    const panelLabel = isKO ? '모바일 내비게이션' : isES ? 'Navegación móvil' : 'Mobile navigation';
+    const closeLabel = isKO ? '메뉴 닫기' : isES ? 'Cerrar menú' : isRU ? 'Закрыть меню' : 'Close menu';
+    const panelLabel = isKO ? '모바일 내비게이션' : isES ? 'Navegación móvil' : isRU ? 'Мобильная навигация' : 'Mobile navigation';
 
     navContainer.innerHTML = `
     <nav class="nav"><div class="nav-container">

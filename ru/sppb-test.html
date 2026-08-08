@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/language-manager.js"></script>
+  <meta name="description" content="Пошаговый протокол проведения SPPB: тест равновесия, скорость ходьбы на 4 метра и пятикратное вставание со стула, с таблицами подсчета баллов.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/ru/sppb-test.html" />
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/sppb-test.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/sppb-test.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/sppb-test.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/sppb-test.html" />
+  <link rel="alternate" hreflang="ru" href="https://andantefit.info/ru/sppb-test.html" />
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/sppb-test.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="Протокол проведения SPPB | AndanteFit">
+  <meta property="og:description" content="Пошаговый протокол проведения SPPB: тест равновесия, скорость ходьбы на 4 метра и пятикратное вставание со стула, с таблицами подсчета баллов.">
+  <meta property="og:url" content="https://andantefit.info/ru/sppb-test.html">
+  <meta property="og:image" content="https://andantefit.info/assets/en/sppb/gait-course.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <title>Протокол проведения SPPB | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <style>
+    .test-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.8; }
+
+    /* Test section layout */
+    .test-section { scroll-margin-top: 88px; }
+    .test-section + .test-section { border-top: 1px solid var(--color-border); }
+
+    .test-inner { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    @media (max-width: 900px) { .test-inner { grid-template-columns: 1fr; } }
+
+    .test-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-deep-blue); color: #fff; font-size: 1.125rem; font-weight: 800; flex-shrink: 0; }
+    .test-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .test-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--color-text-primary); margin: 0; }
+
+    .test-steps { list-style: none; padding: 0; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .test-steps li { display: flex; gap: 12px; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(15,76,129,0.10); color: var(--color-deep-blue); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+    .score-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; }
+    .score-card-header { background: var(--color-deep-blue); color: #fff; padding: 12px 16px; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+    .score-card table { width: 100%; border-collapse: collapse; }
+    .score-card td { padding: 10px 16px; font-size: 0.875rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: top; }
+    .score-card tr:last-child td { border-bottom: none; }
+    .score-card tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+    .score-pts { font-weight: 700; color: var(--color-text-primary); white-space: nowrap; }
+
+    .callout { background: rgba(15,76,129,0.05); border-left: 4px solid var(--color-deep-blue); border-radius: var(--border-radius); padding: 16px 20px; margin: 20px 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; }
+    .callout strong { color: var(--color-text-primary); }
+
+    /* Nav tabs for quick jump */
+    .test-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .test-nav a { display: inline-block; padding: 8px 18px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; transition: all 0.2s; }
+    .test-nav a:hover { border-color: var(--color-deep-blue); color: var(--color-deep-blue); background: rgba(15,76,129,0.05); }
+
+    /* Total scoring table */
+    .total-score-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .total-score-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .total-score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
+    .total-score-table tbody tr:last-child td { border-bottom: none; }
+    .total-score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+
+    /* Image card */
+    .image-card { border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; padding: 10px; background: #ffffff; box-shadow: 0 6px 18px rgba(0,0,0,0.04); margin: 0; }
+    .image-card img { max-width: 100%; width: 100%; border-radius: 6px; display: block; }
+    .image-card figcaption { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 8px; text-align: center; line-height: 1.5; }
+
+    /* Image galleries */
+    .img-gallery-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .img-gallery-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px; }
+    @media (max-width: 700px) { .img-gallery-3, .img-gallery-2 { grid-template-columns: 1fr; } }
+
+    /* Featured single image */
+    .img-featured { margin: 20px 0; }
+
+    /* Print buttons */
+    .print-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+
+    /* Aspect-ratio for CLS prevention */
+    .img-gallery-3 img, .img-gallery-2 img { aspect-ratio: 3/4; object-fit: cover; }
+    .img-featured img { aspect-ratio: 16/9; object-fit: cover; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "SPPB Test Protocol (4m Walk, 5× Chair Stand, Balance)",
+    "description": "Step-by-step SPPB administration guide with scoring tables for balance, 4-meter gait speed, and 5× sit-to-stand.",
+    "url": "https://andantefit.info/sppb-test.html",
+    "mainEntityOfPage": "https://andantefit.info/sppb-test.html",
+    "publisher": { "@type": "Organization", "name": "AndanteFit", "url": "https://andantefit.info" },
+    "about": [
+      { "@type": "Thing", "name": "Short Physical Performance Battery" },
+      { "@type": "Thing", "name": "Gait speed" },
+      { "@type": "Thing", "name": "Chair stand test" },
+      { "@type": "Thing", "name": "Balance test" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to administer the SPPB",
+    "description": "Procedure for the three Short Physical Performance Battery (SPPB) subtests: standing balance, gait speed, and chair stand.",
+    "totalTime": "PT15M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Balance test", "text": "Assess the ability to hold three progressively harder standing positions — side-by-side, semi-tandem, and tandem — for up to 10 seconds each.", "url": "https://andantefit.info/sppb-test.html#balance" },
+      { "@type": "HowToStep", "position": 2, "name": "Gait speed test", "text": "Time the person walking a 4-meter course at their usual pace. The faster of two trials is used for scoring.", "url": "https://andantefit.info/sppb-test.html#gait-speed" },
+      { "@type": "HowToStep", "position": 3, "name": "Chair stand test", "text": "Time the person rising from a chair five times in a row without using the arms.", "url": "https://andantefit.info/sppb-test.html#chair-stand" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is SPPB gait speed measured over 4 meters or 6 meters?", "acceptedAnswer": { "@type": "Answer", "text": "The SPPB standard is a 4-meter walk. The person starts from a standstill and walks at their usual pace while the time is recorded. Some research protocols use a 6-meter variant, but SPPB scoring is based on the 4-meter walk." } },
+      { "@type": "Question", "name": "What kind of chair is used for the chair stand test?", "acceptedAnswer": { "@type": "Answer", "text": "A firm, straight-backed chair with a seat height of about 43–45 cm is used, ideally without armrests. With arms folded across the chest and without using the arms, the person rises and sits five times as quickly as possible while the time is recorded." } },
+      { "@type": "Question", "name": "What is a normal SPPB score?", "acceptedAnswer": { "@type": "Answer", "text": "The total ranges from 0 to 12; higher is better. Generally 10–12 is normal to good, 7–9 indicates moderate limitation, and 0–6 indicates severe limitation. A change of 1 point or more is considered meaningful." } },
+      { "@type": "Question", "name": "How long does the SPPB take?", "acceptedAnswer": { "@type": "Answer", "text": "Performed manually it takes about 10–15 minutes. With AndanteFit, all three subtests are completed in under 3 minutes." } }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Проведение теста</span>
+      <h1 class="hero-headline">Протокол проведения SPPB</h1>
+      <p class="test-lead">
+        Пошаговое руководство по проведению Short Physical Performance Battery (SPPB).
+        Три подтеста обычно выполняются в следующем порядке: равновесие → скорость ходьбы → вставание со стула.
+        Общее время: 10–15 минут при ручном проведении; менее 3 минут с AndanteFit.
+        SPPB был разработан Guralnik и соавторами и широко применяется в эпидемиологических и научных исследованиях старения. Сегодня он используется как стандартизированный показатель функции нижних конечностей в исследованиях и функциональной оценке.
+      </p>
+
+      <div class="test-nav" style="margin-top: 32px;">
+        <a href="#sppb-calc">🧮 Рассчитать балл</a>
+        <a href="#balance">⚖️ Тест равновесия</a>
+        <a href="#gait-speed">🚶 Тест скорости ходьбы</a>
+        <a href="#chair-stand">🪑 Тест вставания со стула</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inline conversion band -->
+  <div class="container">
+    <div class="cta-band">
+      <div class="cta-band-text">
+        <span class="cta-band-eyebrow">Автоматизированный SPPB</span>
+        <p class="cta-band-title">Автоматизируйте все три теста менее чем за 3 минуты.</p>
+        <p class="cta-band-sub">AndanteFit не требует секундомера и разметки пола. Датчик LiDAR измеряет каждый подтест SPPB и автоматически рассчитывает балл — без межэкспертной вариабельности.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="/ru/product.html" class="btn btn-accent" data-af-event="cta_click" data-af-location="test_hero_band" data-af-label="ru_product">Посмотреть систему →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive score calculator -->
+  <section id="sppb-calc" class="section" style="background-color: var(--color-soft-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Калькулятор баллов</span>
+        <h2>Калькулятор SPPB</h2>
+        <p>Выберите балл каждого из трех подтестов (0–4), чтобы автоматически увидеть суммарный результат, функциональный уровень и его интерпретацию. Критерии подсчета для каждого подтеста приведены ниже.</p>
+      </div>
+      <div class="sppb-calc" id="sppbCalc">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <span class="calc-field-label">1. Равновесие<span class="calc-field-hint">Стопы рядом · полутандем · тандем</span></span>
+            <div class="calc-seg" data-calc-input="balance" role="group" aria-label="Балл равновесия">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">2. Скорость ходьбы<span class="calc-field-hint">Время ходьбы на 4 м</span></span>
+            <div class="calc-seg" data-calc-input="gait" role="group" aria-label="Балл скорости ходьбы">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field-label">3. Вставание со стула<span class="calc-field-hint">Время 5 подъемов</span></span>
+            <div class="calc-seg" data-calc-input="chair" role="group" aria-label="Балл вставания со стула">
+              <button type="button" data-val="0">0</button>
+              <button type="button" data-val="1">1</button>
+              <button type="button" data-val="2">2</button>
+              <button type="button" data-val="3">3</button>
+              <button type="button" data-val="4">4</button>
+            </div>
+          </div>
+        </div>
+        <div class="calc-result" id="calcResult" hidden>
+          <div><span class="calc-total-num" id="calcTotal">–</span><span class="calc-total-den">/ 12</span></div>
+          <span class="calc-band" id="calcBand"></span>
+          <p class="calc-interp" id="calcInterp"></p>
+          <div class="calc-cta">
+            <p class="calc-cta-text"><strong>Тратите время на ручной хронометраж и запись?</strong><br>AndanteFit автоматизирует расчет менее чем за 3 минуты.</p>
+            <a href="/ru/product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="calc_result" data-af-label="ru_calc">Узнать об автоматизации →</a>
+          </div>
+        </div>
+      </div>
+      <script type="application/json" id="calcBands">
+      [
+        {"max":6,"tone":"high","label":"Выраженное нарушение (0–6)","interp":"Группа высокого риска. Приоритет для профилактических и восстановительных вмешательств."},
+        {"max":9,"tone":"mid","label":"Умеренное нарушение (7–9)","interp":"Группа промежуточного риска, где физические вмешательства обычно наиболее эффективны."},
+        {"max":12,"tone":"low","label":"Норма или хорошая функция (10–12)","interp":"Группа низкого риска. Полезно для динамического наблюдения и раннего выявления снижения функции."}
+      ]
+      </script>
+    </div>
+  </section>
+
+  <!-- Balance Test -->
+  <section id="balance" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">1</span>
+            <h2 class="test-title">Тест равновесия</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            Тест равновесия оценивает постуральную устойчивость с помощью трех стоек возрастающей сложности. Он выполняется первым, так как требует наименьших усилий и позволяет выявить участников, которым может понадобиться более пристальное наблюдение в последующих тестах.
+          </p>
+
+          <div class="callout">
+            <strong>Что оценивается:</strong> статический постуральный контроль, риск падений, раннее снижение функции.
+          </div>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Подготовка</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Участник стоит рядом со стеной или устойчивой опорой для безопасности. Обувь надета.</li>
+            <li><span class="step-num">2</span>Оператор демонстрирует каждую стойку до начала отсчета времени.</li>
+            <li><span class="step-num">3</span>Руки свободно опущены; во время удержания оператор не поддерживает участника за руки.</li>
+          </ul>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Процедура</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span><span><strong>Стопы рядом:</strong> стопы вместе, внутренние края соприкасаются. Удержание 10 секунд. Если удержать ≥10 с невозможно, балл = 0 и тест завершается.</span></li>
+            <li><span class="step-num">2</span><span><strong>Полутандемная стойка:</strong> боковая сторона одной стопы у большого пальца другой. Удержание 10 секунд. При невозможности — балл = 1 и тест завершается.</span></li>
+            <li><span class="step-num">3</span><span><strong>Полная тандемная стойка:</strong> пятка одной стопы прямо перед пальцами другой, касаясь их. Отсчет до 10 секунд.</span></li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">Тест завершается при потере равновесия или по решению оператора.</p>
+
+          <div class="img-gallery-3">
+            <figure class="image-card">
+              <img src="/assets/en/sppb/balance-side-by-side.webp" alt="SPPB balance test: side-by-side stance with feet together, held for 10 seconds." loading="lazy" decoding="async">
+              <figcaption>Стопы рядом. Удержание 10 секунд.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/balance-semi-tandem.webp" alt="SPPB balance test: semi-tandem stance position held for 10 seconds." loading="lazy" decoding="async">
+              <figcaption>Полутандемная стойка. Удержание 10 секунд.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/balance-full-tandem.webp" alt="SPPB balance test: full tandem stance timed up to 10 seconds." loading="lazy" decoding="async">
+              <figcaption>Полная тандемная стойка. Удержание до 10 секунд.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card-header">Подсчет баллов</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>Не может удержать «стопы рядом» 10 с</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>Стопы рядом ≥10 с; полутандем &lt;10 с</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>Полутандем ≥10 с; полный тандем &lt;3 с</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>Полный тандем 3–9,99 с</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>Полный тандем ≥10 с</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gait Speed Test -->
+  <section id="gait-speed" class="test-section section">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">2</span>
+            <h2 class="test-title">Тест скорости ходьбы</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            Скорость ходьбы — один из самых сильных отдельных предикторов исходов у пожилых людей, включая смертность, когнитивное снижение, госпитализацию и функциональную инвалидизацию. Стандартная дистанция SPPB — 4 метра, хотя в некоторых протоколах используют вариант на 6 метров.
+          </p>
+
+          <div class="callout">
+            <strong>Что оценивается:</strong> функциональная мобильность, общее состояние здоровья, риск старческой астении и саркопении.
+          </div>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Подготовка</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Разметьте дистанцию 4 метра с четкими линиями старта и финиша на ровной, свободной от препятствий поверхности.</li>
+            <li><span class="step-num">2</span>Участник может использовать привычное средство для ходьбы (трость, ходунки). Зафиксируйте его использование.</li>
+            <li><span class="step-num">3</span>Участник начинает из неподвижного положения стоя за линией старта.</li>
+          </ul>
+
+          <figure class="image-card img-featured">
+            <img src="/assets/en/sppb/gait-course.webp" alt="SPPB gait speed test: marked 4-meter walking course on a flat, unobstructed surface." loading="eager" decoding="async" fetchpriority="high">
+            <figcaption>Размеченная дистанция 4 метра на ровной, свободной поверхности.</figcaption>
+          </figure>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Процедура</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Дайте инструкцию: «Идите в обычном для вас темпе, как если бы вы шли по улице».</li>
+            <li><span class="step-num">2</span>Начните отсчет времени, когда участник начинает движение.</li>
+            <li><span class="step-num">3</span>Остановите отсчет, когда ведущая нога пересечет линию финиша.</li>
+            <li><span class="step-num">4</span>Выполните две попытки; для подсчета используйте лучшее (меньшее) время.</li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 8px;">Балл 0, если участник не может выполнить ходьбу или требует физической помощи.</p>
+
+          <div class="img-gallery-2">
+            <figure class="image-card">
+              <img src="/assets/en/sppb/gait-setup.webp" alt="SPPB gait speed test: participant positioned at the start line for the 4-meter walk." loading="lazy" decoding="async">
+              <figcaption>Участник в стартовом положении за линией.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/gait-walking.webp" alt="SPPB gait speed test: participant walking at usual pace along the marked 4-meter course." loading="lazy" decoding="async">
+              <figcaption>Участник идет в обычном темпе по размеченной дистанции 4 метра.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card-header">Подсчет баллов (ходьба 4 м)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>Не может выполнить</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>≥8.70s (&lt;0.46 m/s)</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>6.21–8.70s (0.46–0.64 m/s)</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>4.82–6.20s (0.64–0.83 m/s)</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>&lt;4.82s (&gt;0.83 m/s)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chair Stand Test -->
+  <section id="chair-stand" class="test-section section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="test-inner">
+        <div>
+          <div class="test-title-row">
+            <span class="test-number">3</span>
+            <h2 class="test-title">Тест вставания со стула</h2>
+          </div>
+          <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.8;">
+            Пятикратное вставание со стула оценивает силу и мощность мышц нижних конечностей и функциональный нервно-мышечный контроль. Это наиболее нагрузочный подтест, поэтому его выполняют последним, чтобы утомление не повлияло на предыдущие подтесты.
+          </p>
+
+          <div class="callout">
+            <strong>Что оценивается:</strong> сила и мощность мышц нижних конечностей, функциональная способность к повседневным действиям, например вставанию со стула.
+          </div>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Подготовка</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Используйте устойчивый стул с высотой сиденья примерно 43–45 см, по возможности без подлокотников.</li>
+            <li><span class="step-num">2</span>Участник сидит, скрестив руки на груди. Стопы полностью на полу.</li>
+            <li><span class="step-num">3</span>Сначала попросите участника встать один раз, чтобы убедиться, что он может выполнить движение без опоры на руки.</li>
+          </ul>
+
+          <figure class="image-card img-featured">
+            <img src="/assets/en/sppb/chair-start-position.webp" alt="SPPB chair stand test: correct starting position with arms folded across the chest." loading="lazy" decoding="async">
+            <figcaption>Правильное исходное положение со скрещенными на груди руками.</figcaption>
+          </figure>
+
+          <h3 style="font-size: 1.125rem; margin-top: 24px; margin-bottom: 12px;">Процедура</h3>
+          <ul class="test-steps">
+            <li><span class="step-num">1</span>Инструкция участнику: «Встаньте и сядьте пять раз подряд как можно быстрее и безопаснее, не помогая руками».</li>
+            <li><span class="step-num">2</span>Начните отсчет времени с началом первого вставания.</li>
+            <li><span class="step-num">3</span>Остановите отсчет, когда участник полностью выпрямится на пятом вставании.</li>
+            <li><span class="step-num">4</span>Балл 0, если участник помогает руками или затрачивает более 60 секунд.</li>
+          </ul>
+
+          <div class="img-gallery-2">
+            <figure class="image-card">
+              <img src="/assets/en/sppb/chair-seat-position.webp" alt="SPPB chair stand test: starting seated posture with arms crossed over the chest." loading="lazy" decoding="async">
+              <figcaption>Исходное положение для каждого повторения.</figcaption>
+            </figure>
+            <figure class="image-card">
+              <img src="/assets/en/sppb/chair-full-stand.webp" alt="SPPB chair stand test: full standing posture during the five-repetition test." loading="lazy" decoding="async">
+              <figcaption>Полностью выпрямленное положение для каждого повторения.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card-header">Подсчет баллов (5 вставаний)</div>
+          <table>
+            <tbody>
+              <tr><td><span class="score-pts">0</span></td><td>Не может выполнить; помогает руками; &gt;60 с</td></tr>
+              <tr><td><span class="score-pts">1</span></td><td>≥16.70s</td></tr>
+              <tr><td><span class="score-pts">2</span></td><td>13.70–16.69s</td></tr>
+              <tr><td><span class="score-pts">3</span></td><td>11.20–13.69s</td></tr>
+              <tr><td><span class="score-pts">4</span></td><td>&lt;11.20s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Total scoring -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Суммарный балл</span>
+        <h2>Суммарный балл SPPB</h2>
+        <p>Сложите баллы трех подтестов (каждый 0–4), получив суммарный результат 0–12.</p>
+      </div>
+      <div style="max-width: 680px; margin: 0 auto;">
+        <table class="total-score-table">
+          <thead>
+            <tr><th>Суммарный балл</th><th>Категория</th><th>Функциональная интерпретация</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>0 – 6</strong></td><td>Выраженное нарушение</td><td>Высокий риск; приоритет для профилактических и восстановительных вмешательств.</td></tr>
+            <tr><td><strong>7 – 9</strong></td><td>Умеренное нарушение</td><td>Промежуточный риск; наибольшая польза от физических вмешательств.</td></tr>
+            <tr><td><strong>10 – 12</strong></td><td>Норма или хорошая функция</td><td>Более низкий риск; динамическое наблюдение для раннего выявления снижения функции.</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
+          Изменение на ≥1 балл предложено как минимально значимое функциональное различие во многих популяциях. Всегда интерпретируйте профиль подтестов вместе с суммарным баллом для выбора целенаправленного вмешательства.
+        </p>
+      </div>
+      <div class="print-kit">
+        <p class="print-kit-title">Полевая памятка (A4 · 1 страница)</p>
+        <p class="print-kit-sub">Процедура, критерии подсчета и поля для записи по всем трем тестам на одной странице. Распечатайте и используйте во время обследования.</p>
+        <div class="print-btns" style="margin-top: 0;">
+          <a href="/ru/sppb-test-print.html" target="_blank" class="btn btn-secondary" data-af-event="print_view" data-af-location="test_scoring" data-af-label="ru">🖨️ Версия для печати</a>
+          <a href="/ru/sppb-test-print.html?print=1" target="_blank" class="btn btn-primary" data-af-event="pdf_download" data-af-location="test_scoring" data-af-label="ru">⬇️ Скачать PDF</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">FAQ</span>
+        <h2>SPPB — часто задаваемые вопросы</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Скорость ходьбы в SPPB измеряется на 4 или 6 метрах?</summary>
+          <div class="faq-answer"><p>Стандарт SPPB — ходьба на 4 метра. Участник начинает из неподвижного положения и идет в обычном темпе, при этом фиксируется время. В некоторых исследованиях применяют вариант на 6 метров, но подсчет баллов SPPB основан на ходьбе 4 метра.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Какой стул используется для теста вставания?</summary>
+          <div class="faq-answer"><p>Используется устойчивый стул с прямой спинкой и высотой сиденья около 43–45 см, желательно без подлокотников. Скрестив руки на груди и не помогая руками, участник встает и садится пять раз как можно быстрее, при этом фиксируется время.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Какой балл SPPB считается нормальным?</summary>
+          <div class="faq-answer"><p>Суммарный балл — от 0 до 12; чем выше, тем лучше. Как правило, 10–12 — норма или хорошая функция, 7–9 — умеренное нарушение, 0–6 — выраженное нарушение (более высокий риск смерти, госпитализации и инвалидизации). Изменение на 1 балл и более считается значимым.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Сколько времени занимает SPPB?</summary>
+          <div class="faq-answer"><p>При ручном проведении — около 10–15 минут с учетом подготовки и записи. С AndanteFit все три подтеста выполняются менее чем за 3 минуты с автоматическим хронометражем и записью.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- AndanteFit -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Автоматизированная оценка</span>
+        <h2>Стандартизируйте проведение SPPB с AndanteFit</h2>
+        <p>
+          Ручное проведение SPPB требует секундомера, разметки дистанции на полу и единообразной техники у разных операторов и в разных сессиях. На практике ручной хронометраж и различия в инструкциях могут вносить межэкспертную вариабельность, особенно в крупных скрининговых программах и многоцентровых исследованиях.
+        </p>
+        <p>
+          AndanteFit заменяет ручной хронометраж мультисенсорной автоматизацией: скорость ходьбы измеряется с помощью LiDAR, время вставания — по отслеживанию движения, длительность равновесия — сенсорной платформой.
+          Все три подтеста выполняются менее чем за 3 минуты, при этом обученный оператор в каждой сессии не требуется.
+        </p>
+      </div>
+      <div class="pro-cta">
+        <div class="pro-cta-stats">
+          <div class="pro-cta-stat"><span class="v">&lt; 3 мин</span><span class="l">На все три теста</span></div>
+          <div class="pro-cta-stat"><span class="v">Без носимых устройств</span><span class="l">Без устройств и расходников</span></div>
+          <div class="pro-cta-stat"><span class="v">Автоматический расчет</span><span class="l">Меньше межэкспертной вариабельности</span></div>
+        </div>
+        <div class="pro-cta-actions">
+          <a href="/ru/product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="test_bottom" data-af-label="ru_demo">Запросить демонстрацию →</a>
+          <a href="/ru/what-is-sppb.html" class="btn btn-secondary">Что такое SPPB?</a>
+          <a href="/ru/validation.html" class="btn btn-secondary">Доказательная база</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="./includes/footer.html"></div>
+  <script src="/js/main.js"></script>
+  <script src="/js/navigation.js"></script>
+  <script src="/js/sppb-calculator.js"></script>
+</body>
+</html>

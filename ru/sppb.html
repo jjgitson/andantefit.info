@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/language-manager.js"></script>
+  <meta name="description" content="Short Physical Performance Battery (SPPB): стандартизированный инструмент оценки физической функции у людей старшего возраста — компоненты, подсчет баллов и применение.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/ru/sppb.html" />
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/sppb.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/sppb.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/sppb.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/sppb.html" />
+  <link rel="alternate" hreflang="ru" href="https://andantefit.info/ru/sppb.html" />
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/sppb.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:title" content="Short Physical Performance Battery (SPPB) | AndanteFit">
+  <meta property="og:description" content="Обзор SPPB: компоненты, подсчет баллов и применение в оценке старческой астении и саркопении.">
+  <meta property="og:url" content="https://andantefit.info/ru/sppb.html">
+  <title>Short Physical Performance Battery (SPPB) | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "Short Physical Performance Battery (SPPB)",
+    "url": "https://andantefit.info/sppb.html",
+    "description": "SPPB overview: components, scoring, and professional use in frailty and sarcopenia assessment.",
+    "about": "Short Physical Performance Battery (SPPB) physical performance assessment tool",
+    "publisher": { "@type": "Organization", "name": "AndanteFit", "url": "https://andantefit.info/" }
+  }
+  </script>
+  <style>
+    .sppb-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.8; }
+    .component-card { display: block; text-decoration: none; color: inherit; }
+    .component-card:hover { color: inherit; }
+    .component-card .card { transition: all 0.3s ease; }
+    .component-card:hover .card { box-shadow: var(--shadow-md); border-color: var(--color-deep-blue); transform: translateY(-2px); }
+    .card-link-hint { display: inline-block; margin-top: 12px; font-size: 0.875rem; font-weight: 600; color: var(--color-deep-blue); }
+    .score-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .score-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .score-table tbody td { padding: 12px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
+    .score-table tbody tr:last-child td { border-bottom: none; }
+    .score-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.02); }
+    .score-badge { font-weight: 700; color: var(--color-text-primary); }
+    .learn-more-link { display: inline-block; margin-top: 24px; font-size: 0.9375rem; font-weight: 600; color: var(--color-text-muted); }
+    .learn-more-link:hover { color: var(--color-deep-blue); }
+    /* Prognostic Value section */
+    .prognosis-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start; }
+    .prognosis-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--color-border); display: block; }
+    .prognosis-caption { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 10px; line-height: 1.6; font-style: italic; }
+    /* Guidelines table */
+    .guideline-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .guideline-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 12px 16px; text-align: left; }
+    .guideline-table tbody td { padding: 11px 16px; font-size: 0.9rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: middle; line-height: 1.5; }
+    .guideline-table tbody tr:last-child td { border-bottom: none; }
+    .guideline-table tbody tr:nth-child(even) td { background: rgba(15,76,129,0.025); }
+    .guideline-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(15,76,129,0.12); color: var(--color-deep-blue); white-space: nowrap; }
+    /* Policy section */
+    .policy-block { display: flex; flex-direction: column; gap: 20px; max-width: 880px; margin: 0 auto; }
+    .policy-item { padding: 20px 24px; border-left: 4px solid var(--color-deep-blue); background: rgba(15,76,129,0.03); border-radius: 0 8px 8px 0; }
+    .policy-item-title { font-weight: 700; font-size: 1rem; color: var(--color-deep-blue); margin: 0 0 8px; }
+    .policy-item-text { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.8; margin: 0; }
+    @media (max-width: 768px) { .prognosis-layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Компоненты оценки</span>
+      <h1 class="hero-headline">Short Physical Performance Battery (SPPB)</h1>
+      <p class="sppb-lead">
+        SPPB — стандартизированный и валидированный инструмент для оценки физической функции нижних конечностей у людей старшего возраста.
+        Он включает три объективных подтеста — равновесие, скорость ходьбы и пятикратное вставание со стула — и широко применяется
+        в исследованиях старческой астении и саркопении, функциональной оценке и интегрированной помощи пожилым людям.
+      </p>
+    </div>
+  </section>
+
+  <!-- Inline conversion band -->
+  <div class="container">
+    <div class="cta-band">
+      <div class="cta-band-text">
+        <span class="cta-band-eyebrow">Автоматизированный SPPB</span>
+        <p class="cta-band-title">От ручной оценки за 10–15 минут к результату менее чем за 3 минуты.</p>
+        <p class="cta-band-sub">AndanteFit автоматически выполняет все три подтеста SPPB с помощью LiDAR и датчиков движения — валидировано относительно ручного SPPB (ICC 0,94–0,97).</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="/ru/product.html" class="btn btn-accent" data-af-event="cta_click" data-af-location="sppb_hero_band" data-af-label="ru_product">Посмотреть систему →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Components -->
+  <section id="sppb-components" class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Три подтеста</span>
+        <h2>Компоненты SPPB</h2>
+        <p>Каждый подтест оценивает отдельный аспект функции нижних конечностей и оценивается от 0 до 4 баллов. Максимальная суммарная оценка составляет 12 баллов.</p>
+      </div>
+      <div class="grid grid-3">
+
+        <a class="component-card" href="/ru/sppb-test.html#gait-speed">
+          <div class="card">
+            <div class="card-icon">🚶</div>
+            <h3 class="card-title">Тест скорости ходьбы</h3>
+            <p class="card-description">
+              Хронометрируемая ходьба на 4 метра для оценки функциональной мобильности и скорости ходьбы. Ключевой предиктор общего функционального статуса при оценке старческой астении и саркопении.
+            </p>
+            <span class="card-link-hint">Смотреть протокол теста →</span>
+          </div>
+        </a>
+
+        <a class="component-card" href="/ru/sppb-test.html#chair-stand">
+          <div class="card">
+            <div class="card-icon">🪑</div>
+            <h3 class="card-title">Тест вставания со стула</h3>
+            <p class="card-description">
+              Время выполнения пяти вставаний со стула без опоры на руки. Отражает силу мышц нижних конечностей и функциональную способность к повседневной мобильности.
+            </p>
+            <span class="card-link-hint">Смотреть протокол теста →</span>
+          </div>
+        </a>
+
+        <a class="component-card" href="/ru/sppb-test.html#balance">
+          <div class="card">
+            <div class="card-icon">⚖️</div>
+            <h3 class="card-title">Тест равновесия</h3>
+            <p class="card-description">
+              Стойки возрастающей сложности — стопы рядом, полутандем и полный тандем — для оценки постуральной устойчивости и риска падений.
+            </p>
+            <span class="card-link-hint">Смотреть протокол теста →</span>
+          </div>
+        </a>
+
+      </div>
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="/ru/sppb-test.html" class="btn btn-primary">Полный протокол теста →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Score interpretation -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Подсчет баллов</span>
+        <h2>Интерпретация результатов SPPB</h2>
+        <p>Each of the three subtests is scored 0–4. The total composite score (0–12) reflects overall lower-extremity function.</p>
+      </div>
+      <div style="max-width: 720px; margin: 0 auto;">
+        <table class="score-table">
+          <thead>
+            <tr>
+              <th>Суммарный балл</th>
+              <th>Категория</th>
+              <th>Значение</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="score-badge">0 – 6</span></td>
+              <td>Выраженное нарушение функции</td>
+              <td>Высокий риск смертности, падений, госпитализации и ограничения мобильности. Приоритет для вмешательства.</td>
+            </tr>
+            <tr>
+              <td><span class="score-badge">7 – 9</span></td>
+              <td>Умеренное нарушение функции</td>
+              <td>Промежуточный риск. Наибольшая отзывчивость на физические и восстановительные вмешательства.</td>
+            </tr>
+            <tr>
+              <td><span class="score-badge">10 – 12</span></td>
+              <td>Нормальная или хорошая функция</td>
+              <td>Более низкий риск. Полезная точка отсчета для динамического наблюдения.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
+          The subtest profile matters as much as the total score. Isolated balance impairment, slow gait, or disproportionately slow chair stand performance each point toward different functional targets.
+        </p>
+        <a class="learn-more-link" href="/ru/what-is-sppb.html">Подробный справочник по доказательной базе и рекомендациям SPPB →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prognostic Value -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Прогностическая значимость</span>
+        <h2>SPPB как предиктор неблагоприятных исходов</h2>
+        <p>Помимо оценки функции нижних конечностей, SPPB независимо связан с риском смертности, падений и ограничения мобильности у пожилых людей, проживающих самостоятельно.</p>
+      </div>
+      <div class="prognosis-layout">
+        <div>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            SPPB отражает совокупную нагрузку возрастного снижения функции по равновесию, ходьбе и силе нижних конечностей, что делает его комплексным биомаркером старческой астении. Низкие баллы (≤6) связаны со значительно повышенным риском 5-летней смертности, госпитализации и падений.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary); margin-bottom: 16px;">
+            Систематический обзор и метаанализ (Pavasini et al., 2016; n &gt; 30 000) подтвердил, что увеличение результата SPPB на 1 балл связано со статистически значимым снижением риска общей смертности. Аналогичная зависимость наблюдается для повторной госпитализации, поступления в дома престарелых и развития ограничения мобильности.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.85; color: var(--color-text-secondary);">
+            С точки зрения старческой астении SPPB отражает физический фенотип критериев Fried — низкую скорость ходьбы и слабость мышц нижних конечностей, — а подтест равновесия добавляет информацию о постуральном контроле и риске падений, которую невозможно получить только по ходьбе.
+          </p>
+        </div>
+        <div>
+          <img
+            src="/assets/sppb-prognostic-risk-en.png"
+            alt="Балл SPPB и прогностический риск смертности и падений у пожилых людей"
+            class="prognosis-img"
+          >
+          <p class="prognosis-caption">Баллы SPPB связаны с 5-летней смертностью, риском падений и госпитализацией. Каждый дополнительный балл соответствует ощутимо меньшему риску неблагоприятных исходов.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academic References -->
+  <section class="section" style="background-color: var(--color-white); padding: 32px 0;">
+    <div class="container">
+      <details>
+        <summary style="font-size: 1rem; font-weight: 600; color: var(--color-deep-blue); cursor: pointer; padding: 8px 0;">Научные источники</summary>
+        <ol style="margin-top: 16px; padding-left: 20px; line-height: 2; font-size: 0.875rem; color: var(--color-text-secondary);">
+          <li>Guralnik JM, Simonsick EM, Ferrucci L, et al. A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission. <em>J Gerontol.</em> 1994;49(2):M85–M94.</li>
+          <li>Guralnik JM, Ferrucci L, Pieper CF, et al. Lower extremity function and subsequent disability: consistency across studies, predictive models, and value of gait speed alone compared with the short physical performance battery. <em>J Gerontol A Biol Sci Med Sci.</em> 2000;55(4):M221–M231.</li>
+          <li>Pavasini R, Guralnik J, Brown JC, et al. Short Physical Performance Battery and all-cause mortality: systematic review and meta-analysis. <em>BMC Med.</em> 2016;14:215.</li>
+          <li>Perera S, Mody SH, Woodman RC, Studenski SA. Meaningful change and responsiveness in common physical performance measures in older adults. <em>J Am Geriatr Soc.</em> 2006;54(5):743–749.</li>
+          <li>Volpato S, Cavalieri M, Sioulis F, et al. Predictive value of the Short Physical Performance Battery following hospitalization in older patients. <em>J Gerontol A Biol Sci Med Sci.</em> 2011;66(1):89–96.</li>
+          <li>Kwon S, Perera S, Pahor M, et al. What is a meaningful change in physical performance? Findings from a research study in older adults (the LIFE-P study). <em>J Nutr Health Aging.</em> 2009;13(6):538–544.</li>
+          <li>Studenski S, Perera S, Patel K, et al. Gait speed and survival in older adults. <em>JAMA.</em> 2011;305(1):50–58.</li>
+          <li>Buracchio TI, Dodge HH, Howieson D, Wasserman D, Kaye J. The trajectory of gait speed preceding mild cognitive impairment. <em>Arch Neurol.</em> 2010;67(8):980–986.</li>
+          <li>Welch C, Hassan-Smith ZK, Greig CA, Lord JM, Jackson TA. Acute sarcopenia secondary to hospitalisation — an emerging condition affecting medical inpatients. <em>Gerontology.</em> 2018;64(2):158–166.</li>
+          <li>Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci.</em> 2001;56(3):M146–M156. [Women's Health and Aging Study]</li>
+        </ol>
+      </details>
+    </div>
+  </section>
+
+  <!-- International Guidelines -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Международные рекомендации</span>
+        <h2>SPPB в клинических рекомендациях и исследовательских моделях</h2>
+        <p>SPPB рекомендован по основным функциональным направлениям организациями Европы, Северной Америки, Азии и на глобальном уровне.</p>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="guideline-table">
+          <thead>
+            <tr>
+              <th>Направление</th>
+              <th>Рекомендация / организация</th>
+              <th>Роль SPPB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="guideline-tag">Саркопения</span></td>
+              <td>EWGSOP2 (Europe, 2018)</td>
+              <td>Основной критерий физической работоспособности для диагностики</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Саркопения</span></td>
+              <td>FNIH Sarcopenia Project (USA, 2014)</td>
+              <td>Критерий фенотипа «слабость + медлительность»; порог скорости ходьбы ≤0,8 м/с</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Саркопения</span></td>
+              <td>AWGS 2019 (Asia)</td>
+              <td>Показатель физической работоспособности для диагностики и классификации тяжести</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Интегрированная помощь</span></td>
+              <td>WHO ICOPE (2019)</td>
+              <td>Скрининг локомоторной способности у пожилых людей на уровне сообщества</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Онкология</span></td>
+              <td>ASCO (2018)</td>
+              <td>Направление физической функции в комплексной гериатрической оценке (CGA)</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Онкология</span></td>
+              <td>ESMO/SIOG (2021)</td>
+              <td>Функциональная оценка и стратификация риска токсичности химиотерапии</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Кардиология</span></td>
+              <td>JCS/JACR (Japan, 2021)</td>
+              <td>Оценка функции нижних конечностей в кардиологической реабилитации</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Когортные исследования</span></td>
+              <td>NHANES (USA)</td>
+              <td>Модуль физической работоспособности для наблюдения за функцией на уровне популяции</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Когортные исследования</span></td>
+              <td>KLHAS (Korea)</td>
+              <td>Отслеживание функциональной траектории в национальной когорте старения</td>
+            </tr>
+            <tr>
+              <td><span class="guideline-tag">Клинические исследования</span></td>
+              <td>SPRINT (USA, 2016)</td>
+              <td>Показатели физической работоспособности и скорости ходьбы как исходы</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Policy -->
+  <section class="section" style="background-color: var(--color-soft-gray, #f8f9fa);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Глобальная политика</span>
+        <h2>SPPB в национальной и международной политике</h2>
+        <p>Помимо исследований, SPPB интегрирован в системы здравоохранения и национальные программы помощи по всему миру.</p>
+      </div>
+      <div class="policy-block">
+        <div class="policy-item">
+          <p class="policy-item-title">🇰🇷 Республика Корея — национальная программа интегрированной помощи</p>
+          <p class="policy-item-text">Национальное консенсусное исследование по методу Дельфи рекомендовало SPPB как стандартную оценку физической работоспособности в программах интегрированной помощи пожилым людям в Корее. Сегодня SPPB включен в региональные программы профилактики старческой астении на базе центров здоровья, обеспечивая стандартизированный функциональный скрининг в широком масштабе.</p>
+        </div>
+        <div class="policy-item">
+          <p class="policy-item-title">🌍 ВОЗ — структура ICOPE</p>
+          <p class="policy-item-text">Структура ВОЗ «Интегрированная помощь пожилым людям» (ICOPE) прямо рекомендует SPPB как инструмент оценки локомоторного направления, устанавливая его как глобальный эталон для функционального скрининга пожилых людей на уровне популяции. Структура ориентирует системы здравоохранения более чем в 100 странах на применение SPPB.</p>
+        </div>
+        <div class="policy-item">
+          <p class="policy-item-title">🇪🇸 Испания / Европа — консенсус CIBERFES</p>
+          <p class="policy-item-text">Испанская сеть CIBERFES (Centro de Investigación Biomédica en Red — Fragilidad y Envejecimiento Saludable) и европейские консорциумы по старению рекомендовали SPPB как консенсусный инструмент измерения для исследований и когортных исследований старения, подчеркивая его межнациональную сопоставимость и методологическую надежность.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AndanteFit -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Автоматизированная оценка</span>
+        <h2>Проведение SPPB с AndanteFit</h2>
+        <p>
+          AndanteFit автоматизирует все три подтеста SPPB с помощью мультисенсорной технологии, устраняя необходимость ручного хронометража и присутствия обученного оператора в каждой сессии.
+          Рецензируемые исследования подтверждают высокую согласованность с традиционным ручным SPPB (ICC 0,94–0,97).
+        </p>
+      </div>
+      <div class="pro-cta">
+        <div class="pro-cta-stats">
+          <div class="pro-cta-stat"><span class="v">&lt; 3 мин</span><span class="l">На все три подтеста</span></div>
+          <div class="pro-cta-stat"><span class="v">ICC 0,94–0,97</span><span class="l">Согласованность с ручным SPPB</span></div>
+          <div class="pro-cta-stat"><span class="v">Без носимых устройств</span><span class="l">Без устройств и расходников</span></div>
+        </div>
+        <div class="pro-cta-actions">
+          <a href="/ru/product.html" class="btn btn-primary" data-af-event="cta_click" data-af-location="sppb_bottom" data-af-label="ru_demo">Запросить демонстрацию →</a>
+          <a href="/ru/validation.html" class="btn btn-secondary">Валидационные исследования</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="./includes/footer.html"></div>
+  <script src="/js/main.js"></script>
+  <script src="/js/navigation.js"></script>
+</body>
+</html>

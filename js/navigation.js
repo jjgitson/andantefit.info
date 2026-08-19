@@ -81,6 +81,13 @@ document.addEventListener('DOMContentLoaded', function() {
         '2026-08-06-SPPB-Community-Frailty-Management': {
             en: '2026-08-06-SPPB-Community-Frailty-Management-EN.html',
             es: '2026-08-06-SPPB-Community-Frailty-Management-ES.html'
+        },
+        '2026-08-20-ACC-Frailty-Cardiovascular-SPPB': {
+            en: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-EN.html',
+            ko: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-KR.html',
+            es: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-ES.html',
+            jp: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-JP.html',
+            ru: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-RU.html'
         }
     };
 
@@ -91,14 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const isCaseStudyDetail = path.includes('/case-studies/') && path.endsWith('.html');
 
     const labels = isKO ?
-      { home: '홈', test: 'SPPB 검사', product: '제품', validation: '검증', cases: '사례 연구', refs: '주요 도입처' } :
+      { home: '홈', test: 'SPPB 검사', product: '제품', validation: '검증', cases: 'Evidence', refs: '주요 도입처' } :
       isES ?
-      { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Casos', refs: 'Referencias' } :
+      { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Evidence', refs: 'Referencias' } :
       isJP ?
-      { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '検証', cases: 'ケーススタディ', refs: '導入事例' } :
+      { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '検証', cases: 'Evidence', refs: '導入事例' } :
       isRU ?
-      { home: 'Главная', test: 'Проведение SPPB', product: 'Система', validation: 'Валидация', cases: 'Практические примеры', refs: 'Организации' } :
-      { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Case Studies', refs: 'References' };
+      { home: 'Главная', test: 'Проведение SPPB', product: 'Система', validation: 'Валидация', cases: 'Evidence', refs: 'Организации' } :
+      { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Evidence', refs: 'References' };
 
     function langLink(lang, label) {
         let href;

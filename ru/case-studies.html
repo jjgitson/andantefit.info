@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 브라우저 언어 감지 및 자동 리다이렉트 (동기 실행 - Flash 방지) -->
   <script src="/js/language-manager.js"></script>
-  <meta name="description" content="Примеры применения AndanteFit и SPPB в исследованиях и профессиональной практике по оценке физической функции у людей старшего возраста.">
+  <meta name="description" content="Клиническое применение AndanteFit, научные данные, рекомендации и материалы по оценке физического функционирования.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="canonical" href="https://andantefit.info/ru/case-studies.html" />
   <link rel="alternate" hreflang="en" href="https://andantefit.info/case-studies.html" />
@@ -16,10 +16,10 @@
   <link rel="alternate" hreflang="x-default" href="https://andantefit.info/case-studies.html" />
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AndanteFit">
-  <meta property="og:title" content="Практические примеры SPPB | AndanteFit">
-  <meta property="og:description" content="Примеры применения AndanteFit и SPPB в исследованиях и профессиональной практике по оценке физической функции у людей старшего возраста.">
+  <meta property="og:title" content="Evidence &amp; Insights | AndanteFit">
+  <meta property="og:description" content="Клиническое применение AndanteFit, научные данные, рекомендации и материалы по оценке физического функционирования.">
   <meta property="og:url" content="https://andantefit.info/ru/case-studies.html">
-  <title>Практические примеры SPPB | AndanteFit</title>
+  <title>Evidence &amp; Insights | AndanteFit</title>
   <meta name="token-count" content="~2500">
   <link rel="stylesheet" href="/css/style.css">
   <style>
@@ -39,9 +39,9 @@
   {
     "@context": "https://schema.org",
     "@type": "MedicalWebPage",
-    "name": "Практические примеры SPPB",
+    "name": "Evidence & Insights",
     "url": "https://andantefit.info/ru/case-studies.html",
-    "description": "Real-world implementations of the Short Physical Performance Battery (SPPB) with AndanteFit across research and community settings.",
+    "description": "Клиническое применение AndanteFit, научные данные, рекомендации и материалы по оценке физического функционирования.",
     "about": "Short Physical Performance Battery (SPPB) physical performance assessment tool",
     "publisher": {
       "@type": "Organization",
@@ -56,9 +56,9 @@
 
   <section class="hero">
     <div class="container hero-content">
-      <span class="section-label">Исследования и практические примеры</span>
-      <h1 class="hero-headline">Практические примеры</h1>
-      <p class="hero-subtitle">Примеры применения AndanteFit и SPPB в исследованиях и профессиональной практике.</p>
+      <span class="section-label">Evidence &amp; Insights</span>
+      <h1 class="hero-headline">Evidence &amp; Insights</h1>
+      <p class="hero-subtitle">Клиническое применение AndanteFit, научные данные, рекомендации и материалы по оценке физического функционирования.</p>
     </div>
   </section>
 
@@ -94,24 +94,27 @@
 (function() {
   'use strict';
 
-  const GITHUB_CONFIG = {
-    owner: 'jjgitson',
-    repo: 'andantefit.info',
-    folder: 'case-studies',
-    branch: 'main'
-  };
+  const REPO = { owner: 'jjgitson', repo: 'andantefit.info', branch: 'main' };
 
-  // English site: show only EN files
-  const ALLOWED_LANGS = ['EN'];
+  // Prefer localized RU articles; fall back to the existing EN article when no
+  // RU version exists. Order matters: earlier sources win when a logical
+  // article (same slug) is present in more than one folder.
+  const SOURCES = [
+    { folder: 'ru/case-studies', allow: ['RU'] },
+    { folder: 'case-studies', allow: ['EN', null] }
+  ];
 
   const customTitles = {
+    // Localized RU titles
+    'ACC-Frailty-Cardiovascular-SPPB': 'Как встроить оценку старческой астении в кардиологическую практику: задача Scientific Statement ACC 2026',
+    // Titles for EN articles shown as fallback when no RU version exists yet
     'CIBERFES-Consensus-Frailty-Screening': 'CIBERFES Consensus: Frailty Screening Standardization',
     'Sarcopenia-Management-Korea': 'Sarcopenia Management in Transition: The Korean Experience',
     'BNR17-Muscle-Function-Older-Adults': 'AceBiome BNR17 Pilot Study: Physical Function and Body Composition in Older Adults',
     'SPPB-Community-Frailty-Management': 'Real-Time Community Frailty Tracking with Objective SPPB'
   };
 
-  const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
+  const CACHE_KEY = 'case_studies_cache_ru_evidence_v2';
   const CACHE_TIME_KEY = CACHE_KEY + '_time';
   const CACHE_DURATION = 60 * 60 * 1000;
 
@@ -120,7 +123,7 @@
     if (!match) return null;
 
     const [, year, month, day, fileKey] = match;
-    const langMatch = fileKey.match(/-(EN|KR|ES|JP)$/);
+    const langMatch = fileKey.match(/-(EN|KR|ES|JP|RU)$/);
     const lang = langMatch ? langMatch[1] : null;
     const titleKey = lang ? fileKey.slice(0, -('-' + lang).length) : fileKey;
     const title = customTitles[titleKey] || titleKey.replace(/-/g, ' ');
@@ -131,18 +134,20 @@
       title,
       lang,
       filename,
-      fileKey
+      fileKey,
+      titleKey
     };
   }
 
   function renderCaseStudies(container, caseStudies) {
     const html = caseStudies.map(function(study) {
+      const badge = study.lang === 'EN' ? `<span class="lang-badge">EN</span>` : '';
       return `
         <div class="report-item">
           <div class="report-date">${study.dateStr}</div>
           <div class="report-main">
             <h3 class="report-title">
-              <a href="${study.url}" class="title-link">${study.title}</a>
+              <a href="${study.url}" class="title-link">${study.title}</a>${badge}
             </h3>
           </div>
           <div class="report-link">
@@ -172,6 +177,40 @@
     );
   }
 
+  async function fetchSource(src) {
+    const apiUrl = `https://api.github.com/repos/${REPO.owner}/${REPO.repo}/contents/${src.folder}?ref=${encodeURIComponent(REPO.branch)}`;
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error('API request failed: ' + response.status + ' (' + src.folder + ')');
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error('Invalid API response (' + src.folder + ')');
+
+    return data
+      .filter(function(f) { return f.type === 'file' && f.name.endsWith('.html'); })
+      .map(function(f) {
+        const parsed = parseFilename(f.name);
+        if (!parsed) return null;
+        if (!src.allow.includes(parsed.lang)) return null;
+        parsed.url = '/' + src.folder + '/' + encodeURIComponent(f.name);
+        return parsed;
+      })
+      .filter(Boolean);
+  }
+
+  // Merge sources in priority order, keeping one entry per logical article
+  // (deduplicated by slug/titleKey). RU wins over EN when both exist.
+  function mergeSources(lists) {
+    const seen = Object.create(null);
+    const merged = [];
+    lists.forEach(function(items) {
+      items.forEach(function(item) {
+        if (seen[item.titleKey]) return;
+        seen[item.titleKey] = true;
+        merged.push(item);
+      });
+    });
+    return merged.sort(function(a, b) { return b.date - a.date; });
+  }
+
   async function loadCaseStudies() {
     const container = document.getElementById('caseStudiesContainer');
     if (!container) return;
@@ -188,35 +227,9 @@
         return;
       }
 
-      const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${encodeURIComponent(GITHUB_CONFIG.branch)}`;
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        if (cached) {
-          renderCaseStudies(container, JSON.parse(cached));
-          showCacheWarning(container);
-          return;
-        }
-        throw new Error('API request failed: ' + response.status);
-      }
-
-      const data = await response.json();
-      if (!Array.isArray(data)) throw new Error('Invalid API response');
-
-      const htmlFiles = data.filter(function(f) {
-        return f.type === 'file' && f.name.endsWith('.html');
-      });
-
-      const caseStudies = htmlFiles
-        .map(function(f) {
-          const parsed = parseFilename(f.name);
-          if (!parsed) return null;
-          if (ALLOWED_LANGS.length && !ALLOWED_LANGS.includes(parsed.lang)) return null;
-          parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
-          return parsed;
-        })
-        .filter(Boolean)
-        .sort(function(a, b) { return b.date - a.date; });
+      // Fetch all sources in parallel, then merge in SOURCES priority order.
+      const lists = await Promise.all(SOURCES.map(fetchSource));
+      const caseStudies = mergeSources(lists);
 
       localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
       localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
@@ -225,6 +238,12 @@
 
     } catch (error) {
       console.error(error);
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        renderCaseStudies(container, JSON.parse(cached));
+        showCacheWarning(container);
+        return;
+      }
       showError(container, error.message || String(error));
     }
   }

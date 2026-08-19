@@ -94,21 +94,27 @@
 (function() {
   'use strict';
 
-  const GITHUB_CONFIG = {
-    owner: 'jjgitson',
-    repo: 'andantefit.info',
-    folder: 'ru/case-studies',
-    branch: 'main'
-  };
+  const REPO = { owner: 'jjgitson', repo: 'andantefit.info', branch: 'main' };
 
-  // Russian site: show only RU files
-  const ALLOWED_LANGS = ['RU'];
+  // Prefer localized RU articles; fall back to the existing EN article when no
+  // RU version exists. Order matters: earlier sources win when a logical
+  // article (same slug) is present in more than one folder.
+  const SOURCES = [
+    { folder: 'ru/case-studies', allow: ['RU'] },
+    { folder: 'case-studies', allow: ['EN', null] }
+  ];
 
   const customTitles = {
-    'ACC-Frailty-Cardiovascular-SPPB': 'Как встроить оценку старческой астении в кардиологическую практику: задача Scientific Statement ACC 2026'
+    // Localized RU titles
+    'ACC-Frailty-Cardiovascular-SPPB': 'Как встроить оценку старческой астении в кардиологическую практику: задача Scientific Statement ACC 2026',
+    // Titles for EN articles shown as fallback when no RU version exists yet
+    'CIBERFES-Consensus-Frailty-Screening': 'CIBERFES Consensus: Frailty Screening Standardization',
+    'Sarcopenia-Management-Korea': 'Sarcopenia Management in Transition: The Korean Experience',
+    'BNR17-Muscle-Function-Older-Adults': 'AceBiome BNR17 Pilot Study: Physical Function and Body Composition in Older Adults',
+    'SPPB-Community-Frailty-Management': 'Real-Time Community Frailty Tracking with Objective SPPB'
   };
 
-  const CACHE_KEY = 'case_studies_cache_' + GITHUB_CONFIG.folder.replace(/[^a-z0-9]/gi, '_');
+  const CACHE_KEY = 'case_studies_cache_ru_evidence_v2';
   const CACHE_TIME_KEY = CACHE_KEY + '_time';
   const CACHE_DURATION = 60 * 60 * 1000;
 
@@ -128,18 +134,20 @@
       title,
       lang,
       filename,
-      fileKey
+      fileKey,
+      titleKey
     };
   }
 
   function renderCaseStudies(container, caseStudies) {
     const html = caseStudies.map(function(study) {
+      const badge = study.lang === 'EN' ? `<span class="lang-badge">EN</span>` : '';
       return `
         <div class="report-item">
           <div class="report-date">${study.dateStr}</div>
           <div class="report-main">
             <h3 class="report-title">
-              <a href="${study.url}" class="title-link">${study.title}</a>
+              <a href="${study.url}" class="title-link">${study.title}</a>${badge}
             </h3>
           </div>
           <div class="report-link">
@@ -169,6 +177,40 @@
     );
   }
 
+  async function fetchSource(src) {
+    const apiUrl = `https://api.github.com/repos/${REPO.owner}/${REPO.repo}/contents/${src.folder}?ref=${encodeURIComponent(REPO.branch)}`;
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error('API request failed: ' + response.status + ' (' + src.folder + ')');
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error('Invalid API response (' + src.folder + ')');
+
+    return data
+      .filter(function(f) { return f.type === 'file' && f.name.endsWith('.html'); })
+      .map(function(f) {
+        const parsed = parseFilename(f.name);
+        if (!parsed) return null;
+        if (!src.allow.includes(parsed.lang)) return null;
+        parsed.url = '/' + src.folder + '/' + encodeURIComponent(f.name);
+        return parsed;
+      })
+      .filter(Boolean);
+  }
+
+  // Merge sources in priority order, keeping one entry per logical article
+  // (deduplicated by slug/titleKey). RU wins over EN when both exist.
+  function mergeSources(lists) {
+    const seen = Object.create(null);
+    const merged = [];
+    lists.forEach(function(items) {
+      items.forEach(function(item) {
+        if (seen[item.titleKey]) return;
+        seen[item.titleKey] = true;
+        merged.push(item);
+      });
+    });
+    return merged.sort(function(a, b) { return b.date - a.date; });
+  }
+
   async function loadCaseStudies() {
     const container = document.getElementById('caseStudiesContainer');
     if (!container) return;
@@ -185,35 +227,9 @@
         return;
       }
 
-      const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.folder}?ref=${encodeURIComponent(GITHUB_CONFIG.branch)}`;
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        if (cached) {
-          renderCaseStudies(container, JSON.parse(cached));
-          showCacheWarning(container);
-          return;
-        }
-        throw new Error('API request failed: ' + response.status);
-      }
-
-      const data = await response.json();
-      if (!Array.isArray(data)) throw new Error('Invalid API response');
-
-      const htmlFiles = data.filter(function(f) {
-        return f.type === 'file' && f.name.endsWith('.html');
-      });
-
-      const caseStudies = htmlFiles
-        .map(function(f) {
-          const parsed = parseFilename(f.name);
-          if (!parsed) return null;
-          if (ALLOWED_LANGS.length && !ALLOWED_LANGS.includes(parsed.lang)) return null;
-          parsed.url = '/' + GITHUB_CONFIG.folder + '/' + encodeURIComponent(f.name);
-          return parsed;
-        })
-        .filter(Boolean)
-        .sort(function(a, b) { return b.date - a.date; });
+      // Fetch all sources in parallel, then merge in SOURCES priority order.
+      const lists = await Promise.all(SOURCES.map(fetchSource));
+      const caseStudies = mergeSources(lists);
 
       localStorage.setItem(CACHE_KEY, JSON.stringify(caseStudies));
       localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
@@ -222,6 +238,12 @@
 
     } catch (error) {
       console.error(error);
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        renderCaseStudies(container, JSON.parse(cached));
+        showCacheWarning(container);
+        return;
+      }
       showError(container, error.message || String(error));
     }
   }

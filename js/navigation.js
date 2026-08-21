@@ -88,6 +88,13 @@ document.addEventListener('DOMContentLoaded', function() {
             es: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-ES.html',
             jp: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-JP.html',
             ru: '2026-08-20-ACC-Frailty-Cardiovascular-SPPB-RU.html'
+        },
+        '2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB': {
+            en: '2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-EN.html',
+            ko: '2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-KR.html',
+            es: '2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-ES.html',
+            jp: '2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-JP.html',
+            ru: '2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-RU.html'
         }
     };
 

@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Protocolo paso a paso de la Short Physical Performance Battery (SPPB), incluyendo prueba de equilibrio, velocidad de la marcha y prueba de levantarse de la silla.">
+  <meta name="description" content="AndanteFit administra y puntúa los tres subtests de la SPPB de forma automática con sensores LiDAR. Sin cronómetro, sin marcas en el suelo y sin dispositivos que llevar puestos.">
   <meta name="keywords" content="AndanteFit, SPPB, Short Physical Performance Battery, batería corta de rendimiento físico, evaluación de función física, fragilidad, sarcopenia, velocidad de la marcha, levantarse de la silla cinco veces, equilibrio, evaluación automatizada, LiDAR, medición de rendimiento físico">
   <meta name="author" content="DYPHI Inc.">
   <meta name="robots" content="index,follow">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="AndanteFit">
-  <meta property="og:title" content="Protocolo SPPB: Procedimiento Paso a Paso | AndanteFit">
-  <meta property="og:description" content="Protocolo paso a paso de la Short Physical Performance Battery (SPPB), incluyendo prueba de equilibrio, velocidad de la marcha y prueba de levantarse de la silla.">
+  <meta property="og:title" content="SPPB automatizada en menos de 3 minutos | AndanteFit">
+  <meta property="og:description" content="AndanteFit administra y puntúa los tres subtests de la SPPB de forma automática con sensores LiDAR. Sin cronómetro, sin marcas en el suelo y sin dispositivos que llevar puestos.">
   <meta property="og:url" content="https://andantefit.info/es/product.html">
   <meta property="og:image" content="/assets/andantefit-logo.png">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Protocolo SPPB: Procedimiento Paso a Paso | AndanteFit">
-  <meta name="twitter:description" content="Protocolo paso a paso de la Short Physical Performance Battery (SPPB), incluyendo prueba de equilibrio, velocidad de la marcha y prueba de levantarse de la silla.">
-  <title>Protocolo SPPB: Procedimiento Paso a Paso | AndanteFit</title>
+  <meta name="twitter:title" content="SPPB automatizada en menos de 3 minutos | AndanteFit">
+  <meta name="twitter:description" content="AndanteFit administra y puntúa los tres subtests de la SPPB de forma automática con sensores LiDAR. Sin cronómetro, sin marcas en el suelo y sin dispositivos que llevar puestos.">
+  <title>SPPB automatizada en menos de 3 minutos | AndanteFit</title>
   <meta name="token-count" content="~4900">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -329,90 +329,118 @@
 
 
   <!-- Materials Download Form -->
-  <section class="section">
+  <section class="section" id="materials">
     <div class="container">
       <div style="max-width: 720px; margin: 0 auto;">
         <div class="section-header" style="text-align: center;">
-          <span class="section-label">Materiales del producto</span>
-          <h2>Solicitar folleto de AndanteFit</h2>
-          <p>
-            Solicite el folleto de AndanteFit<br>
-      Por favor, complete la información a continuación y se lo enviaremos por correo electrónico.
-          </p>
+          <span class="section-label">Material del producto</span>
+          <h2>Solicitar documentación de AndanteFit</h2>
+          <p>Especificaciones, datos de validación, casos de uso y presupuesto.<br>Tres campos, un minuto — respondemos en dos días laborables.</p>
         </div>
 
-        <form 
-          action="https://formspree.io/f/xdalkejr" 
+        <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
+             form to instant download — see docs/japan-gtm.md -->
+        <form
+          action="https://formspree.io/f/xdalkejr"
           method="POST"
           class="card"
           style="padding: 40px;"
           id="materialsForm"
+          data-download-url=""
+          data-sending-label="Enviando…"
+          data-download-label="Descargar el folleto (PDF) ↓"
         >
-          <!-- Name -->
-          <div style="margin-bottom: 20px;">
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label for="request_type" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
+              Motivo de la consulta <span style="color: #DC2626;">*</span>
+            </label>
+            <select
+              id="request_type"
+              name="request_type"
+              required
+              style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; background-color: #ffffff;"
+            >
+              <option value="doc">Documentación y especificaciones del producto</option>
+              <option value="quote">Un presupuesto</option>
+              <option value="demo">Una unidad de demostración para evaluar</option>
+              <option value="regulatory">Información regulatoria y de conformidad</option>
+              <option value="partner">Distribución o colaboración comercial</option>
+              <option value="research">Colaboración en investigación</option>
+            </select>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="name" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
               Nombre <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
+            <input
+              type="text"
+              id="name"
+              name="name"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
               placeholder="Dra. Jane Smith"
             >
           </div>
 
-          <!-- Institution -->
-          <div style="margin-bottom: 20px;">
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="institution" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
               Institución <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="text" 
-              id="institution" 
-              name="institution" 
+            <input
+              type="text"
+              id="institution"
+              name="institution"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
               placeholder="Hospital Universitario"
             >
           </div>
 
-          <!-- Email -->
-          <div style="margin-bottom: 32px;">
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="email" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
               Correo electrónico <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
+            <input
+              type="email"
+              id="email"
+              name="email"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
               placeholder="investigador@institucion.edu"
             >
           </div>
 
-          <!-- Hidden field to identify this is a brochure request -->
-          <input type="hidden" name="_subject" value="AndanteFit Brochure Request">
-          <input type="hidden" name="request_type" value="brochure_download">
+          <input type="hidden" name="_subject" value="AndanteFit Enquiry (ES)">
+          <input type="hidden" name="locale" value="es">
 
-          <!-- Submit Button -->
-          <button 
-            type="submit" 
-            class="btn btn-primary" 
+          <button
+            type="submit"
+            class="btn btn-primary"
             style="width: 100%; justify-content: center; font-size: 1rem; padding: 14px;"
           >
-            Solicitar folleto →
+            Enviar solicitud →
           </button>
 
-          <!-- Success Message -->
-          <div id="formSuccess" class="hidden" style="margin-top: 20px; padding: 16px; background-color: rgba(16, 185, 129, 0.1); border-left: 4px solid #10B981; border-radius: 8px;">
-            <p style="color: #065F46; font-weight: 600; margin: 0;">
-              ✓ Gracias. Enviaremos el folleto a su correo electrónico en breve.
-            </p>
+          <div id="formSuccess" class="hidden form-download-ready">
+            <p>✓ Gracias. Le responderemos en dos días laborables.</p>
+            <div data-download-slot></div>
+            <p class="form-download-note">También puede escribirnos directamente con los datos de abajo.</p>
           </div>
         </form>
+
+        <p style="text-align: center; margin-top: 20px; font-size: 0.8125rem; color: var(--color-text-muted);">
+          Sus datos se utilizan únicamente para responder a su consulta y enviarle el material solicitado.
+        </p>
+
+        <!-- Direct contact. Values are assembled by js/main.js. -->
+        <div class="jp-direct-contact">
+          <h3>¿Prefiere no usar el formulario?</h3>
+          <p class="jp-direct-lead">DYPHI Inc. — Desarrollo de negocio. Respondemos en dos días laborables.</p>
+          <ul class="jp-direct-list">
+            <li><span class="jp-direct-label">Email</span><a href="#" class="obf-email" data-u="snm" data-d="dyphi.com">snm&#32;[at]&#32;dyphi&#46;com</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>

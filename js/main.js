@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const submitLabel = submitBtn ? submitBtn.textContent : '';
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.textContent = '送信中…';
+        submitBtn.textContent = leadForm.getAttribute('data-sending-label') || '…';
       }
 
       fetch(leadForm.action, {
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
               link.href = downloadUrl;
               link.className = 'btn btn-primary';
               link.setAttribute('download', '');
-              link.textContent = 'パンフレットをダウンロード（PDF） ↓';
+              link.textContent = leadForm.getAttribute('data-download-label') || 'Download (PDF)';
               link.addEventListener('click', function () {
                 afTrack('pdf_download', {
                   cta_location: 'materials_form_success',

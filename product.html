@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 브라우저 언어 감지 및 자동 리다이렉트 (동기 실행 - Flash 방지) -->
   <script src="/js/language-manager.js"></script>
-  <meta name="description" content="Step-by-step Short Physical Performance Battery (SPPB) protocol including balance test, gait speed measurement, and chair stand test.">
+  <meta name="description" content="AndanteFit administers and scores all three SPPB subtests automatically using LiDAR sensors — no stopwatch, no floor markings, no wearables. Specifications and deployment requirements.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="canonical" href="https://andantefit.info/product.html" />
   <link rel="alternate" hreflang="en" href="https://andantefit.info/product.html" />
@@ -16,10 +16,10 @@
   <link rel="alternate" hreflang="x-default" href="https://andantefit.info/product.html" />
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AndanteFit">
-  <meta property="og:title" content="SPPB Test Protocol: Step-by-Step Procedure | AndanteFit">
-  <meta property="og:description" content="Step-by-step Short Physical Performance Battery (SPPB) protocol including balance test, gait speed measurement, and chair stand test.">
+  <meta property="og:title" content="Automated SPPB Device: Specifications and Deployment | AndanteFit">
+  <meta property="og:description" content="AndanteFit administers and scores all three SPPB subtests automatically using LiDAR sensors — no stopwatch, no floor markings, no wearables. Specifications and deployment requirements.">
   <meta property="og:url" content="https://andantefit.info/product.html">
-  <title>SPPB Test Protocol: Step-by-Step Procedure | AndanteFit</title>
+  <title>Automated SPPB Device: Specifications and Deployment | AndanteFit</title>
   <meta name="token-count" content="~4700">
   <link rel="stylesheet" href="/css/style.css">
   
@@ -322,90 +322,118 @@
 
 
   <!-- Materials Download Form -->
-  <section class="section">
+  <section class="section" id="materials">
     <div class="container">
       <div style="max-width: 720px; margin: 0 auto;">
         <div class="section-header" style="text-align: center;">
           <span class="section-label">Product Materials</span>
-          <h2>Request AndanteFit Brochure</h2>
-          <p>
-            Request the AndanteFit brochure<br>
-      Please fill in the information below, and we will send it to you by email.
-          </p>
+          <h2>Request AndanteFit Documentation</h2>
+          <p>Specifications, validation data, case studies and pricing.<br>Three fields, about a minute — we reply within two business days.</p>
         </div>
 
-        <form 
-          action="https://formspree.io/f/xdalkejr" 
+        <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
+             form to instant download — see docs/japan-gtm.md -->
+        <form
+          action="https://formspree.io/f/xdalkejr"
           method="POST"
           class="card"
           style="padding: 40px;"
           id="materialsForm"
+          data-download-url=""
+          data-sending-label="Sending…"
+          data-download-label="Download the brochure (PDF) ↓"
         >
-          <!-- Name -->
-          <div style="margin-bottom: 20px;">
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label for="request_type" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
+              Request <span style="color: #DC2626;">*</span>
+            </label>
+            <select
+              id="request_type"
+              name="request_type"
+              required
+              style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; background-color: #ffffff;"
+            >
+              <option value="doc">Product documentation and specifications</option>
+              <option value="quote">A price quote</option>
+              <option value="demo">A demo unit for evaluation</option>
+              <option value="regulatory">Regulatory and compliance information</option>
+              <option value="partner">Distribution or partnership</option>
+              <option value="research">Research collaboration</option>
+            </select>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="name" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
-              이름 / Name <span style="color: #DC2626;">*</span>
+              Name <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
+            <input
+              type="text"
+              id="name"
+              name="name"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
-              placeholder="홍길동 / Dr. Jane Smith"
+              placeholder="Dr. Jane Smith"
             >
           </div>
 
-          <!-- Institution -->
-          <div style="margin-bottom: 20px;">
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="institution" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
-              소속 / Institution <span style="color: #DC2626;">*</span>
+              Institution <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="text" 
-              id="institution" 
-              name="institution" 
+            <input
+              type="text"
+              id="institution"
+              name="institution"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
-              placeholder="서울대학교병원 / Seoul National University Hospital"
+              placeholder="University Hospital"
             >
           </div>
 
-          <!-- Email -->
-          <div style="margin-bottom: 32px;">
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="email" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
-              이메일 / Email <span style="color: #DC2626;">*</span>
+              Email <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
+            <input
+              type="email"
+              id="email"
+              name="email"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
               placeholder="researcher@institution.edu"
             >
           </div>
 
-          <!-- Hidden field to identify this is a brochure request -->
-          <input type="hidden" name="_subject" value="AndanteFit Brochure Request">
-          <input type="hidden" name="request_type" value="brochure_download">
+          <input type="hidden" name="_subject" value="AndanteFit Enquiry (EN)">
+          <input type="hidden" name="locale" value="en">
 
-          <!-- Submit Button -->
-          <button 
-            type="submit" 
-            class="btn btn-primary" 
+          <button
+            type="submit"
+            class="btn btn-primary"
             style="width: 100%; justify-content: center; font-size: 1rem; padding: 14px;"
           >
-            Request Brochure →
+            Send request →
           </button>
 
-          <!-- Success Message -->
-          <div id="formSuccess" class="hidden" style="margin-top: 20px; padding: 16px; background-color: rgba(16, 185, 129, 0.1); border-left: 4px solid #10B981; border-radius: 8px;">
-            <p style="color: #065F46; font-weight: 600; margin: 0;">
-              ✓ Thank you! We will send the brochure to your email shortly.
-            </p>
+          <div id="formSuccess" class="hidden form-download-ready">
+            <p>✓ Thank you. We will reply within two business days.</p>
+            <div data-download-slot></div>
+            <p class="form-download-note">You can also reach us directly using the details below.</p>
           </div>
         </form>
+
+        <p style="text-align: center; margin-top: 20px; font-size: 0.8125rem; color: var(--color-text-muted);">
+          Your details are used only to answer your enquiry and send the materials you requested.
+        </p>
+
+        <!-- Direct contact. Values are assembled by js/main.js. -->
+        <div class="jp-direct-contact">
+          <h3>Prefer not to use a form?</h3>
+          <p class="jp-direct-lead">DYPHI Inc. — Business Development. We reply within two business days.</p>
+          <ul class="jp-direct-list">
+            <li><span class="jp-direct-label">Email</span><a href="#" class="obf-email" data-u="snm" data-d="dyphi.com">snm&#32;[at]&#32;dyphi&#46;com</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>

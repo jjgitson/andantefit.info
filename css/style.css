@@ -1709,3 +1709,14 @@ a:hover {
 @media (max-width: 640px) {
   .jp-hero-proof { border-radius: var(--border-radius); }
 }
+
+/* Hero CTA pair — the first ask a branded-search visitor sees. */
+.hero-cta {
+  margin: calc(var(--spacing-unit) * 4) 0 calc(var(--spacing-unit) * 2);
+  justify-content: flex-start;
+}
+.hero-cta .cta-hint { text-align: left; }
+@media (max-width: 640px) {
+  .hero-cta { justify-content: stretch; }
+  .hero-cta .cta-hint { text-align: center; }
+}

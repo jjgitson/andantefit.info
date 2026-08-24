@@ -319,89 +319,118 @@
 
 
   <!-- Materials Download Form -->
-  <section class="section">
+  <section class="section" id="materials">
     <div class="container">
       <div style="max-width: 720px; margin: 0 auto;">
         <div class="section-header" style="text-align: center;">
           <span class="section-label">Материалы о продукте</span>
-          <h2>Запросить брошюру AndanteFit</h2>
-          <p>
-            Заполните форму ниже, и мы отправим вам брошюру по электронной почте.
-          </p>
+          <h2>Запросить документацию AndanteFit</h2>
+          <p>Спецификации, данные валидации, примеры внедрения и расчёт стоимости.<br>Три поля, около минуты — отвечаем в течение двух рабочих дней.</p>
         </div>
 
-        <form 
-          action="https://formspree.io/f/xdalkejr" 
+        <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
+             form to instant download — see docs/japan-gtm.md -->
+        <form
+          action="https://formspree.io/f/xdalkejr"
           method="POST"
           class="card"
           style="padding: 40px;"
           id="materialsForm"
+          data-download-url=""
+          data-sending-label="Отправка…"
+          data-download-label="Скачать брошюру (PDF) ↓"
         >
-          <!-- Name -->
-          <div style="margin-bottom: 20px;">
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label for="request_type" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
+              Тема обращения <span style="color: #DC2626;">*</span>
+            </label>
+            <select
+              id="request_type"
+              name="request_type"
+              required
+              style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; background-color: #ffffff;"
+            >
+              <option value="doc">Документация и технические характеристики</option>
+              <option value="quote">Расчёт стоимости</option>
+              <option value="demo">Демонстрационное устройство для оценки</option>
+              <option value="regulatory">Регуляторная информация и соответствие требованиям</option>
+              <option value="partner">Дистрибуция или партнёрство</option>
+              <option value="research">Научное сотрудничество</option>
+            </select>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="name" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
               Имя <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
+            <input
+              type="text"
+              id="name"
+              name="name"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
               placeholder="Иван Иванов"
             >
           </div>
 
-          <!-- Institution -->
-          <div style="margin-bottom: 20px;">
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="institution" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
               Организация <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="text" 
-              id="institution" 
-              name="institution" 
+            <input
+              type="text"
+              id="institution"
+              name="institution"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
               placeholder="Название организации"
             >
           </div>
 
-          <!-- Email -->
-          <div style="margin-bottom: 32px;">
+          <div class="form-field" style="margin-bottom: 20px;">
             <label for="email" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-primary);">
               Электронная почта <span style="color: #DC2626;">*</span>
             </label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
+            <input
+              type="email"
+              id="email"
+              name="email"
               required
               style="width: 100%; padding: 12px 16px; border: 2px solid var(--color-border); border-radius: 8px; font-family: var(--font-family); font-size: 1rem; transition: border-color 0.2s ease;"
               placeholder="researcher@institution.edu"
             >
           </div>
 
-          <!-- Hidden field to identify this is a brochure request -->
-          <input type="hidden" name="_subject" value="AndanteFit Brochure Request">
-          <input type="hidden" name="request_type" value="brochure_download">
+          <input type="hidden" name="_subject" value="AndanteFit Enquiry (RU)">
+          <input type="hidden" name="locale" value="ru">
 
-          <!-- Submit Button -->
-          <button 
-            type="submit" 
-            class="btn btn-primary" 
+          <button
+            type="submit"
+            class="btn btn-primary"
             style="width: 100%; justify-content: center; font-size: 1rem; padding: 14px;"
           >
-            Запросить брошюру →
+            Отправить запрос →
           </button>
 
-          <!-- Success Message -->
-          <div id="formSuccess" class="hidden" style="margin-top: 20px; padding: 16px; background-color: rgba(16, 185, 129, 0.1); border-left: 4px solid #10B981; border-radius: 8px;">
-            <p style="color: #065F46; font-weight: 600; margin: 0;">
-              ✓ Спасибо! Мы вскоре отправим брошюру на вашу электронную почту.
-            </p>
+          <div id="formSuccess" class="hidden form-download-ready">
+            <p>✓ Спасибо. Мы ответим в течение двух рабочих дней.</p>
+            <div data-download-slot></div>
+            <p class="form-download-note">Вы также можете связаться с нами напрямую по контактам ниже.</p>
           </div>
         </form>
+
+        <p style="text-align: center; margin-top: 20px; font-size: 0.8125rem; color: var(--color-text-muted);">
+          Ваши данные используются только для ответа на обращение и отправки запрошенных материалов.
+        </p>
+
+        <!-- Direct contact. Values are assembled by js/main.js. -->
+        <div class="jp-direct-contact">
+          <h3>Не хотите заполнять форму?</h3>
+          <p class="jp-direct-lead">DYPHI Inc. — Развитие бизнеса. Отвечаем в течение двух рабочих дней.</p>
+          <ul class="jp-direct-list">
+            <li><span class="jp-direct-label">Email</span><a href="#" class="obf-email" data-u="snm" data-d="dyphi.com">snm&#32;[at]&#32;dyphi&#46;com</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>

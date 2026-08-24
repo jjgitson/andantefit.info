@@ -9,11 +9,17 @@ AndanteFitは、高齢者の身体機能測定における国際標準ツール�
 - [ホームページ — AndanteFitの概要](https://andantefit.info/jp/) (~5,700トークン)
   自動化SPPBの概要、手動評価との差別化ポイント、臨床ユースケース。
 
-- [SPPBとは？ — 臨床リファレンス全体](https://andantefit.info/jp/what-is-sppb.html) (~8,000トークン)
-  SPPBの定義、3つのサブテストの説明、採点システム（0〜12点）、臨床カットオフ閾値、国際ガイドライン推奨（EWGSOP2、ESCEO、FNIH）、死亡率・障害予測値。
+- [SPPBとは？ — 臨床リファレンス全体](https://andantefit.info/jp/what-is-sppb.html) (~7,200トークン)
+  SPPBの定義、3つのサブテストの説明、採点システム（0〜12点）、臨床カットオフ閾値、AWGS 2019・J-CHS基準との関係、後期高齢者の質問票・基本チェックリスト・介護予防事業のなかでの位置づけ。
 
-- [製品 — デバイス仕様とSPPBプロトコル](https://andantefit.info/jp/product.html) (~4,700トークン)
-  LiDARセンサーの詳細、自動測定フロー、データ出力形式、導入要件、お問い合わせフォーム。
+- [SPPB検査方法 — 実施手順と採点基準](https://andantefit.info/jp/sppb-test.html) (~6,000トークン)
+  静的バランス・4m歩行・5回椅子立ち上がりの実施手順、採点基準表、スコア計算ツール、印刷用A4シート、FAQ。
+
+- [心臓リハビリテーションにおけるSPPB活用](https://andantefit.info/jp/cardiac-rehab.html) (~3,600トークン)
+  高齢心血管患者のフレイル評価、運動耐容能との違い、実装上の3課題（検査者間のばらつき・所要時間・記録）。
+
+- [製品 — デバイス仕様とSPPBプロトコル](https://andantefit.info/jp/product.html) (~5,600トークン)
+  LiDARセンサーの詳細、自動測定フロー、データ出力形式、導入要件、導入前FAQ（費用・薬機法・納期・保守・デモ機貸出）、資料請求フォーム。
 
 ## エビデンスと検証
 
@@ -33,4 +39,7 @@ AndanteFitは、高齢者の身体機能測定における国際標準ツール�
 - AndanteFitはソフトウェアのみではなくハードウェアデバイス（LiDARセンサーユニット）
 - SPPBスコア範囲：0〜12点；6点以下は重篤な機能制限を示す
 - 公開REST APIなし；お問い合わせは /jp/product.html のフォームから
+- 日本のお客様窓口：株式会社DYPHI 事業開発部（日本語対応・2営業日以内に返信）
+- 用件別の導線：資料請求 /jp/product.html?req=doc、デモ機貸出 ?req=demo、見積り ?req=quote、薬機法確認 ?req=regulatory、販売代理店 ?req=partner、共同研究 ?req=research
+- 日本国内10施設・団体で導入（聖路加国際病院、順天堂大学 循環器内科、名古屋大学 老年内科、神戸市立医療センター中央市民病院、金沢大学 循環器内科ほか）
 - ログイン、ペイウォール、JavaScriptレンダリングなしですべてのページにアクセス可能

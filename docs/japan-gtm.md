@@ -155,19 +155,27 @@ future submissions can be split by market and by intent without relying on GA4.
 | `jp/cardiac-rehab.html` | Segment page for the one Japanese segment with a real budget line |
 | Partner / research / referral routes on `references.html` | No way to reach us as a distributor or ask for an introduction |
 
-**Still open — needs DYPHI to supply facts.** Search the repo for `TODO(DYPHI)`:
+**Decided: no published price band.** DYPHI has chosen not to put a figure or
+a range on the site. The pre-purchase FAQ answers the question without one —
+it names what actually drives the price (unit count, installation, reporting,
+support scope) and commits to a written estimate within two business days.
+That is a deliberate trade: it protects pricing flexibility across very
+different buyer types, and it accepts that some visitors will leave rather than
+ask. If the funnel numbers later show enquiries stalling at that FAQ item,
+this is the assumption to revisit first.
 
-1. **Price band** (`jp/product.html`) — a concrete range. "Contact us for
-   pricing" is the single largest drop-off point for Japanese buyers.
-2. **薬機法 classification** (`jp/product.html`) — whether the device is a
+**Deferred — not to be applied yet.** Search the repo for `TODO(DYPHI)`:
+
+1. **薬機法 classification** (`jp/product.html`) — whether the device is a
    regulated medical device in Japan and, if so, its class. An imported device
    with no stated regulatory position is removed from consideration by hospital
-   procurement before anyone contacts the vendor. **This is the highest-value
-   open item on the list.**
-3. **Standard lead time** (`jp/product.html`).
-4. **Brochure PDF** — upload it and set `data-download-url` on `#materialsForm`
-   to switch the form to instant download. Until then it keeps the current
-   "we will email you" behaviour.
+   procurement before anyone contacts the vendor. **The highest-value item on
+   this list.** Until it is settled the page says the classification is
+   provided in writing on request, which is a holding answer, not an answer.
+2. **Standard lead time** (`jp/product.html`).
+3. **Brochure PDF** — upload it and set `data-download-url` on `#materialsForm`
+   to switch every locale's form to instant download. Until then all five keep
+   the "we will email you" behaviour.
 
 ---
 

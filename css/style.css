@@ -1364,3 +1364,348 @@ a:hover {
   }
   .related-resources__links a { padding: 8px 0; min-height: 44px; }
 }
+
+/* ========================================
+   Japan market components
+   Trust signals and conversion paths built for /jp/ visitors, who arrive on
+   procedure pages with informational intent and need proof of local adoption,
+   a local contact, and a low-commitment first step before they will inquire.
+   ======================================== */
+
+/* --- Japanese footer additions --- */
+.footer-jp-badge {
+  display: inline-block;
+  background-color: rgba(24, 191, 191, 0.16);
+  border: 1px solid rgba(24, 191, 191, 0.45);
+  color: #7FE7E7;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+}
+.footer-jp-note {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.footer-jp-note a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.footer-jp-corporate {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* --- Local adoption proof strip ---
+   Placed directly under the hero so the ~10 s visitor sees Japanese hospital
+   names before anything else. Domestic references are the single strongest
+   trust signal in Japanese institutional purchasing. */
+.jp-adopt {
+  max-width: var(--max-width);
+  margin: calc(var(--spacing-unit) * 4) auto 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-deep-blue);
+  border-radius: var(--border-radius);
+  padding: 20px clamp(20px, 3vw, 28px);
+  box-shadow: var(--shadow-sm);
+}
+.jp-adopt-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-bottom: 12px;
+}
+.jp-adopt-count {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--color-deep-blue);
+  letter-spacing: -0.01em;
+}
+.jp-adopt-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+.jp-adopt-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.jp-adopt-names li {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background-color: var(--color-soft-gray);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  margin: 0;
+}
+.jp-adopt-more {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+}
+.jp-adopt-more a {
+  color: var(--color-deep-blue);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.jp-adopt-more a:hover { border-bottom-color: currentColor; }
+
+/* --- Two-temperature CTA ---
+   One low-commitment action (instant document download) beside one
+   high-commitment action (demo unit / consultation), so informational
+   visitors have a step they can actually take. */
+.cta-actions-dual {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.cta-actions-dual .cta-hint {
+  flex-basis: 100%;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+.pro-cta-actions .cta-hint,
+.calc-cta .cta-hint {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 6px 0 0;
+}
+
+/* --- Pre-purchase FAQ ---
+   The questions a Japanese buyer must answer internally before they are
+   allowed to contact a foreign vendor. */
+.jp-faq {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+}
+.jp-faq details {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 0;
+  box-shadow: var(--shadow-sm);
+}
+.jp-faq summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 22px;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.jp-faq summary::-webkit-details-marker { display: none; }
+.jp-faq summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-deep-blue);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.jp-faq details[open] summary::after { content: "−"; }
+.jp-faq summary:focus-visible {
+  outline: 2px solid var(--color-deep-blue);
+  outline-offset: -2px;
+  border-radius: var(--border-radius);
+}
+.jp-faq-body {
+  padding: 0 22px 20px;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--color-text-secondary);
+}
+.jp-faq-body p { margin: 0 0 10px; }
+.jp-faq-body p:last-child { margin-bottom: 0; }
+.jp-faq-body ul { margin: 0 0 10px 1.1em; }
+.jp-faq-body a { color: var(--color-deep-blue); font-weight: 600; }
+
+/* --- Segment routing cards (cardiac rehab, community, research) --- */
+.jp-segments {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.jp-segment {
+  display: block;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  text-decoration: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+.jp-segment:hover {
+  border-color: var(--color-deep-blue-light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.jp-segment-kicker {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+.jp-segment-title {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.jp-segment-desc {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* --- Instant-download result panel on the materials form --- */
+.form-download-ready {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(16, 185, 129, 0.08);
+  border-left: 4px solid #10B981;
+  border-radius: 8px;
+}
+.form-download-ready p {
+  color: #065F46;
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+.form-download-ready .form-download-note {
+  font-weight: 400;
+  font-size: 0.8125rem;
+  color: #047857;
+  margin: 12px 0 0;
+}
+
+@media (max-width: 640px) {
+  .jp-adopt { margin-left: 0; margin-right: 0; }
+  .cta-actions-dual .btn,
+  .pro-cta-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* Obfuscated contact values are empty until js/main.js fills them in. */
+.footer-jp-contact a.obf-contact {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.footer-jp-contact a.obf-contact:empty { display: none; }
+.obf-row[hidden] { display: none; }
+.footer-jp-dial {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- Direct contact card (product page) ---
+   A form is not the only acceptable first touch in Japan; LINE often is. */
+.jp-direct-contact {
+  max-width: 720px;
+  margin: calc(var(--spacing-unit) * 5) auto 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 28px;
+  text-align: center;
+}
+.jp-direct-contact h3 {
+  font-size: 1.0625rem;
+  margin: 0 0 6px;
+  color: var(--color-text-primary);
+}
+.jp-direct-lead {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 18px;
+}
+.jp-direct-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+}
+.jp-direct-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.9375rem;
+}
+.jp-direct-list li[hidden] { display: none; }
+.jp-direct-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-white);
+  background-color: var(--color-deep-blue);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+.jp-direct-list a {
+  color: var(--color-deep-blue);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(15, 76, 129, 0.3);
+}
+.jp-direct-list a:hover { border-bottom-color: currentColor; }
+.jp-direct-note {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* --- One-line adoption proof inside the hero ---
+   The hero is tall enough that the full .jp-adopt strip falls below the fold on
+   a laptop. This line guarantees the domestic-reference signal reaches the
+   visitor who leaves in ten seconds. */
+.jp-hero-proof {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 0 0 calc(var(--spacing-unit) * 3);
+  padding: 7px 14px;
+  background-color: rgba(15, 76, 129, 0.06);
+  border: 1px solid rgba(15, 76, 129, 0.16);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.jp-hero-proof strong { color: var(--color-deep-blue); font-weight: 700; }
+.jp-hero-proof span { color: var(--color-text-secondary); }
+@media (max-width: 640px) {
+  .jp-hero-proof { border-radius: var(--border-radius); }
+}

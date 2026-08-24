@@ -273,15 +273,53 @@ function injectCopyForAIButton() {
 
 document.addEventListener('DOMContentLoaded', injectCopyForAIButton);
 
-// Activate obfuscated email links after dynamic HTML is injected
+// Activate obfuscated contact details after dynamic HTML is injected.
+//
+// Direct contact details (email, phone, LINE ID) are kept out of the HTML
+// source so they are not picked up by search engines or address scrapers.
+// They are assembled in the browser instead. This is obfuscation, not
+// security: it stops indexing and casual harvesting, nothing more.
 function initEmailLinks(root) {
     const scope = root || document;
+
     scope.querySelectorAll('a.obf-email[data-u][data-d]').forEach(function(el) {
         const email = el.dataset.u + '\u0040' + el.dataset.d;
         el.href = 'mailto:' + email;
         el.textContent = email;
     });
+
+    // Base64-encoded values: [data-v] is the visible text, [data-h] the href
+    // value, and [data-pre] an optional href prefix (tel:, LINE profile URL).
+    scope.querySelectorAll('[data-obf-v]').forEach(function(el) {
+        let text;
+        try {
+            text = decodeURIComponent(escape(window.atob(el.dataset.obfV)));
+        } catch (e) {
+            return; // leave the element empty rather than showing broken output
+        }
+        el.textContent = text;
+        if (el.tagName === 'A') {
+            const prefix = el.dataset.obfPre || '';
+            let target = text;
+            if (el.dataset.obfH) {
+                try {
+                    target = decodeURIComponent(escape(window.atob(el.dataset.obfH)));
+                } catch (e) {
+                    return;
+                }
+            }
+            el.href = prefix + target;
+            el.setAttribute('rel', 'nofollow noopener');
+        }
+        // Reveal the label that belongs to this value only once the value is
+        // actually there, so a decode failure never leaves a dangling label.
+        const row = el.closest('.obf-row');
+        if (row) row.removeAttribute('hidden');
+    });
 }
+
+// Static pages carry obfuscated details too, not just injected includes.
+document.addEventListener('DOMContentLoaded', function () { initEmailLinks(document); });
 
 // js/main.js 파일 맨 아래에 추가
 function includeHTML() {
@@ -334,10 +372,90 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Lead generation: the product inquiry / materials-request form (product.html).
+  //
+  // The form is submitted over fetch so the visitor receives the document at
+  // once instead of waiting for an email. A delayed reward loses the visitor,
+  // and it also loses the internal-approval document they needed right now.
+  //
+  // The brochure URL comes from data-download-url on the form. When it is
+  // absent the form keeps the original "we will email it to you" behaviour,
+  // so the page is safe to publish before the PDF is uploaded.
   const leadForm = document.getElementById('materialsForm');
   if (leadForm) {
-    leadForm.addEventListener('submit', function () {
-      afTrack('generate_lead', { form_id: 'materialsForm', page_path: window.location.pathname });
+    // Preset the inquiry type from ?req= so a CTA can carry the visitor's
+    // intent ("just the document" vs "lend me a demo unit") into the form.
+    const requestField = leadForm.querySelector('[name="request_type"]');
+    if (requestField && requestField.tagName === 'SELECT') {
+      const requested = new URLSearchParams(window.location.search).get('req');
+      if (requested && requestField.querySelector('option[value="' + CSS.escape(requested) + '"]')) {
+        requestField.value = requested;
+      }
+    }
+
+    const successPanel = document.getElementById('formSuccess');
+    const downloadUrl = leadForm.getAttribute('data-download-url');
+
+    leadForm.addEventListener('submit', function (e) {
+      const requestType = requestField ? requestField.value : 'brochure_download';
+      afTrack('generate_lead', {
+        form_id: 'materialsForm',
+        request_type: requestType,
+        page_path: window.location.pathname
+      });
+
+      // No success panel to reveal — let the browser do its normal thing.
+      if (!successPanel) return;
+
+      e.preventDefault();
+      const submitBtn = leadForm.querySelector('button[type="submit"]');
+      const submitLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '送信中…';
+      }
+
+      fetch(leadForm.action, {
+        method: 'POST',
+        body: new FormData(leadForm),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error('submit failed');
+          leadForm.querySelectorAll('.form-field, button[type="submit"]').forEach(function (el) {
+            el.style.display = 'none';
+          });
+          successPanel.classList.remove('hidden');
+          if (downloadUrl) {
+            const ready = successPanel.querySelector('[data-download-slot]');
+            if (ready) {
+              const link = document.createElement('a');
+              link.href = downloadUrl;
+              link.className = 'btn btn-primary';
+              link.setAttribute('download', '');
+              link.textContent = 'パンフレットをダウンロード（PDF） ↓';
+              link.addEventListener('click', function () {
+                afTrack('pdf_download', {
+                  cta_location: 'materials_form_success',
+                  cta_label: requestType,
+                  page_path: window.location.pathname
+                });
+              });
+              ready.appendChild(link);
+              // The visitor asked for the document — start it without a second click.
+              link.click();
+            }
+          }
+          successPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        })
+        .catch(function () {
+          // Never lose a lead to a network or CORS problem: fall back to the
+          // ordinary browser submit, which Formspree also accepts.
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = submitLabel;
+          }
+          leadForm.submit();
+        });
     });
   }
 });

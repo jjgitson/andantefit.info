@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="心臓リハビリテーションにおけるSPPB（簡易身体能力バッテリー）の活用。フレイル評価の標準化、測定のばらつき、外来枠での実施時間という3つの実装課題と、自動化による解決を解説します。">
+  <meta name="keywords" content="心臓リハビリテーション, SPPB, フレイル, 心不全, 心大血管疾患リハビリテーション, 運動耐容能, 身体機能評価, 簡易身体能力バッテリー, 循環器, プレハビリテーション">
+  <meta name="author" content="DYPHI Inc.">
+  <meta name="robots" content="index,follow">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/jp/cardiac-rehab.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/cardiac-rehab.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="心臓リハビリテーションにおけるSPPB活用 | AndanteFit">
+  <meta property="og:description" content="フレイル評価の標準化、測定のばらつき、外来枠での実施時間。心臓リハの現場でSPPBを回すための3つの論点。">
+  <meta property="og:url" content="https://andantefit.info/jp/cardiac-rehab.html">
+  <meta property="og:image" content="/assets/andantefit-logo.png">
+  <title>心臓リハビリテーションにおけるSPPB活用 | AndanteFit</title>
+  <meta name="token-count" content="~3600">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "心臓リハビリテーションにおけるSPPB活用",
+    "url": "https://andantefit.info/jp/cardiac-rehab.html",
+    "inLanguage": "ja",
+    "description": "心臓リハビリテーションにおけるSPPBの位置づけと、標準化・所要時間・記録という実装上の課題。",
+    "about": "心臓リハビリテーションにおける身体機能評価（SPPB）",
+    "publisher": { "@type": "Organization", "name": "AndanteFit", "url": "https://andantefit.info/" }
+  }
+  </script>
+
+  <style>
+    .seg-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 820px; line-height: 1.9; }
+    .content-section { max-width: 860px; }
+    .content-section p { margin-bottom: calc(var(--spacing-unit) * 2.5); line-height: 1.95; color: var(--color-text-secondary); }
+    .issue-list { display: grid; gap: 16px; max-width: 860px; margin: 0 auto; }
+    .issue-item { background: var(--color-white); border: 1px solid var(--color-border); border-left: 4px solid var(--color-deep-blue); border-radius: var(--border-radius); padding: 22px 26px; }
+    .issue-item h3 { font-size: 1.0625rem; margin: 0 0 8px; color: var(--color-text-primary); }
+    .issue-item p { margin: 0 0 10px; font-size: 0.9375rem; line-height: 1.85; color: var(--color-text-secondary); }
+    .issue-item p:last-child { margin-bottom: 0; }
+    .issue-answer { font-size: 0.875rem; color: var(--color-deep-blue); font-weight: 600; }
+    .source-note { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.7; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">循環器・心臓リハビリテーション</span>
+      <h1 class="hero-headline">心臓リハビリテーションにおけるSPPB活用</h1>
+      <p class="jp-hero-proof"><strong>日本国内10施設・団体で採用</strong><span>順天堂大学 循環器内科・金沢大学 循環器内科・心臓リハビリテーション学会 ほか</span></p>
+      <p class="seg-lead">
+        高齢心血管患者では、フレイルと身体機能が予後および治療方針の判断に影響することが、
+        国際的なステートメントで繰り返し示されています。
+        SPPB（簡易身体能力バッテリー）は、そのなかで直接的な身体機能評価法として挙げられる指標のひとつです。
+        本ページでは、<strong>心臓リハビリテーションの現場でSPPBを実際に回すための実装上の論点</strong>を整理します。
+      </p>
+    </div>
+  </section>
+
+  <!-- Local adoption proof, filtered to the cardiovascular segment -->
+  <div class="container">
+    <div class="jp-adopt">
+      <div class="jp-adopt-head">
+        <span class="jp-adopt-count">循環器・リハビリテーション領域の導入機関</span>
+        <span class="jp-adopt-label">日本国内10施設・団体で採用</span>
+      </div>
+      <ul class="jp-adopt-names">
+        <li>順天堂大学 循環器内科</li>
+        <li>金沢大学 循環器内科</li>
+        <li>心臓リハビリテーション学会</li>
+        <li>神戸市立医療センター中央市民病院</li>
+        <li>千里リハビリテーション病院</li>
+        <li>聖路加国際病院</li>
+      </ul>
+      <p class="jp-adopt-more">
+        <a href="./references.html" data-af-event="cta_click" data-af-location="cardiac_adopt_strip" data-af-label="jp_references">導入機関の一覧を見る →</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Why SPPB here -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">位置づけ</span>
+        <h2>運動耐容能だけでは見えないもの</h2>
+      </div>
+      <div class="content-section" style="margin: 0 auto;">
+        <p>
+          心臓リハビリテーションでは、運動耐容能（peak VO₂、6分間歩行距離など）が中心的な指標として用いられます。
+          一方で高齢患者では、<strong>運動耐容能が同程度でも、バランスや立ち上がり動作の障害によって
+          実生活での自立度がまったく異なる</strong>ことがあります。
+        </p>
+        <p>
+          SPPBはバランス・歩行速度・椅子立ち上がりを個別に採点するため、
+          「どの機能が落ちているか」というプロファイルが残ります。
+          これは運動プログラムの内容を決めるうえで、単一の合計指標よりも直接的な手がかりになります。
+        </p>
+        <p>
+          また、NYHA分類のような主観的評価では捉えきれない機能低下を、
+          <strong>0〜12点という反復可能な数値</strong>で記録できる点も、
+          プログラム前後の変化を示す必要がある現場では実務的な利点になります。
+        </p>
+        <p>
+          背景となる臨床的な議論は、以下でより詳しく扱っています。
+        </p>
+        <ul style="line-height: 2; color: var(--color-text-secondary);">
+          <li><a href="./case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html">心不全・心肺リハビリテーションにおけるSPPBの活用</a></li>
+          <li><a href="./case-studies/2026-08-20-ACC-Frailty-Cardiovascular-SPPB-JP.html">心血管診療にフレイル評価をどう組み込むか（2026年 ACC Scientific Statement）</a></li>
+          <li><a href="./case-studies/2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-JP.html">肺移植におけるフレイル評価（2026年 ISHLTコンセンサス）</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Implementation issues -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">実装上の課題</span>
+        <h2>「測ったほうがよい」から「毎回測れる」までの距離</h2>
+        <p>SPPBの臨床的価値はすでに共有されています。現場で止まるのは、たいてい次の3点です。</p>
+      </div>
+
+      <div class="issue-list">
+        <div class="issue-item">
+          <h3>① 検査者間のばらつき</h3>
+          <p>
+            ストップウォッチの押下タイミング、声かけ、姿勢の判定が担当者ごとに異なると、
+            SPPBの1点程度の変化は測定のばらつきに埋もれます。
+            プログラム前後の比較や、多施設での集計では特に問題になります。
+          </p>
+          <p class="issue-answer">
+            → AndanteFitはLiDARセンサーで動作を連続測定し、判定基準に従って自動採点します。担当者が替わっても条件が変わりません。
+          </p>
+        </div>
+
+        <div class="issue-item">
+          <h3>② 外来・リハ枠のなかの所要時間</h3>
+          <p>
+            手動SPPBは準備・実施・記録を含めて1人あたり約10〜15分かかります。
+            床面のマーキング、記録用紙の準備、電子カルテへの転記まで含めると、
+            限られた枠のなかで全患者に実施するのは現実的でない、という声が実際の障壁になります。
+          </p>
+          <p class="issue-answer">
+            → 標準的な検査所要時間は3分以内。床面マーキングもウェアラブル装着も不要です。
+          </p>
+        </div>
+
+        <div class="issue-item">
+          <h3>③ 記録が残らない・比較できない</h3>
+          <p>
+            紙で記録したスコアは、次回の評価時に比較されないまま蓄積されがちです。
+            プレハビリテーションや再評価につなげるには、
+            <strong>同じ物差しで並べられる形</strong>でデータが残っている必要があります。
+          </p>
+          <p class="issue-answer">
+            → 検査後にSPPBレポートを自動生成し、推定フレイル指数（CFS）や身体年齢指標を併記。PDF出力とCSV／Excel一括ダウンロードに対応します。
+          </p>
+        </div>
+      </div>
+
+      <p class="source-note" style="max-width: 860px; margin: calc(var(--spacing-unit) * 3) auto 0;">
+        ※ 心大血管疾患リハビリテーションの実施体制・算定要件は施設基準によって異なります。導入にあたっては貴施設の運用にあわせてご相談ください。
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="pro-cta">
+        <div class="pro-cta-stats">
+          <div class="pro-cta-stat"><span class="v">3分未満</span><span class="l">全3項目の検査時間</span></div>
+          <div class="pro-cta-stat"><span class="v">ICC 0.94–0.97</span><span class="l">手動SPPBとの一致度</span></div>
+          <div class="pro-cta-stat"><span class="v">自動採点</span><span class="l">検査者間のばらつきを低減</span></div>
+        </div>
+        <div class="pro-cta-actions">
+          <a href="./product.html?req=doc#materials" class="btn btn-primary" data-af-event="cta_click" data-af-location="cardiac_bottom" data-af-label="jp_doc">循環器向け資料を受け取る（無料）→</a>
+          <a href="./product.html?req=demo#materials" class="btn btn-secondary" data-af-event="cta_click" data-af-location="cardiac_bottom" data-af-label="jp_demo">デモ機の貸出を相談 →</a>
+          <p class="cta-hint">株式会社DYPHI 事業開発部が日本語で対応します。2営業日以内にご返信します。</p>
+        </div>
+      </div>
+
+      <p style="text-align: center; margin-top: calc(var(--spacing-unit) * 5);">
+        <a href="./what-is-sppb.html" class="btn btn-secondary" data-af-event="cta_click" data-af-location="cardiac_bottom" data-af-label="jp_what_is_sppb">SPPBの基礎から確認する →</a>
+      </p>
+    </div>
+  </section>
+
+  <div data-include="/includes/footer-jp.html"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/navigation.js"></script>
+</body>
+</html>

@@ -309,12 +309,6 @@
   </section>
 
   <!-- Pre-purchase FAQ -->
-  <!--
-    A Japanese institution cannot start an internal approval (稟議) without
-    answers to these five questions, and will leave rather than ask a foreign
-    vendor for them. Answering them on the page is what makes the form below
-    reachable at all.
-  -->
   <section class="section" id="jp-faq" style="background-color: var(--color-soft-gray);">
     <div class="container">
       <div class="section-header" style="text-align: center;">
@@ -327,9 +321,7 @@
         <details>
           <summary>費用はどのくらいですか。概算を知りたいのですが。</summary>
           <div class="jp-faq-body">
-            <!-- TODO(DYPHI): 日本向けの価格レンジ（例：本体○○万円〜／年間保守○○万円）が
-                 確定したら、この段落を具体的な数値に差し替えてください。
-                 「問い合わせないと分からない」状態が離脱の最大要因です。 -->
+            <!-- TODO(DYPHI): price band — see docs/japan-gtm.md -->
             <p>
               構成（本体台数、設置形態、レポート機能、保守範囲）によって異なります。
               ご検討中の施設規模と用途をお知らせいただければ、<strong>概算見積書を2営業日以内に書面でお送りします</strong>。
@@ -345,11 +337,7 @@
         <details>
           <summary>薬機法上の区分はどうなっていますか。</summary>
           <div class="jp-faq-body">
-            <!-- TODO(DYPHI): 日本における薬機法上の区分（医療機器該当性の判断、
-                 該当する場合はクラス分類・認証番号）を確認のうえ、この段落を
-                 確定文言に差し替えてください。区分を明示していない海外機器は
-                 病院の購買部門で検討対象から外されます。
-                 確定するまでは下記の「書面でご案内」文言のままにしてください。 -->
+            <!-- TODO(DYPHI): regulatory classification — see docs/japan-gtm.md -->
             <p>
               日本での薬機法上の区分および根拠資料については、
               施設ごとのご利用目的（診療での使用、研究での使用、地域プログラムでの使用）によって
@@ -367,7 +355,7 @@
         <details>
           <summary>納期はどのくらいかかりますか。</summary>
           <div class="jp-faq-body">
-            <!-- TODO(DYPHI): 実際の日本向け標準納期（発注から設置まで）に差し替えてください。 -->
+            <!-- TODO(DYPHI): standard lead time — see docs/japan-gtm.md -->
             <p>
               ご発注から設置・初期設定までの標準的な期間、および設置に必要なスペース・電源条件は、
               お見積書に併記してお送りします。設置は<strong>床面のマーキングや消耗品を必要としません</strong>。
@@ -436,12 +424,8 @@
           </p>
         </div>
 
-        <!--
-          TODO(DYPHI): パンフレットPDFをアップロードしたら、下記 data-download-url に
-          そのパスを設定してください（例：data-download-url="/assets/andantefit-brochure-jp.pdf"）。
-          設定すると送信直後にその場でダウンロードが始まります。
-          未設定のあいだは、従来どおり「メールでお送りします」という案内が表示されます。
-        -->
+        <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
+             form to instant download — see docs/japan-gtm.md -->
         <form
           action="https://formspree.io/f/xdalkejr"
           method="POST"
@@ -542,9 +526,7 @@
           ご入力いただいた情報は、お問い合わせへの回答および資料送付の目的にのみ使用します。
         </p>
 
-        <!-- Direct contact. Many Japanese enquiries start on LINE rather than a
-             web form, so the same person is reachable without filling anything in.
-             Values are assembled by js/main.js and are not in the page source. -->
+        <!-- Direct contact. Values are assembled by js/main.js. -->
         <div class="jp-direct-contact">
           <h3>フォームを使わずに直接ご連絡いただけます</h3>
           <p class="jp-direct-lead">株式会社DYPHI　事業開発部　崔 碩源（チェ ソクウォン）／ 日本語対応・2営業日以内にご返信</p>

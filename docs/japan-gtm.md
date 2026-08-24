@@ -1,9 +1,10 @@
 # Japan Go-To-Market Plan
 
 Written after the GA4 / Search Console review covering 29 Jun – 23 Aug 2026.
-Japan is our largest search market and `/jp/sppb-test.html` alone takes 56 % of
-all organic clicks — yet document and demo requests are near zero, in Japan and
-everywhere else.
+Japan is our largest search market — `/jp/sppb-test.html` alone takes 56 % of
+all organic clicks and Japan 68 % of them in total — and it has produced none of
+the roughly ten document requests the site has received. Italy, which we do not
+localise for, produced one.
 
 ---
 
@@ -18,18 +19,61 @@ Figures below are Google Analytics 4 and Search Console for **29 Jun – 23 Aug
 | Avg. engagement time | 54 s |
 | Google organic clicks / impressions | 758 / 24,359 (CTR 3.11 %, avg. position 6.47) |
 | **Users reaching `product.html`** | **83 (4.4 % of all users)** |
-| Document / demo requests, all countries | ≈ 0 |
+| Formspree submissions, all countries | ~10 (one from Italy) |
+| **Submissions from Japan** | **0** |
 
-**The conversion problem is real and it is not a Japan problem.** At ~1,900
-users over eight weeks with near-zero requests, the request rate is under
-0.05 %. A gated document on a B2B medical-device content site normally runs
-0.5–2 %. We are one to two orders of magnitude below that, in every locale.
+### The form works. The funnel is one step wide.
 
-*(An earlier draft of this document read the same question off an 8-session
-window and concluded zero requests was statistically expected. With eight weeks
-of data that reading was wrong, and it is corrected here.)*
+| Step | Rate |
+|---|---|
+| All users → `product.html` | **4.4 %** (83 / 1,900) |
+| `product.html` → submitted form | **12 %** (10 / 83) |
+| End to end | 0.53 % |
 
-### Where the funnel actually breaks
+0.53 % end-to-end sits at the low end of the normal 0.5–2 % band for a gated
+document on a B2B medical-device site — so the site is not broken. But the two
+steps are wildly asymmetric. **The form converts one visitor in eight who
+reaches it**, which is strong; `product.html` also has the lowest bounce rate on
+the site (19.6 %). Almost nobody arrives.
+
+That makes the arithmetic unusually clean: requests scale with reach, and reach
+is the only lever that matters right now.
+
+| If reach goes to | Users on `product.html` | Requests / 8 weeks |
+|---|---|---|
+| 6 % | 114 | ~14 |
+| 8 % | 152 | ~18 |
+| 10 % | 190 | ~23 |
+| 15 % | 285 | ~34 |
+
+Nothing about the form, the copy on `product.html`, or the offer needs to change
+to get there. Do not spend effort on them.
+
+*(Two earlier readings of this question were wrong and are corrected here: an
+8-session window suggested zero requests was statistically expected, and a
+later revision assumed submissions were near zero site-wide. Neither held.)*
+
+### Japan's zero is the anomaly, and it is not a volume effect
+
+Japan supplies **68 % of all Google organic clicks** (518 of 758) and is the
+site's largest market by landing-page users — and produced **none** of the ten
+requests. Italy, which we do not localise for at all, produced one.
+
+If Japan converted at the same rate as everywhere else, zero out of ten is
+unlikely on its own:
+
+| Japan's share of traffic | Expected requests | P(observing 0) |
+|---|---|---|
+| 30 % | 3.0 | 2.8 % |
+| 35 % | 3.5 | 1.4 % |
+| 40 % | 4.0 | 0.6 % |
+
+So Japan is converting materially worse than the rest of the site, not merely
+producing a small number. A locale we serve fully in its own language lost to
+one we do not serve at all — which points at trust and contact, not language.
+That is what the changes in section 2 address.
+
+### Where the reach problem lives
 
 It is not the product page and it is not the form:
 
@@ -90,16 +134,13 @@ Two things stand out:
   8.5–9 is a title/meta and ranking problem, not a content problem.
 - **Korea converts attention best** (76.7 %, 1m08s) on the least traffic.
 
-### Before anything else: confirm the form actually works
+### The Formspree endpoint is confirmed working
 
-All five locales post to a single Formspree endpoint (`/f/xdalkejr`). Near-zero
-submissions across every locale for eight weeks is equally consistent with a
-form that is silently failing — a plan limit reached, a deactivated endpoint, a
-changed notification address, or delivery landing in spam.
-
-**Submit the live form once from each locale and confirm the email arrives
-before drawing any conclusion from the numbers above.** Everything else in this
-document assumes the form works.
+All five locales post to a single endpoint (`/f/xdalkejr`); roughly ten
+submissions have arrived through it, so silent failure is ruled out. Worth
+keeping in view: a single shared endpoint gives no locale attribution on the
+Formspree side. The form now posts a `locale` field and `request_type`, so
+future submissions can be split by market and by intent without relying on GA4.
 
 ## 2. On-site changes made (see the accompanying diff)
 
@@ -208,31 +249,34 @@ Three ranking items are worth more than new pages, in order of expected return:
 
 ---
 
-## 5. Measurement — do this before judging any of the above
+## 5. Measurement
 
 GA4's "Key events by Platform" card currently reads **No data available**: no
 key events are configured on the property, so conversions are invisible in
-reporting even where they happen.
+reporting even where they happen. The Formspree inbox is the only record today.
 
-1. **Confirm the Formspree endpoint delivers** (see the end of section 1). This
-   comes before every other item on this list.
-2. **Mark key events** (Admin → Events → Key events): `generate_lead`,
+1. **Mark key events** (Admin → Events → Key events): `generate_lead`,
    `pdf_download`, `cta_click`, `calc_complete`.
-3. **Register `request_type` as a custom dimension.** It is now sent with
+2. **Register `request_type` as a custom dimension.** It is now sent with
    `generate_lead` (`doc` / `quote` / `demo` / `regulatory` / `partner` /
-   `research`), so enquiry *type* becomes visible, not just enquiry count.
-4. **Track the one number that matters: content page → `product.html`.**
+   `research`), so enquiry *type* becomes visible, not just enquiry count. The
+   form also posts a `locale` field, so Formspree submissions can be split by
+   market without relying on GA4.
+3. **Track the one number that matters: all users → `product.html`.**
    Baseline is **83 of 1,900 users = 4.4 %** over 29 Jun – 23 Aug 2026. Every
-   change in section 2 exists to move that figure. If it does not move, the CTA
-   work failed and the next lever is ranking (section 4d), not more CTAs.
-5. **Then** watch `cta_click → page_view(/jp/product.html) → generate_lead` to
-   see which of the two remaining steps leaks.
-6. **Fix Naver attribution** (still open from the previous review): Admin → Data
+   change in section 2 exists to move that figure. The second step
+   (`product.html` → submission) is already at 12 % and needs no work; if reach
+   moves and requests do not follow, that assumption is what broke.
+4. **Watch Japan separately.** Japan is 68 % of organic clicks and produced none
+   of the ten requests. One Japanese request inside the next eight weeks is the
+   first evidence that the section 2 changes did anything.
+5. **Fix Naver attribution** (still open from the previous review): Admin → Data
    streams → Configure tag settings → List unwanted referrals → add
    `naver.com`, and confirm Naver is registered under organic sources with
    `search.naver.com` and `m.search.naver.com`. Naver currently splits across
    `naver / organic` (228 sessions) and `m.search.naver.com / referral` (212),
-   understating our best-engaging market by roughly half.
+   understating Korea by roughly half.
 
-Volume is sufficient to judge these changes: at ~1,900 users per eight weeks, a
-move from 4.4 % to 8 % on the product-page step is visible within a month.
+Volume is sufficient to judge this: at ~1,900 users per eight weeks, a move from
+4.4 % to 8 % on the product-page step is visible within a month, and would take
+requests from ~10 to ~18 per period.

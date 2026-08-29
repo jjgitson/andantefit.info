@@ -9,7 +9,7 @@ Target users: geriatricians, orthopedic surgeons, physical therapists, clinical 
 - [Homepage — What AndanteFit does and why it matters](https://andantefit.info/) (~5,700 tokens)
   Overview of automated SPPB, key differentiators vs. manual assessment, clinical use cases.
 
-- [What is SPPB? — Complete clinical reference](https://andantefit.info/what-is-sppb.html) (~8,000 tokens)
+- [What is SPPB? — Definition, scores, cutoffs, frailty and sarcopenia](https://andantefit.info/sppb.html) (~8,000 tokens)
   SPPB definition, three subtests explained, scoring system (0–12), clinical cut-off thresholds, international guideline endorsements (EWGSOP2, ESCEO, FNIH), mortality and disability predictive value.
 
 - [Product — Device specifications and SPPB protocol](https://andantefit.info/product.html) (~4,700 tokens)

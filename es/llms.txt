@@ -9,7 +9,7 @@ Usuarios objetivo: geriatras, cirujanos ortopédicos, fisioterapeutas, investiga
 - [Página principal — Qué hace AndanteFit y por qué importa](https://andantefit.info/es/) (~5,700 tokens)
   Descripción general de la SPPB automatizada, diferenciadores clave frente a la evaluación manual, casos de uso clínico.
 
-- [¿Qué es la SPPB? — Referencia clínica completa](https://andantefit.info/es/what-is-sppb.html) (~8,000 tokens)
+- [¿Qué es la SPPB? — Definición, puntuación, puntos de corte](https://andantefit.info/es/sppb.html) (~5,000 tokens)
   Definición de la SPPB, tres subtest explicados, sistema de puntuación (0–12), umbrales clínicos, avales de guías internacionales (EWGSOP2, ESCEO, FNIH), valor predictivo de mortalidad y discapacidad.
 
 - [Producto — Especificaciones del dispositivo y protocolo SPPB](https://andantefit.info/es/product.html) (~4,700 tokens)

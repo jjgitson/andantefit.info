@@ -9,7 +9,7 @@ AndanteFit은 노인의 신체 기능을 측정하는 국제 표준 도구인 �
 - [홈페이지 — AndanteFit 소개](https://andantefit.info/ko/) (~5,700 토큰)
   자동화 SPPB 개요, 수동 평가 대비 차별점, 임상 활용 사례.
 
-- [SPPB란? — 임상 참고 자료 전체](https://andantefit.info/ko/what-is-sppb.html) (~8,000 토큰)
+- [SPPB란? — 정의, 점수, 컷오프, 노쇠·근감소증](https://andantefit.info/ko/sppb.html) (~5,000 토큰)
   SPPB 정의, 3가지 소검사 설명, 채점 체계(0~12점), 임상 기준점, 국제 가이드라인 권고(EWGSOP2, ESCEO, FNIH), 사망률·장애 예측 타당도.
 
 - [제품 — 기기 사양 및 SPPB 프로토콜](https://andantefit.info/ko/product.html) (~4,700 토큰)

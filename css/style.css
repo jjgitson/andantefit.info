@@ -1738,3 +1738,20 @@ a:hover {
 }
 .howto-order li, .practical-list li { margin-bottom: 10px; }
 .content-narrow a { color: var(--color-deep-blue); font-weight: 600; }
+
+/* Citation lists on the English SPPB reference pages. */
+.references-section ol { padding-left: 1.3em; margin: 0; }
+.references-section li {
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+}
+.references-section a { color: var(--color-deep-blue); word-break: break-all; }
+
+.policy-item-source {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 10px 0 0;
+}

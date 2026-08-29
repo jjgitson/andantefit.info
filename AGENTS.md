@@ -14,13 +14,13 @@ AndanteFit is a static HTML website (GitHub Pages) for a clinical hardware devic
 ```
 /
 ├── index.html              # Homepage (EN)
-├── what-is-sppb.html       # SPPB clinical reference guide (EN)
+├── sppb.html               # SPPB concept, scores, cutoffs, guidelines (EN)
+├── sppb-test.html          # SPPB administration protocol (EN)
 ├── product.html            # Product/device details (EN)
 ├── validation.html         # Peer-reviewed evidence (EN)
 ├── references.html         # Institutional clients (EN)
 ├── case-studies.html       # Case study index (EN)
 ├── sppb-test.html          # Interactive SPPB scoring tool (EN)
-├── what-is-sppb.md         # Clean Markdown version for AI agents (EN)
 ├── product.md              # Clean Markdown version for AI agents (EN)
 ├── llms.txt                # AI agent site index (EN)
 ├── robots.txt              # Crawler access rules

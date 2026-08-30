@@ -15,6 +15,8 @@
     strongest permanent-redirect signal available: rel=canonical to the target,
     a zero-delay meta refresh (which Google treats as a permanent redirect), and
     a scripted replace() so the browser does not keep this URL in its history.
+    Deliberately not noindex: that directive conflicts with rel=canonical and
+    would stop the signal consolidating into /sppb.html at all.
     If the site ever moves behind a host that can issue real redirects, replace
     this file with a server-side 301 to https://andantefit.info/sppb.html.
   -->

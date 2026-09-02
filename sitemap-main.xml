@@ -2,26 +2,26 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://andantefit.info/sitemap-core.xml</loc>
-    <lastmod>2026-02-27</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://andantefit.info/sitemap-en.xml</loc>
-    <lastmod>2026-02-27</lastmod>
+    <lastmod>2026-09-02</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://andantefit.info/sitemap-ko.xml</loc>
-    <lastmod>2026-02-27</lastmod>
+    <lastmod>2026-09-02</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://andantefit.info/sitemap-jp.xml</loc>
-    <lastmod>2026-02-27</lastmod>
+    <lastmod>2026-09-02</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://andantefit.info/sitemap-es.xml</loc>
-    <lastmod>2026-02-27</lastmod>
+    <lastmod>2026-09-02</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://andantefit.info/sitemap-ru.xml</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-09-02</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://andantefit.info/sitemap-en.xml</loc>
+    <lastmod>2026-09-02</lastmod>
   </sitemap>
 </sitemapindex>

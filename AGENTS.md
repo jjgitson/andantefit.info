@@ -43,6 +43,12 @@ AndanteFit is a static HTML website (GitHub Pages) for a clinical hardware devic
 ## Key Patterns and Conventions
 
 - **No build system.** All HTML is hand-authored. Edit `.html` files directly.
+- **Sitemaps are generated, not hand-edited.** After adding or renaming a page,
+  run `python3 tools/build-sitemaps.py` and commit the result. It rebuilds every
+  `sitemap-*.xml` from what is on disk and sets `lastmod` from git, which is what
+  tells Google a sitemap is worth re-reading. A page is included when its
+  `rel=canonical` points at itself, so redirect stubs and per-locale English
+  fallbacks stay out without a hand-kept exclusion list.
 - **Language routing** is handled by `js/language-manager.js` on every page load — it reads the browser's `navigator.language` and redirects to `/ko/`, `/es/`, or `/jp/` paths. Do not break synchronous script loading in `<head>`.
 - **Navigation** is dynamically injected into `<div id="navigation-container">` by `js/navigation.js`. The navigation HTML is not in individual page files.
 - **CSS variables** are defined at the top of `css/style.css`. Use these instead of hardcoded colors or sizes.

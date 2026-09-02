@@ -1,56 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- Spanish Main Pages -->
   <url>
-    <loc>https://andantefit.info/es/</loc>
-    <lastmod>2026-02-27</lastmod>
+    <loc>https://andantefit.info/es/case-studies.html</loc>
+    <lastmod>2026-08-24</lastmod>
   </url>
   <url>
-    <loc>https://andantefit.info/es/sppb.html</loc>
+    <loc>https://andantefit.info/es/case-studies/2026-02-16-SPPB-Utilization-Spain-ES.html</loc>
+    <lastmod>2026-04-06</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html</loc>
+    <lastmod>2026-04-06</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-04-06-Sarcopenia-Management-Korea-ES.html</loc>
+    <lastmod>2026-04-06</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-04-08-BNR17-Muscle-Function-Older-Adults-ES.html</loc>
+    <lastmod>2026-04-08</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-08-06-SPPB-Community-Frailty-Management-ES.html</loc>
+    <lastmod>2026-08-05</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-08-20-ACC-Frailty-Cardiovascular-SPPB-ES.html</loc>
+    <lastmod>2026-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/case-studies/2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-ES.html</loc>
+    <lastmod>2026-08-21</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/</loc>
     <lastmod>2026-08-30</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/product.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/es/references.html</loc>
+    <lastmod>2026-08-24</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/es/sppb-test.html</loc>
     <lastmod>2026-08-30</lastmod>
   </url>
   <url>
-    <loc>https://andantefit.info/es/product.html</loc>
-    <lastmod>2026-02-11</lastmod>
+    <loc>https://andantefit.info/es/sppb.html</loc>
+    <lastmod>2026-08-30</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/es/validation.html</loc>
-    <lastmod>2026-02-11</lastmod>
+    <lastmod>2026-08-24</lastmod>
   </url>
-  <url>
-    <loc>https://andantefit.info/es/references.html</loc>
-    <lastmod>2026-02-11</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/es/case-studies.html</loc>
-    <lastmod>2026-02-22</lastmod>
-  </url>
-
-  <!-- Spanish Case Studies -->
-  <url>
-    <loc>https://andantefit.info/es/case-studies/2026-02-16-SPPB-Utilization-Spain-ES.html</loc>
-    <lastmod>2026-02-16</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/es/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-ES.html</loc>
-    <lastmod>2026-02-22</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/es/case-studies/2026-08-06-SPPB-Community-Frailty-Management-ES.html</loc>
-    <lastmod>2026-08-06</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/es/case-studies/2026-08-20-ACC-Frailty-Cardiovascular-SPPB-ES.html</loc>
-    <lastmod>2026-08-20</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/es/case-studies/2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-ES.html</loc>
-    <lastmod>2026-08-21</lastmod>
-  </url>
-
 </urlset>

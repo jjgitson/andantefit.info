@@ -1,25 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- Japanese Main Pages -->
-  <url>
-    <loc>https://andantefit.info/jp/</loc>
-    <lastmod>2026-02-27</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/jp/what-is-sppb.html</loc>
-    <lastmod>2026-08-24</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/jp/sppb.html</loc>
-    <lastmod>2026-08-24</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/jp/sppb-test.html</loc>
-    <lastmod>2026-08-24</lastmod>
-  </url>
   <url>
     <loc>https://andantefit.info/jp/cardiac-rehab.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-01-20-Common-Operational-Language-Strategy-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-07-SPPB-Occupational-Health-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-11-Pain-To-Function-Paradigm-Shift-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-04-06-Sarcopenia-Management-Korea-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-04-08-BNR17-Muscle-Function-Older-Adults-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-08-20-ACC-Frailty-Cardiovascular-SPPB-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/case-studies/2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-JP.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/jp/</loc>
     <lastmod>2026-08-24</lastmod>
   </url>
   <url>
@@ -27,46 +53,23 @@
     <lastmod>2026-08-24</lastmod>
   </url>
   <url>
-    <loc>https://andantefit.info/jp/validation.html</loc>
-    <lastmod>2026-02-11</lastmod>
-  </url>
-  <url>
     <loc>https://andantefit.info/jp/references.html</loc>
-    <lastmod>2026-02-11</lastmod>
+    <lastmod>2026-08-24</lastmod>
   </url>
   <url>
-    <loc>https://andantefit.info/jp/case-studies.html</loc>
-    <lastmod>2026-02-22</lastmod>
-  </url>
-
-  <!-- Japanese Case Studies -->
-  <url>
-    <loc>https://andantefit.info/jp/case-studies/2026-01-20-Common-Operational-Language-Strategy-JP.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://andantefit.info/jp/sppb-test.html</loc>
+    <lastmod>2026-08-24</lastmod>
   </url>
   <url>
-    <loc>https://andantefit.info/jp/case-studies/2026-02-07-SPPB-Occupational-Health-JP.html</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://andantefit.info/jp/sppb.html</loc>
+    <lastmod>2026-08-24</lastmod>
   </url>
   <url>
-    <loc>https://andantefit.info/jp/case-studies/2026-02-11-Pain-To-Function-Paradigm-Shift-JP.html</loc>
-    <lastmod>2026-02-11</lastmod>
+    <loc>https://andantefit.info/jp/validation.html</loc>
+    <lastmod>2026-08-24</lastmod>
   </url>
   <url>
-    <loc>https://andantefit.info/jp/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-JP.html</loc>
-    <lastmod>2026-02-13</lastmod>
+    <loc>https://andantefit.info/jp/what-is-sppb.html</loc>
+    <lastmod>2026-08-29</lastmod>
   </url>
-  <url>
-    <loc>https://andantefit.info/jp/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html</loc>
-    <lastmod>2026-02-22</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/jp/case-studies/2026-08-20-ACC-Frailty-Cardiovascular-SPPB-JP.html</loc>
-    <lastmod>2026-08-20</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/jp/case-studies/2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-JP.html</loc>
-    <lastmod>2026-08-21</lastmod>
-  </url>
-
 </urlset>

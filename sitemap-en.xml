@@ -1,92 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- English Main Pages -->
-  <url>
-    <loc>https://andantefit.info/</loc>
-    <lastmod>2026-02-27</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/sppb.html</loc>
-    <lastmod>2026-08-29</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/sppb-test.html</loc>
-    <lastmod>2026-08-29</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/product.html</loc>
-    <lastmod>2026-02-27</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/validation.html</loc>
-    <lastmod>2026-02-27</lastmod>
-  </url>
-  <url>
-    <loc>https://andantefit.info/references.html</loc>
-    <lastmod>2026-02-27</lastmod>
-  </url>
   <url>
     <loc>https://andantefit.info/case-studies.html</loc>
-    <lastmod>2026-02-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
   </url>
-
-  <!-- English Case Studies -->
   <url>
     <loc>https://andantefit.info/case-studies/2026-01-20-Common-Operational-Language-Strategy-EN.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-07-SPPB-Occupational-Health-EN.html</loc>
-    <lastmod>2026-02-07</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-08-PRO-SPPB-Linking-Study-EN.html</loc>
-    <lastmod>2026-02-08</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-09-Digital-Care-Platform-EN.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-11-Pain-To-Function-Paradigm-Shift-EN.html</loc>
-    <lastmod>2026-02-11</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-13-CIBERFES-Consensus-Frailty-Screening-EN.html</loc>
-    <lastmod>2026-02-13</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-16-SPPB-Utilization-Spain-EN.html</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-18-Checkup-Event-Community-CSR-EN.html</loc>
-    <lastmod>2026-02-18</lastmod>
+    <lastmod>2026-04-12</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-18-Community-Frailty-Prevention-Program-EN.html</loc>
-    <lastmod>2026-02-18</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-20-Oncology-SPPB-AndanteFit-EN.html</loc>
-    <lastmod>2026-02-20</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-02-21-Endocrinology-SPPB-Strategy-EN.html</loc>
-    <lastmod>2026-02-21</lastmod>
+    <lastmod>2026-08-07</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-EN.html</loc>
+    <lastmod>2026-08-07</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-04-06-Sarcopenia-Management-Korea-EN.html</loc>
+    <lastmod>2026-08-07</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/case-studies/2026-04-08-BNR17-Muscle-Function-Older-Adults-EN.html</loc>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-08-06-SPPB-Community-Frailty-Management-EN.html</loc>
-    <lastmod>2026-08-06</lastmod>
+    <lastmod>2026-08-07</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-08-20-ACC-Frailty-Cardiovascular-SPPB-EN.html</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-19</lastmod>
   </url>
   <url>
     <loc>https://andantefit.info/case-studies/2026-08-21-ISHLT-Lung-Transplant-Frailty-SPPB-EN.html</loc>
     <lastmod>2026-08-21</lastmod>
   </url>
-
+  <url>
+    <loc>https://andantefit.info/</loc>
+    <lastmod>2026-08-29</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/product.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/references.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/sppb-test.html</loc>
+    <lastmod>2026-08-30</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/sppb.html</loc>
+    <lastmod>2026-08-30</lastmod>
+  </url>
+  <url>
+    <loc>https://andantefit.info/validation.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
 </urlset>

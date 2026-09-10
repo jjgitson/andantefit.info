@@ -12,6 +12,9 @@ AndanteFit은 노인의 신체 기능을 측정하는 국제 표준 도구인 �
 - [SPPB란? — 정의, 점수, 컷오프, 노쇠·근감소증](https://andantefit.info/ko/sppb.html) (~5,000 토큰)
   SPPB 정의, 3가지 소검사 설명, 채점 체계(0~12점), 임상 기준점, 국제 가이드라인 권고(EWGSOP2, ESCEO, FNIH), 사망률·장애 예측 타당도.
 
+- [SPPB 검사 절차 및 점수표 — 실시 방법](https://andantefit.info/ko/sppb-test.html) (~2,700 토큰)
+  균형·4m 보행속도·5회 의자 일어서기의 준비, 실시 순서, 계측 기준, 점수표. 점수 계산 도구와 인쇄용 A4 기록지 포함.
+
 - [제품 — 기기 사양 및 SPPB 프로토콜](https://andantefit.info/ko/product.html) (~4,700 토큰)
   LiDAR 센서 상세 정보, 자동 측정 흐름, 데이터 출력 형식, 도입 요건, 문의 양식.
 
@@ -22,6 +25,17 @@ AndanteFit은 노인의 신체 기능을 측정하는 국제 표준 도구인 �
 
 - [레퍼런스 — 기관 고객 및 도입 현황](https://andantefit.info/ko/references.html) (~15,750 토큰)
   AndanteFit 도입 병원, 연구기관, 제약회사 목록.
+
+## 평가 결과의 해석과 적용
+
+- [SPPB 점수 기반 노쇠 개입전략](https://andantefit.info/ko/sppb-intervention.html) (~2,800 토큰)
+  점수 구간별 운동·영양 개입 설계, ICFSR 합의문 기반 근력·균형·유산소 구성 순서, 지역사회 현장 적용 가이드, 고령자 적정 걸음 수.
+
+- [TUG와 SPPB의 차이: 어떤 검사를 언제 쓰는가](https://andantefit.info/ko/tug-vs-sppb.html) (~1,300 토큰)
+  두 검사의 구조적 차이와 해석 깊이, 지역사회 노쇠 예방에서의 선택 기준.
+
+- [아시아 신체기능 기준값](https://andantefit.info/ko/asian-reference-standards.html) (~2,000 토큰)
+  아시아 12개국 20개 코호트 통합 분석 기반 악력·4m 보행속도·5회 의자 일어서기의 연령·성별 백분위. AWGS 기준과의 관계.
 
 ## 케이스 스터디
 

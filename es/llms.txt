@@ -18,6 +18,11 @@ Usuarios objetivo: geriatras, cirujanos ortopédicos, fisioterapeutas, investiga
 - [Producto — Especificaciones del dispositivo y protocolo SPPB](https://andantefit.info/es/product.html) (~4,700 tokens)
   Detalles del sensor LiDAR, flujo de administración automatizada, formato de salida de datos, requisitos de despliegue, formulario de contacto.
 
+## Concepto de fragilidad
+
+- [Fragilidad: qué es, cómo se evalúa y si es reversible](https://andantefit.info/es/frailty.html) (~3,200 tokens)
+  Definición de fragilidad y prefragilidad, modelos de fenotipo e índice de déficits, evidencia sobre reversibilidad, y por qué el cribado por cuestionario no sustituye a la medición del rendimiento físico.
+
 ## Evidencia y Validación
 
 - [Validación clínica — Evidencia revisada por pares](https://andantefit.info/es/validation.html) (~5,400 tokens)

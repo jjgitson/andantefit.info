@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Qué es la fragilidad, los dos modelos para evaluarla (fenotipo de Fried e índice de fragilidad), la evidencia sobre su reversibilidad y por qué un cuestionario no sustituye a la medición.">
+  <meta name="keywords" content="fragilidad, qué es la fragilidad, prefragilidad, fenotipo de Fried, índice de fragilidad, Clinical Frailty Scale, fragilidad reversible, cribado de fragilidad, SPPB">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/es/frailty.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/frailty.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/frailty.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/frailty.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Fragilidad: qué es, cómo se evalúa y si es reversible | AndanteFit">
+  <meta property="og:description" content="Los dos modelos de evaluación, la evidencia sobre reversibilidad y el papel de la medición del rendimiento físico.">
+  <meta property="og:url" content="https://andantefit.info/es/frailty.html">
+  <meta property="og:image" content="/assets/andantefit-logo.png">
+  <title>Fragilidad: qué es, cómo se evalúa y si es reversible | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <style>
+    .hero-sub { display: block; margin-top: 12px; font-size: 1.0625rem; font-weight: 500; color: var(--color-text-secondary); letter-spacing: -0.005em; }
+    .sppb-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.9; }
+    .prose { max-width: 820px; }
+    .prose p { margin-bottom: 20px; line-height: 1.95; color: var(--color-text-secondary); }
+    .cmp-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .cmp-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; padding: 12px 16px; text-align: left; }
+    .cmp-table tbody td, .cmp-table tbody th { padding: 14px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: top; line-height: 1.8; text-align: left; }
+    .cmp-table tbody th { font-weight: 700; color: var(--color-deep-blue); white-space: nowrap; }
+    .cmp-table tbody tr:last-child td, .cmp-table tbody tr:last-child th { border-bottom: none; }
+    .cmp-table tbody tr:nth-child(even) td, .cmp-table tbody tr:nth-child(even) th { background: rgba(15,76,129,0.02); }
+    .table-scroll { overflow-x: auto; }
+    .plain-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+    .plain-list li { padding: 16px 18px; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); font-size: 0.9375rem; line-height: 1.8; color: var(--color-text-secondary); }
+    .plain-list strong { color: var(--color-text-primary); }
+    .key-box { margin: 28px 0 0; padding: 18px 20px; border-left: 4px solid var(--color-accent); background: rgba(15,76,129,0.03); border-radius: 0 var(--border-radius) var(--border-radius) 0; font-size: 0.9375rem; line-height: 1.85; color: var(--color-text-secondary); }
+    .key-box strong { color: var(--color-text-primary); }
+    .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .flow-step { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 20px; }
+    .flow-step .n { display: inline-block; font-size: .75rem; font-weight: 800; color: var(--color-accent); margin-bottom: 8px; }
+    .flow-step h3 { font-size: 1rem; margin: 0 0 8px; color: var(--color-text-primary); }
+    .flow-step p { margin: 0; font-size: .875rem; line-height: 1.75; color: var(--color-text-secondary); }
+    .refs { max-width: 820px; }
+    .refs ol { padding-left: 1.3em; margin: 0; }
+    .refs li { font-size: 0.875rem; line-height: 1.8; color: var(--color-text-secondary); margin-bottom: 12px; }
+    .refs a { color: var(--color-deep-blue); word-break: break-all; }
+    @media (max-width: 860px) { .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 520px) { .flow { grid-template-columns: 1fr; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "Fragilidad: qué es, cómo se evalúa y si es reversible",
+    "inLanguage": "es",
+    "url": "https://andantefit.info/es/frailty.html",
+    "description": "Definición de fragilidad, modelos de fenotipo e índice de déficits, evidencia sobre reversibilidad y papel de la medición del rendimiento físico.",
+    "about": "Fragilidad en personas mayores",
+    "publisher": { "@type": "Organization", "name": "AndanteFit", "url": "https://andantefit.info/" }
+  }
+  </script>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Conceptos</span>
+      <h1 class="hero-headline">Fragilidad<span class="hero-sub">qué es, cómo se evalúa y si es reversible</span></h1>
+      <p class="sppb-lead">
+        La fragilidad no es el desgaste natural de la edad, sino <strong>un estado en el que la reserva
+        fisiológica y la capacidad de recuperación han disminuido</strong>, de modo que un estrés
+        pequeño basta para que la función se derrumbe. Dos personas con la misma neumonía se separan
+        justo ahí: una se recupera en una semana, la otra ya no vuelve a caminar igual.
+      </p>
+      <p class="sppb-lead">
+        Lo importante es que <strong>no es un estado fijo</strong>. Puede avanzar y puede revertirse.
+        Por eso la fragilidad se parece menos a un diagnóstico que se pone o no se pone, y más a algo
+        que hay que medir repetidamente para saber en qué dirección se mueve.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Definición</span>
+        <h2>¿Qué es la fragilidad?</h2>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          La fragilidad es la disminución simultánea de la reserva de varios sistemas fisiológicos,
+          que aumenta la vulnerabilidad frente a factores de estrés externos. La consecuencia es un
+          riesgo mayor de deterioro funcional, caídas, hospitalización, dependencia y mortalidad.
+          No se explica por un solo órgano ni por una sola enfermedad: es un síndrome multidimensional.
+        </p>
+        <p>
+          Se solapa con el envejecimiento, la enfermedad y la discapacidad, pero no coincide con
+          ninguno. Tener muchos años no implica ser frágil, se puede ser frágil sin enfermedad
+          diagnosticada, y la fragilidad suele estar ya en marcha antes de que aparezca la
+          discapacidad. Ahí está su utilidad clínica: señala
+          <strong>el tramo en el que todavía se puede intervenir</strong>.
+        </p>
+        <div class="key-box">
+          La <strong>prefragilidad</strong> es el estadio intermedio en el que se cumplen algunos
+          criterios pero no todos. Es donde la intervención rinde más, y el objetivo habitual de los
+          programas comunitarios de prevención.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Modelos de evaluación</span>
+        <h2>Dos formas de medir la fragilidad</h2>
+        <p>Según cuál se utilice, la misma palabra «fragilidad» designa cosas distintas.</p>
+      </div>
+      <div class="table-scroll" style="max-width: 920px; margin: 0 auto;">
+        <table class="cmp-table">
+          <thead>
+            <tr><th>Aspecto</th><th>Modelo de fenotipo</th><th>Modelo de acumulación de déficits</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Enfoque</th><td>Se juzga por cuántos criterios fijos se cumplen</td><td>Se expresa como la <em>proporción</em> de problemas de salud presentes</td></tr>
+            <tr><th>Instrumentos</th><td>Fenotipo de Fried, escala FRAIL</td><td>Índice de fragilidad, Clinical Frailty Scale (CFS)</td></tr>
+            <tr><th>Composición</th><td>Pérdida de peso, debilidad, agotamiento, lentitud de la marcha y baja actividad física — cinco criterios</td><td>Decenas de déficits; proporción de 0 a 1. La CFS traduce el juicio clínico a una escala de 1 a 9</td></tr>
+            <tr><th>Resultado</th><td>Categorías: robusto / prefrágil / frágil</td><td>Grado continuo (espectro)</td></tr>
+            <tr><th>Ventaja</th><td>Criterios claros y fáciles de aplicar</td><td>Sensible al cambio y con buena capacidad pronóstica</td></tr>
+            <tr><th>Límite</th><td>No muestra los cambios dentro de una misma categoría</td><td>Requiere tiempo e información para reunir los ítems</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="key-box" style="max-width: 920px; margin: 28px auto 0;">
+        <strong>Los dos modelos comparten un eje: el rendimiento físico.</strong>
+        Tres de los cinco criterios del fenotipo — debilidad, lentitud de la marcha y actividad
+        física — lo son, y en el modelo de déficits los ítems de movilidad pesan de forma
+        desproporcionada en el pronóstico. Se use el que se use, cómo se mida la función física
+        determina la fiabilidad del resultado.
+      </div>
+    </div>
+  </section>
+
+  <section id="reversibility" class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Reversibilidad</span>
+        <h2>¿Se puede revertir la fragilidad?</h2>
+        <p>Sí, con condiciones: depende de con qué antelación se detecte y de cuán multicomponente sea la intervención.</p>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          En un ensayo de intervención comunitaria, tomando como criterio de éxito la mejora de al
+          menos una categoría del fenotipo de Fried o un aumento de al menos un punto en la SPPB,
+          <strong>a las 12 semanas lo alcanzó el 70,4 % del grupo de intervención frente al 49,5 %
+          del control</strong>, y <strong>a las 32 semanas el 81,7 % frente al 51,9 %</strong>.
+          Aproximadamente la mitad mejora sin intervención; con ella, la proporción sube de forma
+          clara y la diferencia se amplía con el tiempo.
+        </p>
+        <p>
+          También hay evidencia de coste. Una intervención multicomponente que combinó ejercicio,
+          nutrición, manejo de la depresión, revisión de la medicación y reducción del riesgo de
+          caídas mostró, en seguimiento prolongado, una reducción de hospitalizaciones y una
+          permanencia más larga en el domicilio.
+        </p>
+        <p>
+          Conviene mirar también en la dirección contraria: quienes acumulan déficits <em>más
+          deprisa</em> tienen peor pronóstico, según análisis longitudinales de gran tamaño. Es decir,
+          no sólo importa el nivel actual sino la <strong>velocidad del cambio</strong> — otra razón
+          por la que una única evaluación no basta.
+        </p>
+        <div class="key-box">
+          En resumen: la fragilidad se puede revertir, sobre todo <strong>interviniendo de forma
+          multicomponente en la fase de prefragilidad</strong>. Y para saber si se está revirtiendo
+          hay que medir repetidamente con la misma escala.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">El lugar de la medición</span>
+        <h2>Lo que un cuestionario no puede responder</h2>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          El primer paso suele ser un cuestionario. Herramientas autoadministradas como la escala
+          FRAIL permiten cribar a mucha gente en poco tiempo, y para eso son adecuadas.
+        </p>
+        <p>
+          Pero un cuestionario recoge <strong>una percepción</strong>. La respuesta a «¿le cuesta
+          caminar?» no siempre coincide con la velocidad de marcha real: hay quien se considera bien
+          y ya ha perdido función, y al revés. Y sobre todo, la puntuación de un cuestionario
+          <strong>no muestra en la misma escala cuánto se ha mejorado antes y después de una
+          intervención.</strong>
+        </p>
+        <p>
+          Por eso al cribado le sigue la medición. Medir significa observar a la persona haciendo
+          algo concreto en condiciones estandarizadas: el resultado no depende de cómo describa su
+          capacidad, y puede repetirse más adelante y compararse directamente.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Medición del rendimiento físico</span>
+        <h2>¿Qué mide la SPPB de la fragilidad?</h2>
+        <p>La SPPB no dictamina fragilidad. Convierte en un número repetible el eje que los dos modelos comparten.</p>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          La SPPB puntúa de 0 a 4 el equilibrio, la velocidad de la marcha y el levantarse de la
+          silla, con un <strong>total de 0 a 12</strong>. Mide directamente el territorio que en el
+          fenotipo corresponde a la debilidad y a la lentitud de la marcha, y aporta la base de los
+          ítems de movilidad en el modelo de déficits. El marco ICOPE de la OMS la señala como
+          herramienta de evaluación del dominio de locomoción.
+        </p>
+        <p>
+          Más allá del total, conviene leer <strong>el perfil de las tres subpruebas</strong>: un
+          déficit aislado de equilibrio orienta hacia algo distinto que un tiempo desproporcionado al
+          levantarse. La interpretación y los puntos de corte están en
+          <a href="./sppb.html">qué es el SPPB</a>, y el procedimiento en
+          <a href="./sppb-test.html">cómo realizar el test SPPB</a>.
+        </p>
+        <div class="key-box">
+          Que el ensayo citado usara como criterio <strong>«mejora de una categoría de Fried o de un
+          punto en la SPPB»</strong> ilustra bien la relación: la categoría de fragilidad puede no
+          moverse mientras la SPPB sí capta el cambio de un punto.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Flujo de trabajo</span>
+        <h2>Del cribado a la reevaluación</h2>
+      </div>
+      <div class="flow" style="max-width: 980px; margin: 0 auto;">
+        <div class="flow-step"><span class="n">1</span><h3>Cribado</h3><p>Un cuestionario delimita ampliamente la población en riesgo.</p></div>
+        <div class="flow-step"><span class="n">2</span><h3>Medición</h3><p>Se mide el rendimiento físico en condiciones estandarizadas y se registra de 0 a 12.</p></div>
+        <div class="flow-step"><span class="n">3</span><h3>Intervención</h3><p>Ejercicio y nutrición según la puntuación y el perfil por subprueba.</p></div>
+        <div class="flow-step"><span class="n">4</span><h3>Reevaluación</h3><p>Se vuelve a medir en las mismas condiciones. Un punto de cambio ya significa algo.</p></div>
+      </div>
+      <div class="key-box" style="max-width: 980px; margin: 28px auto 0;">
+        Si los pasos 2 y 4 <strong>no se hacen en las mismas condiciones</strong>, no se puede
+        comprobar el efecto del paso 3. Si cambia el evaluador, la altura de la silla, la distancia
+        del recorrido o la hora del día, un cambio de un punto queda enterrado en la variabilidad
+        de la medición.
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Evaluación automatizada</span>
+        <h2>Medir repetidamente en las mismas condiciones</h2>
+        <p>
+          AndanteFit administra y puntúa las tres subpruebas de la SPPB automáticamente con sensores
+          LiDAR: sin cronómetro, sin marcas en el suelo y sin que el resultado dependa de quién evalúa.
+        </p>
+      </div>
+      <div class="pro-cta">
+        <div class="pro-cta-stats">
+          <div class="pro-cta-stat"><span class="v">&lt; 3 min</span><span class="l">Las tres subpruebas</span></div>
+          <div class="pro-cta-stat"><span class="v">ICC 0,94–0,97</span><span class="l">Concordancia con la SPPB manual</span></div>
+          <div class="pro-cta-stat"><span class="v">Puntuación automática</span><span class="l">Menos variabilidad entre evaluadores</span></div>
+        </div>
+        <div class="pro-cta-actions">
+          <a href="./product.html?req=doc#materials" class="btn btn-primary" data-af-event="cta_click" data-af-location="frailty_bottom" data-af-label="doc">Recibir la documentación (gratis) →</a>
+          <a href="./product.html?req=demo#materials" class="btn btn-secondary" data-af-event="cta_click" data-af-location="frailty_bottom" data-af-label="demo">Solicitar una unidad de demostración →</a>
+          <p class="cta-hint">Tres campos, un minuto — respondemos en dos días laborables.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Más información</span>
+        <h2>Lecturas relacionadas</h2>
+      </div>
+      <ul class="plain-list" style="max-width: 900px; margin: 0 auto;">
+        <li><a href="./sppb.html"><strong>Qué es el SPPB</strong></a> — componentes, puntuación, valores de corte y su papel en fragilidad y sarcopenia</li>
+        <li><a href="./sppb-test.html"><strong>Cómo realizar el test SPPB</strong></a> — procedimiento y criterios de puntuación de las tres subpruebas</li>
+        <li><a href="./validation.html"><strong>Validación clínica</strong></a> — concordancia con la administración manual de referencia</li>
+        <li><a href="./case-studies.html"><strong>Casos de estudio</strong></a> — programas y políticas de prevención de la fragilidad</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Citas</span>
+        <h2>Referencias</h2>
+      </div>
+      <div class="refs" style="margin: 0 auto;">
+        <ol>
+          <li>Fried, L. P., Tangen, C. M., Walston, J., Newman, A. B., Hirsch, C., Gottdiener, J., … McBurnie, M. A. (2001). Frailty in older adults: Evidence for a phenotype. <em>The Journals of Gerontology: Series A</em>, 56(3), M146–M156. <a href="https://doi.org/10.1093/gerona/56.3.M146" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/gerona/56.3.M146</a></li>
+          <li>Rockwood, K., Song, X., MacKnight, C., Bergman, H., Hogan, D. B., McDowell, I., &amp; Mitnitski, A. (2005). A global clinical measure of fitness and frailty in elderly people. <em>CMAJ</em>, 173(5), 489–495. <a href="https://doi.org/10.1503/cmaj.050051" target="_blank" rel="noopener noreferrer">https://doi.org/10.1503/cmaj.050051</a></li>
+          <li>Guralnik, J. M., Ferrucci, L., Pieper, C. F., Leveille, S. G., Markides, K. S., Ostir, G. V., … Wallace, R. B. (2000). Lower extremity function and subsequent disability. <em>The Journals of Gerontology: Series A</em>, 55(4), M221–M231. <a href="https://doi.org/10.1093/gerona/55.4.M221" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/gerona/55.4.M221</a></li>
+          <li>Pavasini, R., Guralnik, J., Brown, J. C., Di Bari, M., Cesari, M., Landi, F., … Campo, G. (2016). Short Physical Performance Battery and all-cause mortality: Systematic review and meta-analysis. <em>BMC Medicine</em>, 14, 215. <a href="https://doi.org/10.1186/s12916-016-0763-7" target="_blank" rel="noopener noreferrer">https://doi.org/10.1186/s12916-016-0763-7</a></li>
+          <li>Johnson, L., Guthrie, B., Anand, A., Marshall, A., &amp; Seth, S. (2026). Accelerated deficit accumulation in frailty and associations with adverse outcomes. <em>Lancet Healthy Longevity</em>. <a href="https://doi.org/10.1016/j.lanhl.2026.100848" target="_blank" rel="noopener noreferrer">https://doi.org/10.1016/j.lanhl.2026.100848</a></li>
+          <li>World Health Organization. (2019). <em>Integrated care for older people (ICOPE): Guidance for person-centred assessment and pathways in primary care.</em> Ginebra: OMS.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="../includes/footer.html"></div>
+  <script src="../js/main.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>

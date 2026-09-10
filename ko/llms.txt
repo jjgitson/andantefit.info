@@ -26,6 +26,11 @@ AndanteFit은 노인의 신체 기능을 측정하는 국제 표준 도구인 �
 - [레퍼런스 — 기관 고객 및 도입 현황](https://andantefit.info/ko/references.html) (~15,750 토큰)
   AndanteFit 도입 병원, 연구기관, 제약회사 목록.
 
+## 노쇠(Frailty) 개념
+
+- [노쇠(Frailty): 개념, 평가, 되돌릴 수 있는가](https://andantefit.info/ko/frailty.html) (~3,000 토큰)
+  노쇠의 정의와 전노쇠 단계, 표현형 모델(Fried·J-CHS·K-FRAIL)과 결손 누적 모델(Frailty Index·CFS)의 차이, 가역성의 근거, 질문표 선별과 신체기능 실측의 역할 구분.
+
 ## 평가 결과의 해석과 적용
 
 - [SPPB 점수 기반 노쇠 개입전략](https://andantefit.info/ko/sppb-intervention.html) (~2,800 토큰)

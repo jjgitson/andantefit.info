@@ -1,0 +1,441 @@
+/* Article components carried over from wiki.nofrailty.org.
+ *
+ * Only the in-article pieces are here — the wiki's own header, navigation,
+ * footer and card grids are deliberately left behind, because AndanteFit
+ * supplies those. The wiki's design tokens are scoped to .wiki-article
+ * rather than :root so they cannot leak into the rest of the site.
+ *
+ * Load after /css/style.css. The two share no class name and no custom
+ * property name, so they do not interact.
+ *
+ * Generated from wiki.css + case-studies/article-overrides.css in the
+ * nofrailty-wiki repository. Re-extract rather than hand-editing.
+ */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+/* The case study UX standard names Pretendard as the primary font, but nothing
+ * on the site actually loads it — the existing pages name it in font-family and
+ * fall back to a system font. The @import above makes the article body render
+ * in the face the standard asks for. */
+.wiki-article {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+.wiki-article {
+  --primary: #006D77;
+  --primary-dark: #054a51;
+  --primary-light: #f0fdfa;
+  --secondary: #FF9F1C;
+  --accent: #006D77;
+  --radius: 12px;
+  --radius-lg: 18px; 
+  --text-main: #1e293b;
+  --text-sub: #64748b;
+  --bg-body: #f8fafc;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --line: #e2e8f0;
+}
+
+@keyframes frailtySolid {
+  0%, 100% { color: var(--primary); }
+  50% { color: var(--secondary); }
+}
+
+.heroSection, .wikiHero {
+  text-align: left;
+  margin-bottom: 3.5rem;
+}
+
+.wikiH1, .wikiTitle {
+  margin-bottom: 1.2rem;
+  font-size: 46px;
+  font-weight: 900;
+  letter-spacing: -0.04em; 
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+@media (max-width: 640px) {
+  .wikiH1, .wikiTitle { font-size: 36px; }
+}
+
+.wikiDesc, .wikiLead {
+  max-width: 740px;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--text-sub);
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 48px 0 20px;
+  color: var(--text-main);
+}
+
+.sectionTitle::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--primary);
+  margin-bottom: 14px;
+}
+
+.wikiArticle, .contentWrap {
+  font-size: 17px; 
+  max-width: 800px; 
+  margin: 0 auto;
+}
+
+.wikiArticle p, .contentWrap p {
+  line-height: 1.85;
+  margin: 1.6rem 0; 
+  letter-spacing: -0.015em;
+  color: #334155;
+}
+
+.wikiArticle h2 { 
+  margin-top: 50px; 
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--primary-light);
+  font-weight: 800; 
+  font-size: 28px;
+  letter-spacing: -0.03em;
+}
+
+.wikiArticle strong, .contentWrap strong { 
+  font-weight: 800; 
+  color: var(--primary-dark);
+}
+
+.contentWrap ul, .contentWrap ol {
+  margin: 1.4rem 0;
+  padding-left: 1.6rem;
+}
+
+.contentWrap li {
+  margin-bottom: 12px;
+  line-height: 1.75;
+}
+
+.wikiSummary, .noteBox {
+  margin: 32px 0 40px;
+  padding: 28px 32px;
+  background-color: #f8fafc; 
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #334155;
+}
+
+.wikiSummary ul, .noteBox ul {
+  margin: 14px 0 0;
+  padding-left: 20px;
+}
+
+.wikiSummary li, .noteBox li { margin: 8px 0; }
+
+.wikiFigure, .post-figure {
+  margin: 3.5rem auto;
+  text-align: center;
+}
+
+.wikiFigure img, .post-figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.wikiFigure.is-context img, .post-figure img {
+  border: 1px solid var(--border);
+}
+
+.wikiFigure figcaption, .post-figure figcaption {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-sub);
+}
+
+.sdGallery { margin: 32px 0; }
+
+.sdGalleryGrid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 720px) {
+  .sdGalleryGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.sdGalleryItem {
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease;
+}
+
+.sdGalleryItem:hover { transform: scale(1.02); }
+
+.sdGalleryThumb {
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+}
+
+.sdGalleryThumb img { width: 100%; height: 100%; object-fit: contain; }
+
+.badge, .caseTag {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge { color: var(--primary-dark); background: #ccfbf1; border: 1px solid transparent; }
+
+.useTag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  font-size: 11px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.useTag.screening { background-color: #e6f4f1; color: #006d77; }
+
+.useTag.assessment { background-color: #eef2ff; color: #1e40af; }
+
+.useTag.outcome { background-color: #fff7ed; color: #9a3412; }
+
+.wikiRef {
+  margin-top: 60px;
+  border-top: 1px solid var(--border);
+  padding-top: 30px;
+}
+
+.wikiRef ul {
+  list-style: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+.wikiRef li {
+  list-style: none !important;
+  font-size: 14.5px;
+  color: var(--text-sub);
+  margin-bottom: 12px;
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.wikiRef li::marker {
+  content: "";
+}
+
+.wikiRef li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.wikiRef a { 
+  color: var(--primary); 
+  text-decoration: underline; 
+  text-underline-offset: 4px; 
+  opacity: 0.8;
+}
+
+.wikiRef a:hover { 
+  opacity: 1; 
+}
+
+.downloadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 109, 119, 0.2);
+}
+
+.downloadButton:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 109, 119, 0.3); }
+
+.wikiMore {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.wikiMoreSummary { 
+  padding: 18px 24px; 
+  cursor: pointer; 
+  font-weight: 700; 
+  background: var(--bg-body);
+  transition: background 0.2s ease;
+}
+
+.wikiMoreSummary:hover { background: var(--primary-light); }
+
+.keyPhrase { color: var(--primary); font-weight: 800; border-bottom: 2px solid var(--primary-light); }
+
+.hl { background: rgba(0, 109, 119, 0.08); padding: 2px 6px; border-radius: 4px; color: var(--primary-dark); font-weight: 600; }
+
+.doc-credit{
+  margin-top: 32px;
+  text-align: right;
+  font-size: 12.5px;
+  color: #d1d5db;
+  font-style: italic;
+}
+
+.wikiMoreBody{
+  padding: 18px 22px 20px;
+}
+
+.wikiMoreBody .wikiP{
+  margin-bottom: 14px;
+}
+
+.wikiMoreBody .wikiH3{
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.wikiMoreBody .wikiList{
+  margin-left: 18px;
+  margin-bottom: 16px;
+}
+
+.content a:not(.wikiItemLink),
+.contentWrap a:not(.wikiItemLink),
+.wikiArticle a:not(.wikiItemLink),
+.noteBox a {
+  color: #1e66c8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.content a:not(.wikiItemLink):hover,
+.contentWrap a:not(.wikiItemLink):hover,
+.wikiArticle a:not(.wikiItemLink):hover,
+.noteBox a:hover {
+  color: #0b4fb3;
+}
+
+.content a:not(.wikiItemLink):focus-visible,
+.contentWrap a:not(.wikiItemLink):focus-visible,
+.wikiArticle a:not(.wikiItemLink):focus-visible {
+  outline: 2px solid #1e66c8;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.wikiItemPreview {
+  margin-top: 12px;
+}
+
+.wikiItemPreview img {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+  .wikiItemPreview img {  
+      max-width: 320px;  
+    }
+}
+
+/* ---- from case-studies/article-overrides.css ---- */
+
+.noteBox,
+.wikiSummary {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  border-left-color: var(--primary) !important;
+  color: #334155 !important;
+}
+
+.docInfoBox {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  border-left-color: var(--primary) !important;
+  border-radius: 4px !important;
+}
+
+.articleToc {
+  border-radius: 4px !important;
+  background: var(--surface) !important;
+}
+
+.domainCard,
+.domainCard.teal,
+.domainCard.blue,
+.domainCard.amber,
+.domainCard.rose,
+.domainCard.violet,
+.domainCard.slate {
+  background: #f9fafb !important;
+  border-color: #d1d5db !important;
+  border-radius: 4px !important;
+}
+
+.domainCard .domainName,
+.teal  .domainName,
+.blue  .domainName,
+.amber .domainName,
+.rose  .domainName,
+.violet .domainName,
+.slate .domainName {
+  color: var(--primary-dark) !important;
+}
+
+.domainBadge {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+}
+
+.stageBlock {
+  border-radius: 4px !important;
+}
+
+.stageLabel,
+.stageLabel.mild,
+.stageLabel.mod,
+.stageLabel.severe {
+  background: transparent !important;
+}
+
+.stageLabel.mild   { color: #15803d !important; border-left: 3px solid #16a34a; }
+
+.stageLabel.mod    { color: #92400e !important; border-left: 3px solid #d97706; }
+
+.stageLabel.severe { color: #991b1b !important; border-left: 3px solid #dc2626; }

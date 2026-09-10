@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000" height="460" viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="사망 또는 장기요양보험(LTCI) 자격 발생 없이 생존할 확률: 참여군 vs 비참여군">
+  <style>
+    .axis { stroke:#222; stroke-width:1.2; }
+    .grid { stroke:#e6e6e6; stroke-width:1; }
+    .label { font-family: sans-serif; font-size:12px; fill:#333; }
+    .title { font-family: sans-serif; font-size:16px; fill:#111; }
+    .note { font-family: sans-serif; font-size:12px; fill:#444; }
+    .p { stroke:#f28e2b; stroke-width:3; fill:none; }
+    .n { stroke:#2f4b5b; stroke-width:3; fill:none; }
+    .shadeP { fill:#f28e2b; opacity:0.12; }
+    .shadeN { fill:#2f4b5b; opacity:0.12; }
+  </style>
+
+  <!-- 제목 -->
+  <text x="500" y="24" text-anchor="middle" class="title">
+    사망 또는 장기요양 진입 없이 생존할 확률(66개월 추적)
+  </text>
+
+  <!-- 플롯 영역 -->
+  <!-- padding: left 90, right 30, top 50, bottom 80 -->
+  <rect x="90" y="50" width="880" height="300" fill="#fff"/>
+
+  <!-- 격자 (y: 0.5~1.0) -->
+  <g class="grid">
+    <line x1="90" y1="50" x2="970" y2="50"/>
+    <line x1="90" y1="110" x2="970" y2="110"/>
+    <line x1="90" y1="170" x2="970" y2="170"/>
+    <line x1="90" y1="230" x2="970" y2="230"/>
+    <line x1="90" y1="290" x2="970" y2="290"/>
+    <line x1="90" y1="350" x2="970" y2="350"/>
+  </g>
+
+  <!-- 축 -->
+  <line x1="90" y1="350" x2="970" y2="350" class="axis"/>
+  <line x1="90" y1="50" x2="90" y2="350" class="axis"/>
+
+  <!-- y축 라벨 -->
+  <g class="label">
+    <text x="30" y="354">0.5</text>
+    <text x="30" y="294">0.6</text>
+    <text x="30" y="234">0.7</text>
+    <text x="30" y="174">0.8</text>
+    <text x="30" y="114">0.9</text>
+    <text x="30" y="54">1.0</text>
+    <text x="90" y="395" text-anchor="start">추적 기간(개월)</text>
+    <text x="10" y="200" transform="rotate(-90 10 200)" text-anchor="middle">생존확률(사망 또는 장기요양 진입 없음)</text>
+  </g>
+
+  <!-- x축 눈금(0~66) -->
+  <g class="label">
+    <text x="90"  y="372" text-anchor="middle">0</text>
+    <text x="170" y="372" text-anchor="middle">6</text>
+    <text x="250" y="372" text-anchor="middle">12</text>
+    <text x="330" y="372" text-anchor="middle">18</text>
+    <text x="410" y="372" text-anchor="middle">24</text>
+    <text x="490" y="372" text-anchor="middle">30</text>
+    <text x="570" y="372" text-anchor="middle">36</text>
+    <text x="650" y="372" text-anchor="middle">42</text>
+    <text x="730" y="372" text-anchor="middle">48</text>
+    <text x="810" y="372" text-anchor="middle">54</text>
+    <text x="890" y="372" text-anchor="middle">60</text>
+    <text x="970" y="372" text-anchor="middle">66</text>
+  </g>
+
+  <!-- 곡선 (도식화: 논문 그림의 경향을 반영한 재그림, 시각적 전달용) -->
+  <!-- 비참여군 음영 -->
+  <path class="shadeN" d="M90,95
+    C170,115 250,140 330,165
+    C410,190 490,215 570,240
+    C650,265 730,290 810,310
+    C890,330 930,342 970,350
+    L970,330
+    C930,322 890,315 810,295
+    C730,275 650,250 570,225
+    C490,200 410,175 330,150
+    C250,125 170,105 90,90
+    Z"/>
+
+  <!-- 참여군 음영 -->
+  <path class="shadeP" d="M90,80
+    C170,95 250,115 330,135
+    C410,155 490,175 570,195
+    C650,215 730,235 810,255
+    C890,275 930,292 970,310
+    L970,292
+    C930,276 890,260 810,242
+    C730,224 650,205 570,185
+    C490,165 410,145 330,125
+    C250,105 170,90 90,74
+    Z"/>
+
+  <!-- 비참여군(선) -->
+  <path class="n" d="M90,92
+    C170,110 250,135 330,158
+    C410,182 490,206 570,230
+    C650,254 730,278 810,300
+    C890,322 930,335 970,340"/>
+
+  <!-- 참여군(선) -->
+  <path class="p" d="M90,76
+    C170,92 250,112 330,132
+    C410,152 490,172 570,192
+    C650,212 730,232 810,252
+    C890,272 930,288 970,301"/>
+
+  <!-- 범례 -->
+  <rect x="720" y="62" width="16" height="4" fill="#f28e2b"/>
+  <text x="742" y="66" class="label">참여군</text>
+  <rect x="720" y="82" width="16" height="4" fill="#2f4b5b"/>
+  <text x="742" y="86" class="label">비참여군</text>
+
+  <!-- 핵심 수치 주석 -->
+  <text x="90" y="430" class="note">
+    주: 논문 Figure 1의 메시지를 한글로 재구성한 도식입니다. 30개월 시점 평균 2.86개월, 66개월 시점 평균 6.53개월의 차이가 보고되었습니다.
+  </text>
+</svg>

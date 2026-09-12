@@ -209,7 +209,7 @@ const App = () => {
     <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
       <header className="mb-5 sm:mb-6">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
+          <div className="w-1.5 h-6 bg-sky-700 rounded-full"></div>
           <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
         </div>
         <h2 className="text-[24px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
@@ -228,7 +228,7 @@ const App = () => {
       <div className="w-full md:h-full p-5 sm:p-10 flex flex-col">
         <header className="mb-6 flex flex-col gap-1">
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
-            <div className="w-2 h-8 bg-teal-600 rounded-full"></div>
+            <div className="w-2 h-8 bg-sky-700 rounded-full"></div>
             Building a Digital Community Center-Based Preventive Health Management Platform
           </h1>
           <p className="text-base sm:text-lg font-bold text-slate-500 pl-5">
@@ -267,7 +267,7 @@ const App = () => {
                         key={m.id}
                         className={`px-2 py-1 rounded border text-[10px] bg-white/60 transition-all ${
                           activeGroup === m.id
-                            ? "border-teal-500 shadow-sm"
+                            ? "border-sky-600 shadow-sm"
                             : ""
                         }`}
                       >
@@ -281,7 +281,7 @@ const App = () => {
           </div>
 
           <div className="w-full lg:w-64 bg-slate-900 rounded-[2rem] p-6 flex flex-col justify-center items-center shadow-2xl shrink-0">
-            <div className="bg-teal-600 text-white text-[9px] px-3 py-1 rounded-full mb-6 font-black uppercase tracking-widest">
+            <div className="bg-sky-700 text-white text-[9px] px-3 py-1 rounded-full mb-6 font-black uppercase tracking-widest">
               Shared Outcome Axis
             </div>
 
@@ -343,16 +343,16 @@ const App = () => {
       </div>
 
       {/* Core solution - emphasized */}
-      <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-8 sm:p-10 rounded-3xl border-2 border-teal-200 shadow-lg">
+      <div className="bg-gradient-to-r from-sky-50 to-blue-50 p-8 sm:p-10 rounded-3xl border-2 border-sky-200 shadow-lg">
         <div className="flex items-start gap-4">
-          <div className="w-2 h-12 bg-teal-600 rounded-full flex-shrink-0"></div>
+          <div className="w-2 h-12 bg-sky-700 rounded-full flex-shrink-0"></div>
           <div>
-            <p className="text-base sm:text-lg text-teal-700 font-semibold mb-3">
+            <p className="text-base sm:text-lg text-sky-800 font-semibold mb-3">
               The Solution
             </p>
             <p className="text-xl sm:text-2xl font-black text-slate-900 leading-tight mb-4">
-              Establish <span className="text-teal-600">Physical Function</span> as a
-              <span className="text-teal-600"> Common Language</span>
+              Establish <span className="text-sky-700">Physical Function</span> as a
+              <span className="text-sky-700"> Common Language</span>
             </p>
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
               Centering on standard indicators such as SPPB,<br/>
@@ -429,15 +429,15 @@ const App = () => {
               <div className="text-xs text-slate-500 mb-2">WHO ICOPE Core Principles</div>
               <ul className="text-sm text-slate-700 space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span className="text-sky-700 mt-0.5">•</span>
                   <span>Functional Ability-Centered Assessment</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span className="text-sky-700 mt-0.5">•</span>
                   <span>Longitudinal Tracking</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span className="text-sky-700 mt-0.5">•</span>
                   <span>Preventive Intervention</span>
                 </li>
               </ul>
@@ -465,15 +465,15 @@ const App = () => {
               <h4 className="font-bold mb-3 text-slate-900 text-base">Fully Automated SPPB Engine</h4>
               <ul className="text-xs sm:text-sm space-y-2 text-slate-600">
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 font-bold">•</span>
+                  <span className="text-sky-700 font-bold">•</span>
                   <span><strong>Eliminating rater error:</strong> High reliability</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 font-bold">•</span>
+                  <span className="text-sky-700 font-bold">•</span>
                   <span><strong>Rapid assessment in under 3 minutes:</strong> Efficiency</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 font-bold">•</span>
+                  <span className="text-sky-700 font-bold">•</span>
                   <span><strong>Protocol anyone can perform:</strong> Accessibility</span>
                 </li>
               </ul>
@@ -486,7 +486,7 @@ const App = () => {
                 { icon: "triangle", label: "Balance", value: "3-level balance" }
               ].map((item, idx) => (
                 <div key={idx} className="bg-white p-4 rounded-xl border border-slate-200 text-center">
-                  <LucideIcon name={item.icon} className="w-6 h-6 text-teal-600 mx-auto mb-2" />
+                  <LucideIcon name={item.icon} className="w-6 h-6 text-sky-700 mx-auto mb-2" />
                   <div className="text-xs font-bold text-slate-900">{item.label}</div>
                   <div className="text-[10px] text-slate-500 mt-1">{item.value}</div>
                 </div>
@@ -519,15 +519,15 @@ const App = () => {
               <div className="text-xs text-slate-500 mb-2">Intervention Principles</div>
               <ul className="text-sm text-slate-700 space-y-1">
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600">→</span>
+                  <span className="text-sky-700">→</span>
                   <span>Frailty: Combined exercise + nutrition</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600">→</span>
+                  <span className="text-sky-700">→</span>
                   <span>Pre-frailty: Endurance exercise</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600">→</span>
+                  <span className="text-sky-700">→</span>
                   <span>Healthy: High-intensity exercise</span>
                 </li>
               </ul>
@@ -579,7 +579,7 @@ const App = () => {
               { label: "ADL Maintenance Rate", value: "+30%" }
             ].map((item, idx) => (
               <div key={idx} className="bg-white p-4 rounded-xl border border-slate-200 text-center">
-                <div className="text-2xl font-black text-teal-600 mb-1">{item.value}</div>
+                <div className="text-2xl font-black text-sky-700 mb-1">{item.value}</div>
                 <div className="text-xs text-slate-600">{item.label}</div>
               </div>
             ))}

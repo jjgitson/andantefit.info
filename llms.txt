@@ -12,6 +12,11 @@ Target users: geriatricians, orthopedic surgeons, physical therapists, clinical 
 - [What is SPPB? — Definition, scores, cutoffs, frailty and sarcopenia](https://andantefit.info/sppb.html) (~8,000 tokens)
   SPPB definition, three subtests explained, scoring system (0–12), clinical cut-off thresholds, international guideline endorsements (EWGSOP2, ESCEO, FNIH), mortality and disability predictive value.
 
+## Frailty
+
+- [Frailty: What It Is, How It Is Assessed, and Whether It Can Be Reversed](https://andantefit.info/frailty.html) (~3,000 tokens)
+  Definition of frailty and the prefrail stage, the phenotype model (Fried, FRAIL scale) versus the deficit accumulation model (Frailty Index, Clinical Frailty Scale), the evidence on reversibility, and where questionnaire screening ends and physical performance measurement begins.
+
 - [Product — Device specifications and SPPB protocol](https://andantefit.info/product.html) (~4,700 tokens)
   LiDAR sensor details, automated administration flow, data output format, deployment requirements, contact/inquiry form.
 

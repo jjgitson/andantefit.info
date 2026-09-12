@@ -22,11 +22,11 @@
 }
 
 .wiki-article {
-  --primary: #006D77;
-  --primary-dark: #054a51;
-  --primary-light: #f0fdfa;
+  --primary: #0F4C81;
+  --primary-dark: #0B3A62;
+  --primary-light: #F1F7FC;
   --secondary: #FF9F1C;
-  --accent: #006D77;
+  --accent: #18BFBF;
   --radius: 12px;
   --radius-lg: 18px; 
   --text-main: #1e293b;
@@ -221,7 +221,7 @@
   letter-spacing: 0.02em;
 }
 
-.badge { color: var(--primary-dark); background: #ccfbf1; border: 1px solid transparent; }
+.badge { color: var(--primary-dark); background: #E2EEF8; border: 1px solid transparent; }
 
 .useTag {
   display: inline-block;
@@ -232,7 +232,7 @@
   font-weight: 700;
 }
 
-.useTag.screening { background-color: #e6f4f1; color: #006d77; }
+.useTag.screening { background-color: #EAF2F9; color: #0F4C81; }
 
 .useTag.assessment { background-color: #eef2ff; color: #1e40af; }
 

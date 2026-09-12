@@ -167,34 +167,50 @@
 
 .sdGallery { margin: 32px 0; }
 
+/* minmax(0, 1fr) rather than 1fr: a grid item's automatic minimum size is its
+ * min-content width, which for an <img> is its intrinsic width (~966px here),
+ * so plain 1fr columns refused to shrink and the gallery overflowed the
+ * 760px article column. */
 .sdGalleryGrid {
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-@media (max-width: 720px) {
-  .sdGalleryGrid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 480px) {
+  .sdGalleryGrid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
 }
 
-.sdGalleryItem {
-  border-radius: 20px;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--border);
-  transition: transform 0.3s ease;
-}
-
-.sdGalleryItem:hover { transform: scale(1.02); }
-
+.sdGalleryItem,
 .sdGalleryThumb {
-  aspect-ratio: 16 / 9;
-  display: grid;
-  place-items: center;
-  padding: 12px;
+  min-width: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--soft-gray, #f8fafc);
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.sdGalleryThumb img { width: 100%; height: 100%; object-fit: contain; }
+.sdGalleryItem:hover,
+.sdGalleryThumb:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08); }
+
+.sdGalleryThumb:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* The source frames are video stills of mixed ratios (966x804 to 966x1012)
+ * with burned-in subtitles at the bottom, so contain rather than cover: a
+ * crop would cut the captions that carry the point of each frame. */
+.sdGalleryThumb {
+  aspect-ratio: 4 / 3;
+  display: block;
+}
+
+.sdGalleryThumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
 
 .badge, .caseTag {
   font-size: 11.5px;

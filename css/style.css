@@ -1755,3 +1755,19 @@ a:hover {
   line-height: 1.6;
   margin: 10px 0 0;
 }
+
+/* The frailty hero sits on the deep-blue gradient (the section class itself is
+ * declared inline on each home page), so links inside it cannot use the default
+ * #0F4C81 link colour - it is all but invisible against that background. Only
+ * the Korean page carried an inline override. */
+.section-frailty-prevention a {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.section-frailty-prevention a:hover,
+.section-frailty-prevention a:focus-visible {
+  border-bottom-color: #ffffff;
+}

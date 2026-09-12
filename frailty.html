@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="What frailty is, the two models used to assess it (Fried phenotype and deficit accumulation), the evidence on whether it can be reversed, and why a questionnaire is not a substitute for measurement.">
+  <meta name="keywords" content="frailty, what is frailty, prefrailty, Fried phenotype, frailty index, Clinical Frailty Scale, is frailty reversible, frailty screening, SPPB">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="canonical" href="https://andantefit.info/frailty.html" />
+  <link rel="alternate" hreflang="en" href="https://andantefit.info/frailty.html" />
+  <link rel="alternate" hreflang="ko" href="https://andantefit.info/ko/frailty.html" />
+  <link rel="alternate" hreflang="ja" href="https://andantefit.info/jp/frailty.html" />
+  <link rel="alternate" hreflang="es" href="https://andantefit.info/es/frailty.html" />
+  <link rel="alternate" hreflang="ru" href="https://andantefit.info/ru/frailty.html" />
+  <link rel="alternate" hreflang="x-default" href="https://andantefit.info/frailty.html" />
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AndanteFit">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Frailty: What It Is, How It Is Assessed, and Whether It Can Be Reversed | AndanteFit">
+  <meta property="og:description" content="The two assessment models, the evidence on reversibility, and where physical performance measurement fits.">
+  <meta property="og:url" content="https://andantefit.info/frailty.html">
+  <meta property="og:image" content="/assets/andantefit-logo.png">
+  <title>Frailty: What It Is, How It Is Assessed, and Whether It Can Be Reversed | AndanteFit</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4ENVHFYP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0L4ENVHFYP');
+  </script>
+  <style>
+    .hero-sub { display: block; margin-top: 12px; font-size: 1.0625rem; font-weight: 500; color: var(--color-text-secondary); letter-spacing: -0.005em; }
+    .sppb-lead { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 760px; line-height: 1.9; }
+    .prose { max-width: 820px; }
+    .prose p { margin-bottom: 20px; line-height: 1.95; color: var(--color-text-secondary); }
+    .cmp-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; background: var(--color-white); }
+    .cmp-table thead th { background: var(--color-deep-blue); color: #fff; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; padding: 12px 16px; text-align: left; }
+    .cmp-table tbody td, .cmp-table tbody th { padding: 14px 16px; font-size: 0.9375rem; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); vertical-align: top; line-height: 1.8; text-align: left; }
+    .cmp-table tbody th { font-weight: 700; color: var(--color-deep-blue); white-space: nowrap; }
+    .cmp-table tbody tr:last-child td, .cmp-table tbody tr:last-child th { border-bottom: none; }
+    .cmp-table tbody tr:nth-child(even) td, .cmp-table tbody tr:nth-child(even) th { background: rgba(15,76,129,0.02); }
+    .table-scroll { overflow-x: auto; }
+    .plain-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+    .plain-list li { padding: 16px 18px; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); font-size: 0.9375rem; line-height: 1.8; color: var(--color-text-secondary); }
+    .plain-list strong { color: var(--color-text-primary); }
+    .key-box { margin: 28px 0 0; padding: 18px 20px; border-left: 4px solid var(--color-accent); background: rgba(15,76,129,0.03); border-radius: 0 var(--border-radius) var(--border-radius) 0; font-size: 0.9375rem; line-height: 1.85; color: var(--color-text-secondary); }
+    .key-box strong { color: var(--color-text-primary); }
+    .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .flow-step { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 20px; }
+    .flow-step .n { display: inline-block; font-size: .75rem; font-weight: 800; color: var(--color-accent); margin-bottom: 8px; }
+    .flow-step h3 { font-size: 1rem; margin: 0 0 8px; color: var(--color-text-primary); }
+    .flow-step p { margin: 0; font-size: .875rem; line-height: 1.75; color: var(--color-text-secondary); }
+    .refs { max-width: 820px; }
+    .refs ol { padding-left: 1.3em; margin: 0; }
+    .refs li { font-size: 0.875rem; line-height: 1.8; color: var(--color-text-secondary); margin-bottom: 12px; }
+    .refs a { color: var(--color-deep-blue); word-break: break-all; }
+    @media (max-width: 860px) { .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 520px) { .flow { grid-template-columns: 1fr; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "Frailty: What It Is, How It Is Assessed, and Whether It Can Be Reversed",
+    "inLanguage": "en",
+    "url": "https://andantefit.info/frailty.html",
+    "description": "Definition of frailty, the phenotype and deficit accumulation models, evidence on reversibility, and the role of physical performance measurement.",
+    "about": "Frailty in older adults",
+    "publisher": { "@type": "Organization", "name": "AndanteFit", "url": "https://andantefit.info/" }
+  }
+  </script>
+</head>
+<body>
+  <div id="navigation-container"></div>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="section-label">Concepts</span>
+      <h1 class="hero-headline">Frailty<span class="hero-sub">what it is, how it is assessed, and whether it can be reversed</span></h1>
+      <p class="sppb-lead">
+        Frailty is not the ordinary wear of getting older. It is <strong>a state in which
+        physiological reserve and the capacity to recover have both declined</strong>, so that a
+        small stressor is enough to send function over a cliff. Two people with the same pneumonia
+        part ways exactly there: one is back on their feet in a week, the other never walks the
+        same way again.
+      </p>
+      <p class="sppb-lead">
+        What matters clinically is that frailty is <strong>not a fixed state</strong>. It can
+        progress and it can be reversed. That makes it less like a diagnosis you either carry or
+        do not, and more like something to be measured repeatedly so you can see which way it is
+        moving.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Definition</span>
+        <h2>What is frailty?</h2>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          Frailty is a simultaneous decline in the reserve of several physiological systems, which
+          raises vulnerability to outside stressors. The consequence is a higher risk of functional
+          decline, falls, hospitalisation, dependency and death. It is not explained by any single
+          organ or single disease: it is a multidimensional syndrome.
+        </p>
+        <p>
+          It overlaps with ageing, disease and disability without being any of them. Advanced age
+          does not make someone frail, a person can be frail with no diagnosed disease, and frailty
+          is usually already under way before disability appears. That is exactly where its clinical
+          value lies: it marks <strong>the window in which intervention is still possible</strong>.
+        </p>
+        <div class="key-box">
+          <strong>Prefrailty</strong> is the intermediate stage where some criteria are met but not
+          all. It is where intervention pays off most, and the usual target of community prevention
+          programmes.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Assessment models</span>
+        <h2>Two ways of measuring frailty</h2>
+        <p>Depending on which one is used, the same word &ldquo;frailty&rdquo; refers to different things.</p>
+      </div>
+      <div class="table-scroll" style="max-width: 920px; margin: 0 auto;">
+        <table class="cmp-table">
+          <thead>
+            <tr><th>Aspect</th><th>Phenotype model</th><th>Deficit accumulation model</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Approach</th><td>Judged by how many fixed criteria are met</td><td>Expressed as the <em>proportion</em> of health problems present</td></tr>
+            <tr><th>Instruments</th><td>Fried phenotype, FRAIL scale</td><td>Frailty Index, Clinical Frailty Scale (CFS)</td></tr>
+            <tr><th>Composition</th><td>Weight loss, weakness, exhaustion, slow gait and low physical activity &mdash; five criteria</td><td>Dozens of deficits, scored as a 0&ndash;1 proportion. The CFS renders clinical judgement on a 1&ndash;9 scale</td></tr>
+            <tr><th>Output</th><td>Categories: robust / prefrail / frail</td><td>A continuous degree (a spectrum)</td></tr>
+            <tr><th>Strength</th><td>Clear criteria, easy to apply</td><td>Sensitive to change, strong prognostic performance</td></tr>
+            <tr><th>Limitation</th><td>Does not show change within a category</td><td>Takes time and data to assemble the items</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="key-box" style="max-width: 920px; margin: 28px auto 0;">
+        <strong>Both models share one axis: physical performance.</strong>
+        Three of the phenotype&rsquo;s five criteria &mdash; weakness, slow gait and physical
+        activity &mdash; are performance items, and in the deficit model the mobility items carry
+        disproportionate prognostic weight. Whichever model is used, how physical function is
+        measured decides how much the result can be trusted.
+      </div>
+    </div>
+  </section>
+
+  <section id="reversibility" class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Reversibility</span>
+        <h2>Can frailty be reversed?</h2>
+        <p>Yes, with conditions: it depends on how early it is detected and how multicomponent the intervention is.</p>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          In a community intervention trial that defined success as improving by at least one Fried
+          phenotype category or gaining at least one SPPB point,
+          <strong>70.4% of the intervention group reached it at 12 weeks against 49.5% of controls</strong>,
+          and <strong>81.7% against 51.9% at 32 weeks</strong>. Roughly half improve with no
+          intervention at all; with one, the proportion rises clearly and the gap widens over time.
+        </p>
+        <p>
+          There is cost evidence too. A multicomponent intervention combining exercise, nutrition,
+          depression management, medication review and falls-risk reduction showed, on extended
+          follow-up, fewer hospitalisations and longer time spent living at home.
+        </p>
+        <p>
+          It is worth reading the evidence in the other direction as well: people who accumulate
+          deficits <em>faster</em> have worse outcomes, according to large longitudinal analyses. So
+          it is not only the current level that matters but the <strong>rate of change</strong>
+          &mdash; another reason a single assessment is not enough.
+        </p>
+        <div class="key-box">
+          In short: frailty can be reversed, above all by <strong>intervening in a multicomponent
+          way during prefrailty</strong>. And to know whether it is being reversed, you have to
+          measure repeatedly on the same scale.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Where measurement fits</span>
+        <h2>What a questionnaire cannot answer</h2>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          The first step is usually a questionnaire. Self-report tools such as the FRAIL scale let
+          you screen a lot of people quickly, and for that they are well suited.
+        </p>
+        <p>
+          But a questionnaire captures <strong>a perception</strong>. The answer to &ldquo;do you
+          have difficulty walking?&rdquo; does not always match measured gait speed: some people
+          consider themselves fine and have already lost function, and the reverse happens too.
+          Above all, a questionnaire score <strong>cannot show, on the same scale, how much someone
+          improved before and after an intervention.</strong>
+        </p>
+        <p>
+          That is why screening is followed by measurement. Measuring means watching a person do
+          something specific under standardised conditions: the result does not depend on how they
+          describe their own ability, and it can be repeated later and compared directly.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Physical performance measurement</span>
+        <h2>What does the SPPB measure about frailty?</h2>
+        <p>The SPPB does not diagnose frailty. It turns the axis both models share into a repeatable number.</p>
+      </div>
+      <div class="prose" style="margin: 0 auto;">
+        <p>
+          The SPPB scores balance, gait speed and chair stand from 0 to 4 each, for a
+          <strong>total of 0 to 12</strong>. It directly measures the territory that the phenotype
+          calls weakness and slow gait, and it supplies the basis for the mobility items in the
+          deficit model. The WHO ICOPE framework names it as an assessment tool for the locomotor
+          capacity domain.
+        </p>
+        <p>
+          Beyond the total, it is worth reading <strong>the profile across the three subtests</strong>:
+          an isolated balance deficit points somewhere different from a disproportionate chair-stand
+          time. Interpretation and cutoffs are covered in
+          <a href="./sppb.html">what the SPPB is</a>, and the procedure in
+          <a href="./sppb-test.html">how to perform the SPPB test</a>.
+        </p>
+        <div class="key-box">
+          That the trial cited above used <strong>&ldquo;one Fried category or one SPPB point&rdquo;</strong>
+          as its endpoint illustrates the relationship well: the frailty category can sit still while
+          the SPPB still registers a one-point change.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Workflow</span>
+        <h2>From screening to reassessment</h2>
+      </div>
+      <div class="flow" style="max-width: 980px; margin: 0 auto;">
+        <div class="flow-step"><span class="n">1</span><h3>Screening</h3><p>A questionnaire broadly delimits the at-risk population.</p></div>
+        <div class="flow-step"><span class="n">2</span><h3>Measurement</h3><p>Physical performance is measured under standardised conditions and recorded from 0 to 12.</p></div>
+        <div class="flow-step"><span class="n">3</span><h3>Intervention</h3><p>Exercise and nutrition, guided by the score and the subtest profile.</p></div>
+        <div class="flow-step"><span class="n">4</span><h3>Reassessment</h3><p>Measured again under the same conditions. A one-point change already means something.</p></div>
+      </div>
+      <div class="key-box" style="max-width: 980px; margin: 28px auto 0;">
+        If steps 2 and 4 are <strong>not carried out under the same conditions</strong>, the effect
+        of step 3 cannot be verified. Change the assessor, the chair height, the walk distance or
+        the time of day, and a one-point change disappears into measurement variability.
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Automated assessment</span>
+        <h2>Measuring repeatedly under the same conditions</h2>
+        <p>
+          AndanteFit administers and scores all three SPPB subtests automatically using LiDAR
+          sensors: no stopwatch, no floor markings, and no dependence on who is doing the assessing.
+        </p>
+      </div>
+      <div class="pro-cta">
+        <div class="pro-cta-stats">
+          <div class="pro-cta-stat"><span class="v">&lt; 3 min</span><span class="l">All three subtests</span></div>
+          <div class="pro-cta-stat"><span class="v">ICC 0.94&ndash;0.97</span><span class="l">Agreement with manual SPPB</span></div>
+          <div class="pro-cta-stat"><span class="v">Automatic scoring</span><span class="l">Less inter-rater variability</span></div>
+        </div>
+        <div class="pro-cta-actions">
+          <a href="./product.html?req=doc#materials" class="btn btn-primary" data-af-event="cta_click" data-af-location="frailty_bottom" data-af-label="doc">Get the documentation (free) &rarr;</a>
+          <a href="./product.html?req=demo#materials" class="btn btn-secondary" data-af-event="cta_click" data-af-location="frailty_bottom" data-af-label="demo">Request a demo unit &rarr;</a>
+          <p class="cta-hint">Three fields, one minute &mdash; we reply within two business days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Read next</span>
+        <h2>Related reading</h2>
+      </div>
+      <ul class="plain-list" style="max-width: 900px; margin: 0 auto;">
+        <li><a href="./sppb.html"><strong>What the SPPB is</strong></a> &mdash; components, scoring, cutoffs and its role in frailty and sarcopenia</li>
+        <li><a href="./sppb-test.html"><strong>How to perform the SPPB test</strong></a> &mdash; procedure and scoring criteria for the three subtests</li>
+        <li><a href="./validation.html"><strong>Clinical validation</strong></a> &mdash; agreement with reference manual administration</li>
+        <li><a href="./case-studies.html"><strong>Case studies</strong></a> &mdash; frailty prevention programmes and policy</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Citations</span>
+        <h2>References</h2>
+      </div>
+      <div class="refs" style="margin: 0 auto;">
+        <ol>
+          <li>Fried, L. P., Tangen, C. M., Walston, J., Newman, A. B., Hirsch, C., Gottdiener, J., &hellip; McBurnie, M. A. (2001). Frailty in older adults: Evidence for a phenotype. <em>The Journals of Gerontology: Series A</em>, 56(3), M146&ndash;M156. <a href="https://doi.org/10.1093/gerona/56.3.M146" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/gerona/56.3.M146</a></li>
+          <li>Rockwood, K., Song, X., MacKnight, C., Bergman, H., Hogan, D. B., McDowell, I., &amp; Mitnitski, A. (2005). A global clinical measure of fitness and frailty in elderly people. <em>CMAJ</em>, 173(5), 489&ndash;495. <a href="https://doi.org/10.1503/cmaj.050051" target="_blank" rel="noopener noreferrer">https://doi.org/10.1503/cmaj.050051</a></li>
+          <li>Guralnik, J. M., Ferrucci, L., Pieper, C. F., Leveille, S. G., Markides, K. S., Ostir, G. V., &hellip; Wallace, R. B. (2000). Lower extremity function and subsequent disability. <em>The Journals of Gerontology: Series A</em>, 55(4), M221&ndash;M231. <a href="https://doi.org/10.1093/gerona/55.4.M221" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/gerona/55.4.M221</a></li>
+          <li>Pavasini, R., Guralnik, J., Brown, J. C., Di Bari, M., Cesari, M., Landi, F., &hellip; Campo, G. (2016). Short Physical Performance Battery and all-cause mortality: Systematic review and meta-analysis. <em>BMC Medicine</em>, 14, 215. <a href="https://doi.org/10.1186/s12916-016-0763-7" target="_blank" rel="noopener noreferrer">https://doi.org/10.1186/s12916-016-0763-7</a></li>
+          <li>Johnson, L., Guthrie, B., Anand, A., Marshall, A., &amp; Seth, S. (2026). Accelerated deficit accumulation in frailty and associations with adverse outcomes. <em>Lancet Healthy Longevity</em>. <a href="https://doi.org/10.1016/j.lanhl.2026.100848" target="_blank" rel="noopener noreferrer">https://doi.org/10.1016/j.lanhl.2026.100848</a></li>
+          <li>World Health Organization. (2019). <em>Integrated care for older people (ICOPE): Guidance for person-centred assessment and pathways in primary care.</em> Geneva: WHO.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div data-include="./includes/footer.html"></div>
+  <script src="./js/main.js"></script>
+  <script src="./js/navigation.js"></script>
+</body>
+</html>

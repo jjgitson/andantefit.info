@@ -209,7 +209,7 @@ const App = () => {
     <div className="w-full md:h-full flex flex-col p-6 sm:p-10">
       <header className="mb-5 sm:mb-6">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-1.5 h-6 bg-teal-600 rounded-full"></div>
+          <div className="w-1.5 h-6 bg-sky-700 rounded-full"></div>
           <span className="text-sm font-bold text-slate-500 tracking-wider">{title}</span>
         </div>
         <h2 className="text-[24px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">{headline}</h2>
@@ -228,7 +228,7 @@ const App = () => {
       <div className="w-full md:h-full p-5 sm:p-10 flex flex-col">
         <header className="mb-6 flex flex-col gap-1">
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
-            <div className="w-2 h-8 bg-teal-600 rounded-full"></div>
+            <div className="w-2 h-8 bg-sky-700 rounded-full"></div>
             디지털 복지관 중심 예방적 건강관리 플랫폼 구축 방향
           </h1>
           <p className="text-base sm:text-lg font-bold text-slate-500 pl-5">
@@ -267,7 +267,7 @@ const App = () => {
                         key={m.id}
                         className={`px-2 py-1 rounded border text-[10px] bg-white/60 transition-all ${
                           activeGroup === m.id
-                            ? "border-teal-500 shadow-sm"
+                            ? "border-sky-600 shadow-sm"
                             : ""
                         }`}
                       >
@@ -281,7 +281,7 @@ const App = () => {
           </div>
 
           <div className="w-full lg:w-64 bg-slate-900 rounded-[2rem] p-6 flex flex-col justify-center items-center shadow-2xl shrink-0">
-            <div className="bg-teal-600 text-white text-[9px] px-3 py-1 rounded-full mb-6 font-black uppercase tracking-widest">
+            <div className="bg-sky-700 text-white text-[9px] px-3 py-1 rounded-full mb-6 font-black uppercase tracking-widest">
               공통 성과 축
             </div>
 
@@ -343,16 +343,16 @@ const App = () => {
       </div>
 
       {/* 핵심 솔루션 - 강조 */}
-      <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-8 sm:p-10 rounded-3xl border-2 border-teal-200 shadow-lg">
+      <div className="bg-gradient-to-r from-sky-50 to-blue-50 p-8 sm:p-10 rounded-3xl border-2 border-sky-200 shadow-lg">
         <div className="flex items-start gap-4">
-          <div className="w-2 h-12 bg-teal-600 rounded-full flex-shrink-0"></div>
+          <div className="w-2 h-12 bg-sky-700 rounded-full flex-shrink-0"></div>
           <div>
-            <p className="text-base sm:text-lg text-teal-700 font-semibold mb-3">
+            <p className="text-base sm:text-lg text-sky-800 font-semibold mb-3">
               해결 방안
             </p>
             <p className="text-xl sm:text-2xl font-black text-slate-900 leading-tight mb-4">
-              <span className="text-teal-600">신체기능</span>을 
-              <span className="text-teal-600"> 공통 언어</span>로 설정
+              <span className="text-sky-700">신체기능</span>을 
+              <span className="text-sky-700"> 공통 언어</span>로 설정
             </p>
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
               SPPB와 같은 표준 지표를 중심으로<br/>
@@ -429,15 +429,15 @@ const App = () => {
               <div className="text-xs text-slate-500 mb-2">WHO ICOPE 핵심 원칙</div>
               <ul className="text-sm text-slate-700 space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span className="text-sky-700 mt-0.5">•</span>
                   <span>기능 중심 평가(Functional Ability)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span className="text-sky-700 mt-0.5">•</span>
                   <span>시간에 따른 변화 추적(Longitudinal Tracking)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 mt-0.5">•</span>
+                  <span className="text-sky-700 mt-0.5">•</span>
                   <span>예방적 개입(Preventive Intervention)</span>
                 </li>
               </ul>
@@ -465,15 +465,15 @@ const App = () => {
               <h4 className="font-bold mb-3 text-slate-900 text-base">전자동 SPPB 엔진</h4>
               <ul className="text-xs sm:text-sm space-y-2 text-slate-600">
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 font-bold">•</span>
+                  <span className="text-sky-700 font-bold">•</span>
                   <span><strong>검사자 오차 배제:</strong> High reliability</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 font-bold">•</span>
+                  <span className="text-sky-700 font-bold">•</span>
                   <span><strong>3분 이내 빠른 측정:</strong> Efficiency</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600 font-bold">•</span>
+                  <span className="text-sky-700 font-bold">•</span>
                   <span><strong>누구나 수행 가능한 프로토콜:</strong> Accessibility</span>
                 </li>
               </ul>
@@ -486,7 +486,7 @@ const App = () => {
                 { icon: "triangle", label: "균형", value: "3단계 균형" }
               ].map((item, idx) => (
                 <div key={idx} className="bg-white p-4 rounded-xl border border-slate-200 text-center">
-                  <LucideIcon name={item.icon} className="w-6 h-6 text-teal-600 mx-auto mb-2" />
+                  <LucideIcon name={item.icon} className="w-6 h-6 text-sky-700 mx-auto mb-2" />
                   <div className="text-xs font-bold text-slate-900">{item.label}</div>
                   <div className="text-[10px] text-slate-500 mt-1">{item.value}</div>
                 </div>
@@ -519,15 +519,15 @@ const App = () => {
               <div className="text-xs text-slate-500 mb-2">개입 원칙</div>
               <ul className="text-sm text-slate-700 space-y-1">
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600">→</span>
+                  <span className="text-sky-700">→</span>
                   <span>노쇠: 복합운동 + 영양</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600">→</span>
+                  <span className="text-sky-700">→</span>
                   <span>전노쇠: 지구력 운동</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-teal-600">→</span>
+                  <span className="text-sky-700">→</span>
                   <span>건강: 고강도 운동</span>
                 </li>
               </ul>
@@ -579,7 +579,7 @@ const App = () => {
               { label: "ADL 유지율", value: "+30%" }
             ].map((item, idx) => (
               <div key={idx} className="bg-white p-4 rounded-xl border border-slate-200 text-center">
-                <div className="text-2xl font-black text-teal-600 mb-1">{item.value}</div>
+                <div className="text-2xl font-black text-sky-700 mb-1">{item.value}</div>
                 <div className="text-xs text-slate-600">{item.label}</div>
               </div>
             ))}

@@ -135,7 +135,7 @@ const flowSteps = [
 
 const exerciseModules = [
   { icon: "zap",      title: "Resistance Training",   desc: "Lower limb and core strength",     color: "bg-emerald-50 border-emerald-200 text-emerald-700" },
-  { icon: "triangle", title: "Balance Training",      desc: "Fall prevention and static balance", color: "bg-teal-50 border-teal-200 text-teal-700" },
+  { icon: "triangle", title: "Balance Training",      desc: "Fall prevention and static balance", color: "bg-sky-50 border-sky-200 text-sky-800" },
   { icon: "heart",    title: "Aerobic Exercise",      desc: "Endurance and cardiorespiratory fitness", color: "bg-sky-50 border-sky-200 text-sky-700" },
   { icon: "move",     title: "Flexibility Training",  desc: "Joint range of motion and posture",  color: "bg-violet-50 border-violet-200 text-violet-700" },
 ];
@@ -149,7 +149,7 @@ const App = () => {
 
     /* ── Slide 1: Cover ── */
     (
-      <div className="w-full md:h-full p-6 sm:p-12 flex flex-col bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+      <div className="w-full md:h-full p-6 sm:p-12 flex flex-col bg-gradient-to-br from-emerald-50 via-white to-sky-50">
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-6">
           <span className="bg-emerald-600 text-white text-xs font-black px-3 py-1 rounded-full tracking-widest uppercase">
@@ -286,12 +286,12 @@ const App = () => {
           </div>
 
           {/* Block 2: Exercise Content */}
-          <div className="bg-teal-50 border border-teal-200 rounded-2xl p-6 flex flex-col gap-4">
+          <div className="bg-sky-50 border border-sky-200 rounded-2xl p-6 flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-sky-700 rounded-lg flex items-center justify-center">
                 <LucideIcon name="dumbbell" className="w-4 h-4 text-white" />
               </div>
-              <span className="font-black text-teal-800 text-sm">Exercise Content</span>
+              <span className="font-black text-sky-900 text-sm">Exercise Content</span>
             </div>
             <div className="grid grid-cols-2 gap-2">
               {exerciseModules.map((m, i) => (
@@ -302,7 +302,7 @@ const App = () => {
                 </div>
               ))}
             </div>
-            <p className="text-sm text-teal-800 leading-relaxed">
+            <p className="text-sm text-sky-900 leading-relaxed">
               Progressive content · 5 days/week · ~30 minutes/session<br/>
               Effectiveness validated through widespread community implementation
             </p>
@@ -398,7 +398,7 @@ const App = () => {
       <div className="w-full md:h-full bg-slate-900 p-8 sm:p-14 flex flex-col justify-center relative overflow-hidden">
         {/* BG blobs */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-sky-600/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Left: effects */}

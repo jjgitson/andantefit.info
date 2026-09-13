@@ -321,6 +321,137 @@ function initEmailLinks(root) {
 // Static pages carry obfuscated details too, not just injected includes.
 document.addEventListener('DOMContentLoaded', function () { initEmailLinks(document); });
 
+// ── Footer: locale-aware quick links and copy ────────────────────────────────
+// Three footer files serve five languages: includes/footer.html (en, ko, es),
+// includes/footer-jp.html and ru/includes/footer.html. The shared one was
+// English on Korean and Spanish pages, and its "Quick Links" column held two
+// language links - a subset of the switcher the header already renders for all
+// five, and on the Korean page one of them pointed at the page you were on.
+//
+// Rather than edit ~120 pages to split the include, fill the column here from
+// the path's locale. The six destinations exist in every language.
+const FOOTER_TEXT = {
+  en: {
+    quick: 'Quick Links',
+    links: [
+      ['sppb.html', 'What Is the SPPB?'],
+      ['sppb-test.html', 'SPPB Test Protocol'],
+      ['frailty.html', 'What Is Frailty?'],
+      ['validation.html', 'Clinical Validation'],
+      ['case-studies.html', 'Case Studies'],
+      ['product.html', 'Product &amp; Materials']
+    ]
+  },
+  ko: {
+    quick: '주요 페이지',
+    links: [
+      ['sppb.html', 'SPPB란 무엇인가'],
+      ['sppb-test.html', 'SPPB 검사 방법'],
+      ['frailty.html', '노쇠란 무엇인가'],
+      ['validation.html', '임상 검증'],
+      ['case-studies.html', '도입 사례'],
+      ['product.html', '제품 · 자료 요청']
+    ],
+    blurb: 'DYPHI Inc.가 개발하고 공급합니다.<br>지역사회와 임상 현장을 위한 신체기능 평가 자동화 장비입니다.',
+    contact: '문의',
+    email: '이메일',
+    seoul: '서울 사무소',
+    daejeon: '대전 사무소',
+    rights: '© 2026 DYPHI Inc. 모든 권리 보유.'
+  },
+  es: {
+    quick: 'Páginas principales',
+    links: [
+      ['sppb.html', 'Qué es el SPPB'],
+      ['sppb-test.html', 'Protocolo del test SPPB'],
+      ['frailty.html', 'Qué es la fragilidad'],
+      ['validation.html', 'Validación clínica'],
+      ['case-studies.html', 'Casos de estudio'],
+      ['product.html', 'Producto y materiales']
+    ],
+    blurb: 'Desarrollado y suministrado por DYPHI Inc.<br>Evaluación automatizada del rendimiento físico para entornos comunitarios y profesionales.',
+    contact: 'Contacto',
+    email: 'Correo',
+    seoul: 'Oficina de Seúl',
+    daejeon: 'Oficina de Daejeon',
+    rights: '© 2026 DYPHI Inc. Todos los derechos reservados.'
+  },
+  jp: {
+    quick: '主なページ',
+    links: [
+      ['sppb.html', 'SPPBとは'],
+      ['sppb-test.html', 'SPPB検査方法'],
+      ['frailty.html', 'フレイルとは'],
+      ['validation.html', '臨床検証'],
+      ['case-studies.html', '導入事例'],
+      ['product.html', '製品・資料請求']
+    ]
+  },
+  ru: {
+    quick: 'Основные страницы',
+    links: [
+      ['sppb.html', 'Что такое SPPB'],
+      ['sppb-test.html', 'Протокол SPPB'],
+      ['frailty.html', 'Что такое астения'],
+      ['validation.html', 'Клиническая валидация'],
+      ['case-studies.html', 'Практические примеры'],
+      ['product.html', 'Продукт и материалы']
+    ]
+  }
+};
+
+function footerLocale() {
+  const seg = location.pathname.split('/').filter(Boolean)[0];
+  return (seg === 'ko' || seg === 'jp' || seg === 'es' || seg === 'ru') ? seg : 'en';
+}
+
+function localizeFooter(root) {
+  const footer = root.querySelector('.footer');
+  if (!footer) return;
+  const loc = footerLocale();
+  const t = FOOTER_TEXT[loc];
+  if (!t) return;
+  const prefix = loc === 'en' ? '/' : '/' + loc + '/';
+  const sections = footer.querySelectorAll('.footer-section');
+
+  sections.forEach(function (section) {
+    const h = section.querySelector('h4');
+    const p = section.querySelector('p');
+    if (!h || !p) return;
+    // The quick-links column is the one whose paragraph is nothing but links.
+    const onlyLinks = p.querySelectorAll('a').length > 1
+      && !p.querySelector('a.obf-email, a.obf-contact');
+    if (!onlyLinks) return;
+    h.textContent = t.quick;
+    p.innerHTML = t.links.map(function (item) {
+      return '<a href="' + prefix + item[0] + '">' + item[1] + '</a>';
+    }).join('<br>');
+  });
+
+  // The shared footer file is written in English; translate the rest of it for
+  // the two locales that borrow it. jp and ru have their own localised files.
+  if (!t.blurb) return;
+  const cols = footer.querySelectorAll('.footer-section');
+  if (cols[0]) {
+    const p = cols[0].querySelector('p');
+    if (p) p.innerHTML = t.blurb;
+  }
+  const contact = footer.querySelector('.footer-section:last-child');
+  if (contact) {
+    const h = contact.querySelector('h4');
+    if (h) h.textContent = t.contact;
+    const p = contact.querySelector('p');
+    if (p) {
+      p.innerHTML = p.innerHTML
+        .replace(/^\s*Email:/, t.email + ':')
+        .replace(/Seoul Office:/, t.seoul + ':')
+        .replace(/Daejeon Office:/, t.daejeon + ':');
+    }
+  }
+  const bottom = footer.querySelector('.footer-bottom');
+  if (bottom && t.rights) bottom.textContent = t.rights;
+}
+
 // js/main.js 파일 맨 아래에 추가
 function includeHTML() {
     const elements = document.querySelectorAll('[data-include]');
@@ -335,6 +466,7 @@ function includeHTML() {
                 .then(data => {
                     el.innerHTML = data;
                     el.removeAttribute('data-include');
+                    localizeFooter(el);
                     initEmailLinks(el);
                 })
                 .catch(error => console.error('Error loading include:', error));

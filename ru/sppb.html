@@ -70,6 +70,13 @@
     .policy-item-title { font-weight: 700; font-size: 1rem; color: var(--color-deep-blue); margin: 0 0 8px; }
     .policy-item-text { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.8; margin: 0; }
     @media (max-width: 768px) { .prognosis-layout { grid-template-columns: 1fr; } }
+      .summary-box {
+    .summary-box ul {
+    .summary-box li {
+    .summary-box li::before {
+    .references-section ol {
+    .references-section li {
+    .references-section li a {
   </style>
 </head>
 <body>
@@ -105,6 +112,28 @@
   </div>
 
   <!-- Components -->
+  <section class="section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Кратко</span>
+        <h2>Кратко</h2>
+      </div>
+      <div class="summary-box" style="max-width: 860px; margin: 0 auto;">
+        <ul>
+          <li>SPPB оценивает физическую функцию нижних конечностей с помощью трех подтестов: <strong>равновесие, скорость ходьбы и вставание со стула (пятикратное)</strong>.</li>
+          <li>Метод может использоваться для <strong>скрининга, функциональной оценки и отслеживания изменений во времени</strong>; повторные измерения позволяют отслеживать функциональную динамику.</li>
+          <li>Интерпретация не только суммарного балла, но и <strong>того, какой именно компонент нарушен</strong>, дает более практичную информацию для принятия решений и целенаправленного вмешательства.</li>
+        </ul>
+      </div>
+
+      <div class="content-section" style="margin: calc(var(--spacing-unit) * 6) auto 0;">
+        <p>
+          Отличительная особенность SPPB — акцент на <strong>физической функции</strong> как центральном объекте оценки. Снижение физической функции является общим ключевым элементом старческой астении и саркопении и важно для прогноза при обоих состояниях. Поэтому SPPB широко применяется как основной инструмент оценки нарушения физической функции в исследованиях и практике.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section id="sppb-components" class="section" style="background-color: var(--color-white);">
     <div class="container">
       <div class="section-header">
@@ -155,7 +184,7 @@
   </section>
 
   <!-- Score interpretation -->
-  <section class="section">
+<section class="section">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Подсчет баллов</span>
@@ -163,7 +192,7 @@
         <p>Each of the three subtests is scored 0–4. The total composite score (0–12) reflects overall lower-extremity function.</p>
       </div>
       <div style="max-width: 720px; margin: 0 auto;">
-        <table class="score-table">
+        <div style="overflow-x: auto;"><table class="score-table">
           <thead>
             <tr>
               <th>Суммарный балл</th>
@@ -188,11 +217,10 @@
               <td>Более низкий риск. Полезная точка отсчета для динамического наблюдения.</td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
         <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 16px;">
           The subtest profile matters as much as the total score. Isolated balance impairment, slow gait, or disproportionately slow chair stand performance each point toward different functional targets.
         </p>
-        <a class="learn-more-link" href="/ru/what-is-sppb.html">Подробный справочник по доказательной базе и рекомендациям SPPB →</a>
       </div>
     </div>
   </section>
@@ -372,6 +400,51 @@
           <a href="/ru/validation.html" class="btn btn-secondary">Валидационные исследования</a>
           <p class="cta-hint">Три поля, около минуты — отвечаем в течение двух рабочих дней.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+<!-- References -->
+  <section class="section references-section" style="background-color: var(--color-white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Источники</span>
+        <h2>Источники</h2>
+      </div>
+
+      <div class="content-section" style="margin: 0 auto;">
+        <ol>
+          <li>
+            Bellettiere, J., LaMonte, M. J., Unkart, J. T., Liles, S., Laddu-Patel, D., Manson, J. E., … LaCroix, A. Z. (2020). Short Physical Performance Battery and incident cardiovascular events among older women. <em>Journal of the American Heart Association</em>, 9(14), e016845. <a href="https://doi.org/10.1161/JAHA.120.016845" target="_blank" rel="noopener noreferrer">https://doi.org/10.1161/JAHA.120.016845</a>
+          </li>
+          <li>
+            Buracchio, T., Dodge, H. H., Howieson, D., Wasserman, D., &amp; Kaye, J. (2010). The trajectory of gait speed preceding mild cognitive impairment. <em>Archives of Neurology</em>, 67(8), 980–986. <a href="https://doi.org/10.1001/archneurol.2010.159" target="_blank" rel="noopener noreferrer">https://doi.org/10.1001/archneurol.2010.159</a>
+          </li>
+          <li>
+            Guralnik, J. M., Ferrucci, L., Pieper, C. F., Leveille, S. G., Markides, K. S., Ostir, G. V., … Wallace, R. B. (2000). Lower extremity function and subsequent disability: Consistency across studies, predictive models, and value of gait speed alone compared with the Short Physical Performance Battery. <em>The Journals of Gerontology: Series A</em>, 55(4), M221–M231. <a href="https://doi.org/10.1093/gerona/55.4.M221" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/gerona/55.4.M221</a>
+          </li>
+          <li>
+            Kwon, S., Perera, S., Pahor, M., Katula, J. A., King, A. C., Groessl, E. J., &amp; Studenski, S. A. (2009). What is a meaningful change in physical performance? Findings from a research study in older adults (the LIFE-P Study). <em>The Journal of Nutrition, Health &amp; Aging</em>, 13(6), 538–544. <a href="https://doi.org/10.1007/s12603-009-0104-z" target="_blank" rel="noopener noreferrer">https://doi.org/10.1007/s12603-009-0104-z</a>
+          </li>
+          <li>
+            Lamers, F., Willemsen, G., van Roon, M., Smit, J. H., &amp; Penninx, B. W. J. H. (2017). The association between physical performance and risk of cognitive decline and dementia: A systematic review. <em>Ageing Research Reviews</em>, 35, 241–252. <a href="https://doi.org/10.1016/j.arr.2017.02.001" target="_blank" rel="noopener noreferrer">https://doi.org/10.1016/j.arr.2017.02.001</a>
+          </li>
+          <li>
+            Pavasini, R., Guralnik, J., Brown, J. C., Di Bari, M., Cesari, M., Landi, F., … Campo, G. (2016). Short Physical Performance Battery and all-cause mortality: Systematic review and meta-analysis. <em>BMC Medicine</em>, 14, 215. <a href="https://doi.org/10.1186/s12916-016-0763-7" target="_blank" rel="noopener noreferrer">https://doi.org/10.1186/s12916-016-0763-7</a>
+          </li>
+          <li>
+            Perera, S., Studenski, S., Chandler, J. M., &amp; Guralnik, J. M. (2005). Magnitude and patterns of decline in health and function in one year affect subsequent five-year survival. <em>The Journals of Gerontology: Series A</em>, 60(7), 894–900. <a href="https://doi.org/10.1093/gerona/60.7.894" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/gerona/60.7.894</a>
+          </li>
+          <li>
+            Welch, S. A., Ward, R. E., Beauchamp, M. K., Leveille, S. G., Travison, T., &amp; Bean, J. F. (2021). The Short Physical Performance Battery (SPPB): A quick and useful tool for fall risk stratification among older primary care patients. <em>Journal of the American Medical Directors Association</em>, 22(8), 1646–1651. <a href="https://doi.org/10.1016/j.jamda.2020.09.038" target="_blank" rel="noopener noreferrer">https://doi.org/10.1016/j.jamda.2020.09.038</a>
+          </li>
+          <li>
+            Volpato, S., Cavalieri, M., Sioulis, F., Guerra, G., Maraldi, C., Zuliani, G., … Guralnik, J. M. (2011). Predictive value of the Short Physical Performance Battery following hospitalization in older patients. <em>The Journals of Gerontology: Series A</em>, 66(1), 89–96. <a href="https://doi.org/10.1093/gerona/glq167" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/gerona/glq167</a>
+          </li>
+          <li>
+            Women's Health and Aging Study. (n.d.). The Women's Health and Aging Study: Health, function, and cognitive change. National Institute on Aging. <a href="https://www.nia.nih.gov/research/dbsr/womens-health-aging-study-health-function-and-cognitive-change" target="_blank" rel="noopener noreferrer">https://www.nia.nih.gov/research/dbsr/womens-health-aging-study-health-function-and-cognitive-change</a>
+          </li>
+        </ol>
       </div>
     </div>
   </section>

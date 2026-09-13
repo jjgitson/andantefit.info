@@ -54,6 +54,11 @@
     .policy-item-title { font-weight: 700; font-size: 1rem; color: var(--color-deep-blue); margin: 0 0 8px; }
     .policy-item-text { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.8; margin: 0; }
     @media (max-width: 768px) { .prognosis-layout { grid-template-columns: 1fr; } }
+      .jp-policy-list { display: grid; gap: 16px; max-width: 860px; margin: calc(var(--spacing-unit) * 3) auto 0; }
+    .jp-policy-item { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 20px 24px; }
+    .jp-policy-item h3 { font-size: 1rem; margin: 0 0 6px; color: var(--color-deep-blue); }
+    .jp-policy-item p { margin: 0; font-size: 0.9375rem; line-height: 1.85; color: var(--color-text-secondary); }
+    .source-note { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.7; font-style: italic; }
   </style>
 </head>
 <body>
@@ -247,6 +252,9 @@
           <li>Studenski S, Perera S, Patel K, et al. Gait speed and survival in older adults. <em>JAMA.</em> 2011;305(1):50–58.</li>
           <li>Buracchio TI, Dodge HH, Howieson D, Wasserman D, Kaye J. The trajectory of gait speed preceding mild cognitive impairment. <em>Arch Neurol.</em> 2010;67(8):980–986.</li>
           <li>Welch C, Hassan-Smith ZK, Greig CA, Lord JM, Jackson TA. Acute sarcopenia secondary to hospitalisation — an emerging condition affecting medical inpatients. <em>Gerontology.</em> 2018;64(2):158–166.</li>
+          <li>Chen LK, Woo J, Assantachai P, et al. Asian Working Group for Sarcopenia: 2019 consensus update on sarcopenia diagnosis and treatment. <em>J Am Med Dir Assoc.</em> 2020;21(3):300–307.e2. <a href="https://doi.org/10.1016/j.jamda.2019.12.012" target="_blank" rel="noopener noreferrer">https://doi.org/10.1016/j.jamda.2019.12.012</a></li>
+          <li>Satake S, Arai H. The revised Japanese version of the Cardiovascular Health Study criteria (the J-CHS criteria). <em>Geriatr Gerontol Int.</em> 2020;20(10):992–993. <a href="https://doi.org/10.1111/ggi.14005" target="_blank" rel="noopener noreferrer">https://doi.org/10.1111/ggi.14005</a></li>
+          <li>Welch SA, Ward RE, Beauchamp MK, Leveille SG, Travison T, Bean JF. The Short Physical Performance Battery (SPPB): A quick and useful tool for fall risk stratification among older primary care patients. <em>J Am Med Dir Assoc.</em> 2021;22(8):1646–1651. <a href="https://doi.org/10.1016/j.jamda.2020.09.038" target="_blank" rel="noopener noreferrer">https://doi.org/10.1016/j.jamda.2020.09.038</a></li>
           <li>Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci.</em> 2001;56(3):M146–M156. [Women's Health and Aging Study]</li>
         </ol>
       </details>
@@ -353,6 +361,72 @@
   </section>
 
   <!-- AndanteFit -->
+<section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">日本の制度との関係</span>
+        <h2>フレイル健診・介護予防のなかでSPPBはどこに位置づくか</h2>
+        <p>日本では高齢者の状態把握に質問票が広く用いられています。SPPBはそれを置き換えるものではなく、<strong>質問票で拾い上げた対象者の身体機能を実測で確認する</strong>役割を担います。</p>
+      </div>
+
+      <div class="jp-policy-list">
+        <div class="jp-policy-item">
+          <h3>後期高齢者の質問票（15項目）</h3>
+          <p>
+            後期高齢者医療の健診で用いられる自己記入式の質問票で、健康状態・食習慣・口腔・体重変化・運動習慣・社会参加などを幅広く把握します。
+            質問票は<strong>主観的な状態把握</strong>を目的としており、身体機能そのものを数値で測るものではありません。
+            そのため「運動・転倒」の項目でリスクが疑われた対象者に対して、SPPBのような実測評価を組み合わせることで、
+            機能低下の有無と程度を客観的な点数として確認できます。
+          </p>
+        </div>
+        <div class="jp-policy-item">
+          <h3>基本チェックリスト（25項目）</h3>
+          <p>
+            介護予防の対象者把握に用いられる質問票です。運動器機能の項目で該当した対象者について、
+            SPPBを実施すると<strong>0〜12点というひとつの尺度</strong>で機能水準を記録でき、
+            プログラム参加前後の変化を同じ物差しで比較できます。
+          </p>
+        </div>
+        <div class="jp-policy-item">
+          <h3>介護予防・日常生活支援総合事業／通いの場</h3>
+          <p>
+            通いの場や短期集中予防サービスでは、参加者の変化を示すアウトカム指標が求められます。
+            SPPBは<strong>反復測定に向いた指標</strong>であり、合計点の推移と、どのサブテストが改善したかを併せて示すことで、
+            事業評価と参加者へのフィードバックの両方に使えます。
+          </p>
+        </div>
+        <div class="jp-policy-item">
+          <h3>AWGS 2019（アジアのサルコペニア診断基準）</h3>
+          <p>
+            アジアサルコペニアワーキンググループ（AWGS）の2019年改訂では、身体機能低下の基準の一つとして
+            <strong>SPPB 9点以下</strong>が採用されています（ほかに6m歩行速度1.0m/秒未満、5回椅子立ち上がり12秒以上）。
+            日本でサルコペニアを評価する際、SPPBは診断基準に直接組み込まれた指標です。
+          </p>
+        </div>
+        <div class="jp-policy-item">
+          <h3>J-CHS基準（日本版フレイル表現型）</h3>
+          <p>
+            体重減少・筋力低下・疲労感・歩行速度・身体活動の5項目でフレイルを判定する基準です。
+            歩行速度と筋力（下肢）はSPPBのサブテストと重なる領域であり、
+            SPPBを併用すると<strong>フレイル判定の背景にある機能低下の内訳</strong>まで把握できます。
+          </p>
+        </div>
+        <div class="jp-policy-item">
+          <h3>心臓リハビリテーション・周術期</h3>
+          <p>
+            循環器領域では、フレイルが予後や治療方針の判断に影響することが国際的なステートメントで繰り返し示されています。
+            日本でも心臓リハビリテーションの現場でSPPBが用いられており、
+            <a href="./case-studies/2026-02-22-Heart-Failure-Cardiopulmonary-Rehab-SPPB-JP.html">心不全・心肺リハビリテーションにおけるSPPBの活用</a>で詳しく解説しています。 フレイルそのものの概念は<a href="./frailty.html">フレイルとは</a>で扱っています。
+          </p>
+        </div>
+      </div>
+
+      <p class="source-note" style="max-width: 860px; margin: calc(var(--spacing-unit) * 3) auto 0;">
+        ※ 制度の運用は自治体・保険者によって異なります。実際の運用にあたっては各実施主体の要領をご確認ください。
+      </p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <div class="section-header">

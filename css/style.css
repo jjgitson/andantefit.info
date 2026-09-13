@@ -1771,3 +1771,10 @@ a:hover {
 .section-frailty-prevention a:focus-visible {
   border-bottom-color: #ffffff;
 }
+
+/* Long unbreakable words - Russian headings especially - pushed the page a few
+ * pixels wider than a 320px viewport. break-word only engages when a word would
+ * otherwise overflow, so this changes nothing at normal widths. */
+h1, h2, h3, h4, .section-header h2, .hero-headline {
+  overflow-wrap: break-word;
+}

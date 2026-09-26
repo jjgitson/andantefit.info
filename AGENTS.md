@@ -49,6 +49,35 @@ AndanteFit is a static HTML website (GitHub Pages) for a clinical hardware devic
   tells Google a sitemap is worth re-reading. A page is included when its
   `rel=canonical` points at itself, so redirect stubs and per-locale English
   fallbacks stay out without a hand-kept exclusion list.
+- **Case-study lists are generated too.** Each locale's `case-studies.html` holds
+  its list and its field-filter chips between markers; both come from
+  `python3 tools/build-case-lists.py`. Do not hand-edit inside
+  `<!-- case-list:begin -->` or `<!-- case-filter:begin -->` — the next run
+  overwrites it. Titles are read from each article's own `<title>`, and
+  `noindex` articles are skipped.
+
+  **Adding a case study — the whole procedure:**
+
+  1. Create the article as `<locale>/case-studies/YYYY-MM-DD-Slug-XX.html`
+     (`XX` is `EN`/`KR`/`JP`/`ES`/`RU`). Copy the head, inline `<style>` and
+     footer/script paths from a recent article in that same locale — the
+     relative depths differ per locale, and `/jp/` uses `footer-jp.html`.
+     Self-canonical, and declare `hreflang` only for locales that actually
+     have a version.
+  2. Add the slug stem to `CATEGORY` in `tools/build-case-lists.py` so the
+     article lands under the right field chip. The stem is the filename
+     without the date and the language suffix, and it is shared across
+     locales — one entry covers all five. Skipping this is not fatal: the
+     article falls into `other` and still shows under "All".
+  3. Run both generators and commit what they change:
+
+     ```
+     python3 tools/build-case-lists.py
+     python3 tools/build-sitemaps.py
+     ```
+
+  Search Console needs nothing for this — the sitemap already lists the new
+  URL. Requesting indexing for it only speeds things up.
 - **Language routing** is handled by `js/language-manager.js` on every page load — it reads the browser's `navigator.language` and redirects to `/ko/`, `/es/`, or `/jp/` paths. Do not break synchronous script loading in `<head>`.
 - **Navigation** is dynamically injected into `<div id="navigation-container">` by `js/navigation.js`. The navigation HTML is not in individual page files.
 - **CSS variables** are defined at the top of `css/style.css`. Use these instead of hardcoded colors or sizes.

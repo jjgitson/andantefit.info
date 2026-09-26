@@ -1778,3 +1778,66 @@ a:hover {
 h1, h2, h3, h4, .section-header h2, .hero-headline {
   overflow-wrap: break-word;
 }
+
+/* Case-study field filter. The chips are generated into each index page by
+ * tools/build-case-lists.py, which only emits the fields that locale actually
+ * has, so the row stays short in locales with few articles. */
+.case-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 900px;
+  margin: 0 auto 22px;
+}
+
+.case-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.case-chip:hover {
+  border-color: var(--color-deep-blue-light);
+  color: var(--color-deep-blue);
+}
+
+.case-chip:focus-visible {
+  outline: 2px solid var(--color-deep-blue);
+  outline-offset: 2px;
+}
+
+.case-chip.is-active {
+  background: var(--color-deep-blue);
+  border-color: var(--color-deep-blue);
+  color: var(--color-white);
+}
+
+.case-chip-n {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.case-chip.is-active .case-chip-n { color: rgba(255, 255, 255, 0.75); }
+
+/* .report-item sets display:flex, which outranks the user-agent
+ * [hidden]{display:none} rule - without this the filter would set the
+ * attribute and the row would stay on screen. */
+.report-item[hidden] { display: none; }
+
+@media (max-width: 600px) {
+  .case-filter { gap: 6px; }
+  .case-chip { padding: 7px 12px; font-size: 0.8125rem; }
+}

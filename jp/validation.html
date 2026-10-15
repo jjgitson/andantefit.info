@@ -89,7 +89,7 @@ AndanteFitは、アジア（韓国、シンガポール）と北米の対象者�
             <span style="background-color: var(--color-deep-blue); color: white; padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">2020</span>
             <span style="color: var(--color-deep-blue); font-weight: 700; font-size: 0.875rem;">Clinical Interventions in Aging</span>
           </div>
-          <h3 class="card-title">全自動SPPBに基づく機能的身体年齢指標とフレイル状態判別研究</h3>
+          <h3 class="card-title">全自動SPPBに基づく身体年齢（Physiological Age）指標とフレイル状態判別研究</h3>
           <p class="publication-authors" style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 16px;">
             Hee-Won Jung, Taeyang Jin, Ji Yeon Baek, Seongjun Yoon, Eunju Lee, <strong style="color: var(--color-deep-blue);">Jack M. Guralnik</strong>, Il-Young Jang.
           </p>
@@ -178,18 +178,38 @@ AndanteFitは、アジア（韓国、シンガポール）と北米の対象者�
             論文を見る →
           </a>
         </div>
+
+        <!-- Study 7 -->
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <span style="background-color: var(--color-deep-blue); color: white; padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">2025</span>
+            <span style="color: var(--color-deep-blue); font-weight: 700; font-size: 0.875rem;">European Geriatric Medicine</span>
+          </div>
+          <h3 class="card-title">地域在住高齢者における改訂版eSPPBキオスクの検証研究</h3>
+          <p class="publication-authors" style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 16px;">
+            Daphne Zihui Yang, E. E. Rodrigues, Herb Howard C. Hernandez, Eng Hui Ong, Louise Heyzer, Cai Ning Tan, J. Kua, Noor Hafizah Ismail, Wee Shiong Lim.
+          </p>
+          <p class="card-description">
+            地域在住高齢者58名を対象に、改訂版マルチセンサーベースeSPPBキオスクを手動SPPBと比較検証し、相関係数 r 0.922（p &lt; 0.001）および優れた評価者間信頼性（ICC 0.92；95% CI 0.87–0.95）を報告しました。2週間後の再検査信頼性は両方式で同程度でした（eSPPB ICC 0.61、手動SPPB ICC 0.66）。
+          </p>
+          <a href="https://doi.org/10.1007/s41999-024-01151-2" target="_blank" rel="noopener noreferrer"
+             style="display: inline-block; margin-top: 12px; color: var(--color-deep-blue); font-weight: 600; font-size: 0.875rem;">
+            論文を見る →
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Evidence Bridge -->
-  <section class="section section-evidence-bridge">
+  <section class="section section-evidence-bridge" id="evidence-map">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Evidence Map</span>
         <h2>査読研究はAndanteFitをどのように裏付けているか</h2>
         <p>
           主要研究と現在のAndanteFitシステムを結ぶ構造化されたサマリー—研究者、臨床医、AI引用のために設計されています。
+          サイト上で表示される検証数値はすべてこの表を基準としており、1つの数値に1つの論文を対応させて管理しています。
         </p>
       </div>
 
@@ -220,18 +240,18 @@ AndanteFitは、アジア（韓国、シンガポール）と北米の対象者�
           </div>
           <div class="eb-map-row">
             <div class="eb-claim">手動SPPBと比較した自動化測定の一致度が高い。</div>
-            <div class="eb-evidence"><strong>JAGS 2019</strong> — 合計点 ICC 0.97；kappa 0.79</div>
+            <div class="eb-evidence"><strong>JAGS 2019</strong>（Jung et al.）— 合計点 ICC 0.97；kappa 0.79</div>
           </div>
           <div class="eb-map-row">
             <div class="eb-claim">臨床運用環境でも信頼性と一致度が裏付けられている。</div>
-            <div class="eb-evidence"><strong>AGMR 2022</strong> — ICC 0.94；平均差 −0.2</div>
+            <div class="eb-evidence"><strong>AGMR 2022</strong>（Hernandez et al.）— ICC 0.94（95% CI 0.88–0.97）；平均差 −0.2</div>
           </div>
           <div class="eb-map-row">
             <div class="eb-claim">地域社会環境でも拡張可能性を示している。</div>
-            <div class="eb-evidence"><strong>Eur Geriatr Med 2025</strong> — r 0.922；評価者間 ICC 0.92；再検査 ICC 0.61</div>
+            <div class="eb-evidence"><strong>Eur Geriatr Med 2025</strong>（Yang et al.）— r 0.922；評価者間 ICC 0.92（95% CI 0.87–0.95）；再検査 ICC 0.61</div>
           </div>
           <div class="eb-map-row">
-            <div class="eb-claim">機能的年齢は実年齢よりもフレイルスクリーニング能力が高い。</div>
+            <div class="eb-claim">身体年齢は実年齢よりもフレイルスクリーニング能力が高い。</div>
             <div class="eb-evidence"><strong>CIA 2020</strong> — C-statistic 0.912 vs. 0.637</div>
           </div>
           <div class="eb-map-row">
@@ -243,12 +263,12 @@ AndanteFitは、アジア（韓国、シンガポール）と北米の対象者�
 
       <!-- D. 기능적 연령 심화 -->
       <div class="eb-functional-age">
-        <p class="eb-functional-age-title">機能的年齢の詳細分析 (CIA 2020)</p>
-        <p class="eb-formula">機能的年齢 = 83.61 − 1.98 × バランススコア − 5.21 × 歩行速度(m/s) + 0.23 × 椅子立ち上がり時間(s)</p>
+        <p class="eb-functional-age-title">身体年齢の詳細分析（CIA 2020・論文表記 functional age）</p>
+        <p class="eb-formula">身体年齢 = 83.61 − 1.98 × バランススコア − 5.21 × 歩行速度(m/s) + 0.23 × 椅子立ち上がり時間(s)</p>
         <div class="eb-stats">
           <div class="eb-stat">
             <span class="eb-stat-value">0.912</span>
-            <span class="eb-stat-label">機能的年齢 C-statistic</span>
+            <span class="eb-stat-label">身体年齢 C-statistic</span>
           </div>
           <div class="eb-stat">
             <span class="eb-stat-value">0.637</span>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    system.html is not a page of this site; product.html is. The URL exists only
+    because external material (slide decks, printed brochures) has used
+    /system.html, and a 404 there is worse than a redirect.
+
+    The canonical URL for the system/product overview is https://andantefit.info/ru/product.html.
+
+    GitHub Pages serves static files and cannot issue an HTTP 301, so this is the
+    strongest permanent-redirect signal available: rel=canonical to the target,
+    a zero-delay meta refresh (which Google treats as a permanent redirect), and
+    a scripted replace() so the browser does not keep this URL in its history.
+    Deliberately not noindex: that directive conflicts with rel=canonical and
+    would stop the signal consolidating into the target at all.
+  -->
+  <link rel="canonical" href="https://andantefit.info/ru/product.html" />
+  <meta http-equiv="refresh" content="0; url=https://andantefit.info/ru/product.html">
+  <title>Страница перемещена: о системе | AndanteFit</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      line-height: 1.7;
+    }
+    .redirect-card {
+      max-width: 520px;
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    h1 { font-size: 1.25rem; margin: 0 0 12px; }
+    p { color: #475569; font-size: 0.9375rem; margin: 0 0 20px; }
+    a.go {
+      display: inline-block;
+      background-color: #0F4C81;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 6px;
+    }
+  </style>
+  <script>
+    // replace() rather than assign(), so the browser Back button returns to
+    // wherever the visitor came from instead of bouncing through this page.
+    window.location.replace('https://andantefit.info/ru/product.html');
+  </script>
+</head>
+<body>
+  <div class="redirect-card">
+    <h1>Страница перемещена</h1>
+    <p>Описание системы AndanteFit теперь находится на странице продукта.</p>
+    <p><a class="go" href="https://andantefit.info/ru/product.html">Перейти на /ru/product.html →</a></p>
+  </div>
+</body>
+</html>

@@ -10,11 +10,11 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:title" content="Product - AndanteFit">
-  <meta property="og:description" content="身体機能評価ソリューション AndanteFit：簡易身体能力バッテリー（SPPB）を3分以内に全自動で実施し、レポートと身体年齢、フレイル指数（Clinical Frailty Scale, CFS）を自動生成します。">
+  <meta property="og:description" content="身体機能評価ソリューション AndanteFit：簡易身体能力バッテリー（SPPB）を3分以内に全自動で実施し、レポートと身体年齢（Physiological Age）、フレイル指数（Frailty Index）を自動生成します。">
   <meta property="og:image" content="/assets/andantefit-logo.png">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Product - AndanteFit">
-  <meta name="twitter:description" content="身体機能評価ソリューション AndanteFit：簡易身体能力バッテリー（SPPB）を3分以内に全自動で実施し、レポートと身体年齢、フレイル指数（Clinical Frailty Scale, CFS）を自動生成します。">
+  <meta name="twitter:description" content="身体機能評価ソリューション AndanteFit：簡易身体能力バッテリー（SPPB）を3分以内に全自動で実施し、レポートと身体年齢（Physiological Age）、フレイル指数（Frailty Index）を自動生成します。">
 <link rel="icon" href="/favicon.ico" sizes="any">
 
   <title>Product - AndanteFit</title>
@@ -52,7 +52,8 @@
         <br><br>
         標準的な検査所要時間：3分以内。
         <br><br>
-        各SPPB検査後にレポートが自動生成され、SPPB結果とともに推定フレイル指数（CFS）、身体年齢指標などを提供します。
+        各SPPB検査後にレポートが自動生成され、SPPB結果とともにフレイル指数（Frailty Index）、身体年齢（Physiological Age）などを提供します。
+        フレイル指数は高齢者総合機能評価（CGA）に基づく欠損累積指数で、0〜0.14を健常、0.15〜0.24をプレフレイル、0.25以上をフレイルとして区分します。
       </p>
     </div>
   </section>
@@ -61,7 +62,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-label">デモ</span>
-        <h2>AndanteFitで約3分以内にSPPBを実施</h2>
+        <h2>AndanteFitで3分以内にSPPBを実施</h2>
       </div>
 
       <div class="video-wrapper" style="max-width: 900px; margin: 0 auto;">
@@ -234,31 +235,43 @@
         <h2>効率性の根拠</h2>
       </div>
 
-      <div class="grid grid-3">
+      <div class="grid grid-2">
         <div class="card">
-          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">&lt;3 min</h3>
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">ICC 0.97</h3>
           <p class="card-description">
-            <strong>対象者1人あたりの平均検査時間。</strong> 手動検査（通常5〜8分）と比較して検査時間を短縮しました
-            （Jung et al., 2019）。
+            <strong>手動SPPB合計点との一致度。</strong> 熟練した検査者による手動SPPBと比較し、合計点ICC 0.97、kappa 0.79を報告しました
+            （Jung et al., 2019, <em>JAGS</em>）。
           </p>
         </div>
 
         <div class="card">
-          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">r = 0.92</h3>
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">ICC 0.94</h3>
           <p class="card-description">
-            <strong>手動SPPBとの相関。</strong> 各構成要素全体で高い一致度が報告されました
-            （Park et al., 2021）。
+            <strong>臨床現場での信頼性。</strong> 転倒・バランス外来においてICC 0.94（95% CI 0.88–0.97）、手動SPPBとの平均差 −0.2を
+            報告しました（Hernandez et al., 2022, <em>AGMR</em>）。
           </p>
         </div>
 
         <div class="card">
-          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">ICC &gt; 0.90</h3>
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">r = 0.922</h3>
           <p class="card-description">
-            <strong>検査者間信頼性。</strong> 検査者や施設が異なっても一貫した結果が報告されました
-            （Hernandez et al., 2022）。
+            <strong>手動SPPBとの相関。</strong> 地域在住高齢者において相関係数 r 0.922、評価者間ICC 0.92（95% CI 0.87–0.95）を
+            報告しました（Yang et al., 2025, <em>Eur Geriatr Med</em>）。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">&lt;3分</h3>
+          <p class="card-description">
+            <strong>対象者1人あたりの検査時間。</strong> 外来高齢患者124名を対象とした研究で、自動SPPBの平均測定時間は124.8秒でした
+            （Park et al., 2021, <em>Sensors</em>）。
           </p>
         </div>
       </div>
+
+      <p class="card-description" style="margin-top: 32px; text-align: center;">
+        上記の数値と出典は<a href="validation.html#evidence-map">臨床検証 · Evidence Map</a>に一つの表として整理されています。
+      </p>
     </div>
   </section>
 
@@ -281,7 +294,7 @@
         <div class="card">
           <h3 class="card-title">検査フロー</h3>
           <ul style="line-height: 1.9; color: var(--color-text-secondary);">
-            <li>標準的な検査所要時間：約3分</li>
+            <li>標準的な検査所要時間：3分以内</li>
             <li>自動スコア算出およびレポート生成</li>
             <li>手動タイミングおよびスコアリング不要</li>
           </ul>

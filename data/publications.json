@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-13",
+  "lastUpdated": "2026-10-15",
   "publications": [
     {
       "year": "2026",
@@ -9,6 +9,15 @@
       "volume": "15(8)",
       "pages": "3093",
       "doi": "https://doi.org/10.3390/jcm15083093"
+    },
+    {
+      "year": "2025",
+      "title": "Validation of the revised multi-sensor-based electronic Short Physical Performance Battery (eSPPB) kiosk in community-dwelling older adults",
+      "authors": "Daphne Zihui Yang, E. E. Rodrigues, Herb Howard C. Hernandez, Eng Hui Ong, Louise Heyzer, Cai Ning Tan, J. Kua, Noor Hafizah Ismail, Wee Shiong Lim",
+      "journal": "European Geriatric Medicine",
+      "volume": "16(3)",
+      "pages": "975-983",
+      "doi": "https://doi.org/10.1007/s41999-024-01151-2"
     },
     {
       "year": "2025",

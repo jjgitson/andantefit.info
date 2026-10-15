@@ -52,7 +52,8 @@
         <br><br>
         일반적인 검사 소요 시간: 3분 이내.
         <br><br>
-        각 SPPB 검사 후 결과지(리포트)가 자동 생성되며, SPPB 결과와 함께 추정 노쇠 지수(CFS), 신체 나이 지표 등을 제공합니다.
+        각 SPPB 검사 후 결과지(리포트)가 자동 생성되며, SPPB 결과와 함께 노쇠 지수(Frailty Index), 신체 나이(Physiological Age) 등을 제공합니다.
+        노쇠 지수는 포괄적 노인평가(CGA) 기반 결손 누적 지수로, 0~0.14 강건 · 0.15~0.24 전노쇠 · 0.25 이상 노쇠로 구분합니다.
       </p>
     </div>
   </section>
@@ -61,7 +62,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-label">데모</span>
-        <h2>AndanteFit으로 약 3분 내 SPPB 수행</h2>
+        <h2>AndanteFit으로 3분 이내 SPPB 수행</h2>
       </div>
 
       <div class="video-wrapper" style="max-width: 900px; margin: 0 auto;">
@@ -145,7 +146,7 @@
           <h3 class="card-title">즉시 점수 산출</h3>
           <p class="card-description">
             <strong>실시간 계산:</strong> 검사 종료 후 즉시 SPPB 점수를 산출합니다.
-            AWGS 2019 및 국제 가이드라인의 컷오프 기준을 적용하였습니다. 노쇠지수, 신체나이의 경우 대규모 연구 결과를 바탕으로 합니다. 
+            AWGS 2019 및 국제 가이드라인의 컷오프 기준을 적용하였습니다. 노쇠 지수와 신체 나이는 대규모 연구 결과를 바탕으로 산출합니다. 
           </p>
         </div>
       </div>
@@ -234,31 +235,43 @@
         <h2>효율성 근거</h2>
       </div>
 
-      <div class="grid grid-3">
+      <div class="grid grid-2">
         <div class="card">
-          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">&lt;3 min</h3>
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">ICC 0.97</h3>
           <p class="card-description">
-            <strong>대상자 1인당 평균 검사 시간.</strong> 수동 검사(일반적으로 5–8분) 대비 검사 시간을 줄였습니다
-            (Jung et al., 2019).
+            <strong>수동 SPPB 총점과의 일치도.</strong> 숙련된 검사자의 수동 SPPB와 비교해 총점 ICC 0.97, kappa 0.79를 보고했습니다
+            (Jung et al., 2019, <em>JAGS</em>).
           </p>
         </div>
 
         <div class="card">
-          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">r = 0.92</h3>
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">ICC 0.94</h3>
           <p class="card-description">
-            <strong>수동 SPPB와의 상관.</strong> 구성 요소 전반에서 높은 일치도를 보고했습니다
-            (Park et al., 2021).
+            <strong>임상 현장 신뢰도.</strong> 낙상·균형 클리닉 환경에서 ICC 0.94(95% CI 0.88–0.97), 수동 SPPB와의 평균차 −0.2를
+            보고했습니다 (Hernandez et al., 2022, <em>AGMR</em>).
           </p>
         </div>
 
         <div class="card">
-          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">ICC &gt; 0.90</h3>
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">r = 0.922</h3>
           <p class="card-description">
-            <strong>검사자 간 신뢰도.</strong> 검사자 및 기관이 달라져도 일관된 결과를 보고했습니다
-            (Hernandez et al., 2022).
+            <strong>수동 SPPB와의 상관.</strong> 지역사회 거주 고령자에서 상관계수 r 0.922, 평가자 간 ICC 0.92(95% CI 0.87–0.95)를
+            보고했습니다 (Yang et al., 2025, <em>Eur Geriatr Med</em>).
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="font-size: 2.5rem; color: var(--color-deep-blue);">&lt;3분</h3>
+          <p class="card-description">
+            <strong>대상자 1인당 검사 시간.</strong> 외래 고령 환자 124명을 대상으로 한 연구에서 자동 SPPB의 평균 측정 시간은 124.8초였습니다
+            (Park et al., 2021, <em>Sensors</em>).
           </p>
         </div>
       </div>
+
+      <p class="card-description" style="margin-top: 32px; text-align: center;">
+        위 수치와 출처는 <a href="validation.html#evidence-map">임상 검증 · Evidence Map</a>에 하나의 표로 정리되어 있습니다.
+      </p>
     </div>
   </section>
 
@@ -281,7 +294,7 @@
         <div class="card">
           <h3 class="card-title">검사 흐름</h3>
           <ul style="line-height: 1.9; color: var(--color-text-secondary);">
-            <li>일반적인 검사 소요 시간: 약 3분</li>
+            <li>일반적인 검사 소요 시간: 3분 이내</li>
             <li>자동 점수 산출 및 결과지(리포트) 생성</li>
             <li>수동 타이밍 및 점수화 불필요</li>
           </ul>

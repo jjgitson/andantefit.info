@@ -64,6 +64,7 @@ CATEGORY = {
     'SPPB-Utilization-Spain': 'policy',
     'Tokyo-Oral-Frailty-Manual': 'policy',
     'SPPB-Occupational-Health': 'policy',
+    'UN-Decade-Healthy-Ageing-Midterm-Report': 'policy',
 
     'Sarcopenia-Drug-Development-SPPB': 'research',
     'Sarcopenia-Management-Korea': 'research',

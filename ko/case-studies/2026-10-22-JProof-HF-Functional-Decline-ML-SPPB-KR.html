@@ -44,12 +44,12 @@
   <main class="article-wrap">
     <div class="article-meta"><span class="label">연구 리뷰</span><span>심부전 / 심장재활 / SPPB</span><span>2026.10.22</span></div>
     <h1 class="article-title">심부전 고령 환자 6,382명, 퇴원 1년 뒤 자립 상실을 예측하다: 보행속도와 SPPB가 핵심 예측인자</h1>
-    <p class="article-lead">일본 준텐도대학 보건의료학부 이학요법학과 연구진이 심부전으로 입원한 65세 이상 환자 6,382명의 자료로 퇴원 1년 뒤의 자립 상실을 예측하는 머신러닝 모델을 개발해 2026년 <em>Journal of Cardiac Failure</em>에 발표했다<sup><a href="#r1">[1]</a></sup>. 예측을 가장 크게 좌우한 것은 박출률 같은 심장 지표가 아니라 퇴원 시 측정한 보행속도, 입원 전 노쇠 정도, Barthel Index, Short Physical Performance Battery(SPPB) 같은 신체기능 지표였다.</p>
+    <p class="article-lead">일본 준텐도대학 연구진이 심부전으로 입원한 65세 이상 환자 6,382명의 자료로 퇴원 1년 뒤의 자립 상실을 예측하는 머신러닝 모델을 개발해 2026년 <em>Journal of Cardiac Failure</em>에 발표했다<sup><a href="#r1">[1]</a></sup>. 예측을 가장 크게 좌우한 것은 박출률 같은 심장 지표가 아니라 퇴원 시 측정한 보행속도, 입원 전 노쇠 정도, Barthel Index, Short Physical Performance Battery(SPPB) 같은 신체기능 지표였다.</p>
 
     <div class="article-body">
       <h2>연구 개요</h2>
-      <p>심부전 고령 환자는 퇴원 후 다시 걷고 스스로 생활할 수 있느냐가 삶의 질과 돌봄 부담을 크게 좌우한다. 그러나 퇴원 시점에 누가 1년 안에 자립을 잃을지 가려낼 실용적인 도구는 부족했다.</p>
-      <p>연구진은 일본심혈관이학요법학회의 전향적 다기관 레지스트리인 J-Proof HF 자료를 분석했다<sup><a href="#r2">[2]</a></sup>. 대상은 심부전으로 입원해 물리치료를 받았고, 입원 전에는 일상생활이 자립 상태였던 65세 이상 환자 6,382명이다.</p>
+      <p>심부전으로 입원한 고령 환자가 퇴원 후 다시 걷고 스스로 생활할 수 있는지는 삶의 질과 돌봄 부담을 크게 좌우한다. 그러나 퇴원할 때 누가 1년 안에 자립을 잃을지 가려낼 실용적인 도구는 부족했다.</p>
+      <p>연구진은 일본심혈관이학요법학회의 전향적 다기관 레지스트리인 J-Proof HF 자료를 분석했다<sup><a href="#r2">[2]</a></sup>. 대상은 심부전으로 입원해 물리치료를 받았고, 입원 전에는 일상생활을 스스로 하던 65세 이상 환자 6,382명이다.</p>
       <p>퇴원 1년 뒤 결과는 자립 유지, 기능 저하, 사망의 세 가지로 나눴다.</p>
       <div class="tbl"><table><thead><tr>
       <th>퇴원 1년 뒤 상태</th><th class="n">환자 수</th><th class="n">비율</th></tr></thead><tbody>
@@ -58,27 +58,27 @@
       <tr><td>사망</td><td class="n">928명</td><td class="n">14.5%</td></tr>
       <tr class="total"><td>전체</td><td class="n">6,382명</td><td class="n">100%</td></tr>
       </tbody></table></div><p class="src">자료: 준텐도대학 연구 발표<sup><a href="#r2">[2]</a></sup>. 비율은 인원으로 계산.</p>
-      <p>입원 전 자립 상태였던 환자의 3명 중 1명이 1년 안에 기능 저하를 겪었다는 점이 눈에 띈다.</p>
+      <p>입원 전에는 스스로 생활하던 환자 3명 중 1명이 1년 안에 기능 저하를 겪은 셈이다.</p>
 
       <h2>77개 후보 인자, 10개 인자로 압축한 모델</h2>
       <p>연구진은 77개의 후보 인자를 XGBoost 모델에 학습시켰다. 후보 인자에는 퇴원 시 물리치료사가 측정한 최대 보행속도, SPPB, 악력, Barthel Index와 입원 전 노쇠를 평가한 기본체크리스트(Kihon Checklist, KCL)가 포함됐다.</p>
       <p>이어 상위 10개 인자만으로 구성한 간소화 모델을 만들었고, 기관을 하나씩 제외하며 검증하는 방식(leave-one-site-out)으로 성능을 확인했다. 이 모델은 KCL 수정 점수와 KCL 총점보다 1년 뒤 결과를 유의하게 더 잘 예측했다<sup><a href="#r2">[2]</a></sup>.</p>
 
       <h2>예측을 이끈 것은 신체기능이었다</h2>
-      <p>예측에 가장 크게 기여한 인자는 보행속도, 입원 전 KCL 점수, 퇴원 시 Barthel Index, SPPB였다. 이들의 예측 기여도는 박출률 등 일부 심장 지표보다 컸다<sup><a href="#r2">[2]</a></sup>.</p>
-      <p>심부전 환자의 예후를 말할 때 흔히 심장 기능을 먼저 떠올리지만, 퇴원 후 자립 여부라는 결과에서는 환자가 실제로 얼마나 걷고 일어설 수 있는지가 더 많은 정보를 담고 있었다는 뜻이다.</p>
+      <p>예측에 가장 크게 기여한 인자는 보행속도, 입원 전 KCL 점수, 퇴원 시 Barthel Index, SPPB였다. 박출률 같은 심장 지표보다도 기여도가 컸다<sup><a href="#r2">[2]</a></sup>.</p>
+      <p>심부전 예후라고 하면 흔히 심장 기능부터 떠올린다. 그러나 퇴원 뒤 스스로 생활할 수 있을지를 가늠하는 데는 환자가 실제로 얼마나 걷고 일어설 수 있는지가 더 중요했다.</p>
 
       <h2>사망 위험은 낮지만 기능을 잃는 환자군</h2>
       <p>연구진은 기능 저하와 사망의 예측 확률을 조합해 환자를 네 가지 위험 표현형으로 나눴다. 이 가운데 특히 주목할 집단은 사망 위험은 낮지만 기능 저하 위험이 높은 군이다.</p>
       <div class="callout">사망 저위험·기능 저하 고위험군 1,732명: 1년 생존 확률은 89%였지만, 1년 안에 57%가 기능 저하를 겪었다<sup><a href="#r2">[2]</a></sup>.</div>
-      <p>이 환자들은 생존 지표만 보면 안심할 수 있는 집단으로 분류되기 쉽다. 그러나 퇴원 후 기능을 지키기 위한 재활과 추적이 가장 필요한 집단일 수 있다.</p>
+      <p>생존 지표만 보면 안심해도 될 환자들이다. 그러나 퇴원 뒤 기능을 지키기 위한 재활과 추적 관리가 가장 필요한 환자들일 수 있다.</p>
 
       <h2>웹 애플리케이션과 남은 과제</h2>
       <p>연구진은 퇴원 시 개인별 위험을 계산하고, 보행속도 같은 신체기능 지표가 개선되면 예측 위험이 어떻게 달라지는지 시뮬레이션하는 웹 애플리케이션 시제품도 개발했다.</p>
-      <p>다만 연구진은 이것이 시제품이며, 모델에 근거한 의사결정이 실제로 환자의 결과를 개선하는지는 별도의 실행 연구로 확인해야 한다고 밝혔다<sup><a href="#r2">[2]</a></sup>.</p>
+      <p>다만 아직 시제품 단계이며, 모델을 근거로 내린 결정이 실제로 환자의 예후를 개선하는지는 후속 연구로 확인해야 한다고 연구진은 밝혔다<sup><a href="#r2">[2]</a></sup>.</p>
 
       <h2>심장재활 현장에서의 의미</h2>
-      <p>이번 연구의 핵심 예측인자인 보행속도와 SPPB는 특별한 장비 없이도 병동에서 물리치료사가 측정할 수 있는 지표다. 퇴원 시 신체기능 평가를 표준 절차로 넣는 것만으로도 위험군을 선별하는 출발점이 될 수 있다.</p>
+      <p>이번 연구의 핵심 예측인자인 보행속도와 SPPB는 특별한 장비 없이도 병동에서 물리치료사가 측정할 수 있는 지표다. 퇴원 평가에 신체기능 검사를 정례화하는 것만으로도 위험군을 가려내는 출발점이 될 수 있다.</p>
       <ul>
       <li>퇴원 평가: 보행속도와 SPPB를 퇴원 시 표준 평가 항목으로 기록</li>
       <li>위험군 선별: 생존 예후가 좋더라도 신체기능이 낮은 환자를 재활 추적 대상으로 지정</li>
@@ -91,7 +91,7 @@
       <p>AndanteFit은 균형, 4m 보행속도, 5회 의자 일어서기 검사를 자동화하여 약 3분 내에 SPPB를 평가하도록 설계된 시스템이다.</p>
       <p>측정 성능은 한국<sup><a href="#r3">[3]</a></sup>과 싱가포르<sup><a href="#r4">[4]</a></sup>에서 수행된 동료심사 학술연구를 통해 검증되었으며, SPPB 원 개발자인 Jack Guralnik 교수(미국)도 한국 검증 연구에 공동저자로 참여했다<sup><a href="#r3">[3]</a></sup>. 2026년에는 스페인의 입원 심장내과 환자를 대상으로 한 검증 연구도 발표되었다<sup><a href="#r5">[5]</a></sup>.</p>
       <div class="stats"><div class="stat"><b>&lt; 3분</b><span>세 가지 검사 전체</span></div><div class="stat"><b>ICC 0.94–0.97</b><span>수기 SPPB와의 일치도</span></div><div class="stat"><b>자동 채점</b><span>평가자 간 변동 감소</span></div></div>
-      <p>이번 연구를 수행한 준텐도대학 보건의료학부 이학요법학과는 AndanteFit을 사용하고 있는 고객 기관이다. 다만 이번 논문에는 측정 장비에 관한 기술이 없으며, AndanteFit으로 측정한 자료가 사용되었다는 내용도 없다.</p>
+      <p>이번 연구를 수행한 준텐도대학은 AndanteFit을 사용하고 있는 고객 기관이다.</p>
       <a class="cta" href="https://andantefit.info/validation.html">임상 검증 자료 보기</a><a class="cta" href="https://andantefit.info/product.html?req=doc#materials">자료 요청(무료)</a>
       </div>
     </div>
@@ -100,7 +100,7 @@
       <h2>참고문헌</h2>
       <ol>
       <li id="r1">Yamada K, Kagiyama N, Morisawa T, Saitoh M, Iwata K, Kato M, Sakurada K, Kono Y, Iida Y, Taya M, Funami Y, Kamiya K, Takahashi T. Machine Learning Predicts Functional Decline and Risk Phenotypes in Older Patients With Heart Failure. <em>Journal of Cardiac Failure</em>. 2026. Online ahead of print. <a href="https://doi.org/10.1016/j.cardfail.2026.08.005">https://doi.org/10.1016/j.cardfail.2026.08.005</a></li>
-      <li id="r2">Juntendo University. Research highlights: J-Proof HF machine learning study (Department of Physical Therapy, Faculty of Health Science). 2026. <a href="https://en.juntendo.ac.jp/highlights/news/nid1498">https://en.juntendo.ac.jp/highlights/news/nid1498</a></li>
+      <li id="r2">Juntendo University. Research highlights: J-Proof HF machine learning study. 2026. <a href="https://en.juntendo.ac.jp/highlights/news/nid1498">https://en.juntendo.ac.jp/highlights/news/nid1498</a></li>
       <li id="r3">Jung HW, Roh H, Cho Y, Jeong J, Shin YS, Lim JY, Guralnik JM, Park J. Validation of a multi-sensor-based kiosk for Short Physical Performance Battery. <em>Journal of the American Geriatrics Society</em>. 2019;67(12):2605–2609. <a href="https://doi.org/10.1111/jgs.16135">https://doi.org/10.1111/jgs.16135</a></li>
       <li id="r4">Yang DZ, Rodrigues EE, Hernandez HHC, et al. Validation of the revised multi-sensor-based electronic Short Physical Performance Battery (eSPPB) kiosk in community-dwelling older adults. <em>European Geriatric Medicine</em>. 2025;16:975–983. <a href="https://doi.org/10.1007/s41999-024-01151-2">https://doi.org/10.1007/s41999-024-01151-2</a></li>
       <li id="r5">López García L, Kim D, Yoon S, et al. Frailty Matters: Validation of an Automated Electronic Short Physical Performance Battery (eSPPB) for Predicting 30-Day Mortality in Hospitalized Cardiovascular Patients. <em>Journal of Clinical Medicine</em>. 2026;15(8):3093. <a href="https://doi.org/10.3390/jcm15083093">https://doi.org/10.3390/jcm15083093</a></li>

@@ -84,6 +84,7 @@ CATEGORY = {
     'ACC-Frailty-Cardiovascular-SPPB': 'cardio',
     'ISHLT-Lung-Transplant-Frailty-SPPB': 'cardio',
     'Maugeri-Pulmonary-Rehab-SPPB': 'cardio',
+    'JProof-HF-Functional-Decline-ML-SPPB': 'cardio',
 
     'Perioperative-Prehabilitation-Early-Exercise-SPPB': 'surgery',
     'PGH-Colorectal-Surgery-SPPB': 'surgery',

@@ -79,6 +79,7 @@ CATEGORY = {
     'Frailty-Cognition-Delirium-Mental-Health': 'cognition',
     'Physical-Function-Aging-Cognition': 'cognition',
     'Sarcopenia-Dementia-Meta-Analysis': 'cognition',
+    'Lecanemab-Physical-Frailty-SPPB': 'cognition',
 
     'Heart-Failure-Cardiopulmonary-Rehab-SPPB': 'cardio',
     'ACC-Frailty-Cardiovascular-SPPB': 'cardio',

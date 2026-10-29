@@ -60,4 +60,3 @@ async function formScenario(ok) {
   assert.doesNotMatch(read('js/main.js'),/injectCopyForAIButton/);
   console.log('Passed: language preferences, Japanese routing, query/hash preservation, success/error form states, duplicate-submit guard, confirmed-lead analytics, five-language inline-script syntax, and directory counts.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
-

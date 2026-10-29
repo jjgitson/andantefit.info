@@ -14,13 +14,14 @@
   // 홈페이지에서만 실행 — 콘텐츠 페이지(product, validation, references, case-studies 등)에서는 리다이렉트 없음
   if (path !== '/' && path !== '/index.html') return;
 
-  var SUPPORTED_LANGS = ['en', 'ko', 'es', 'ru'];
+  var SUPPORTED_LANGS = ['en', 'ko', 'es', 'jp', 'ru'];
   var KNOWN_PAGES = ['index.html', 'product.html', 'case-studies.html', 'validation.html', 'references.html'];
 
   // ── 1. localStorage 저장된 설정 확인 ─────────────────────────────
-  var saved = localStorage.getItem('lang_preference');
+  var saved = null;
+  try { saved = localStorage.getItem('lang_preference'); } catch (e) { /* Storage may be disabled. */ }
   if (saved === 'en') return;                        // 영어 명시 선택 → 리다이렉트 안 함
-  if (saved === 'ko' || saved === 'es' || saved === 'ru') {
+  if (saved === 'ko' || saved === 'es' || saved === 'jp' || saved === 'ru') {
     redirect(saved);
     return;
   }
@@ -35,6 +36,7 @@
 
   for (var i = 0; i < langs.length; i++) {
     var code = langs[i].toLowerCase();
+    if (code === 'ja' || code.startsWith('ja-')) { redirect('jp'); return; }
     if (code === 'ko' || code.startsWith('ko-')) { redirect('ko'); return; }
     if (code === 'es' || code.startsWith('es-')) { redirect('es'); return; }
     if (code === 'ru' || code.startsWith('ru-')) { redirect('ru'); return; }
@@ -47,6 +49,6 @@
     var segments = path.split('/').filter(Boolean);
     var filename = segments[segments.length - 1] || 'index.html';
     if (KNOWN_PAGES.indexOf(filename) === -1) filename = 'index.html';
-    window.location.replace('/' + lang + '/' + filename);
+    window.location.replace('/' + lang + '/' + filename + window.location.search + window.location.hash);
   }
 })();

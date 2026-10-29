@@ -196,7 +196,7 @@ a:hover {
   line-height: 1;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1199px) {
   /* Desktop nav elements stay hidden on mobile/tablet — overlay handles navigation.
      Breakpoint raised to 992px so the 6-item menu (with wide CJK labels) collapses
      to the hamburger before it gets cramped, instead of wrapping. */
@@ -338,7 +338,7 @@ a:hover {
   to   { opacity: 1; }
 }
 
-@media (min-width: 993px) {
+@media (min-width: 1200px) {
   /* Overlay only for mobile/tablet — never shown on desktop */
   .nav-overlay { display: none !important; }
 }
@@ -902,53 +902,6 @@ a:hover {
    Targets 500–700 range colors on light backgrounds only.
    Light tones (100–400, used on dark backgrounds) are intentionally excluded.
    Chart colors are JS-based (Chart.js) and unaffected by this rule. */
-/* ── Copy for AI button ─────────────────────────────────────────────────── */
-.copy-for-ai-btn {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 8000;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background-color: #ffffff;
-  color: #0F4C81;
-  border: 1.5px solid #0F4C81;
-  border-radius: 20px;
-  font-family: var(--font-family, sans-serif);
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1;
-  cursor: pointer;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-  white-space: nowrap;
-}
-
-.copy-for-ai-btn:hover,
-.copy-for-ai-btn:focus-visible {
-  background-color: #0F4C81;
-  color: #ffffff;
-  box-shadow: 0 4px 20px rgba(15, 76, 129, 0.3);
-  outline: none;
-}
-
-@media print {
-  .copy-for-ai-btn { display: none; }
-}
-
-@media (max-width: 480px) {
-  .copy-for-ai-btn {
-    bottom: 16px;
-    right: 16px;
-    font-size: 0.75rem;
-    padding: 7px 12px;
-  }
-}
-
-/* ──────────────────────────────────────────────────────────────────────────── */
-
 .text-teal-500, .text-teal-600, .text-teal-700,
 .text-blue-600, .text-blue-700,
 .text-sky-500, .text-sky-700,
@@ -1840,4 +1793,31 @@ h1, h2, h3, h4, .section-header h2, .hero-headline {
 @media (max-width: 600px) {
   .case-filter { gap: 6px; }
   .case-chip { padding: 7px 12px; font-size: 0.8125rem; }
+}
+
+/* Focused readability refinements; retain the existing brand and page structure. */
+.hero { background: var(--color-soft-gray); padding: 64px 0; }
+.hero-headline { max-width: 1000px; text-wrap: balance; }
+.nav-menu { gap: 20px; font-size: 0.875rem; }
+html:lang(ko) h1, html:lang(ko) h2, html:lang(ko) h3,
+html:lang(ko) .section-label { word-break: keep-all; overflow-wrap: anywhere; }
+.hero-features { margin-top: 40px; }
+.hero .section-label { border-radius: 4px; }
+.card:hover { transform: none; box-shadow: none; }
+a.card:hover { border-color: var(--color-deep-blue); }
+.form-error { margin: 16px 0 0; color: var(--color-text-primary); }
+.region-header { flex-wrap: wrap; }
+.region-header .count-badge { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+:focus-visible { outline: 2px solid var(--color-deep-blue); outline-offset: 4px; }
+@media (max-width: 767px) {
+  .hero { padding: 40px 0; }
+  .hero-headline { font-size: clamp(1.875rem, 7.5vw, 2.5rem); margin-bottom: 24px; }
+  .hero-subtitle { font-size: 1.0625rem; margin-bottom: 28px; }
+  .hero-features { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 32px; }
+  .section-label { max-width: 100%; white-space: normal; }
+  #materialsForm { padding: 24px !important; }
+  .pro-cta-actions .btn { white-space: normal; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

@@ -128,14 +128,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const isCaseStudyDetail = path.includes('/case-studies/') && path.endsWith('.html');
 
     const labels = isKO ?
-      { home: '홈', test: 'SPPB 검사', product: '제품', validation: '검증', cases: 'Evidence', refs: '주요 도입처' } :
+      { home: '홈', test: 'SPPB 검사', product: '제품', validation: '임상 검증', cases: '연구·활용 자료', refs: '도입 기관' } :
       isES ?
-      { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Evidence', refs: 'Referencias' } :
+      { home: 'Inicio', test: 'Prueba SPPB', product: 'Producto', validation: 'Validación', cases: 'Investigación y aplicaciones', refs: 'Centros usuarios' } :
       isJP ?
-      { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '検証', cases: 'Evidence', refs: '導入事例' } :
+      { home: 'ホーム', test: 'SPPB検査', product: '製品', validation: '臨床検証', cases: '研究・活用情報', refs: '導入施設' } :
       isRU ?
-      { home: 'Главная', test: 'Проведение SPPB', product: 'Система', validation: 'Валидация', cases: 'Evidence', refs: 'Организации' } :
-      { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Evidence', refs: 'References' };
+      { home: 'Главная', test: 'Проведение SPPB', product: 'Система', validation: 'Валидация', cases: 'Исследования и применение', refs: 'Организации' } :
+      { home: 'Home', test: 'SPPB Test', product: 'Product', validation: 'Validation', cases: 'Research &amp; Applications', refs: 'Institutions' };
 
     function langLink(lang, label) {
         let href;
@@ -162,15 +162,16 @@ document.addEventListener('DOMContentLoaded', function() {
         { href: rootPath + langPrefix + 'references.html', label: labels.refs }
     ];
     const navLinksHtml = navItems.map(function(item) { return '<li><a href="' + item.href + '">' + item.label + '</a></li>'; }).join('');
-    const closeLabel = isKO ? '메뉴 닫기' : isES ? 'Cerrar menú' : isRU ? 'Закрыть меню' : 'Close menu';
-    const panelLabel = isKO ? '모바일 내비게이션' : isES ? 'Navegación móvil' : isRU ? 'Мобильная навигация' : 'Mobile navigation';
+    const closeLabel = isKO ? '메뉴 닫기' : isES ? 'Cerrar menú' : isJP ? 'メニューを閉じる' : isRU ? 'Закрыть меню' : 'Close menu';
+    const panelLabel = isKO ? '모바일 내비게이션' : isES ? 'Navegación móvil' : isJP ? 'モバイルナビゲーション' : isRU ? 'Мобильная навигация' : 'Mobile navigation';
 
+    const openLabel = isKO ? '메뉴 열기' : isES ? 'Abrir menú' : isJP ? 'メニューを開く' : isRU ? 'Открыть меню' : 'Open navigation menu';
     navContainer.innerHTML = `
     <nav class="nav"><div class="nav-container">
       <a href="${rootPath}${langPrefix}index.html" class="nav-logo"><img src="${rootPath}assets/andantefit-logo.png" alt="AndanteFit"></a>
       <ul class="nav-menu" id="navMenu">${navLinksHtml}</ul>
       <div class="nav-lang">${langHtml}</div>
-      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navOverlay">&#9776;</button>
+      <button class="nav-toggle" id="navToggle" aria-label="${openLabel}" aria-expanded="false" aria-controls="navOverlay">&#9776;</button>
     </div></nav>
     <div class="nav-overlay" id="navOverlay" aria-hidden="true">
       <div class="nav-overlay-dim" id="navOverlayDim"></div>
@@ -181,19 +182,32 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>`;
 
     navContainer.querySelectorAll('[data-lang]').forEach(function(link) {
-        link.addEventListener('click', function() { localStorage.setItem('lang_preference', this.getAttribute('data-lang')); });
+        link.addEventListener('click', function() {
+            try { localStorage.setItem('lang_preference', this.getAttribute('data-lang')); } catch (e) { /* The link still works without storage. */ }
+        });
     });
 
     const toggle = document.getElementById('navToggle');
     const overlay = document.getElementById('navOverlay');
     const dim = document.getElementById('navOverlayDim');
     const closeBtn = document.getElementById('navOverlayClose');
-    function openMenu() { overlay.classList.add('open'); overlay.setAttribute('aria-hidden', 'false'); toggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
-    function closeMenu() { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true'); toggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    function openMenu() { overlay.inert = false; overlay.classList.add('open'); overlay.setAttribute('aria-hidden', 'false'); toggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; closeBtn.focus(); }
+    function closeMenu() { overlay.inert = true; overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true'); toggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; toggle.focus(); }
+    overlay.inert = true;
+    window.matchMedia('(min-width: 1200px)').addEventListener('change', function(event) {
+        if (event.matches && overlay.classList.contains('open')) closeMenu();
+    });
     if (toggle) toggle.addEventListener('click', openMenu);
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
     if (dim) dim.addEventListener('click', closeMenu);
     if (overlay) overlay.querySelectorAll('a').forEach(function(link) { link.addEventListener('click', closeMenu); });
+    overlay.addEventListener('keydown', function(e) {
+      if (e.key !== 'Tab') return;
+      const items = Array.from(overlay.querySelectorAll('a, button'));
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) { closeMenu(); if (toggle) toggle.focus(); } });
 
     // Every case-study detail page receives the same post-reading journey.

@@ -341,17 +341,15 @@
     <div class="region-section">
       <div class="region-header">
         <h3>South Korea 🇰🇷</h3>
-        <span class="count-badge">80+ Selected Professional and Research Institutions</span>
+        <span class="count-badge">Clinical, research and community sites</span>
       </div>
-      <p class="mb-4" style="color: var(--color-text-secondary);">
-        To keep the page readable while still listing every site, domestic references are grouped by region with a searchable index.
-      </p>
+      <p class="mb-4" style="color: var(--color-text-secondary);">Search Korean institution names by region. Departments may be listed separately.</p>
 
       <div class="korea-sites">
         <div class="korea-panel">
           <div class="korea-metric">
-            <div class="label">Sites listed on this page</div>
-            <div class="value">293</div>
+            <div class="label">Listed entries (including departments)</div>
+            <div class="value">290</div>
           </div>
           <div class="korea-metric">
             <div class="label">Grouping</div>
@@ -369,9 +367,7 @@
               <button class="korea-btn" type="button" id="collapseAllBtn">Collapse all</button>
               <button class="korea-btn" type="button" id="clearSearchBtn">Clear</button>
             </div>
-            <div class="korea-hint" id="koreaHint">
-              Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.
-            </div>
+            <div class="korea-hint" id="koreaHint" role="status" aria-live="polite">Search Korean names, e.g. 서울 (Seoul). Results update as you type.</div>
           </div>
         </div>
 
@@ -379,7 +375,7 @@
           <details class="region-accordion" open data-region="서울">
             <summary class="region-summary">
               <span class="region-name">서울</span>
-              <span class="region-count">128</span>
+              <span class="region-count">124</span>
             </summary>
             <ul class="hospital-ul">
               <li class="hospital-item" data-name="A+잠실데이케어센터">A+잠실데이케어센터</li>
@@ -780,7 +776,7 @@
           <details class="region-accordion" data-region="부산">
             <summary class="region-summary">
               <span class="region-name">부산</span>
-              <span class="region-count">14</span>
+              <span class="region-count">15</span>
             </summary>
             <ul class="hospital-ul">
               <li class="hospital-item" data-name="동의대학교한방병원">동의대학교한방병원</li>
@@ -849,9 +845,9 @@
         <p class="cta-band-sub">See how comparable institutions run it, and what a deployment involves. We will send specifications, case studies and pricing.</p>
       </div>
       <div class="cta-band-actions cta-actions-dual">
-        <a href="/product.html?req=doc#materials" class="btn btn-accent" data-af-event="cta_click" data-af-location="references_bottom" data-af-label="doc">Get the documentation (free) →</a>
+        <a href="/product.html?req=doc#materials" class="btn btn-accent" data-af-event="cta_click" data-af-location="references_bottom" data-af-label="doc">Request product information →</a>
         <a href="/product.html?req=partner#materials" class="btn btn-on-dark" data-af-event="cta_click" data-af-location="references_bottom" data-af-label="partner">Distribution or partnership →</a>
-        <p class="cta-hint">Three fields, about a minute — we reply within two business days.</p>
+        <p class="cta-hint">Leave your name, organization and email. We reply within two business days.</p>
       </div>
     </div>
   </div>
@@ -902,11 +898,11 @@
         });
 
         if (!q) {
-          hintEl.textContent = 'Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.';
+          hintEl.textContent = 'Search Korean names, e.g. 서울 (Seoul). Results update as you type.';
         } else {
           hintEl.textContent = totalMatches === 0
             ? 'No matches found. Try a shorter keyword.'
-            : totalMatches + ' site(s) matched.';
+            : totalMatches + ' entries matched.';
         }
       }
 

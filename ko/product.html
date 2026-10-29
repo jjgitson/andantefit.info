@@ -45,9 +45,9 @@
   <section class="hero">
     <div class="container hero-content">
       <span class="section-label">제품 개요</span>
-      <h1 class="hero-headline">SPPB 전자동 평가</h1>
+      <h1 class="hero-headline">SPPB 자동 측정</h1>
       <p class="hero-subtitle">
-        LiDAR 기술 기반 전자동 프로세스로 정밀한 신체기능 측정을 지원합니다.
+        LiDAR 기반 보행 측정과 센서 기술로 SPPB 측정·채점을 자동화합니다.
         착용형 장비나 별도 소모품이 필요하지 않습니다.
         <br><br>
         일반적인 검사 소요 시간: 3분 이내.
@@ -99,7 +99,7 @@
         </div>
 
         <div class="card">
-          <h3 class="card-title">프로토콜 준수 이슈</h3>
+          <h3 class="card-title">검사 절차 적용의 어려움</h3>
           <ul style="line-height: 1.9; color: var(--color-text-secondary); list-style: none; padding-left: 0;">
             <li>✗ <strong>출발 조건:</strong> 정적 출발과 동적 출발 프로토콜 적용이 일관되지 않을 수 있습니다.</li>
             <li>✗ <strong>자세 검증:</strong> 균형 자세 확인이 주관적 평가에 의존할 수 있습니다.</li>
@@ -124,7 +124,6 @@
 
       <div class="grid grid-3">
         <div class="card">
-          <div class="card-icon">📏</div>
           <h3 class="card-title">정밀 측정</h3>
           <p class="card-description">
             <strong>LiDAR 기술:</strong> 10 Hz 샘플링으로 연속 2D 공간 추적을 수행합니다.
@@ -133,7 +132,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">🤖</div>
           <h3 class="card-title">자동 감지</h3>
           <p class="card-description">
             <strong>규칙 기반 알고리즘:</strong> 시작/종료 자동 감지, 자세 검증,
@@ -142,7 +140,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">📊</div>
           <h3 class="card-title">즉시 점수 산출</h3>
           <p class="card-description">
             <strong>실시간 계산:</strong> 검사 종료 후 즉시 SPPB 점수를 산출합니다.
@@ -217,7 +214,7 @@
         <div class="card">
           <h3 class="card-title">웹 대시보드</h3>
           <ul style="line-height: 1.9; color: var(--color-text-secondary);">
-            <li><strong>데이터 저장소:</strong> 보안 클라우드 저장 및 종단 추적(Longitudinal tracking)을 지원합니다.</li>
+            <li><strong>데이터 저장소:</strong> 보안 클라우드 저장 및 시간에 따른 결과 변화 추적을 지원합니다.</li>
             <li><strong>리포트 도구:</strong> PDF 내보내기, CSV/Excel 일괄 다운로드를 지원합니다.</li>
             <li><strong>분석:</strong> 코호트 비교, 변화량 시각화를 지원합니다.</li>
             <li><strong>접근 제어:</strong> 연구팀 역할 기반 권한 관리를 지원합니다.</li>
@@ -328,7 +325,7 @@
         <div class="section-header" style="text-align: center;">
           <span class="section-label">제품 자료</span>
           <h2>AndanteFit 자료 요청</h2>
-          <p>사양서·검증 데이터·도입 사례·견적 자료를 보내드립니다.<br>3개 항목, 1분이면 충분합니다. 2영업일 이내에 회신드립니다.</p>
+          <p>사양서·검증 데이터·도입 사례·견적 자료를 보내드립니다.<br>이름·소속·이메일을 남겨주시면 2영업일 이내에 회신드립니다.</p>
         </div>
 
         <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
@@ -339,6 +336,7 @@
           class="card"
           style="padding: 40px;"
           id="materialsForm"
+          data-error-label="전송 여부를 확인하지 못했습니다. 다시 시도하거나 이메일로 문의해 주세요."
           data-download-url=""
           data-sending-label="전송 중…"
           data-download-label="브로슈어 내려받기 (PDF) ↓"
@@ -415,7 +413,7 @@
             보내기 →
           </button>
 
-          <div id="formSuccess" class="hidden form-download-ready">
+          <div id="formSuccess" role="status" tabindex="-1" class="hidden form-download-ready">
             <p>✓ 감사합니다. 2영업일 이내에 회신드리겠습니다.</p>
             <div data-download-slot></div>
             <p class="form-download-note">아래 연락처로 직접 문의하셔도 됩니다.</p>
@@ -431,7 +429,7 @@
           <h3>양식 없이 바로 문의하실 수 있습니다</h3>
           <p class="jp-direct-lead">주식회사 디파이 사업개발부 · 2영업일 이내 회신</p>
           <ul class="jp-direct-list">
-            <li><span class="jp-direct-label">Email</span><a href="#" class="obf-email" data-u="snm" data-d="dyphi.com">snm&#32;[at]&#32;dyphi&#46;com</a></li>
+            <li><span class="jp-direct-label">이메일</span><a href="#" class="obf-email" data-u="snm" data-d="dyphi.com">snm&#32;[at]&#32;dyphi&#46;com</a></li>
           </ul>
         </div>
       </div>

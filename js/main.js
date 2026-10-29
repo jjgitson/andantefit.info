@@ -96,38 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Add fade-in animation for cards on scroll
-  if ('IntersectionObserver' in window) {
-    const cardObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '0';
-          entry.target.style.transform = 'translateY(20px)';
-          entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-          
-          // Trigger animation
-          setTimeout(() => {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }, 100);
-          
-          cardObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-    
-    // Observe all cards except hero cards
-    document.querySelectorAll('.card').forEach((card, index) => {
-      // Skip cards in hero section
-      if (!card.closest('.hero')) {
-        cardObserver.observe(card);
-      }
-    });
-  }
-  
+  // Keep content visible immediately, including for reduced-motion users.
   // Log page view (for analytics - can be replaced with actual analytics)
   console.log('AndanteFit page loaded:', {
     page: document.title,
@@ -215,64 +184,6 @@ document.head.appendChild(style);
 // Expose utility functions globally
 window.AndanteFit = AndanteFit;
 
-// ── Copy for AI ──────────────────────────────────────────────────────────────
-
-function copyForAI() {
-  const clone = document.body.cloneNode(true);
-
-  ['#navigation-container', 'nav', 'footer', '.copy-for-ai-btn', 'script', 'style', 'noscript', '.cookie-banner']
-    .forEach(sel => clone.querySelectorAll(sel).forEach(el => el.remove()));
-
-  const header = '# ' + document.title + '\nSource: ' + window.location.href + '\n\n';
-
-  const md = clone.innerHTML
-    .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, (_, t) => '\n# ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
-    .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_, t) => '\n## ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
-    .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_, t) => '\n### ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
-    .replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, (_, t) => '\n#### ' + t.replace(/<[^>]+>/g, '').trim() + '\n')
-    .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, t) => '\n- ' + t.replace(/<[^>]+>/g, '').trim())
-    .replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (_, t) => '\n' + t.replace(/<[^>]+>/g, '').trim() + '\n')
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&#39;/g, "'")
-    .replace(/\n[ \t]+/g, '\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-
-  const text = header + md;
-
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      AndanteFit.showNotification('Copied for AI ✓');
-    }).catch(() => fallbackCopy(text));
-  } else {
-    fallbackCopy(text);
-  }
-}
-
-function fallbackCopy(text) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand('copy'); AndanteFit.showNotification('Copied for AI ✓'); }
-  catch (e) { AndanteFit.showNotification('Copy failed — try selecting text manually', 'error'); }
-  document.body.removeChild(ta);
-}
-
-function injectCopyForAIButton() {
-  const btn = document.createElement('button');
-  btn.className = 'copy-for-ai-btn';
-  btn.setAttribute('aria-label', 'Copy page content as clean text for AI assistants');
-  btn.setAttribute('title', 'Copy this page as clean text for AI assistants');
-  btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy for AI';
-  btn.addEventListener('click', copyForAI);
-  document.body.appendChild(btn);
-}
-
-document.addEventListener('DOMContentLoaded', injectCopyForAIButton);
-
 // Activate obfuscated contact details after dynamic HTML is injected.
 //
 // Direct contact details (email, phone, LINE ID) are kept out of the HTML
@@ -338,7 +249,7 @@ const FOOTER_TEXT = {
       ['sppb-test.html', 'SPPB Test Protocol'],
       ['frailty.html', 'What Is Frailty?'],
       ['validation.html', 'Clinical Validation'],
-      ['case-studies.html', 'Case Studies'],
+      ['case-studies.html', 'Research &amp; Applications'],
       ['product.html', 'Product &amp; Materials']
     ]
   },
@@ -349,7 +260,7 @@ const FOOTER_TEXT = {
       ['sppb-test.html', 'SPPB 검사 방법'],
       ['frailty.html', '노쇠란 무엇인가'],
       ['validation.html', '임상 검증'],
-      ['case-studies.html', '도입 사례'],
+      ['case-studies.html', '연구·활용 자료'],
       ['product.html', '제품 · 자료 요청']
     ],
     blurb: 'DYPHI Inc.가 개발하고 공급합니다.<br>지역사회와 임상 현장을 위한 신체기능 평가 자동화 장비입니다.',
@@ -366,7 +277,7 @@ const FOOTER_TEXT = {
       ['sppb-test.html', 'Protocolo del test SPPB'],
       ['frailty.html', 'Qué es la fragilidad'],
       ['validation.html', 'Validación clínica'],
-      ['case-studies.html', 'Casos de estudio'],
+      ['case-studies.html', 'Investigación y aplicaciones'],
       ['product.html', 'Producto y materiales']
     ],
     blurb: 'Desarrollado y suministrado por DYPHI Inc.<br>Evaluación automatizada del rendimiento físico para entornos comunitarios y profesionales.',
@@ -383,7 +294,7 @@ const FOOTER_TEXT = {
       ['sppb-test.html', 'SPPB検査方法'],
       ['frailty.html', 'フレイルとは'],
       ['validation.html', '臨床検証'],
-      ['case-studies.html', '導入事例'],
+      ['case-studies.html', '研究・活用情報'],
       ['product.html', '製品・資料請求']
     ]
   },
@@ -394,7 +305,7 @@ const FOOTER_TEXT = {
       ['sppb-test.html', 'Протокол SPPB'],
       ['frailty.html', 'Что такое астения'],
       ['validation.html', 'Клиническая валидация'],
-      ['case-studies.html', 'Практические примеры'],
+      ['case-studies.html', 'Исследования и применение'],
       ['product.html', 'Продукт и материалы']
     ]
   }
@@ -527,18 +438,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const successPanel = document.getElementById('formSuccess');
     const downloadUrl = leadForm.getAttribute('data-download-url');
 
+    let submitting = false;
     leadForm.addEventListener('submit', function (e) {
+      if (submitting) { e.preventDefault(); return; }
       const requestType = requestField ? requestField.value : 'brochure_download';
-      afTrack('generate_lead', {
-        form_id: 'materialsForm',
-        request_type: requestType,
-        page_path: window.location.pathname
-      });
 
       // No success panel to reveal — let the browser do its normal thing.
       if (!successPanel) return;
 
       e.preventDefault();
+      submitting = true;
+      leadForm.setAttribute('aria-busy', 'true');
+      const oldError = leadForm.querySelector('.form-error');
+      if (oldError) oldError.remove();
       const submitBtn = leadForm.querySelector('button[type="submit"]');
       const submitLabel = submitBtn ? submitBtn.textContent : '';
       if (submitBtn) {
@@ -553,10 +465,17 @@ document.addEventListener('DOMContentLoaded', function () {
       })
         .then(function (response) {
           if (!response.ok) throw new Error('submit failed');
+          afTrack('generate_lead', {
+            form_id: 'materialsForm',
+            request_type: requestType,
+            page_path: window.location.pathname
+          });
           leadForm.querySelectorAll('.form-field, button[type="submit"]').forEach(function (el) {
             el.style.display = 'none';
           });
+          leadForm.removeAttribute('aria-busy');
           successPanel.classList.remove('hidden');
+          successPanel.focus();
           if (downloadUrl) {
             const ready = successPanel.querySelector('[data-download-slot]');
             if (ready) {
@@ -580,13 +499,17 @@ document.addEventListener('DOMContentLoaded', function () {
           successPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
         })
         .catch(function () {
-          // Never lose a lead to a network or CORS problem: fall back to the
-          // ordinary browser submit, which Formspree also accepts.
+          submitting = false;
+          leadForm.removeAttribute('aria-busy');
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.textContent = submitLabel;
           }
-          leadForm.submit();
+          const message = document.createElement('p');
+          message.className = 'form-error';
+          message.setAttribute('role', 'alert');
+          message.textContent = leadForm.getAttribute('data-error-label') || 'We could not confirm your submission. Please try again or contact us by email.';
+          leadForm.appendChild(message);
         });
     });
   }

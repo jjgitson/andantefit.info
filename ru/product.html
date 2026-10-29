@@ -55,12 +55,12 @@
   <section class="hero">
     <div class="container hero-content">
       <span class="section-label">Обзор системы</span>
-      <h1 class="hero-headline">Автоматизированное проведение SPPB</h1>
+      <h1 class="hero-headline">Автоматизированная оценка по SPPB</h1>
   <p class="hero-subtitle">
-  Высокоточное непрерывное измерение на основе технологии LiDAR в полностью автоматизированном процессе.
+  Система использует LiDAR для измерения ходьбы и автоматизирует проведение и оценку тестов SPPB.
   Не требуются носимые устройства или расходные материалы.
   <br><br>
-  Обычное время проведения: менее 3 минут.
+  Обычная продолжительность обследования: менее 3 минут.
   <br><br>
   После каждого SPPB автоматически формируется отчет с результатами оценки.
 </p>
@@ -134,7 +134,6 @@
 
       <div class="grid grid-3">
         <div class="card">
-          <div class="card-icon">📏</div>
           <h3 class="card-title">Точное измерение</h3>
           <p class="card-description">
             <strong>Технология LiDAR:</strong> непрерывное двумерное пространственное отслеживание с частотой 10 Гц.
@@ -143,7 +142,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">🤖</div>
           <h3 class="card-title">Автоматическое распознавание</h3>
           <p class="card-description">
             <strong>Алгоритмы на основе правил:</strong> автоматическое определение начала и окончания, проверка положения
@@ -152,7 +150,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">📊</div>
           <h3 class="card-title">Мгновенный расчет</h3>
           <p class="card-description">
             <strong>Расчет в реальном времени:</strong> результат SPPB рассчитывается сразу после завершения теста.
@@ -339,7 +336,7 @@
         <div class="section-header" style="text-align: center;">
           <span class="section-label">Материалы о продукте</span>
           <h2>Запросить документацию AndanteFit</h2>
-          <p>Спецификации, данные валидации, примеры внедрения и расчёт стоимости.<br>Три поля, около минуты — отвечаем в течение двух рабочих дней.</p>
+          <p>Спецификации, данные валидации, примеры внедрения и расчёт стоимости.<br>Укажите имя, организацию и электронную почту. Мы ответим в течение двух рабочих дней.</p>
         </div>
 
         <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
@@ -350,6 +347,7 @@
           class="card"
           style="padding: 40px;"
           id="materialsForm"
+          data-error-label="Не удалось подтвердить отправку. Повторите попытку или свяжитесь с нами по электронной почте."
           data-download-url=""
           data-sending-label="Отправка…"
           data-download-label="Скачать брошюру (PDF) ↓"
@@ -426,7 +424,7 @@
             Отправить запрос →
           </button>
 
-          <div id="formSuccess" class="hidden form-download-ready">
+          <div id="formSuccess" role="status" tabindex="-1" class="hidden form-download-ready">
             <p>✓ Спасибо. Мы ответим в течение двух рабочих дней.</p>
             <div data-download-slot></div>
             <p class="form-download-note">Вы также можете связаться с нами напрямую по контактам ниже.</p>

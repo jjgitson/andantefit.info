@@ -55,7 +55,7 @@
   <section class="hero">
     <div class="container hero-content">
       <span class="section-label">Product Overview</span>
-      <h1 class="hero-headline">Automated SPPB Administration</h1>
+      <h1 class="hero-headline">Automated SPPB assessment</h1>
   <p class="hero-subtitle">
   High-precision, continuous measurement enabled by LiDAR technology through a fully automated process.
   No wearable devices or disposable components required.
@@ -135,7 +135,6 @@
 
       <div class="grid grid-3">
         <div class="card">
-          <div class="card-icon">📏</div>
           <h3 class="card-title">Precise Measurement</h3>
           <p class="card-description">
             <strong>LiDAR technology:</strong> Continuous 2D spatial tracking at 10Hz sampling rate. 
@@ -144,7 +143,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">🤖</div>
           <h3 class="card-title">Automated Detection</h3>
           <p class="card-description">
             <strong>Rule-based algorithms:</strong> Automatic start/stop detection, position verification, 
@@ -153,7 +151,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">📊</div>
           <h3 class="card-title">Instant Scoring</h3>
           <p class="card-description">
             <strong>Real-time calculation:</strong> SPPB scores computed immediately after test completion. 
@@ -340,7 +337,7 @@
         <div class="section-header" style="text-align: center;">
           <span class="section-label">Product Materials</span>
           <h2>Request AndanteFit Documentation</h2>
-          <p>Specifications, validation data, case studies and pricing.<br>Three fields, about a minute — we reply within two business days.</p>
+          <p>Specifications, validation data, case studies and pricing.<br>Leave your name, organization and email. We reply within two business days.</p>
         </div>
 
         <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
@@ -351,6 +348,7 @@
           class="card"
           style="padding: 40px;"
           id="materialsForm"
+          data-error-label="We could not confirm your submission. Please try again or contact us by email."
           data-download-url=""
           data-sending-label="Sending…"
           data-download-label="Download the brochure (PDF) ↓"
@@ -427,7 +425,7 @@
             Send request →
           </button>
 
-          <div id="formSuccess" class="hidden form-download-ready">
+          <div id="formSuccess" role="status" tabindex="-1" class="hidden form-download-ready">
             <p>✓ Thank you. We will reply within two business days.</p>
             <div data-download-slot></div>
             <p class="form-download-note">You can also reach us directly using the details below.</p>

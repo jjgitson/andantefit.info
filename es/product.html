@@ -62,14 +62,14 @@
   <section class="hero">
     <div class="container hero-content">
       <span class="section-label">Resumen del producto</span>
-      <h1 class="hero-headline">Administración automatizada del SPPB</h1>
+      <h1 class="hero-headline">Evaluación automatizada con SPPB</h1>
   <p class="hero-subtitle">
-  Medición continua de alta precisión habilitada por tecnología LiDAR mediante un proceso totalmente automatizado.
-  No se requieren dispositivos portátiles ni componentes desechables.
+  El sistema utiliza sensores LiDAR para medir la marcha y automatiza la evaluación SPPB.
+  No se requieren sensores corporales ni consumibles.
   <br><br>
   Tiempo típico de prueba: menos de 3 minutos.
   <br><br>
-  Genera automáticamente una hoja de informe después de cada SPPB, que incluye los resultados del SPPB y los indicadores derivados, como un índice estimado de fragilidad y una métrica de edad fisiológica.
+  Genera un informe automáticamente al finalizar cada evaluación SPPB, que incluye los resultados del SPPB y los indicadores derivados, como un índice estimado de fragilidad y una métrica de edad fisiológica.
 </p>
 
     </div>
@@ -142,7 +142,6 @@
 
       <div class="grid grid-3">
         <div class="card">
-          <div class="card-icon">📏</div>
           <h3 class="card-title">Medición precisa</h3>
           <p class="card-description">
             <strong>Tecnología LiDAR:</strong> seguimiento espacial 2D continuo a 10 Hz de frecuencia de muestreo.
@@ -151,7 +150,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">🤖</div>
           <h3 class="card-title">Detección automatizada</h3>
           <p class="card-description">
             <strong>Algoritmos basados en reglas:</strong> detección automática de inicio/fin, verificación de posición
@@ -160,7 +158,6 @@
         </div>
 
         <div class="card">
-          <div class="card-icon">📊</div>
           <h3 class="card-title">Puntuación inmediata</h3>
           <p class="card-description">
             <strong>Cálculo en tiempo real:</strong> las puntuaciones del SPPB se calculan inmediatamente tras finalizar la prueba.
@@ -347,7 +344,7 @@
         <div class="section-header" style="text-align: center;">
           <span class="section-label">Material del producto</span>
           <h2>Solicitar documentación de AndanteFit</h2>
-          <p>Especificaciones, datos de validación, casos de uso y presupuesto.<br>Tres campos, un minuto — respondemos en dos días laborables.</p>
+          <p>Especificaciones, datos de validación, casos de uso y presupuesto.<br>Indique su nombre, institución y correo electrónico. Respondemos en un plazo de dos días laborables.</p>
         </div>
 
         <!-- TODO(DYPHI): set data-download-url to the brochure PDF to switch this
@@ -358,6 +355,7 @@
           class="card"
           style="padding: 40px;"
           id="materialsForm"
+          data-error-label="No hemos podido confirmar el envío. Inténtelo de nuevo o contáctenos por correo electrónico."
           data-download-url=""
           data-sending-label="Enviando…"
           data-download-label="Descargar el folleto (PDF) ↓"
@@ -434,7 +432,7 @@
             Enviar solicitud →
           </button>
 
-          <div id="formSuccess" class="hidden form-download-ready">
+          <div id="formSuccess" role="status" tabindex="-1" class="hidden form-download-ready">
             <p>✓ Gracias. Le responderemos en dos días laborables.</p>
             <div data-download-slot></div>
             <p class="form-download-note">También puede escribirnos directamente con los datos de abajo.</p>

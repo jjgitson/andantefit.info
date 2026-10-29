@@ -328,37 +328,33 @@
     <div class="region-section">
       <div class="region-header">
         <h3>Corea del Sur 🇰🇷</h3>
-        <span class="count-badge">Más de 80 instituciones clínicas y de investigación seleccionadas</span>
+        <span class="count-badge">Centros clínicos, de investigación y comunitarios</span>
       </div>
-      <p class="mb-4" style="color: var(--color-text-secondary);">
-        To keep the page readable while still listing every site, domestic references are grouped by region with a searchable index.
-      </p>
+      <p class="mb-4" style="color: var(--color-text-secondary);">Busque por el nombre coreano o explore la lista por región. Los departamentos pueden figurar por separado.</p>
 
       <div class="korea-sites">
         <div class="korea-panel">
           <div class="korea-metric">
-            <div class="label">Centros incluidos en esta página</div>
-            <div class="value">293</div>
+            <div class="label">Entradas del directorio (incluidos departamentos)</div>
+            <div class="value">291</div>
           </div>
           <div class="korea-metric">
-            <div class="label">Grouping</div>
-            <div class="value">By region</div>
+            <div class="label">Organización</div>
+            <div class="value">Por región</div>
           </div>
           <div class="korea-metric">
-            <div class="label">How to browse</div>
-            <div class="value">Search + expand</div>
+            <div class="label">Cómo consultar</div>
+            <div class="value">Buscar o desplegar</div>
           </div>
 
           <div class="korea-controls">
-            <input id="koreaSearch" class="korea-search" type="search" placeholder="Search a hospital / clinic / public health center…" aria-label="Search Korean sites">
+            <input id="koreaSearch" class="korea-search" type="search" placeholder="Buscar hospital, clínica o centro de salud…" aria-label="Buscar nombres de centros en coreano">
             <div class="korea-actions">
-              <button class="korea-btn" type="button" id="expandAllBtn">Expand all</button>
-              <button class="korea-btn" type="button" id="collapseAllBtn">Collapse all</button>
-              <button class="korea-btn" type="button" id="clearSearchBtn">Clear</button>
+              <button class="korea-btn" type="button" id="expandAllBtn">Desplegar todo</button>
+              <button class="korea-btn" type="button" id="collapseAllBtn">Plegar todo</button>
+              <button class="korea-btn" type="button" id="clearSearchBtn">Borrar búsqueda</button>
             </div>
-            <div class="korea-hint" id="koreaHint">
-              Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.
-            </div>
+            <div class="korea-hint" id="koreaHint" role="status" aria-live="polite">Busque nombres en coreano, por ejemplo 서울 (Seúl). Los resultados se actualizan al escribir.</div>
           </div>
         </div>
 
@@ -366,7 +362,7 @@
           <details class="region-accordion" open data-region="서울">
             <summary class="region-summary">
               <span class="region-name">서울</span>
-              <span class="region-count">128</span>
+              <span class="region-count">126</span>
             </summary>
             <ul class="hospital-ul">
               <li class="hospital-item" data-name="A+잠실데이케어센터">A+잠실데이케어센터</li>
@@ -821,9 +817,9 @@
         <p class="cta-band-sub">Vea cómo lo aplican instituciones comparables y qué implica una implantación. Le enviamos especificaciones, casos y presupuesto.</p>
       </div>
       <div class="cta-band-actions cta-actions-dual">
-        <a href="/es/product.html?req=doc#materials" class="btn btn-accent" data-af-event="cta_click" data-af-location="references_bottom" data-af-label="doc">Recibir la documentación (gratis) →</a>
+        <a href="/es/product.html?req=doc#materials" class="btn btn-accent" data-af-event="cta_click" data-af-location="references_bottom" data-af-label="doc">Solicitar información del producto →</a>
         <a href="/es/product.html?req=partner#materials" class="btn btn-on-dark" data-af-event="cta_click" data-af-location="references_bottom" data-af-label="partner">Distribución o colaboración comercial →</a>
-        <p class="cta-hint">Tres campos, un minuto — respondemos en dos días laborables.</p>
+        <p class="cta-hint">Indique su nombre, institución y correo electrónico. Respondemos en un plazo de dos días laborables.</p>
       </div>
     </div>
   </div>
@@ -874,11 +870,11 @@
         });
 
         if (!q) {
-          hintEl.textContent = 'Tip: Type a keyword (e.g., 서울, 보건소, 대학교병원). Results update instantly.';
+          hintEl.textContent = 'Busque nombres en coreano, por ejemplo 서울 (Seúl). Los resultados se actualizan al escribir.';
         } else {
           hintEl.textContent = totalMatches === 0
-            ? 'No matches found. Try a shorter keyword.'
-            : totalMatches + ' site(s) matched.';
+            ? 'No hay resultados. Pruebe con una palabra más corta.'
+            : totalMatches + ' entradas encontradas.';
         }
       }
 

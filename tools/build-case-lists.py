@@ -89,6 +89,7 @@ CATEGORY = {
 
     'Perioperative-Prehabilitation-Early-Exercise-SPPB': 'surgery',
     'PGH-Colorectal-Surgery-SPPB': 'surgery',
+    'Cholecystectomy-Biomarker-Burden-SPPB': 'surgery',
 
     'Endocrinology-SPPB-Strategy': 'endocrine',
     'ADA2026-GLP1-Muscle-Loss-Debate': 'endocrine',

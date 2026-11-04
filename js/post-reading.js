@@ -104,7 +104,13 @@
     const dupe = document.querySelector('a.back-link[href="' + text.listUrl + '"]');
     if (dupe) dupe.remove();
 
-    if (target) target.appendChild(section);
+    if (target) {
+      // Some templates use <main> only as a wrapper for full-bleed sections,
+      // each with its own centred container. Appended there, the block would
+      // stretch edge to edge, so give it the standalone width instead.
+      if (target === host && getComputedStyle(host).maxWidth === 'none') section.classList.add('af-post-reading-standalone');
+      target.appendChild(section);
+    }
     else { section.classList.add('af-post-reading-standalone'); anchor.parentNode.insertBefore(section, anchor); }
   }
 

@@ -28,6 +28,12 @@
   <link rel="stylesheet" href="/css/wiki-article.css">
   <style>
 body{background:#fff;color:#1a1a1a}.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}.article-meta{font-size:.85rem;color:#6b7280;margin-bottom:20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}.article-meta .label{font-weight:600;color:#1F6FB2}.article-title{font-size:clamp(1.65rem,4vw,2.3rem);font-weight:800;line-height:1.3;letter-spacing:-.025em;color:#0f172a;margin-bottom:16px}.article-subtitle{font-size:1.05rem;line-height:1.75;color:#374151;margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid #e5e7eb}.article-lead{font-size:1.05rem;line-height:1.9;color:#1f2937;margin-bottom:40px}.article-body h2{font-size:1.25rem;font-weight:700;color:#0f172a;margin-top:52px;margin-bottom:16px;letter-spacing:-.01em}.article-body p{font-size:1rem;line-height:1.95;color:#1f2937;margin-bottom:24px}.article-body ul{margin:0 0 28px 22px;color:#1f2937;line-height:1.9}.article-body li{margin-bottom:8px}.callout{margin:34px 0;background:#F1F7FC;border-left:4px solid #1F6FB2;border-radius:0 8px 8px 0;padding:22px 24px;color:#0B3A62;line-height:1.85}.company-list{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:22px 24px;margin:30px 0}.company-list p{margin-bottom:14px}.article-source{margin-top:48px;padding-top:24px;border-top:1px solid #e5e7eb;font-size:.86rem;color:#6b7280;line-height:1.8}.article-source a{color:#0F4C81;overflow-wrap:anywhere}.article-disclaimer{margin-top:28px;padding:18px 20px;background:#f8fafc;border-radius:8px;font-size:.84rem;color:#6b7280;line-height:1.75}.article-disclaimer p{margin:0 0 12px}.article-disclaimer p:last-child{margin-bottom:0}.back-link{display:inline-block;margin-top:40px;color:#1F6FB2;text-decoration:none;font-weight:600}@media(max-width:600px){.article-wrap{padding:32px 18px 72px}}
+.sdChart{margin:32px 0;padding:20px 16px 14px;border:1px solid #e2e8f0;border-radius:12px;background:#fff}.sdChart svg{display:block;width:100%;height:auto;font-family:inherit}.sdChart figcaption{margin-top:10px;font-size:14px;color:#64748b;line-height:1.6;text-align:center}
+.sdBand{font-size:13px;fill:#475569;text-anchor:middle}.sdTick text{font-size:12px;fill:#94a3b8;text-anchor:middle}.sdGrid line{stroke:#eef2f6;stroke-width:1}.sdLbl{font-size:14px;fill:#475569}.sdVal{font-weight:800;fill:#0f172a}.sdValOn{fill:#0F4C81}.sdRow{font-size:14px;fill:#334155;text-anchor:end;font-weight:600}
+.sdStats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0 8px}.sdStat{background:#F1F7FC;border-radius:12px;padding:20px 16px;text-align:center}.sdStatNum{font-size:30px;font-weight:900;color:#0F4C81;letter-spacing:-.03em;line-height:1.2}.sdStatNum span{font-size:16px;font-weight:700;margin-left:2px}.sdStatLbl{margin-top:8px;font-size:14px;color:#334155;line-height:1.5}.sdStatLbl small{display:block;color:#64748b;font-size:12.5px;margin-top:2px}.contentWrap p.sdStatNote{font-size:13.5px;color:#64748b;margin:6px 0 1.6rem}
+@media(max-width:600px){.sdStats{grid-template-columns:1fr}.sdChart{padding:14px 8px 10px}.sdBand{font-size:20px}.sdBand .sdRange{display:none}.sdTick text{font-size:18px}.sdLbl{font-size:22px}.sdRow{font-size:22px}}
+.wikiMoreBody{font-size:15.5px}.contentWrap .wikiMoreBody p{margin:.9rem 0;line-height:1.8}.wikiMoreBody .sdH{font-weight:800;color:#0f172a;margin-top:1.6rem!important}.wikiMoreBody .sdH:first-child{margin-top:.4rem!important}.wikiMoreSummary{list-style-position:inside}
+.sdTableWrap{overflow-x:auto;margin:12px 0 8px}.sdTable{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6;min-width:520px}.sdTable th,.sdTable td{border:1px solid #e2e8f0;padding:9px 11px;text-align:left;vertical-align:top}.sdTable th{background:#f8fafc;font-weight:700;color:#334155}.sdTable td{color:#334155}
   </style>
   <script type="application/ld+json">
   {
@@ -102,6 +108,161 @@ body{background:#fff;color:#1a1a1a}.article-wrap{max-width:760px;margin:0 auto;p
         <li><strong>자기효능감:</strong> 67.6점 → 72.4점</li>
         <li><strong>신체건강행동:</strong> 152.3점 → 161.7점</li>
       </ul>
+
+      <figure class="sdChart" aria-labelledby="sdGaugeCap">
+        <svg viewBox="0 0 640 150" role="img" aria-label="SPPB 0~12점 척도에서 참여 전 평균 8.6점(노쇠 전단계)이 참여 후 10.3점(양호 범주)으로 이동">
+          <!-- bands: x = 40 + score * 46.667 -->
+          <rect x="40" y="62" width="302.3" height="22" rx="4" fill="#E2E8F0"><title>0~6점: 기능 저하</title></rect>
+          <rect x="344.3" y="62" width="138" height="22" fill="#CFE0F0"><title>7~9점: 노쇠 전단계</title></rect>
+          <rect x="484.3" y="62" width="115.7" height="22" rx="4" fill="#9CC3E4"><title>10~12점: 양호</title></rect>
+          <text x="191" y="106" class="sdBand">기능 저하<tspan class="sdRange"> (0~6)</tspan></text>
+          <text x="413" y="106" class="sdBand">노쇠 전단계<tspan class="sdRange"> (7~9)</tspan></text>
+          <text x="542" y="106" class="sdBand">양호<tspan class="sdRange"> (10~12)</tspan></text>
+          <g class="sdTick">
+            <text x="40" y="132">0</text><text x="180" y="132">3</text><text x="320" y="132">6</text><text x="460" y="132">9</text><text x="600" y="132">12</text>
+          </g>
+          <line x1="452" y1="44" x2="508" y2="44" stroke="#0F4C81" stroke-width="2" marker-end="url(#sdArrow)"/>
+          <defs><marker id="sdArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0F4C81"/></marker></defs>
+          <circle cx="441.3" cy="73" r="8" fill="#fff" stroke="#64748b" stroke-width="2.5"><title>참여 전 평균 8.6점</title></circle>
+          <circle cx="520.7" cy="73" r="8" fill="#0F4C81" stroke="#fff" stroke-width="2"><title>참여 후 평균 10.3점</title></circle>
+          <text x="420" y="30" class="sdLbl" text-anchor="end">참여 전 <tspan class="sdVal">8.6</tspan></text>
+          <text x="600" y="30" class="sdLbl" text-anchor="end">참여 후 <tspan class="sdVal sdValOn">10.3</tspan></text>
+        </svg>
+        <figcaption id="sdGaugeCap">SPPB 평균 점수의 범주 이동 — 3개월 만에 ‘노쇠 전단계’에서 ‘양호’ 범주로 넘어갔습니다.</figcaption>
+      </figure>
+    </div>
+
+    <div class="sectionTitle">이 숫자가 뜻하는 것</div>
+    <div class="contentWrap">
+      <p>SPPB 1.7점 상승은 작은 변화가 아닙니다. 임상적으로 ‘의미 있는 변화’로 보는 최소 기준(1점)을 넘어섰고, 무엇보다 참여자 집단의 평균이 <strong>노쇠 전단계(7~9점)에서 양호(10~12점) 범주로 넘어갔습니다.</strong> 악력도 19kg에서 21.4kg으로 약 13% 늘었습니다.</p>
+      <p>범주가 바뀐다는 것은 위험의 크기가 달라진다는 뜻입니다. 여러 연구에서 노쇠 전단계에 해당하는 어르신은 양호 범주에 비해 사망 위험이 약 1.5배, 1년 내 낙상 위험이 약 1.2배, 걷기 등 이동 능력을 잃을 위험이 1.5~2배 높았습니다. 성동구 참여자들은 평균적으로 이 ‘추가 위험’이 사라지는 구간으로 이동한 셈입니다.</p>
+      <p>SPPB 점수와 건강 결과 사이의 관계를 정리한 연구들을 1.7점 상승에 대입해 보면, 다음과 같은 위험 감소를 기대할 수 있습니다.</p>
+
+      <figure class="sdChart" aria-labelledby="sdRiskCap">
+        <svg viewBox="0 0 640 178" role="img" aria-label="SPPB 1.7점 상승 시 문헌 기반 기대 위험 감소: 퇴원 후 재입원 또는 사망 약 23%, 낙상 약 15~36%, 일상생활 장애 약 10%">
+          <g class="sdGrid">
+            <line x1="210" y1="14" x2="210" y2="146"/><line x1="310" y1="14" x2="310" y2="146"/><line x1="410" y1="14" x2="410" y2="146"/><line x1="510" y1="14" x2="510" y2="146"/><line x1="610" y1="14" x2="610" y2="146"/>
+          </g>
+          <g class="sdTick">
+            <text x="210" y="166">0%</text><text x="310" y="166">10%</text><text x="410" y="166">20%</text><text x="510" y="166">30%</text><text x="610" y="166">40%</text>
+          </g>
+          <text x="196" y="36" class="sdRow">재입원·사망*</text>
+          <rect x="210" y="24" width="92" height="16" rx="4" fill="#0F4C81"><title>퇴원 후 재입원 또는 사망: 약 23% 감소</title></rect>
+          <text x="310" y="36" class="sdLbl"><tspan class="sdVal">약 23%</tspan></text>
+          <text x="196" y="82" class="sdRow">낙상</text>
+          <rect x="210" y="70" width="60" height="16" rx="4" fill="#0F4C81"><title>낙상: 약 15% 감소(보수적 추정)</title></rect>
+          <rect x="272" y="70" width="84" height="16" rx="4" fill="#9CC3E4"><title>낙상: 최대 약 36% 감소(낙관적 추정)</title></rect>
+          <text x="364" y="82" class="sdLbl"><tspan class="sdVal">약 15~36%</tspan></text>
+          <text x="196" y="128" class="sdRow">일상생활 장애</text>
+          <rect x="210" y="116" width="40" height="16" rx="4" fill="#0F4C81"><title>일상생활(ADL·IADL) 장애 발생: 약 10% 감소</title></rect>
+          <text x="258" y="128" class="sdLbl"><tspan class="sdVal">약 10%</tspan></text>
+        </svg>
+        <figcaption id="sdRiskCap">SPPB +1.7점에 해당하는 상대위험 감소(문헌 기반 추정). 낙상은 연구마다 폭이 달라 범위로 표시했습니다. *입원했다 퇴원한 경우 기준.</figcaption>
+      </figure>
+    </div>
+
+    <div class="sectionTitle">100명이 참여했다면 — 기대 효과 추정</div>
+    <div class="contentWrap">
+      <p>참여 인원이 공개되지 않아, 전노쇠군 <strong>100명</strong>이 같은 수준의 개선을 얻고 그 기능을 유지한다고 가정해 향후 2.5년간의 효과를 어림해 보았습니다. 기준으로 삼은 것은 강원 평창군 어르신 383명을 66개월간 추적해 사망·장기요양 등급 진입·의료비까지 확인한 국내 연구입니다.</p>
+
+      <div class="sdStats" role="list">
+        <div class="sdStat" role="listitem">
+          <div class="sdStatNum">5~10<span>건</span></div>
+          <div class="sdStatLbl">낙상 감소<br><small>2.5년 누적</small></div>
+        </div>
+        <div class="sdStat" role="listitem">
+          <div class="sdStatNum">2~4<span>명</span></div>
+          <div class="sdStatLbl">사망·장기요양 등급 진입<br>예방 또는 지연 <small>2.5년 누적</small></div>
+        </div>
+        <div class="sdStat" role="listitem">
+          <div class="sdStatNum">1~2<span>억 원</span></div>
+          <div class="sdStatLbl">의료비·장기요양비 절감<br><small>2.5년 누적 · 5.5년이면 2~4억 원</small></div>
+        </div>
+      </div>
+      <p class="sdStatNote">※ 실제로 측정된 성과가 아니라, 현재의 기능 개선이 유지될 때 문헌을 근거로 기대할 수 있는 근사치입니다.</p>
+
+      <p>여기서 ‘예방’은 영원히 막는다는 뜻보다 <strong>그 시점을 뒤로 미룬다</strong>는 의미에 가깝습니다. 평창 연구에서도 시간이 지나며 두 집단의 차이는 좁아졌지만, 끝까지 남은 효과는 ‘집에서 자립해 지내는 기간이 길어진 것’이었습니다. 성동구가 내세운 에이징 인 플레이스(Aging in Place)와 정확히 같은 목표입니다.</p>
+      <p>관건은 <strong>유지</strong>입니다. 3개월 프로그램이 끝난 뒤 6개월·12개월 시점에도 점수가 유지되어야 위의 기대 효과가 성립합니다. 같은 기기와 같은 방식으로 다시 측정해 확인하는 것이 다음 단계입니다.</p>
+
+      <details class="wikiMore">
+        <summary class="wikiMoreSummary">추정 방법과 근거 데이터 자세히 보기</summary>
+        <div class="wikiMoreBody">
+          <p class="sdH">1. SPPB 1점당 위험 변화를 +1.7점에 적용</p>
+          <p>SPPB 점수와 예후의 관계를 보고한 관찰 연구의 1점당 효과를 +1.7점에 그대로 적용했습니다. 운동으로 올린 점수가 원래 그 점수인 사람과 같은 예후를 갖는다는 가정이 깔려 있습니다.</p>
+          <div class="sdTableWrap"><table class="sdTable">
+            <thead><tr><th>결과 지표</th><th>문헌의 1점당 효과</th><th>+1.7점 적용 시</th><th>근거</th></tr></thead>
+            <tbody>
+              <tr><td>퇴원 후 재입원 또는 사망</td><td>1점↑ → 14% 감소 (HR 0.86)</td><td>약 23% 감소 (0.86<sup>1.7</sup> ≈ 0.77)</td><td>Volpato 2011</td></tr>
+              <tr><td>낙상 확률</td><td>1점↓ → 10~30% 증가</td><td>약 15~36% 감소</td><td>Phu 2020, Welch 2021</td></tr>
+              <tr><td>ADL·IADL 장애 발생</td><td>1점↑ → 약 6% 감소</td><td>약 10% 감소</td><td>Guralnik 2000 등</td></tr>
+              <tr><td>전체 사망 (SPPB ≤9 vs ≥10)</td><td>범주 이동</td><td>노쇠 전단계 1.5배 → 기준 위험(1.0)</td><td>Pavasini 2016</td></tr>
+            </tbody>
+          </table></div>
+
+          <p class="sdH">2. 평창 연구를 기준선으로 한 비례 환산</p>
+          <p>평창 연구는 국내에서 SPPB를 결과 변수로 쓰면서 사망·장기요양 등급 진입·건강보험 비용까지 66개월을 추적한 유일한 사례입니다. 성동구의 개선 폭(1.7점)을 평창의 집단 간 차이(3.5점)로 나눈 <strong>0.49</strong>를 ‘용량 비율’로 보고, 평창에서 관찰된 위험 감소와 비용 절감을 그 비율만큼만 인정했습니다. 즉 평창 효과의 절반 정도를 기대한다는 가정입니다.</p>
+          <div class="sdTableWrap"><table class="sdTable">
+            <thead><tr><th>항목</th><th>평창 (Oh 2021 / Ji 2025)</th><th>성동구 (2025)</th></tr></thead>
+            <tbody>
+              <tr><td>대상</td><td>65세 이상 농촌 취약계층(독거·의료급여), 평균 76.8세, 여성 72%</td><td>도시 지역 전노쇠군 (인원 미공개)</td></tr>
+              <tr><td>기저 SPPB</td><td>7.6점 (노쇠 전단계 하단)</td><td>8.6점 (노쇠 전단계 상단)</td></tr>
+              <tr><td>중재</td><td>24주 다요인(운동·영양·우울·다약제·가정환경), 1인당 약 872달러(≈100만 원)</td><td>3개월 운동 중심, 비용 미공개</td></tr>
+              <tr><td>SPPB 변화</td><td>6개월 시점 집단 간 차이 +3.5점 (95% CI 2.8~4.2), 30개월까지 유지</td><td>3개월 전후 +1.7점, 추적 없음</td></tr>
+              <tr><td>사망 또는 장기요양 등급 진입</td><td>30개월 12.6% vs 대조 22.7% / 66개월 32.8% vs 37.0%</td><td>미측정</td></tr>
+              <tr><td>사건 없는 생존기간</td><td>30개월 기준 28.5 vs 23.3개월 (HR 0.31) / 66개월 기준 +6.5개월</td><td>미측정</td></tr>
+              <tr><td>건강보험·장기요양 비용 절감</td><td>30개월 3,390달러/인, 66개월 7,688달러/인 (95% CI 1,197~14,615)</td><td>미측정</td></tr>
+              <tr><td>편익/비용 비</td><td>30개월 3.89, 66개월 8.82</td><td>—</td></tr>
+            </tbody>
+          </table></div>
+          <p>이 가정은 두 방향으로 틀릴 수 있습니다. 성동구 참여자는 평창보다 기저 기능이 높고 도시에 거주해 원래 사건 발생률이 낮으므로, 같은 비율로 위험이 줄어도 실제 예방 건수는 적습니다. 반면 노쇠 전단계는 중재에 가장 잘 반응하는 구간이라 기능 유지 자체는 더 쉬울 수 있습니다. 그래서 아래 수치는 범위로 제시했습니다.</p>
+
+          <p class="sdH">3. 100명당 기대 효과 (기능 유지 가정, 2.5년 기준)</p>
+          <p>기저 발생률은 도시 전노쇠군에 맞게 평창 대조군보다 낮게 잡았습니다.</p>
+          <div class="sdTableWrap"><table class="sdTable">
+            <thead><tr><th>결과 지표</th><th>기저 발생률 가정 (중재 없을 때)</th><th>적용한 상대 감소</th><th>100명당 예방 건수 근사</th></tr></thead>
+            <tbody>
+              <tr><td>낙상 (연간)</td><td>10~15% (전체 노인 자가보고 5.6%, 2023 노인실태조사; 전노쇠군은 그 이상)</td><td>15~36% (1점당 10~30%)</td><td>연 2~4건, 2.5년 누적 5~10건</td></tr>
+              <tr><td>사망 또는 장기요양 등급 진입 (2.5년 누적)</td><td>8~15% (평창 대조군 22.7%의 절반 안팎)</td><td>약 25% (평창 45% 감소 × 0.49)</td><td>2~4명 예방 또는 지연</td></tr>
+              <tr><td>사망 또는 장기요양 등급 진입 (5.5년 누적)</td><td>25~30%</td><td>약 6% (평창 66개월 효과는 축소됨)</td><td>1~2명; 대신 진입 시점이 평균 약 3개월 늦춰짐 (평창 6.5개월 × 0.49)</td></tr>
+              <tr><td>ADL·IADL 장애 발생 (연간)</td><td>5~8%</td><td>약 10% (1점당 6%)</td><td>연 0.5~1명</td></tr>
+              <tr><td>입원 후 재입원·사망</td><td>입원자에게 적용</td><td>약 23% (1점당 14%)</td><td>입원 사건 10건당 2건 감소</td></tr>
+            </tbody>
+          </table></div>
+
+          <p class="sdH">4. 비용 측면 근사</p>
+          <p>평창 연구의 건강보험·장기요양 절감액에 용량 비율 0.49를 적용하면 1인당 절감액은 2.5년 누적 약 190만 원, 5.5년 누적 약 430만 원입니다(환율 1,141원/달러, 논문 기준). 성동구 참여자의 기저 위험이 낮은 점을 반영해 하한을 그 절반으로 잡았습니다.</p>
+          <div class="sdTableWrap"><table class="sdTable">
+            <thead><tr><th>항목</th><th>1인당</th><th>100명당</th></tr></thead>
+            <tbody>
+              <tr><td>의료비·장기요양비 절감, 2.5년 누적</td><td>100~190만 원</td><td>1~2억 원</td></tr>
+              <tr><td>의료비·장기요양비 절감, 5.5년 누적</td><td>200~430만 원</td><td>2~4억 원</td></tr>
+              <tr><td>참고: 평창 중재 비용 (24주 다요인)</td><td>약 100만 원</td><td>약 1억 원</td></tr>
+              <tr><td>참고: 장기요양 수급자 1인당 급여비 (2025)</td><td>월 154만 원, 연 약 1,850만 원</td><td>—</td></tr>
+            </tbody>
+          </table></div>
+          <p>장기요양 급여비로 교차 확인해도 크게 어긋나지 않습니다. 100명당 등급 진입 2~4명이 각각 1년씩 늦춰지는 것만 계산해도 약 3,700~7,400만 원이고, 여기에 낙상 골절·입원 감소가 더해집니다. 다만 절감액의 약 91%는 건강보험공단 부담분이므로, 지자체 예산이 아니라 보험 재정에서 나타나는 효과라는 점은 정책 논의에서 구분해 볼 필요가 있습니다.</p>
+          <p>프로그램 비용이 평창과 비슷한 1인당 50~100만 원 수준이라면 편익/비용 비는 2.5년 기준 1~2, 5.5년 기준 2~4 정도로 추정됩니다. 평창(8.82)보다 낮은 것은 개선 폭이 절반이고 기저 위험이 낮기 때문이며, 그래도 투입 대비 절감이 클 가능성이 높습니다. 실제 1인당 비용이 확인되면 이 비율은 바로 갱신할 수 있습니다.</p>
+        </div>
+      </details>
+
+      <details class="wikiMore">
+        <summary class="wikiMoreSummary">해석 시 유의사항과 다음 단계</summary>
+        <div class="wikiMoreBody">
+          <ul>
+            <li><strong>측정값이 아닌 추정치입니다.</strong> 낙상·입원·장기요양 등급 진입 같은 결과 지표는 아직 측정되지 않았습니다. 위 수치는 현재 수준의 기능 개선이 유지될 때 문헌상 기대할 수 있는 효과이며, 인용할 때는 ‘문헌 기반 추정’임을 밝혀야 합니다.</li>
+            <li><strong>대조군이 없는 전후 비교입니다.</strong> 반복 측정에 따른 학습 효과와 평균 회귀가 섞여 있을 수 있습니다. 반대로 같은 기간 비참여자의 기능이 떨어졌을 가능성을 고려하면 실제 집단 간 차이는 1.7점보다 클 수도 있습니다. 환산에는 1.7점을 그대로 썼습니다.</li>
+            <li><strong>근거 연구의 한계.</strong> 1점당 위험 변화는 모두 관찰 연구에서 나온 연관성입니다. 평창 연구는 무작위 배정이 아닌 성향점수 매칭 연구이고, 농촌 취약계층을 대상으로 했습니다.</li>
+            <li><strong>효과 지속성이 가장 큰 미지수입니다.</strong> 평창은 24주 중재에 영양·우울·다약제 관리가 함께 들어가 30개월까지 SPPB 차이가 유지됐습니다. 성동구는 3개월 운동 프로그램이므로, 점수가 기저로 돌아가면 기대 효과도 사라집니다.</li>
+          </ul>
+          <p class="sdH">추정을 실측으로 바꾸려면</p>
+          <ol>
+            <li>프로그램 종료 후 6개월·12개월 시점 SPPB 재측정 — 같은 기기·같은 프로토콜로 측정해야 유지 여부를 믿을 수 있습니다.</li>
+            <li>비참여 전노쇠군(대기자 또는 인근 자치구)의 같은 시점 측정값 — 대조군이 있어야 1.7점이 ‘집단 간 차이’가 됩니다.</li>
+            <li>참여 인원, 1인당 비용, 가능하다면 건강보험공단 자료 연계(장기요양 등급 신청·입원·진료비) — 평창 연구가 바로 이 방식으로 66개월 결과를 냈습니다.</li>
+          </ol>
+          <p>이 세 가지가 갖춰지면 성동구는 평창에 이어 국내 두 번째, 도시 지자체로는 처음으로 기능 개선을 장기요양·의료비 결과까지 연결한 사례가 됩니다.</p>
+        </div>
+      </details>
     </div>
 
     <div class="sectionTitle">정책적 시사점</div>
@@ -115,7 +276,25 @@ body{background:#fff;color:#1a1a1a}.article-wrap{max-width:760px;margin:0 auto;p
         <li>성동구청 홈페이지 관련 자료</li>
         <li>헤럴드경제, ‘살던 곳에서 건강한 노후’ 스마트헬스케어센터 구축 완료</li>
         <li>SBS뉴스(2025.02.26), 스마트헬스케어센터 어르신 건강 관리 추진 방송분</li>
+        <li>헤럴드경제(2025.10.28), 시정일보(2025.10.29) — 성동구 스마트헬스케어센터 운영 성과 보도</li>
       </ul>
+      <details class="wikiMore">
+        <summary class="wikiMoreSummary">기대 효과 추정에 사용한 문헌</summary>
+        <div class="wikiMoreBody">
+          <ul class="wikiRef">
+            <li>Oh G, Lee H, Park CM, Jung H-W, Lee E, Jang I-Y, Guralnik JM, Kim DH. Long-term effect of a 24-week multicomponent intervention on physical performance and frailty in community-dwelling older adults. <em>Age and Ageing</em>. 2021;50(6):2157–2166. (평창 30개월 추적)</li>
+            <li>Ji S, et al. Long-Term Health and Cost Outcomes of a 24-Week Multicomponent Frailty Intervention in Older Adults. <em>JAMA Netw Open</em>. 2025;8(11):e2543278. (평창 66개월 비용 추적)</li>
+            <li>Volpato S, et al. <em>J Gerontol A</em>. 2011;66(1):89–96. (퇴원 후 재입원·사망, 1점당 14%)</li>
+            <li>Guralnik JM, et al. <em>J Gerontol A</em>. 2000;55(4):M221–231. (장애 발생)</li>
+            <li>Pavasini R, et al. <em>BMC Med</em>. 2016;14:215. (전체 사망)</li>
+            <li>Welch SA, et al. <em>JAMDA</em>. 2021;22(8):1646–1651; Phu S, et al. 2020. (낙상)</li>
+            <li>Perera S, et al. <em>J Am Geriatr Soc</em>. 2006;54(5):743–749. (임상적 최소 유의 변화, MCID)</li>
+            <li>점수 범주별 위험비: 『간단신체수행능력 검사(SPPB) 검사결과 해석 및 중재 가이드』(DYPHI) 5쪽 표</li>
+            <li>보건복지부, 2023 노인실태조사 — 최근 1년 낙상 경험 5.6%</li>
+            <li>국민건강보험공단, 2025 노인장기요양보험 통계연보 — 수급자 1인당 월평균 급여비 154만 280원, 공단부담 91.4%</li>
+          </ul>
+        </div>
+      </details>
     </div>
     </article>
     <a class="back-link" href="/ko/case-studies.html">← Evidence &amp; Insights 목록으로</a>

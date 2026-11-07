@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t">
+  <title id="t">Older adult walking from a parked car toward neighbourhood shops</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#DCEBF8"/>
+      <stop offset="1" stop-color="#F6FAFD"/>
+    </linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9D3DE"/>
+      <stop offset="1" stop-color="#B7C3D0"/>
+    </linearGradient>
+    <linearGradient id="car" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2B7CC2"/>
+      <stop offset="1" stop-color="#1A5F9C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1380" cy="150" r="70" fill="#FFF3CF"/>
+  <circle cx="1380" cy="150" r="110" fill="#FFF3CF" opacity=".35"/>
+  <g fill="#fff" opacity=".9">
+    <ellipse cx="260" cy="140" rx="90" ry="26"/><ellipse cx="320" cy="122" rx="60" ry="30"/>
+    <ellipse cx="980" cy="100" rx="70" ry="20"/><ellipse cx="1030" cy="86" rx="48" ry="24"/>
+  </g>
+
+  <!-- distant skyline -->
+  <g fill="#C7DBEE">
+    <rect x="0" y="420" width="140" height="240"/><rect x="150" y="380" width="110" height="280"/>
+    <rect x="270" y="440" width="160" height="220"/><rect x="440" y="400" width="120" height="260"/>
+    <rect x="570" y="450" width="200" height="210"/>
+  </g>
+  <g fill="#B5CFE7">
+    <rect x="30" y="470" width="90" height="190"/><rect x="300" y="480" width="100" height="180"/><rect x="600" y="490" width="140" height="170"/>
+  </g>
+
+  <!-- shop row -->
+  <g>
+    <rect x="800" y="380" width="800" height="285" fill="#FBFCFE"/>
+    <rect x="800" y="360" width="800" height="26" fill="#0F4C81"/>
+    <!-- unit 1 -->
+    <rect x="830" y="470" width="150" height="120" rx="4" fill="#CFE3F3"/>
+    <path d="M840 480 l40 0 l-30 100 l-10 0z" fill="#fff" opacity=".45"/>
+    <rect x="1000" y="470" width="70" height="195" rx="3" fill="#7FA8CC"/>
+    <circle cx="1060" cy="570" r="4" fill="#fff"/>
+    <g>
+      <path d="M815 410 h270 v40 h-270z" fill="#F4A261"/>
+      <path d="M815 450 q16.9 22 33.75 0 q16.9 22 33.75 0 q16.9 22 33.75 0 q16.9 22 33.75 0 q16.9 22 33.75 0 q16.9 22 33.75 0 q16.9 22 33.75 0 q16.9 22 33.75 0z" fill="#F4A261"/>
+      <path d="M848.75 410 h33.75 v40 h-33.75z M916.25 410 h33.75 v40 h-33.75z M983.75 410 h33.75 v40 h-33.75z M1051.25 410 h33.75 v40 h-33.75z" fill="#fff" opacity=".55"/>
+    </g>
+    <!-- unit 2 -->
+    <rect x="1130" y="470" width="70" height="195" rx="3" fill="#7FA8CC"/>
+    <circle cx="1140" cy="570" r="4" fill="#fff"/>
+    <rect x="1220" y="470" width="130" height="120" rx="4" fill="#CFE3F3"/>
+    <path d="M1230 480 l36 0 l-26 100 l-10 0z" fill="#fff" opacity=".45"/>
+    <g>
+      <path d="M1115 410 h250 v40 h-250z" fill="#2A9D8F"/>
+      <path d="M1115 450 q15.6 22 31.25 0 q15.6 22 31.25 0 q15.6 22 31.25 0 q15.6 22 31.25 0 q15.6 22 31.25 0 q15.6 22 31.25 0 q15.6 22 31.25 0 q15.6 22 31.25 0z" fill="#2A9D8F"/>
+      <path d="M1146.25 410 h31.25 v40 h-31.25z M1208.75 410 h31.25 v40 h-31.25z M1271.25 410 h31.25 v40 h-31.25z M1333.75 410 h31.25 v40 h-31.25z" fill="#fff" opacity=".4"/>
+    </g>
+    <!-- unit 3 -->
+    <rect x="1400" y="470" width="170" height="120" rx="4" fill="#CFE3F3"/>
+    <path d="M1410 480 l40 0 l-30 100 l-10 0z" fill="#fff" opacity=".45"/>
+    <path d="M1390 410 h210 v40 h-210z" fill="#1F6FB2"/>
+    <path d="M1390 450 q17.5 22 35 0 q17.5 22 35 0 q17.5 22 35 0 q17.5 22 35 0 q17.5 22 35 0 q17.5 22 35 0z" fill="#1F6FB2"/>
+    <!-- plants -->
+    <g>
+      <path d="M1088 640 h34 l-5 25 h-24z" fill="#B5835A"/>
+      <circle cx="1095" cy="628" r="16" fill="#5FA36A"/><circle cx="1113" cy="622" r="18" fill="#6DB277"/>
+      <path d="M1368 640 h34 l-5 25 h-24z" fill="#B5835A"/>
+      <circle cx="1376" cy="626" r="17" fill="#5FA36A"/><circle cx="1394" cy="630" r="15" fill="#6DB277"/>
+    </g>
+  </g>
+
+  <!-- trees -->
+  <g>
+    <rect x="452" y="520" width="16" height="145" rx="6" fill="#8A6A4F"/>
+    <circle cx="460" cy="470" r="78" fill="#7DBB86"/>
+    <circle cx="410" cy="505" r="48" fill="#6DAE77"/>
+    <circle cx="512" cy="500" r="52" fill="#6DAE77"/>
+    <rect x="1572" y="540" width="14" height="125" rx="6" fill="#8A6A4F"/>
+    <circle cx="1580" cy="500" r="62" fill="#7DBB86"/>
+  </g>
+
+  <!-- street lamp -->
+  <g>
+    <rect x="768" y="420" width="8" height="245" fill="#5B6B7D"/>
+    <path d="M760 420 h24 l-4 -22 h-16z" fill="#5B6B7D"/>
+    <circle cx="772" cy="402" r="7" fill="#FFF3CF"/>
+  </g>
+
+  <!-- sidewalk -->
+  <rect x="0" y="660" width="1600" height="70" fill="#E9EEF3"/>
+  <g stroke="#D7DEE6" stroke-width="2">
+    <path d="M100 660 l-20 70 M260 660 l-20 70 M420 660 l-20 70 M580 660 l-20 70 M740 660 l-20 70 M900 660 l-20 70 M1060 660 l-20 70 M1220 660 l-20 70 M1380 660 l-20 70 M1540 660 l-20 70"/>
+  </g>
+  <rect x="0" y="728" width="1600" height="10" fill="#D3DBE4"/>
+
+  <!-- road -->
+  <rect x="0" y="738" width="1600" height="162" fill="url(#road)"/>
+  <g fill="#F6F8FA" opacity=".85">
+    <rect x="640" y="868" width="110" height="8" rx="4"/><rect x="840" y="868" width="110" height="8" rx="4"/>
+    <rect x="1040" y="868" width="110" height="8" rx="4"/><rect x="1240" y="868" width="110" height="8" rx="4"/>
+    <rect x="1440" y="868" width="110" height="8" rx="4"/>
+  </g>
+  <!-- parking bay -->
+  <path d="M60 750 v100 M600 750 v100" stroke="#F6F8FA" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+
+  <!-- parked car -->
+  <g>
+    <ellipse cx="330" cy="848" rx="250" ry="14" fill="#8A97A6" opacity=".35"/>
+    <path d="M95 812 L95 748 Q97 730 118 725 L198 712 L268 652 Q280 642 298 642 L452 642 Q474 642 486 656 L548 724 Q568 730 568 752 L568 812 Q568 822 558 822 L105 822 Q95 822 95 812 Z" fill="url(#car)"/>
+    <path d="M284 658 L362 658 L362 708 L222 708 Z" fill="#DCEBF8"/>
+    <path d="M376 658 L450 658 Q462 658 470 668 L510 708 L376 708 Z" fill="#DCEBF8"/>
+    <path d="M300 664 l30 0 l-38 38 l-22 0z" fill="#fff" opacity=".5"/>
+    <rect x="368" y="652" width="8" height="160" fill="#174F82"/>
+    <rect x="300" y="738" width="26" height="6" rx="3" fill="#174F82"/>
+    <rect x="440" y="738" width="26" height="6" rx="3" fill="#174F82"/>
+    <path d="M98 742 h22 v16 h-24z" fill="#FFF3CF"/>
+    <path d="M552 738 h14 v22 h-16z" fill="#E76F51"/>
+    <rect x="95" y="790" width="473" height="10" fill="#174F82" opacity=".6"/>
+    <circle cx="200" cy="822" r="38" fill="#2F3A47"/><circle cx="200" cy="822" r="17" fill="#AEB8C4"/>
+    <circle cx="465" cy="822" r="38" fill="#2F3A47"/><circle cx="465" cy="822" r="17" fill="#AEB8C4"/>
+  </g>
+
+  <!-- older adult walking toward the shops -->
+  <g stroke-linecap="round" stroke-linejoin="round" transform="translate(702 712) scale(1.3) translate(-702 -712)">
+    <ellipse cx="702" cy="712" rx="52" ry="7" fill="#AEB8C4" opacity=".45"/>
+    <!-- back leg -->
+    <path d="M697 608 L684 655 L668 703" fill="none" stroke="#3F4A5A" stroke-width="20"/>
+    <path d="M656 699 h28 q8 0 8 8 v4 h-40 q-4 -12 4 -12z" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+    <!-- back arm + bag -->
+    <path d="M690 532 L678 572 L672 598" fill="none" stroke="#2F7A8E" stroke-width="15"/>
+    <circle cx="671" cy="602" r="7" fill="#EDC4A3"/>
+    <path d="M661 604 q10 -18 20 0" fill="none" stroke="#B5835A" stroke-width="4"/>
+    <rect x="650" y="604" width="42" height="44" rx="6" fill="#E9C46A"/>
+    <!-- front leg -->
+    <path d="M707 608 L722 655 L738 701" fill="none" stroke="#4B5767" stroke-width="20"/>
+    <path d="M728 697 h30 q8 0 8 8 v6 h-42 q-4 -14 4 -14z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+    <!-- torso / cardigan -->
+    <path d="M680 528 Q700 516 720 528 L728 618 Q702 628 676 618 Z" fill="#3A8DA3"/>
+    <path d="M702 522 L703 620" stroke="#2F7A8E" stroke-width="3" fill="none"/>
+    <!-- front arm -->
+    <path d="M714 532 L728 572 L742 600" fill="none" stroke="#3A8DA3" stroke-width="15"/>
+    <circle cx="744" cy="604" r="7" fill="#EDC4A3"/>
+    <!-- neck + head -->
+    <rect x="696" y="506" width="12" height="18" rx="5" fill="#EDC4A3"/>
+    <circle cx="706" cy="488" r="25" fill="#EDC4A3"/>
+    <path d="M682 492 Q676 458 706 456 Q732 456 734 476 Q722 468 708 472 Q696 476 694 498 Q690 504 682 492 Z" fill="#D5D9DF"/>
+    <circle cx="719" cy="486" r="2.4" fill="#3F4A5A"/>
+    <path d="M716 499 q5 3 10 0" fill="none" stroke="#B9785E" stroke-width="2"/>
+  </g>
+</svg>

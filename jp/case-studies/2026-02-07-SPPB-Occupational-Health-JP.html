@@ -573,27 +573,25 @@
         plugins: [{
           id: 'textCenter',
           beforeDraw: function(chart) {
-            var width = chart.width,
-                height = chart.height,
-                ctx = chart.ctx;
-            ctx.restore();
-            var fontSize = (height / 114).toFixed(2);
-            ctx.font = "bold " + fontSize + "em sans-serif";
-            ctx.textBaseline = "middle";
-            ctx.fillStyle = "#0F4C81";
-            var text = "11.9%",
-                textX = Math.round((width - ctx.measureText(text).width) / 2),
-                textY = height / 2;
-            ctx.fillText(text, textX, textY);
-            
-            var subFontSize = (height / 200).toFixed(2);
-            ctx.font = subFontSize + "em sans-serif";
-            ctx.fillStyle = "#64748b";
-            var subText = "Risk Reduction",
-                subTextX = Math.round((width - ctx.measureText(subText).width) / 2),
-                subTextY = height / 2 + 25;
-            ctx.fillText(subText, subTextX, subTextY);
+            var ctx = chart.ctx,
+                area = chart.chartArea,
+                cx = (area.left + area.right) / 2,
+                cy = (area.top + area.bottom) / 2,
+                meta = chart.getDatasetMeta(0),
+                inner = (meta.data[0] && meta.data[0].innerRadius) || Math.min(area.right - area.left, area.bottom - area.top) * 0.35;
+            var fontSize = Math.round(inner * 0.42),
+                subFontSize = Math.round(inner * 0.16),
+                gap = Math.round(inner * 0.08);
             ctx.save();
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "bold " + fontSize + "px sans-serif";
+            ctx.fillStyle = "#0F4C81";
+            ctx.fillText("11.9%", cx, cy - (subFontSize + gap) / 2);
+            ctx.font = subFontSize + "px sans-serif";
+            ctx.fillStyle = "#64748b";
+            ctx.fillText("Risk Reduction", cx, cy + (fontSize + gap) / 2);
+            ctx.restore();
           }
         }]
       });

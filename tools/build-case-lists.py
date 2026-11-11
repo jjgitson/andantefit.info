@@ -97,6 +97,7 @@ CATEGORY = {
     'ADA2026-GLP1-Muscle-Loss-Debate': 'endocrine',
 
     'CKD-Frailty-Consensus-SPPB': 'nephrology',
+    'Kidney-Transplant-SPPB-Screening': 'nephrology',
     'Oncology-SPPB-AndanteFit': 'oncology',
 }
 

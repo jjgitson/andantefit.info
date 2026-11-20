@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>안전운전 체력검사 벽 포스터 A1 3종</title>
+<style>
+/* A1 세로(594 × 841 mm) 벽 부착 포스터. 상단 제목 띠 → 사진 + 검사 방법 2단 → 결과 보는 법 → 출처 */
+@page { size: 594mm 841mm; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #fff; }
+body { font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif; color: #111; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 594mm; height: 841mm; position: relative; overflow: hidden; background: var(--bg); break-after: page; page-break-after: always; padding: 24mm 24mm 0; display: flex; flex-direction: column; justify-content: space-between; gap: 9mm; }
+.page:last-child { break-after: auto; page-break-after: auto; }
+.sts5 { --bg: #cfeee3; --bar: #0e8a7a; --soft: #e9f8f2; }
+.cst30 { --bg: #f8e3c8; --bar: #c4561a; --soft: #fdf2e4; }
+.bal { --bg: #cfe6f5; --bar: #1d3c8f; --soft: #eaf4fb; }
+
+.title { background: var(--bar); color: #fff; border-radius: 6mm; padding: 9mm 12mm 10mm; display: flex; flex-direction: column; gap: 3mm; flex: none; }
+.title h1 { font-size: 38mm; line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; }
+.title p { font-size: 16mm; font-weight: 700; line-height: 1.25; opacity: .96; }
+.title small { display: block; margin-top: 2mm; font-size: 8mm; font-weight: 400; opacity: .85; }
+
+.mid { display: grid; grid-template-columns: 228mm 1fr; gap: 10mm; align-items: stretch; flex: none; }
+.arch { background: #fff; border-radius: 114mm 114mm 6mm 6mm; overflow: hidden; height: 330mm; }
+.arch img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sts5 .arch img, .cst30 .arch img { object-position: 56% 50%; }
+.bal .arch img { object-position: 38% 50%; }
+
+.sec { background: #fff; border-radius: 6mm; padding: 10mm 11mm 11mm; display: flex; flex-direction: column; gap: 7mm; min-width: 0; }
+.sec h2 { font-size: 13mm; font-weight: 700; color: var(--bar); display: flex; align-items: center; gap: 3mm; }
+.sec h2::before { content: ""; width: 6.5mm; height: 13mm; background: var(--bar); border-radius: 1.2mm; }
+.quote { font-size: 16mm; font-weight: 700; line-height: 1.42; letter-spacing: -0.025em; word-break: keep-all; }
+.steps { display: flex; flex-direction: column; gap: 6mm; }
+.step { display: grid; grid-template-columns: 16mm 1fr; gap: 4mm; font-size: 15mm; line-height: 1.36; font-weight: 700; word-break: keep-all; letter-spacing: -0.025em; }
+.step b { width: 16mm; height: 16mm; border-radius: 50%; background: var(--bar); color: #fff; display: grid; place-items: center; font-size: 10mm; margin-top: 2mm; }
+
+.res { display: flex; flex-direction: column; gap: 5mm; }
+.row { display: grid; grid-template-columns: 82mm 1fr; gap: 7mm; align-items: center; background: var(--soft); border-radius: 5mm; padding: 6mm 7mm; }
+.chip { color: #fff; font-weight: 700; font-size: 14.5mm; text-align: center; border-radius: 4mm; padding: 3.5mm 0; }
+.good { background: #2e7d32; } .warn { background: #e08a00; } .bad { background: #c62828; }
+.row p { font-size: 16.5mm; line-height: 1.3; font-weight: 700; word-break: keep-all; letter-spacing: -0.025em; }
+.row p span { display: block; font-size: 11mm; font-weight: 400; color: #333; margin-top: 1mm; }
+
+.tblwrap { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+table { width: 100%; border-collapse: separate; border-spacing: 0 3mm; font-size: 14mm; font-weight: 700; text-align: center; }
+th { font-size: 10mm; color: #333; padding-bottom: .5mm; }
+td { background: var(--soft); padding: 3.6mm 0; }
+td:first-child { border-radius: 3mm 0 0 3mm; }
+td:last-child { border-radius: 0 3mm 3mm 0; }
+td.n { font-size: 17mm; color: var(--bar); }
+.lead { font-size: 15mm; font-weight: 700; }
+.lead em { font-style: normal; color: var(--bar); }
+.note { font-size: 10.5mm; line-height: 1.4; color: #333; word-break: keep-all; }
+
+.feet { display: flex; flex-direction: column; gap: 2mm; }
+.foot { display: grid; grid-template-columns: 62mm 1fr; align-items: center; gap: 5mm; }
+.foot svg { width: 62mm; height: 41mm; }
+.foot .lab { font-size: 14.5mm; font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; }
+.foot .lab span { display: block; font-size: 9.5mm; font-weight: 400; color: #333; margin-top: 1mm; }
+.arrow { font-size: 8mm; color: var(--bar); padding-left: 27mm; line-height: 1; }
+
+.foot-bar { padding: 0 0 16mm; display: flex; justify-content: space-between; align-items: flex-end; gap: 8mm; flex: none; }
+.foot-bar .src { font-size: 6mm; line-height: 1.45; color: #333; max-width: 430mm; word-break: keep-all; }
+.foot-bar .brand { font-size: 10mm; font-weight: 700; color: rgba(0,0,0,.3); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- 1. 5회 의자 일어서기 -->
+<section class="page sts5">
+  <header class="title">
+    <h1>5회 의자 일어서기</h1>
+    <p>다리 힘과 일어서는 능력을 봅니다 <small>세계보건기구 노인 통합돌봄 지침의 이동 능력 선별 항목</small></p>
+  </header>
+  <div class="mid">
+    <div class="arch"><img src="driver-sit.jpg" alt="작업복 차림으로 의자에 앉아 팔을 가슴 앞에 모은 남성 운전자"></div>
+    <div class="sec">
+      <h2>검사 방법</h2>
+      <p class="quote">“가능한 한 빠르게, 의자에서 일어서서 다시 앉는 동작을 총 5회 반복해 주세요. 팔은 가슴 앞에 모은 상태를 유지해 주세요.”</p>
+      <div class="steps">
+        <div class="step"><b>1</b><span>의자 가운데에 등을 떼고 앉습니다</span></div>
+        <div class="step"><b>2</b><span>“시작” 소리에 맞춰 5번 일어섰다 앉습니다</span></div>
+        <div class="step"><b>3</b><span>일어설 때 무릎과 허리를 끝까지 폅니다</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="sec">
+    <h2>결과 보는 법 (60세 이상)</h2>
+    <div class="res">
+      <div class="row"><div class="chip good">좋음</div><p>12초 미만</p></div>
+      <div class="row"><div class="chip warn">주의</div><p>12초 이상<span>다리 근력 저하가 의심되는 수준</span></p></div>
+      <div class="row"><div class="chip bad">상담 권유</div><p>15초 이상 또는 5회를 못 마침<span>보건소·의료기관 상담을 권합니다</span></p></div>
+    </div>
+  </div>
+  <div class="foot-bar">
+    <p class="src">결과는 참고용이며 진단이 아닙니다. 기준: 아시아 근감소증 연구그룹(AWGS) 2019 진단기준 12초, 유럽 노인 근감소증 연구그룹(EWGSOP2) 2019 기준 15초, 세계보건기구(WHO) 노인 통합돌봄 지침(ICOPE) 2019.</p>
+    <span class="brand">AndanteFit</span>
+  </div>
+</section>
+
+<!-- 2. 30초 의자 일어서기 -->
+<section class="page cst30">
+  <header class="title">
+    <h1>30초 의자 일어서기</h1>
+    <p>다리 힘과 지구력을 봅니다 <small>미국 질병통제예방센터 낙상 예방 프로그램(STEADI) 검사</small></p>
+  </header>
+  <div class="mid">
+    <div class="arch"><img src="driver-sit.jpg" alt="작업복 차림으로 의자에 앉아 팔을 가슴 앞에 모은 남성 운전자"></div>
+    <div class="sec">
+      <h2>검사 방법</h2>
+      <p class="quote">“30초 동안 가능한 한 많이, 의자에서 일어서서 다시 앉는 동작을 반복해 주세요. 팔은 가슴 앞에 모은 상태를 유지해 주세요.”</p>
+      <div class="steps">
+        <div class="step"><b>1</b><span>의자 가운데에 등을 떼고 앉습니다</span></div>
+        <div class="step"><b>2</b><span>“시작” 소리부터 “그만” 소리까지 반복합니다</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="sec">
+    <h2>결과 보는 법</h2>
+    <p class="lead">아래 횟수보다 <em>적으면 주의</em>하세요</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>나이</th><th>남성</th><th>여성</th></tr></thead>
+        <tbody>
+          <tr><td>60–64세</td><td class="n">14회</td><td class="n">12회</td></tr>
+          <tr><td>65–69세</td><td class="n">12회</td><td class="n">11회</td></tr>
+          <tr><td>70–74세</td><td class="n">12회</td><td class="n">10회</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>나이</th><th>남성</th><th>여성</th></tr></thead>
+        <tbody>
+          <tr><td>75–79세</td><td class="n">11회</td><td class="n">10회</td></tr>
+          <tr><td>80–84세</td><td class="n">10회</td><td class="n">9회</td></tr>
+          <tr><td>85–89세</td><td class="n">8회</td><td class="n">8회</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">기준보다 적으면 같은 나이 평균보다 다리 힘이 약하고 넘어질 위험과 관련됩니다.</p>
+  </div>
+  <div class="foot-bar">
+    <p class="src">결과는 참고용이며 진단이 아닙니다. 기준: 미국 질병통제예방센터(CDC) 낙상 예방 프로그램(STEADI) 30초 의자 일어서기 평균 미만 기준, 리클리·존스 노인체력검사(2013).</p>
+    <span class="brand">AndanteFit</span>
+  </div>
+</section>
+
+<!-- 3. 정적 균형 -->
+<section class="page bal">
+  <header class="title">
+    <h1>정적 균형 검사</h1>
+    <p>넘어지지 않고 서 있는 능력을 봅니다 <small>단축형 신체수행능력 검사(SPPB) 균형 항목</small></p>
+  </header>
+  <div class="mid">
+    <div class="arch"><img src="driver-stand.jpg" alt="작업복 차림으로 균형 측정판 위에 바로 선 남성 운전자"></div>
+    <div class="sec">
+      <h2>검사 방법</h2>
+      <p class="quote">“각 자세는 10초간 유지하도록 하며, 아래 순서대로 진행합니다.”</p>
+      <div class="feet">
+        <div class="foot">
+          <svg viewBox="0 0 70 46" aria-hidden="true"><g fill="#fff" stroke="#9fb3c8" stroke-width="0.8"><path d="M22 4c5 0 7 6 7 12s-2 10-2 15 1 11-5 11-6-5-6-11 1-8 0-14S17 4 22 4z"/><path d="M42 4c5 0 7 6 7 12s-2 10-2 15 1 11-5 11-6-5-6-11 1-8 0-14S37 4 42 4z"/></g></svg>
+          <p class="lab">① 나란히 서기 10초<span>두 발을 붙여 나란히</span></p>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="foot">
+          <svg viewBox="0 0 70 46" aria-hidden="true"><path d="M24 12c5 0 7 6 7 12s-2 7-2 11 1 9-5 9-6-4-6-9 1-6 0-11S19 12 24 12z" fill="#fff" stroke="#9fb3c8" stroke-width="0.8"/><path d="M38 2c5 0 7 6 7 12s-2 7-2 11 1 9-5 9-6-4-6-9 1-6 0-11S33 2 38 2z" fill="#3aa7a0"/></svg>
+          <p class="lab">② 반일렬 서기 10초<span>한 발 뒤꿈치를 다른 발 엄지 옆에</span></p>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="foot">
+          <svg viewBox="0 0 70 46" aria-hidden="true"><path d="M30 24c4 0 6 4 6 9s-1 5-1 7 1 5-5 5-5-3-5-5 1-4 0-7 1-9 5-9z" fill="#fff" stroke="#9fb3c8" stroke-width="0.8"/><path d="M30 1c4 0 6 4 6 9s-1 5-1 7 1 5-5 5-5-3-5-5 1-4 0-7 1-9 5-9z" fill="#1d3c8f"/></svg>
+          <p class="lab">③ 일렬 서기 10초<span>한 발을 다른 발 바로 앞에 일직선으로</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sec">
+    <h2>결과 보는 법</h2>
+    <div class="res">
+      <div class="row"><div class="chip good">좋음</div><p>세 자세 모두 10초 유지</p></div>
+      <div class="row"><div class="chip warn">주의</div><p>일렬 서기를 10초 못 버팀<span>넘어질 위험이 높아질 수 있습니다</span></p></div>
+      <div class="row"><div class="chip bad">상담 권유</div><p>반일렬 서기도 10초 못 버팀<span>보건소·의료기관 상담을 권합니다</span></p></div>
+    </div>
+  </div>
+  <div class="foot-bar">
+    <p class="src">결과는 참고용이며 진단이 아닙니다. 기준: 미국 질병통제예방센터(CDC) 낙상 예방 프로그램(STEADI) 4단계 균형 검사, 미국 국립노화연구소(NIA) 단축형 신체수행능력 검사(SPPB).</p>
+    <span class="brand">AndanteFit</span>
+  </div>
+</section>
+
+</body>
+</html>
